@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router({mergeParams: true}) // don't forget the parent params!
-var   auth          = require('../auth')();
 const { check } = require('express-validator/check');
-
 userController = require('./userController')
+registerController = require('./registerController')
+loginController = require('./loginController')
 
 router.post('/register', [
     check('email_address', 'Not an email address').isEmail().trim(),
@@ -20,9 +20,9 @@ router.post('/register', [
     check('room_num', 'Please enter 4 digits, no more no less').isLength({min: 4, max: 4}).isNumeric().trim(),
     check('first_name', 'Cannot have numbers').isAlpha().trim(),
     check('last_name', 'Cannot have numbers').isAlpha().trim()
-], userController.registerUser)
+], registerController.registerUser)
 
-router.post('/login', userController.loginUser)
+router.post('/login', loginController.loginUser)
 
 router.get('/login', userController.showLogin)
 

@@ -23,6 +23,7 @@ function showAllUsers(req, res) {
 // GET /user/{id}
 function showOneUser(req, res) {
     jwt.verify(req.token, 'secretkey', (err, authData) => {
+        // Display login user information if user id found
         if(authData.user.user_id === req.params.user_id){
             res.json({
                 message: "Post created",
@@ -35,15 +36,6 @@ function showOneUser(req, res) {
             });
         }
     });
-    /*knex('users').where('user_id', req.params.user_id)
-        .then((rows) => {
-            res.send(rows).status(200)
-        })
-        .catch(function (err) {
-            res.status(500).send({
-                message: `${err}`
-            }) // FOR DEBUGGING ONLY, dont send exact message in prod
-        })*/
 }
 // GET /user/{id}/orders
 function showUserOrders(req, res) {
@@ -95,9 +87,7 @@ function registerUser(req, res) {
             // Select the user that was just created
             knex("users").select('*').where('user_id', user_id)
                 .then((rows) => {
-                    // res.status(201).send(`User created: ${rows[0].email_address}`)
-                    res.status(201)
-                    res.redirect(`/api/user/login?email=${rows[0].email_address}`)
+                    res.redirect(307, `/api/user/login`)
                 })
         })
         // else send err

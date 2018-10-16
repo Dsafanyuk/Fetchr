@@ -9,14 +9,6 @@ router.post('/register', [
     check('email_address', 'Not an email address').isEmail().trim(),
     check('password', 'Password must have at least one lowercase, one uppercase, a number,  and a minimum of 8 characters')
         .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/, "i").trim(),
-    check('confirm_password').custom((value, { req }) => {
-        if (value !== req.body.password) {
-            throw new Error('Password confirmation must match the password')
-        }
-        else {
-            return true;
-        }
-    }).isLength({ min: 10 }).trim(),
     check('phone', 'Only digits').isMobilePhone().trim(),
     check('room_num', 'Please enter 4 digits, no more no less').isLength({ min: 4, max: 4 }).isNumeric().trim(),
     check('first_name', 'Cannot have numbers').isAlpha().trim(),

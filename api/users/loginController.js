@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 // POST /user/login
 function loginUser(req, res) {
     var user = {}; // Object, contains id, email, and password of the user
-    var passwordIsCorrect = {}; // Boolean, true if password correct
+    var passwordIsCorrect = 'undefined'; // Boolean, true if password correct
 
     // Search user with the email address
     knex('users').select('*').where({ email_address: req.body.email_address })
@@ -33,12 +33,10 @@ function loginUser(req, res) {
                 }
                 console.log(user);
                 jwt.sign({ user }, 'secretkey', (err, token) => {
-                    if(err)
-                    {
+                    if (err) {
                         res.status(500).send(err);
                     }
-                    else
-                    {
+                    else {
                         res.json({
                             token
                         });

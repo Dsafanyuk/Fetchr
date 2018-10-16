@@ -6,7 +6,7 @@ var dbOptions = require("../db");
 const knex = require("knex")(dbOptions);
 
 // POST /user/register
-function registerUser(req, res) {
+async function registerUser(req, res) {
     const errors = validationResult(req); // Validation errors, if there is any
 
     // If errors is not empty, return error messages
@@ -19,15 +19,39 @@ function registerUser(req, res) {
         email_address: req.body.email_address,
         password: req.body.password,
         room_num: req.body.room_num,
+        phone_number: req.body.phone,
         first_name: req.body.first_name,
         last_name: req.body.last_name
     }
 
-    bcrypt.genSalt(10, function (err, salt) {
-        if(err) {
-            res.status(500).send(err);
-        }
-        else {
+    // Auto-gen a salt and hash with given password
+    try {
+        var generatedHash = await bcrypt.hash(req.body.password, 10);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+
+    // Assign hashed password
+    newUser.password = await generatedHash;
+
+    knex("users").insert(newUser)
+        // if user successfully inserted
+        .then((user_id) => {
+            // Select the user that was just created
+            knex("users").select('*').where('user_id', user_id)
+                .then((rows) => {
+                    res.redirect(307, `./login`)
+                })
+        })
+        // else send err
+        .catch(function (err) {
+            res.status(500).send({
+                message: `${err}`
+            }) // FOR DEBUGGING ONLY, dont send exact message in prod
+        })
+
+    /*bcrypt.genSalt(10, function (err, salt) {
+        if (!err) {
             // Hash the password
             bcrypt.hash(req.body.password, salt, function (err, hash) {
                 console.log(`hash is ${hash}`);
@@ -50,7 +74,10 @@ function registerUser(req, res) {
                     })
             });
         }
-    });
+        else {
+            res.status(500).send(err);
+        }
+    });*/
 }
 
 module.exports = {

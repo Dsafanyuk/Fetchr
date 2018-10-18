@@ -12,8 +12,9 @@ function loginUser(req, res) {
 
     // Search user with the email address
     knex('users').select('*').where({ email_address: req.body.email_address })
-        .then(async (rows) => {
-            if (rows.length) {
+        .then(async (users) => {
+            // If there is any row, compare password
+            if (users.length) {
                 // Compares hashed password with password
                 passwordIsCorrect = await bcrypt.compare(req.body.password, `${rows[0].password}`);
             }

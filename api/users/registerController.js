@@ -35,8 +35,8 @@ async function registerUser(req, res) {
     newUser.password = await generatedHash;
 
     knex("users").select('*').where('email_address', newUser.email_address)
-        .then(rows => {
-            if (rows.length) {
+        .then(users => {
+            if (users.length) {
                 res.status(400).send('Duplicate entry');
             }
             else {

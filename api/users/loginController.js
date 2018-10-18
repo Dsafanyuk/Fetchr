@@ -8,21 +8,15 @@ const jwt = require('jsonwebtoken');
 // POST /user/login
 function loginUser(req, res) {
     var user = {}; // Object, contains id, email, and password of the user
-    var passwordIsCorrect = 'undefined'; // Boolean, true if password correct
+    var passwordIsCorrect = false; // Boolean, true if password correct
 
     // Search user with the email address
     knex('users').select('*').where({ email_address: req.body.email_address })
-        .then((rows) => {
-            // Compares hashed password with password
-            bcrypt.compare(req.body.password, `${rows[0].password}`, function (err, res) {
-                if (err) {
-                    res.status(500).send(err);
-                }
-                else {
-                    console.log('BCRYPT COMPARE: ' + res + typeof (res));
-                    passwordIsCorrect = res;
-                }
-            });
+        .then(async (rows) => {
+            if (rows.length) {
+                // Compares hashed password with password
+                passwordIsCorrect = await bcrypt.compare(req.body.password, `${rows[0].password}`);
+            }
 
             // Creates token and send it as a response
             if (passwordIsCorrect) {
@@ -43,15 +37,15 @@ function loginUser(req, res) {
                     }
                 });
             }
+            else {
+                res.status(401).send('Wrong password or email address');
+            }
         })
         // else send err
         .catch(function (err) {
             res.status(500).send({
                 message: `${err}`
-            }) // FOR DEBUGGING ONLY, dont send exact message in prod
-            console.log({
-                message: `${err}`
-            });
+            })
         })
 }
 

@@ -45,7 +45,7 @@ async function registerUser(req, res) {
                     .then((user_id) => {
                         // Select the user that was just created
                         knex("users").select('*').where('user_id', user_id)
-                            .then((rows) => {
+                            .then(users => {
                                 res.redirect(307, `./login`)
                             })
                     })

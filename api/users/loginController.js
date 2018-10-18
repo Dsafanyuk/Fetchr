@@ -16,14 +16,14 @@ function loginUser(req, res) {
             // If there is any row, compare password
             if (users.length) {
                 // Compares hashed password with password
-                passwordIsCorrect = await bcrypt.compare(req.body.password, `${rows[0].password}`);
+                passwordIsCorrect = await bcrypt.compare(req.body.password, `${users[0].password}`);
             }
 
             // Creates token and send it as a response
             if (passwordIsCorrect) {
                 user = {
-                    user_id: `${rows[0].user_id}`,
-                    email_address: `${rows[0].email_address}`
+                    user_id: `${users[0].user_id}`,
+                    email_address: `${users[0].email_address}`
                 }
                 console.log(user);
                 jwt.sign({ user }, 'secretkey', (err, token) => {

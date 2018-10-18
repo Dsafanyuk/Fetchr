@@ -19,7 +19,7 @@ function loginUser(req, res) {
                     res.status(500).send(err);
                 }
                 else {
-                    console.log('BCRYPT COMPARE: ' + res);
+                    console.log('BCRYPT COMPARE: ' + res + typeof (res));
                     passwordIsCorrect = res;
                 }
             });

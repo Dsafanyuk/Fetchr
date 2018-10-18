@@ -34,29 +34,12 @@ async function registerUser(req, res) {
     // Assign hashed password
     newUser.password = await generatedHash;
 
-    knex("users").insert(newUser)
-        // if user successfully inserted
-        .then((user_id) => {
-            // Select the user that was just created
-            knex("users").select('*').where('user_id', user_id)
-                .then((rows) => {
-                    res.redirect(307, `./login`)
-                })
-        })
-        // else send err
-        .catch(function (err) {
-            res.status(500).send({
-                message: `${err}`
-            }) // FOR DEBUGGING ONLY, dont send exact message in prod
-        })
-
-    /*bcrypt.genSalt(10, function (err, salt) {
-        if (!err) {
-            // Hash the password
-            bcrypt.hash(req.body.password, salt, function (err, hash) {
-                console.log(`hash is ${hash}`);
-                newUser.password = hash;
-
+    knex("users").select('*').where('email_address', newUser.email_address)
+        .then(rows => {
+            if (rows.length) {
+                res.status(400).send('Duplicate entry');
+            }
+            else {
                 knex("users").insert(newUser)
                     // if user successfully inserted
                     .then((user_id) => {
@@ -72,12 +55,11 @@ async function registerUser(req, res) {
                             message: `${err}`
                         }) // FOR DEBUGGING ONLY, dont send exact message in prod
                     })
-            });
-        }
-        else {
+            }
+        })
+        .catch((err) => {
             res.status(500).send(err);
-        }
-    });*/
+        })
 }
 
 module.exports = {

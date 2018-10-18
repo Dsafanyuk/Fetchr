@@ -23,8 +23,7 @@ function loginUser(req, res) {
             if (passwordIsCorrect) {
                 user = {
                     user_id: `${rows[0].user_id}`,
-                    email_address: `${rows[0].email_address}`,
-                    password: `${rows[0].password}`
+                    email_address: `${rows[0].email_address}`
                 }
                 console.log(user);
                 jwt.sign({ user }, 'secretkey', (err, token) => {

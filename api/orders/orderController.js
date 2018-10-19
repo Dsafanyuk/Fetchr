@@ -80,6 +80,9 @@ function showOneOrderSummary(req,res){
         .where('orders.order_id', req.params.order_id)
         .select('product_name', 'quantity', 'price', 'product_url')
         .then((rows) => {
+            rows.forEach(row => {
+                row.price = row.price * row.quantity;
+            });
             res.send(rows).status(200)
         })
         .catch(function (err) {

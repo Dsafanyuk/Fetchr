@@ -79,11 +79,11 @@ function showOneOrderSummary(req,res){
         .innerJoin('products', 'order_summary.product_id', 'products.product_id')
         .where('orders.order_id', req.params.order_id)
         .select('product_name', 'quantity', 'price', 'product_url')
-        .then((rows) => {
-            rows.forEach(row => {
-                row.price = row.price * row.quantity;
+        .then((product) => {
+            product.forEach(row => {
+                product.price = product.price * product.quantity;
             });
-            res.send(rows).status(200)
+            res.send(product).status(200)
         })
         .catch(function (err) {
             res.status(500).send({

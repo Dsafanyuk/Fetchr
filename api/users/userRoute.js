@@ -15,13 +15,9 @@ router.post('/register', [
     check('last_name', 'Cannot have numbers').isAlpha().trim()
 ], registerController.registerUser)
 
-<<<<<<< Updated upstream
-router.post('/login', loginController.loginUser)
-=======
 router.get('/:user_id/creditCheck', userController.creditCheck)
 
 router.post('/login', userController.loginUser)
->>>>>>> Stashed changes
 
 router.get('/login', userController.showLogin)
 

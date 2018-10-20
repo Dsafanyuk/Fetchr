@@ -126,12 +126,8 @@ module.exports = {
     createUser: createUser,
     updateUser: updateUser,
     deleteUser: deleteUser,
-<<<<<<< Updated upstream
-    showLogin: showLogin
-=======
     registerUser: registerUser,
     loginUser: loginUser,
     showLogin: showLogin,
     creditCheck: creditCheck
->>>>>>> Stashed changes
 };

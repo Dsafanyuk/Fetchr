@@ -6,6 +6,6 @@ var productRouter = require('../products/productRoute');
 
 router.use('/users', userRouter);
 router.use('/orders', orderRouter);
-router.use('/products', productController);
+router.use('/products', productRouter);
 
 module.exports = router;

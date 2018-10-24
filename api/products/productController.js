@@ -18,19 +18,18 @@ function showAllProducts(req, res) {
             res.json(products).status(200)
         })
         .catch(function (err) {
-            console.error(err)
-            // res.status(500).json({
-            //     message: `${err}`
-            // }) // FOR DEBUGGING ONLY, dont json exact message in prod
+            res.status(500).json({
+                message: `${err}`
+            }) // FOR DEBUGGING ONLY, dont json exact message in prod
         })
 }
 
-// GET /product/{product_id}
+// GET /products/{product_id}
 function showOneProduct(req, res) {
     knex('products').where('product_id', req.params.product_id)
         .then((products) => {
             if (products.length == 0) {
-                res.status(204).json('no item of this id')
+                res.status(204).send('no item of this id')
             } else {
                 res.status(200).json(products)
             }
@@ -42,14 +41,14 @@ function showOneProduct(req, res) {
         })
 }
 
-// GET /filter/{category}
+// GET /products/filter/{category}
 function showItemByCategory(req, res) {
     sortParams = req.sortParams
-    var productOrderQuery = function (queryBuilder, sortParams) {
+    var productOrderQuery = (queryBuilder, sortParams) => {
         if (sortParams) {
             queryBuilder.orderBy(`${sortParams.option}`, `${sortParams.orderBy}`)
         } else {
-            queryBuilder.orderBy(`total_sold`, `desc`)
+            queryBuilder.orderBy('total_sold', 'desc')
         }
     };
     knex('popular').modify(productOrderQuery, sortParams)

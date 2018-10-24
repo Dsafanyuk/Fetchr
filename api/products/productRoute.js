@@ -20,7 +20,7 @@ function sortBy(sortQuery) {
     option: '',
     orderBy: ''
   }
-
+  // TODO VALIDATE INCOMING QUERIES
   Object.keys(sortQuery).forEach((option) => {
     sortParams.option = option
     sortParams.orderBy = sortQuery[option]

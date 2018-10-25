@@ -13,7 +13,7 @@ module.exports = {
 
 // GET /products
 function showAllProducts(req, res) {
-    knex('popular').orderBy('total_sold', 'desc')
+    knex('product_records').orderBy('total_sold', 'desc')
         .then((products) => {
             res.json(products).status(200)
         })
@@ -51,7 +51,7 @@ function showItemByCategory(req, res) {
             queryBuilder.orderBy('total_sold', 'desc')
         }
     };
-    knex('popular').modify(productOrderQuery, sortParams)
+    knex('product_records').modify(productOrderQuery, sortParams)
         .then((products) => {
             if (products.length == 0) {
                 res.status(204).json('no category of this id')

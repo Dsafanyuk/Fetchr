@@ -37,9 +37,9 @@ async function registerUser(req, res) {
       } else {
         knex('users').insert(newUser)
           // if user successfully inserted
-          .then((user_id) => {
+          .then((userId) => {
             // Select the user that was just created
-            knex('users').select('*').where('user_id', user_id)
+            knex('users').select('*').where('user_id', userId)
               .then(() => {
                 res.redirect(307, './login');
               });
@@ -55,6 +55,8 @@ async function registerUser(req, res) {
     .catch((err) => {
       res.status(500).send(err);
     });
+
+  return 0;
 }
 
 module.exports = {

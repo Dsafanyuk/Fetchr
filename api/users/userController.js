@@ -16,8 +16,8 @@ function showAllUsers(req, res) {
 // GET /user/{id}
 function showOneUser(req, res) {
   // Check user id with value at the parameter
-  if (req.token.user.user_id === req.params.user_id) {
-    knex('users').select('*').where('user_id', req.params.user_id)
+  if (req.token.user.userId === req.params.userId) {
+    knex('users').select('*').where('userId', req.params.userId)
       .then((rows) => {
         res.send(rows).status(200);
       })
@@ -32,7 +32,7 @@ function showOneUser(req, res) {
 }
 // GET /user/{id}/orders
 function showUserOrders(req, res) {
-  knex('orders').select('*').where('customer_id', req.params.user_id)
+  knex('orders').select('*').where('customer_id', req.params.userId)
     .then((rows) => {
       res.send(rows);
     })
@@ -54,9 +54,9 @@ function createUser(req, res) {
 
   knex('users').insert(request)
     // if user successfully inserted
-    .then((user_id) => {
+    .then((userId) => {
       // Select the user that was just created
-      knex('users').select('*').where('user_id', user_id)
+      knex('users').select('*').where('user_id', userId)
         .then((rows) => {
           res.status(201).send(`User created: ${rows[0].email_address}`);
         });
@@ -75,44 +75,21 @@ function updateUser(req, res) {
   res.send('update user');
 }
 
-// DELETE /user/{id}
-// TODO primary key error
-//* ******************** */
-/* Unhandled rejection Error: ER_ROW_IS_REFERENCED_2:
- Cannot delete or update a parent row: a foreign key constraint fails
- (`fetchr_db`.`orders`, CONSTRAINT `courier_fk`
- FOREIGN KEY (`courier_id`)
- REFERENCES `users` (`user_id`))
-*/
-
-// Should we just have a 'deactivate account' option instead of a straight up delete?
-function deleteUser(req, res) {
-  knex('users').where('user_id', req.params.user_id).del()
-    .then(() => {
-      res.send('success').status(202);
+// Returns OK status if user has a CC in our system
+function creditCheck(req, res) {
+  knex('users_cc').count('user_id as numberOfCards').where('user_id', req.params.user_id)
+    .then((userCCRows) => {
+      if (userCCRows[0].numberOfCards) {
+        res.send(200).status(200);
+      } else {
+        res.send(204).status(204);
+      }
     })
     .catch((err) => {
       res.status(500).send({
         message: `${err}`,
-      }); // FOR DEBUGGING ONLY, dont send exact message in prod
+      }); // FOR DEBUGGING ONLY, dont send exact error message in prod
     });
-}
-
-// Returns OK status if user has a CC in our system
-function creditCheck(req, res) {
-    knex('users_cc').count('user_id as numberOfCards').where('user_id', req.params.user_id)
-        .then((userCCRows) => {
-            if (userCCRows[0].numberOfCards) {
-                res.send(200).status(200)
-            } else {
-                res.send(204).status(204)
-            }
-        })
-        .catch(function (err){
-            res.status(500).send({
-                message: `${err}`
-            }) // FOR DEBUGGING ONLY, dont send exact error message in prod
-        })
 }
 
 module.exports = {
@@ -121,6 +98,6 @@ module.exports = {
   showUserOrders,
   createUser,
   updateUser,
-  deleteUser,
   showLogin,
+  creditCheck,
 };

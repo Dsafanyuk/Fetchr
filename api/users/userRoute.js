@@ -23,7 +23,7 @@ router.get('/login', userController.showLogin);
 
 router.get('/', userController.showAllUsers);
 
-router.get('/:user_id/', verifyToken, userController.showOneUser);
+router.get('/:user_id/', verifyToken, userController.showOneUser); // eslint-disable-line no-use-before-define
 
 router.get('/:user_id/orders', userController.showUserOrders);
 
@@ -58,6 +58,8 @@ function verifyToken(req, res, next) {
       } else {
         return res.json({ success: false, message: 'Failed to authenticate token.' });
       }
+
+      return 0;
     });
   } else {
     // If there is no token, return an error
@@ -66,6 +68,8 @@ function verifyToken(req, res, next) {
       message: 'No token provided.',
     });
   }
+
+  return 0;
 }
 
 module.exports = router;

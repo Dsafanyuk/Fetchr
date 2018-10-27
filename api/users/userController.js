@@ -98,6 +98,23 @@ function deleteUser(req, res) {
     });
 }
 
+// Returns OK status if user has a CC in our system
+function creditCheck(req, res) {
+    knex('users_cc').count('user_id as numberOfCards').where('user_id', req.params.user_id)
+        .then((userCCRows) => {
+            if (userCCRows[0].numberOfCards) {
+                res.send(200).status(200)
+            } else {
+                res.send(204).status(204)
+            }
+        })
+        .catch(function (err){
+            res.status(500).send({
+                message: `${err}`
+            }) // FOR DEBUGGING ONLY, dont send exact error message in prod
+        })
+}
+
 module.exports = {
   showAllUsers,
   showOneUser,

@@ -27,7 +27,6 @@ function loginUser(req, res) {
           user_id: `${users[0].user_id}`,
           email_address: `${users[0].email_address}`,
         };
-        console.log(user);
         jwt.sign({ user }, 'secretkey', (err, token) => {
           if (err) {
             res.status(500).send(err);
@@ -50,5 +49,5 @@ function loginUser(req, res) {
 }
 
 module.exports = {
-  loginUser: loginUser,
+  loginUser,
 };

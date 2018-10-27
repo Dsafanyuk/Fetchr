@@ -51,7 +51,7 @@ function showLogin(req, res) {
 // POST /user
 function createUser(req, res) {
   const request = req.body;
-  console.log(request);
+
   knex('users').insert(request)
     // if user successfully inserted
     .then((user_id) => {
@@ -76,8 +76,8 @@ function updateUser(req, res) {
 }
 
 // DELETE /user/{id}
-//TODO primary key error
-//********************* */
+// TODO primary key error
+//* ******************** */
 /* Unhandled rejection Error: ER_ROW_IS_REFERENCED_2:
  Cannot delete or update a parent row: a foreign key constraint fails
  (`fetchr_db`.`orders`, CONSTRAINT `courier_fk`
@@ -99,11 +99,11 @@ function deleteUser(req, res) {
 }
 
 module.exports = {
-  showAllUsers: showAllUsers,
-  showOneUser: showOneUser,
-  showUserOrders: showUserOrders,
-  createUser: createUser,
-  updateUser: updateUser,
-  deleteUser: deleteUser,
-  showLogin: showLogin,
+  showAllUsers,
+  showOneUser,
+  showUserOrders,
+  createUser,
+  updateUser,
+  deleteUser,
+  showLogin,
 };

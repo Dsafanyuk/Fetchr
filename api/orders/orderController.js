@@ -53,8 +53,8 @@ function updateOrder(req, res) {
 
 // DELETE /order/{id}
 function deleteOrder(req, res) {
-  knex("orders").where('order_id', req.params.order_id).del()
-    .then((rows) => {
+  knex('orders').where('order_id', req.params.order_id).del()
+    .then(() => {
       res.send('success').status(202);
     })
     .catch((err) => {
@@ -65,9 +65,9 @@ function deleteOrder(req, res) {
 }
 
 module.exports = {
-  showAllOrders: showAllOrders,
-  showOneOrder: showOneOrder,
-  createOrder: createOrder,
-  updateOrder: updateOrder,
-  deleteOrder: deleteOrder,
+  showAllOrders,
+  showOneOrder,
+  createOrder,
+  updateOrder,
+  deleteOrder,
 };

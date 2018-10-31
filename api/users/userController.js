@@ -93,6 +93,7 @@ function creditCheck(req, res) {
 }
 
 // POST /users/favorite
+// send in request body { "user_id": {their user id}, "product_id": {the product id} }
 function favorite(req, res) {
     knex('favorites').insert({user_id: req.body.user_id, product_id: req.body.product_id})
         .then(() => {
@@ -106,6 +107,7 @@ function favorite(req, res) {
 }
 
 // DELETE /users/unfavorite
+// send in request body { "user_id": {their user id}, "product_id": {the product id} }
 function unfavorite(req, res) {
     knex('favorites').where({user_id: req.body.user_id, product_id: req.body.product_id}).del()
         .then(() => {

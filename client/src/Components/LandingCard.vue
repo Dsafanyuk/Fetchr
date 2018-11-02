@@ -1,5 +1,5 @@
 <template>
-  <div id="landing_card" class="col-md-3 col-xs-2">
+  <div id="landing_card" class="shadow col-md-3 col-xs-2">
      <div class="thumb">
           <ProductInfo>
            

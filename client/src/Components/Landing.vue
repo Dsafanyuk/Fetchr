@@ -49,15 +49,13 @@ export default {
     name: 'landing';
     return {
       name: 'Ok',
-      products: null,
+      products: {},
     };
   },
   mounted: function() {
     axios.get('http://localhost:3000/api/products').then((response) => {
-      response['data'].forEach((element) => {
-        console.log(element);
-      });
       this.products = response.data;
+      console.log('length of products = ' + this.products.length);
     });
   },
   components: {

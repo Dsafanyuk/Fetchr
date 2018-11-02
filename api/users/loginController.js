@@ -31,6 +31,7 @@ function loginUser(req, res) {
           if (err) {
             res.status(500).send(err);
           } else {
+            res.cookie('token', { token });
             res.json({
               token,
             });

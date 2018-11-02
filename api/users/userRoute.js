@@ -1,6 +1,7 @@
 const express = require('express');
 const { check } = require('express-validator/check');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 const userController = require('./userController');
 const registerController = require('./registerController');
 const loginController = require('./loginController');
@@ -31,31 +32,27 @@ router.patch('/:user_id', userController.updateUser);
 
 router.post('/', userController.createUser);
 
-router.delete('/:user_id', userController.deleteUser);
-
 
 // IMPORTANT, FORMAT OF TOKEN
 // Authorization: Bearer <access_token>
 
 // Verify token
 function verifyToken(req, res, next) {
-  // Get auth header value
-  const bearerHeader = req.headers.authorization;
+  // Get jwt in cookies
+  const jwtCookie = cookieParser// `${req.cookies.token}`;
 
-  // Check if bearer is undefined
-  if (typeof bearerHeader !== 'undefined') {
-    // Split at space
-    const bearer = bearerHeader.split(' ');
-    // Get token from array
-    const bearerToken = bearer[1];
-
+  console.log(typeof jwtCookie);
+  // Check if cookie is undefined
+  if (jwtCookie) {
     // Verifies secret
-    jwt.verify(bearerToken, 'secretkey', (err, decoded) => {
+    jwt.verify(jwtCookie, 'secretkey', (err, decoded) => {
       if (!err) {
+        console.log(jwtCookie);
         // if everything is good, save to request for use in other routes
         req.token = decoded;
         next();
       } else {
+        console.log(err);
         return res.json({ success: false, message: 'Failed to authenticate token.' });
       }
 

@@ -1,67 +1,75 @@
 <template>
-
-        <v-app>
+<v-app>
     <LandingHeader> </LandingHeader>
     <div class="container-fluid">
-      <div class="row">
-        <div class=" cat_menu col-md-12">
-          <ul class="  nav justify-content-center">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Food</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Snacks</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Drink</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">  </a>
-            </li>
-          </ul>
+        <div class="row">
+            <div class=" cat_menu col-md-12">
+                <ul class="  nav justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Food</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Snacks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Drink</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">  </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
-      <div class="card_container col-md-9 ">
-        <LandingCard> </LandingCard>
-        <LandingCard> </LandingCard>
-        <LandingCard> </LandingCard>
-        <LandingCard> </LandingCard>
-      </div>
-      <div class="col-md-3">
-        
-      </div>
+        <div class="row">
+            <div class="card_container col-md-9" v-for="i in Math.ceil(products.length / 4)" :key="i" >
+                <LandingCard v-for="product in products.slice((i-1)*4, i * 4)" :key="product.product_id" :product=product></LandingCard>
+            </div>
+            <div class="col-md-3">
+              <ShoppingCart></ShoppingCart>
+            </div>
+        </div>
+
     </div>
-
-
     <LandingFooter> </LandingFooter>
-  </v-app>
 
+
+</v-app>
 </template>
 
 <script>
-  import LandingHeader from './LandingHeader.vue'
-  import LandingFooter from './LandingFooter.vue'
-  import LandingCard   from './LandingCard.vue'
-  import ProductInfo   from './ProductInfo.vue'
+import LandingHeader from './mini-components/LandingHeader.vue';
+import LandingFooter from './mini-components/LandingFooter.vue';
+import LandingCard from './mini-components/LandingCard.vue';
+import ProductInfo from './mini-components/ProductInfo.vue';
+import ShoppingCart from './mini-components/ShoppingCart.vue'
+import axios from 'axios';
 
-
-  export default {
-
-    data() {
-      name: "landing"
-      return {
-        name: "Ok"
-      }
-    },
-    components: {
-      'LandingHeader': LandingHeader,
-      'LandingFooter': LandingFooter,
-      'LandingCard'  : LandingCard,
-      'ProductInfo'  : ProductInfo
-    }
-  }
+export default {
+  data() {
+    name: 'landing';
+    return {
+      name: 'Ok',
+      products: null,
+    };
+  },
+  mounted: function() {
+    axios.get('http://localhost:3000/api/products').then((response) => {
+      response['data'].forEach((element) => {
+        console.log(element);
+      });
+      this.products = response.data;
+    });
+  },
+  components: {
+    LandingHeader: LandingHeader,
+    LandingFooter: LandingFooter,
+    LandingCard: LandingCard,
+    ProductInfo: ProductInfo,
+    ShoppingCart : ShoppingCart,
+  },
+};
 </script>
 
 <style lang="css">
-  @import 'custom_css/landing.scss'
+@import 'custom_css/landing.scss';
 </style>

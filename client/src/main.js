@@ -2,7 +2,6 @@ import Vue       from 'vue'
 import Vuetify   from 'vuetify'
 import App       from './Components/App.vue'
 import VueRouter from 'vue-router'
-import VueCookies from 'vue-cookies'
 import Home      from './Components/Home.vue'
 import Login     from './Components/Login.vue'
 import Register  from './Components/Register.vue'
@@ -11,7 +10,6 @@ import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(VueRouter);
 Vue.use(Vuetify);
-Vue.use(VueCookies);
 /*----------------------- Routes Declaration -----------------*/
 const routes = [
   {path : '/',         component : Home      },

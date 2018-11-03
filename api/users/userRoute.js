@@ -1,7 +1,6 @@
 const express = require('express');
 const { check } = require('express-validator/check');
 const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
 const userController = require('./userController');
 const registerController = require('./registerController');
 const loginController = require('./loginController');
@@ -34,20 +33,18 @@ router.post('/', userController.createUser);
 
 
 // IMPORTANT, FORMAT OF TOKEN
-// Authorization: Bearer <access_token>
 
 // Verify token
 function verifyToken(req, res, next) {
   // Get jwt in cookies
-  const jwtCookie = cookieParser// `${req.cookies.token}`;
+  const jwtCookie = req.cookies.authCookie.token;
 
-  console.log(typeof jwtCookie);
-  // Check if cookie is undefined
-  if (jwtCookie) {
+  console.log(jwtCookie);
+  // Check if there is cookie
+  if (typeof jwtCookie === 'string') {
     // Verifies secret
     jwt.verify(jwtCookie, 'secretkey', (err, decoded) => {
       if (!err) {
-        console.log(jwtCookie);
         // if everything is good, save to request for use in other routes
         req.token = decoded;
         next();

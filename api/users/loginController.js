@@ -23,15 +23,17 @@ function loginUser(req, res) {
 
       // Creates token and send it as a response
       if (passwordIsCorrect) {
+        // The payload
         user = {
           user_id: `${users[0].user_id}`,
           email_address: `${users[0].email_address}`,
         };
-        jwt.sign({ user }, 'secretkey', (err, token) => {
+        // Create jwt, expires in 1 hour
+        jwt.sign({ user }, 'secretkey', { expiresIn: 60 * 60 }, (err, token) => {
           if (err) {
             res.status(500).send(err);
           } else {
-            res.cookie('token', { token });
+            res.cookie('authCookie', { token });
             res.json({
               token,
             });

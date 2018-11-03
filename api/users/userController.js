@@ -17,7 +17,6 @@ function showAllUsers(req, res) {
 function showOneUser(req, res) {
   // Check user id with value at the parameter
   if (req.token.user.user_id === req.params.user_id) {
-    console.log(req.token);
     knex('users').select('*').where('user_id', req.params.user_id)
       .then((rows) => {
         res.send(rows).status(200);

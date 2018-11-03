@@ -39,7 +39,6 @@ function verifyToken(req, res, next) {
   // Get jwt in cookies
   const jwtCookie = req.cookies.authCookie.token;
 
-  console.log(jwtCookie);
   // Check if there is cookie
   if (typeof jwtCookie === 'string') {
     // Verifies secret
@@ -49,8 +48,7 @@ function verifyToken(req, res, next) {
         req.token = decoded;
         next();
       } else {
-        console.log(err);
-        return res.json({ success: false, message: 'Failed to authenticate token.' });
+        return res.status(403).json({ success: false, message: 'Failed to authenticate token.' });
       }
 
       return 0;

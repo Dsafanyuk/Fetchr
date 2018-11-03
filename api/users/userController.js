@@ -27,7 +27,7 @@ function showOneUser(req, res) {
         });
       });
   } else {
-    res.status(403).send('Unauthorized');
+    res.status(403).send({ message: 'Unauthorized' });
   }
 }
 // GET /user/{id}/orders

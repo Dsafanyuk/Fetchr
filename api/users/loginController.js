@@ -40,7 +40,7 @@ function loginUser(req, res) {
           }
         });
       } else {
-        res.status(401).send('Wrong password or email address');
+        res.status(401).send({ message: 'Wrong password or email address' });
       }
     })
     // else send err

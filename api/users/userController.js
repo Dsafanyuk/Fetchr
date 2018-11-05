@@ -2,7 +2,8 @@ const knex = require('knex')(require('../db'));
 
 // GET /users
 function showAllUsers(req, res) {
-  knex('users').select('*')
+  knex('users')
+    .select('*')
     .then((rows) => {
       res.send(rows).status(200);
     })
@@ -17,7 +18,9 @@ function showAllUsers(req, res) {
 function showOneUser(req, res) {
   // Check user id with value at the parameter
   if (req.token.user.user_id === req.params.user_id) {
-    knex('users').select('*').where('user_id', req.params.user_id)
+    knex('users')
+      .select('*')
+      .where('user_id', req.params.user_id)
       .then((rows) => {
         res.send(rows).status(200);
       })
@@ -27,12 +30,14 @@ function showOneUser(req, res) {
         });
       });
   } else {
-    res.status(403).send({ message: 'Unauthorized' });
+    res.status(403).send({message: 'Unauthorized'});
   }
 }
 // GET /users/{user_id}/orders
 function showUserOrders(req, res) {
-  knex('orders').select('*').where('customer_id', req.params.userId)
+  knex('orders')
+    .select('*')
+    .where('customer_id', req.params.user_id)
     .then((rows) => {
       res.send(rows);
     })
@@ -52,11 +57,14 @@ function showLogin(req, res) {
 function createUser(req, res) {
   const request = req.body;
 
-  knex('users').insert(request)
+  knex('users')
+    .insert(request)
     // if user successfully inserted
-    .then((userId) => {
+    .then((user_id) => {
       // Select the user that was just created
-      knex('users').select('*').where('user_id', userId)
+      knex('users')
+        .select('*')
+        .where('user_id', user_id)
         .then((rows) => {
           res.status(201).send(`User created: ${rows[0].email_address}`);
         });
@@ -99,12 +107,12 @@ function favorite(req, res) {
   knex('favorites')
     .insert({
       user_id: req.body.user_id,
-      product_id: req.body.product_id
+      product_id: req.body.product_id,
     })
     .then(() => {
       res.send(200).status(200);
     })
-    .catch(function (err) {
+    .catch(function(err) {
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact error message in prod
@@ -117,13 +125,13 @@ function unfavorite(req, res) {
   knex('favorites')
     .where({
       user_id: req.body.user_id,
-      product_id: req.body.product_id
+      product_id: req.body.product_id,
     })
     .del()
     .then(() => {
       res.send(200).status(200);
     })
-    .catch(function (err) {
+    .catch(function(err) {
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact error message in prod
@@ -139,7 +147,7 @@ function favorites(req, res) {
     .then((favorites) => {
       res.send(favorites).status(200);
     })
-    .catch(function (err) {
+    .catch(function(err) {
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod

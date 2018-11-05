@@ -13,7 +13,7 @@ function showAllOrders(req, res) {
     });
 }
 
-// GET /order/{id}
+// GET /order/{order_id}
 function showOneOrder(req, res) {
   knex('orders').where('order_id', req.params.order_id)
     .then((rows) => {
@@ -67,7 +67,7 @@ function updateOrder(req, res) {
     });
 }
 
-// GET /orders/{id}/summary
+// GET /orders/{order_id}/summary
 function showOneOrderSummary(req, res) {
   // Retrieve order summary
   knex('orders')

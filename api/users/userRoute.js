@@ -4,18 +4,30 @@ const jwt = require('jsonwebtoken');
 const userController = require('./userController');
 const registerController = require('./registerController');
 const loginController = require('./loginController');
-
-const router = express.Router({ mergeParams: true }); // don't forget the parent params!
+const router = express.Router({
+  mergeParams: true
+}); // don't forget the parent params!
 
 router.post('/register', [
   check('email_address', 'Not an email address').isEmail().trim(),
   check('password', 'Password must have at least one lowercase, one uppercase, a number,  and a minimum of 8 characters')
-    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/, 'i').trim(),
+  .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/, 'i').trim(),
   check('phone', 'Only digits').isMobilePhone().trim(),
-  check('room_num', 'Please enter 4 digits, no more no less').isLength({ min: 4, max: 4 }).isNumeric().trim(),
+  check('room_num', 'Please enter 4 digits, no more no less').isLength({
+    min: 4,
+    max: 4
+  }).isNumeric().trim(),
   check('first_name', 'Cannot have numbers').isAlpha().trim(),
   check('last_name', 'Cannot have numbers').isAlpha().trim(),
 ], registerController.registerUser);
+
+router.post('/favorite', userController.favorite);
+
+router.delete('/unfavorite', userController.unfavorite);
+
+router.get('/:user_id/favorites', userController.favorites);
+
+router.get('/:user_id/creditCheck', userController.creditCheck)
 
 router.post('/login', loginController.loginUser);
 

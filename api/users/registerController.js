@@ -1,8 +1,9 @@
 const { validationResult } = require('express-validator/check');
+
 const bcrypt = require('bcryptjs');
 const knex = require('knex')(require('../db'));
 
-// POST /user/register
+// POST /users/register
 async function registerUser(req, res) {
   const errors = validationResult(req); // Validation errors, if there is any
 

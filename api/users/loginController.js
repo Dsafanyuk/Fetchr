@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const knex = require('knex')(require('../db'));
 
-// POST /user/login
+// POST /users/login
 function loginUser(req, res) {
   let user = {}; // Object, contains id, email, and password of the user
   let passwordIsCorrect = false; // Boolean, true if password correct

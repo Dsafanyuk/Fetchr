@@ -1,5 +1,5 @@
 <template>
-  <div id="landing_card" class="shadow col-md-3 col-xs-2">
+  <div id="landing_card" class=" card_prop col-md-3 col-xs-2">
      <div class="thumb">
           <ProductInfo>
 
@@ -31,16 +31,17 @@ import ProductInfo from './ProductInfo.vue';
 
 export default {
   props: {
-    product: {
-      product_id: String,
-      product_name: String,
-      price: Number,
-      category: String,
-      product_url: String,
-    },
+  product: {
+    product_id: String,
+    product_name: String,
+    price: Number,
+    category: String,
+    product_url: String,
   },
+},
   data() {
-    return {};
+    return {
+    };
   },
   components: {
     ProductInfo: ProductInfo,

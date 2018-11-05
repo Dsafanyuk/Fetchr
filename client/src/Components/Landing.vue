@@ -21,13 +21,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="card_container col-md-9" v-for="i in Math.ceil(products.length / 4)" :key="i" >
-                <LandingCard v-for="product in products.slice((i-1)*4, i * 4)" :key="product.product_id" :product=product></LandingCard>
+
+                <LandingCard v-for="product in products" :key="product.product_id" :product=product ></LandingCard>
+
+
             </div>
-            <div class="col-md-3">
-              <ShoppingCart></ShoppingCart>
-            </div>
-        </div>
 
     </div>
     <LandingFooter> </LandingFooter>
@@ -46,16 +44,16 @@ import axios from 'axios';
 
 export default {
   data() {
-    name: 'landing';
     return {
-      name: 'Ok',
-      products: {},
+      products : {},
     };
+  },
+  props : {
   },
   mounted: function() {
     axios.get('http://localhost:3000/api/products').then((response) => {
       this.products = response.data;
-      console.log('length of products = ' + this.products.length);
+      console.log("Hey ");
     });
   },
   components: {

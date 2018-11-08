@@ -52,6 +52,7 @@ export default {
       .get('http://localhost:3000/api/products')
       .then((response) => {
         this.products = response.data;
+        console.log(this.products);
         loadingProductsToast.text('Products loaded!').goAway(5000);
       })
       .catch((error) => {

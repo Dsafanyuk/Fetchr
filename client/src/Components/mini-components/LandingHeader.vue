@@ -3,7 +3,7 @@
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="custom_url col-md-4 navbar-nav  mt-2 ">
           <li class="nav-item active">
-            <img src="fetchr_logo.png" width="80" height="80" class="d-inline-block align-top"align="left">
+            <img src="https://s3.us-east-2.amazonaws.com/fetchrapp/Logo.png" width="80" height="80" class="d-inline-block align-top"align="left">
           </li>
         </ul>
         <form class="col-md-4 form-inline my-2 my-lg-0">
@@ -25,6 +25,6 @@ export default {
 };
 </script>
 
-<style lang="css">
+<style scoped lang="scss">
 @import '../custom_css/landing.scss';
 </style>

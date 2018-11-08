@@ -7,7 +7,22 @@
   margin: 20px;
   overflow: hidden;
 }
-
+.card .card-img {
+  position: relative;
+  width: 250px;
+  height: 300px;
+  display: flex;
+}
+.card .card-img img {
+  border-radius: 2px 2px 0 0;
+  max-height: 100%;
+  max-width: 100%;
+  padding-left: 95px;
+  vertical-align: middle;
+  padding-top: 29px;
+  top: 50%;
+  object-fit: contain;
+}
 .product-card .card .card-content {
   padding: 5px;
 }

@@ -7,10 +7,14 @@
                 <img :src=product.product_url :alt=product.product_name>
             </div>
                 <ul class="card-action-buttons">
-
-                    <li><a class="btn-floating waves-effect waves-light red accent-2"><i class="material-icons like">favorite_border</i></a>
+                    <li><a v-on:click="favorite()" id="favorite" class="btn-floating waves-effect waves-light red accent-2">
+                            <i v-if="isFavorite" class="material-icons like">favorite</i>
+                            <i v-if="!isFavorite" class="material-icons like">favorite_border</i>
+                        </a>
                     </li>
-                    <li><a id="buy" class="btn-floating waves-effect waves-light blue"><i class="material-icons buy">add_shopping_cart</i></a>
+                    <li><a v-on:click="addToCart()" id="buy" class="btn-floating waves-effect waves-light blue">
+                            <i class="material-icons buy">add_shopping_cart</i>
+                        </a>
                     </li>
                 </ul>
                 <div class="card-content">
@@ -30,6 +34,8 @@
 </template>
 
 <script>
+import Toasted from 'vue-toasted';
+
 export default {
   props: {
     product: {
@@ -41,9 +47,22 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      isFavorite: false,
+    };
   },
   components: {},
+  methods: {
+    favorite: function() {
+      if (this.isFavorite) {
+        this.isFavorite = false;
+        this.$toasted.success('Unfavorited').goAway(1000);
+      } else {
+        this.isFavorite = true;
+        this.$toasted.success('Favorited').goAway(1000);
+      }
+    },
+  },
 };
 </script>
 

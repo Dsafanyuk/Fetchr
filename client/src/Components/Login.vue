@@ -20,6 +20,9 @@
           <div class="form-group text-center">
             <input type="submit" @click="loginCustomer" class="btnRegister" value="Login" />
           </div>
+          <div class="form-group text-center">
+            <input type="submit" @click="addCookie" class="btnRegister" value="AddCookie" />
+          </div>
         </div>
       </div>
     </div>
@@ -27,6 +30,11 @@
 </template>
 <script>
   import axios from 'axios'
+
+  const api = axios.create({
+    withCredentials: true,
+    headers: { 'Access-Control-Allow-Credentials': true }
+  });
 
   export default {
     //******************************************* Component Name  ********************************/
@@ -39,25 +47,30 @@
     },
     methods: {
       loginCustomer(e) {
-        let api_url = "http://localhost:3000/api/users/login";
+        let api_url = "http://localhost:3000/api/users";
 
         if (this.cEmail && this.cPassword) {
-          axios.post(api_url, {
-            email_address: this.cEmail,
-            password: this.cPassword
+          api({
+            url: '/login', method: 'post', baseURL: api_url, data: {
+              email_address: this.cEmail,
+              password: this.cPassword
+            },
           })
-            .then(function (response) {
+            .then((response) => {
               if (response.status == 200) {
-                console.log('logged in');
-                this.$router.push('/');
+                console.log(response);
               }
             })
-            .catch(function (error) {
+            .catch((error) => {
               console.log(error);
             });
         } else {
           console.log('at least 1 null field');
         }
+      },
+
+      addCookie(e) {
+
       }
     }
   }

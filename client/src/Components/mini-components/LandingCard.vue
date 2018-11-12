@@ -13,7 +13,8 @@
                         </a>
                     </li>
                     <li><a v-on:click="addToCart()" id="buy" class="btn-floating waves-effect waves-light blue">
-                            <i class="material-icons buy">add_shopping_cart</i>
+                            <i v-if="inCart" class="material-icons buy">check</i>
+                            <i v-if="!inCart" class="material-icons buy">add_shopping_cart</i>
                         </a>
                     </li>
                 </ul>
@@ -49,6 +50,7 @@ export default {
   data() {
     return {
       isFavorite: false,
+      inCart: false,
     };
   },
   components: {},
@@ -60,6 +62,15 @@ export default {
       } else {
         this.isFavorite = true;
         this.$toasted.success('Favorited').goAway(1000);
+      }
+    },
+    addToCart: function() {
+      if (this.inCart) {
+        this.inCart = false;
+        this.$toasted.success('Removed from cart').goAway(1000);
+      } else {
+        this.inCart = true;
+        this.$toasted.success('Added to cart').goAway(1000);
       }
     },
   },

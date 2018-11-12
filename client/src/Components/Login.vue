@@ -46,7 +46,7 @@
     },
     methods: {
       loginCustomer(e) {
-        let api_url = "http://localhost:3000/api/users";
+        let api_url = "http://127.0.0.1:3000/api/users";
 
         if (this.cEmail && this.cPassword) {
           api({
@@ -57,7 +57,7 @@
           })
             .then((response) => {
               if (response.status == 200) {
-                console.log(response.headers);
+                console.log(response);
               }
             })
             .catch((error) => {

@@ -8,6 +8,8 @@ const apiRouter = require('./routes/index');
 const corsOptions = {
   origin: 'http://127.0.0.1:8080',
   credentials: true,
+  exposedHeaders: 'Set-Cookie',
+  preflightContinue: true,
 };
 
 const app = express();

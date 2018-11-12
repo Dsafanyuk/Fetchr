@@ -33,7 +33,6 @@
 
   const api = axios.create({
     withCredentials: true,
-    headers: { 'Access-Control-Allow-Credentials': true }
   });
 
   export default {
@@ -58,7 +57,7 @@
           })
             .then((response) => {
               if (response.status == 200) {
-                console.log(response);
+                console.log(response.headers);
               }
             })
             .catch((error) => {
@@ -70,7 +69,7 @@
       },
 
       addCookie(e) {
-
+        document.cookie = "meow=MEOOOW";
       }
     }
   }

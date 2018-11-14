@@ -22,7 +22,7 @@
         </div>
         <div class="row">
                 <LandingCard v-for="product in products" :key="product.product_id" :product=product ></LandingCard>
-            </div>
+        </div>
 
     </div>
     <LandingFooter> </LandingFooter>

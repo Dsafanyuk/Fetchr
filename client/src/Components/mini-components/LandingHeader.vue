@@ -10,8 +10,8 @@
           <input class="form-control mr-sm-2 " size="40" type="search" placeholder="Search" aria-label="Search">
         </form>
         <div class="col-md-4 icons_div">
-          <i class="far fa-user"></i>
-          <i class="fas fa-shopping-cart"></i>
+          <i class="far fa-user fa-xs"></i>
+          <i class="fas fa-shopping-cart fa-xs"></i>
         </div>
       </div>
     </nav>

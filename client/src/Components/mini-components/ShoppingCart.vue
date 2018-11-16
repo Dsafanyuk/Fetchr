@@ -32,11 +32,17 @@
    </ul>
 
    <a href="#" class="button">Checkout</a>
- </div> <!--end 
+ </div>
 </template>
 
 <script>
+(function(){
 
+  $("#cart").on("click", function() {
+    $(".shopping-cart").fadeToggle( "fast");
+  });
+
+})();
 export default {
   props: {
   },
@@ -46,6 +52,6 @@ export default {
 };
 </script>
 
-<style lang="css">
+<style scoped lang="scss">
 @import '../custom_css/ShoppingCart.scss';
 </style>

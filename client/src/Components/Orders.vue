@@ -16,7 +16,7 @@
             <tbody>
                 <tr v-for="order in orders">
                     <td>{{order.order_id}}</td>
-                    <td>{{order.time_created}}</td>
+                    <td>{{fixDate(order.time_created)}}</td>
                     <td>{{order.delivery_status}}</td>
                     <td>${{order.order_total.toFixed(2)}}</td>
                     <td>
@@ -51,8 +51,18 @@ export default {
   components: {
     LandingHeader: LandingHeader,
     LandingFooter: LandingFooter
+  },
+  methods: {
+    fixDate: function(date) {
+        date = new Date(date);
+        let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        let goodDate = months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear()
+        return goodDate
+    }
   }
 }
+
 </script>
 
 <style>

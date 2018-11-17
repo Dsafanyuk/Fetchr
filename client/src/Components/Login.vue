@@ -20,9 +20,6 @@
           <div class="form-group text-center">
             <input type="submit" @click="loginCustomer" class="btnRegister" value="Login" />
           </div>
-          <div class="form-group text-center">
-            <input type="submit" @click="addCookie" class="btnRegister" value="AddCookie" />
-          </div>
         </div>
       </div>
     </div>
@@ -30,6 +27,7 @@
 </template>
 <script>
   import axios from 'axios'
+  import * as jwtDecode from 'jwt-decode'
 
   const api = axios.create({
     withCredentials: true,
@@ -57,7 +55,10 @@
           })
             .then((response) => {
               if (response.status == 200) {
-                console.log(response);
+                if (document.cookie) {
+                  console.log(jwtDecode(document.cookie.split('=')[1]));
+                }
+                this.$router.push('/dashboard');
               }
             })
             .catch((error) => {
@@ -66,10 +67,6 @@
         } else {
           console.log('at least 1 null field');
         }
-      },
-
-      addCookie(e) {
-        document.cookie = "meow=MEOOOW";
       }
     }
   }

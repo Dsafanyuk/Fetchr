@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const userController = require('./userController');
 const registerController = require('./registerController');
 const loginController = require('./loginController');
+
 const router = express.Router({
   mergeParams: true,
 }); // don't forget the parent params!
@@ -49,7 +50,9 @@ router.post('/', userController.createUser);
 // Verify token
 function verifyToken(req, res, next) {
   // Get jwt in cookies
-  const jwtCookie = req.cookies.authCookie;
+  const jwtCookie = req.body.clientToken;
+
+  console.log(jwtCookie);
 
   // Check if there is cookie
   if (typeof jwtCookie === 'string') {

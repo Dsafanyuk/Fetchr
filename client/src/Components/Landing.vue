@@ -54,9 +54,9 @@
             axios.get('http://localhost:3000/api/products').then((response) => {
                 this.products = response.data;
             })
-            .catch((response) => {
-                console.log(response);
-            });
+                .catch((response) => {
+                    console.log(response);
+                });
         },
         components: {
             LandingHeader: LandingHeader,

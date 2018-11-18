@@ -55,9 +55,6 @@
           })
             .then((response) => {
               if (response.status == 200) {
-                if (document.cookie) {
-                  console.log(jwtDecode(document.cookie.split('=')[1]));
-                }
                 this.$router.push('/dashboard');
               }
             })

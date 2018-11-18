@@ -20,7 +20,7 @@
     <div class="container">
       <ul class="foote_bottom_ul_amrc">
         <li><a href="#">Home</a></li>
-        <li><a href="#" v-on:click="showOneUser">About</a></li>
+        <li @click="showOneUser"><a href="#">About</a></li>
         <li><a href="#"></a></li>
         <li><a href="#">Blog</a></li>
         <li><a href="#">Contact</a></li>
@@ -46,14 +46,13 @@
 
   export default {
     name: "LandingFooter",
-    method: {
-      showOneUser() {
-        let userId = document.cookie.userId
+    methods: {
+      showOneUser(e) {
+        let userId = document.cookie.split('=')[2];
         let api_url = `http://127.0.0.1:3000/api/users/${userId}`;
 
-        console.log(api_url);
         axios.post(api_url, {
-          token: document.cookie.authCookie,
+          clientToken: document.cookie.split('=')[1].split(';')[0],
         })
           .then((response) => {
             if (response.status == 200) {
@@ -70,6 +69,8 @@
               console.log(error.response.headers);
             }
           });
+
+        return;
       }
     }
   }

@@ -23,10 +23,10 @@
                       </div>
                       <ul class="header-links list-reset m-0">
                           <li>
-                              <a href="#">Login</a>
+                              <a href="/login">Login</a>
                           </li>
                           <li>
-                              <a class="button button-sm button-shadow" href="#">Signup</a>
+                              <a class="button button-sm button-shadow" href="/register">Signup</a>
                           </li>
                       </ul>
                   </div>

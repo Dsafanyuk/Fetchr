@@ -1,12 +1,6 @@
 <template>
   <div class="shopping-cart">
-   <div class="shopping-cart-header">
-     <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">3</span>
-     <div class="shopping-cart-total">
-       <span class="lighter-text">Total:</span>
-       <span class="main-color-text">$2,229.97</span>
-     </div>
-   </div> <!--end shopping-cart-header -->
+
 
    <ul class="shopping-cart-items">
      <li class="clearfix">
@@ -36,13 +30,6 @@
 </template>
 
 <script>
-(function(){
-
-  $("#cart").on("click", function() {
-    $(".shopping-cart").fadeToggle( "fast");
-  });
-
-})();
 export default {
   props: {
   },

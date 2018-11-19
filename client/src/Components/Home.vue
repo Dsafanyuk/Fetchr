@@ -1,6 +1,5 @@
 <template >
-
-  <body class="is-boxed has-animations">
+<body class="is-boxed has-animations">
       <div class="body-wrap boxed-container">
           <header class="site-header">
               <div class="container">
@@ -45,7 +44,6 @@
                       </div>
                   </div>
               </section>
-
               <section class="clients section">
                   <div class="container">
                       <div class="clients-inner section-inner has-top-divider">

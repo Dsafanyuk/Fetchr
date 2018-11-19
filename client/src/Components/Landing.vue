@@ -43,6 +43,7 @@ export default {
   data() {
     return {
       products: {},
+      selectedCategory: '',
     };
   },
   props: {},
@@ -66,6 +67,19 @@ export default {
     LandingFooter: LandingFooter,
     LandingCard: LandingCard,
     ShoppingCart: ShoppingCart,
+  },
+  computed: {
+    filteredPeople: () => {
+      var category = this.selectedCategory;
+
+      if (category === 'All') {
+        return vm.people;
+      } else {
+        return vm.people.filter(function(person) {
+          return person.category === category;
+        });
+      }
+    },
   },
 };
 </script>

@@ -1,7 +1,6 @@
 <template>
 <v-app>
     <LandingHeader> </LandingHeader>
-    <ShoppingCart ></ShoppingCart>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -40,12 +39,9 @@ import ShoppingCart from './mini-components/ShoppingCart.vue';
 import axios from 'axios';
 import Toasted from 'vue-toasted';
 
-
-
 export default {
   data() {
     return {
-
       products: {},
     };
   },
@@ -71,13 +67,6 @@ export default {
     LandingCard: LandingCard,
     ShoppingCart: ShoppingCart,
   },
-    methods: {
-      showShoppingCart : function (event){
-        alert (" Clicked");
-      },
-
-
-    }
 };
 </script>
 

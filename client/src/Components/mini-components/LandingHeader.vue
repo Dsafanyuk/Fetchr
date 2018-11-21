@@ -14,9 +14,69 @@
           </div>
           <div class="col-md-4" style="display: -webkit-inline-box;">
           <i class="far fa-user fa-xs"></i>
-          <a id="cart" href="#" v-on:click="showShoppingCart"> <i id="cart" class="fas fa-shopping-cart fa-xs"></i></a>
-
-
+       <li class="dropdown">
+         <a href="#" class="" data-toggle="dropdown" role="button" aria-expanded="false"> <i class="fas fa-shopping-cart fa-xs"></i> </a>
+         <ul class="dropdown-menu dropdown-cart" role="menu">
+             <li>
+                 <span class="item">
+                   <span class="item-left">
+                       <img src="http://lorempixel.com/50/50/" alt="" />
+                       <span class="item-info">
+                           <span>Item name</span>
+                           <span>23$</span>
+                       </span>
+                   </span>
+                   <span class="item-right">
+                       <button class="btn btn-xs btn-danger pull-right">x</button>
+                   </span>
+               </span>
+             </li>
+             <li>
+                 <span class="item">
+                   <span class="item-left">
+                       <img src="http://lorempixel.com/50/50/" alt="" />
+                       <span class="item-info">
+                           <span>Item name</span>
+                           <span>23$</span>
+                       </span>
+                   </span>
+                   <span class="item-right">
+                       <button class="btn btn-xs btn-danger pull-right">x</button>
+                   </span>
+               </span>
+             </li>
+             <li>
+                 <span class="item">
+                   <span class="item-left">
+                       <img src="http://lorempixel.com/50/50/" alt="" />
+                       <span class="item-info">
+                           <span>Item name</span>
+                           <span>23$</span>
+                       </span>
+                   </span>
+                   <span class="item-right">
+                       <button class="btn btn-xs btn-danger pull-right">x</button>
+                   </span>
+               </span>
+             </li>
+             <li>
+                 <span class="item">
+                   <span class="item-left">
+                       <img src="http://lorempixel.com/50/50/" alt="" />
+                       <span class="item-info">
+                           <span>Item name</span>
+                           <span>23$</span>
+                       </span>
+                   </span>
+                   <span class="item-right">
+                       <button class="btn btn-xs btn-danger pull-right">x</button>
+                   </span>
+               </span>
+             </li>
+             <li class="divider"></li>
+             	<button type="button" class="btn btn-success">Success</button>
+         </ul>
+       </li>
           </div>
         </div>
       </div>
@@ -25,15 +85,12 @@
 
 </template>
 <script>
-import ShoppingCart from './ShoppingCart.vue';
+
 export default {
   data() {
     name: 'LandingHeader';
     return {};
   },
-  components: {
-    ShoppingCart: ShoppingCart
-  }
 };
 
 </script>

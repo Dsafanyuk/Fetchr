@@ -1,7 +1,7 @@
 <template>
 <v-app>
-
-
+    <LandingHeader v-on:showcart="displayCart" > </LandingHeader>
+ <ShoppingCart v-if ="seen" ></ShoppingCart>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -71,6 +71,15 @@ export default {
     LandingCard: LandingCard,
     ShoppingCart: ShoppingCart,
   },
+  methods : {
+    displayCart(show){
+     if (this.seen)
+      this.seen = false;
+      else {
+        this.seen = true;
+      }
+    }
+  }
 
 };
 </script>

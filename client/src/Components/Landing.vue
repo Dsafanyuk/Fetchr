@@ -1,7 +1,7 @@
 <template>
 <v-app>
-    <LandingHeader> </LandingHeader>
-    <ShoppingCart v-if = "seen" ></ShoppingCart>
+
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">

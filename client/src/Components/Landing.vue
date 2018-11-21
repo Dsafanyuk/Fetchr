@@ -87,5 +87,5 @@ export default {
 </script>
 
 <style lang="css">
-@import 'custom_css/landing.scss';
+    @import 'custom_css/landing.scss';
 </style>

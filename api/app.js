@@ -5,6 +5,14 @@ const logger = require('morgan');
 const cors = require('cors');
 const apiRouter = require('./routes/index');
 
+<<<<<<< Updated upstream
+=======
+const corsOptions = {
+  origin: 'http://127.0.0.1:8080',
+  credentials: true,
+};
+
+>>>>>>> Stashed changes
 const app = express();
 
 app.use(logger('dev'));
@@ -15,7 +23,11 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+<<<<<<< Updated upstream
 app.use(cors());
+=======
+app.use(cors(corsOptions));
+>>>>>>> Stashed changes
 
 app.use('/api', apiRouter);
 

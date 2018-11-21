@@ -8,12 +8,10 @@ import Login from './Components/Login.vue'
 import Register from './Components/Register.vue'
 import Landing from './Components/Landing.vue'
 
-
-
 Vue.use(VueRouter);
 Vue.use(Vuetify);
-Vue.use(VueToast);
-
+Vue.use(VueToast)
+Vue.use(VueMaterial)
 /*----------------------- Routes Declaration -----------------*/
 const routes = [{
     path: '/',

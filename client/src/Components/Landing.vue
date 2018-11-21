@@ -1,7 +1,7 @@
 <template>
 <v-app>
     <LandingHeader> </LandingHeader>
-    <ShoppingCart ></ShoppingCart>
+    <ShoppingCart v-if = "seen" ></ShoppingCart>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -45,7 +45,7 @@ import Toasted from 'vue-toasted';
 export default {
   data() {
     return {
-
+      seen : false,
       products: {},
     };
   },
@@ -71,13 +71,7 @@ export default {
     LandingCard: LandingCard,
     ShoppingCart: ShoppingCart,
   },
-    methods: {
-      showShoppingCart : function (event){
-        alert (" Clicked");
-      },
 
-
-    }
 };
 </script>
 

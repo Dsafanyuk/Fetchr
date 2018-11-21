@@ -12,7 +12,7 @@ import Landing from './Components/Landing.vue'
 
 Vue.use(VueRouter);
 Vue.use(Vuetify);
-Vue.use(VueToast)
+Vue.use(VueToast);
 
 /*----------------------- Routes Declaration -----------------*/
 const routes = [{

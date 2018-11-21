@@ -25,7 +25,7 @@
 
 </template>
 <script>
-import ShoppingCart from './ShoppingCart.vue';
+//import Landing from '../Landing.vue';
 export default {
   data() {
     name: 'LandingHeader';
@@ -33,6 +33,9 @@ export default {
   },
   components: {
     ShoppingCart: ShoppingCart
+  },
+  methods: {
+
   }
 };
 

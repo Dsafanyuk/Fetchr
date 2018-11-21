@@ -31,15 +31,8 @@
                 ></LandingCard>
             </div>
         </div>
-        <div class="row">
-                <LandingCard v-for="product in products" :key="product.product_id" :product=product ></LandingCard>
-        </div>
-
-    </div>
-    <LandingFooter> </LandingFooter>
-
-
-</v-app>
+        <LandingFooter></LandingFooter>
+    </v-app>
 </template>
 
 <script>
@@ -50,31 +43,42 @@ import ShoppingCart from './mini-components/ShoppingCart.vue';
 import axios from 'axios';
 import Toasted from 'vue-toasted';
 
-
-
 export default {
   data() {
     return {
       seen : false,
       products: {},
+      selectedCategory: 'Popular',
     };
   },
   props: {},
-  mounted: function loadProducts() {
+  created: function loadProducts() {
     let loadingProductsToast = this.$toasted.show('Loading products...');
     axios
       .get('http://localhost:3000/api/products')
       .then((response) => {
         this.products = response.data;
-        console.log(this.products);
         loadingProductsToast.text('Products loaded!').goAway(5000);
       })
       .catch((error) => {
-        console.log(error);
+          console.log(error);
         loadingProductsToast.goAway();
         this.$toasted.error('Something went wrong');
       });
   },
+  computed: {
+    filteredProducts() {
+        var category = this.selectedCategory.toLowerCase().split(' ').join('_')
+        console.log(`Category = ${category}`)
+        if (category === 'popular' || !category){
+            return this.products;
+        } else {
+            return this.products.filter((product) => {
+                return product.category === category;
+            });
+        }
+    },
+},
   components: {
     LandingHeader: LandingHeader,
     LandingFooter: LandingFooter,

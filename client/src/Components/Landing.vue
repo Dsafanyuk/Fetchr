@@ -63,6 +63,7 @@ export default {
       .get('http://127.0.0.1:3000/api/products')
       .then((response) => {
         this.products = response.data;
+        console.log(this.products)
         loadingProductsToast.text('Products loaded!').goAway(5000);
       })
       .catch((error) => {

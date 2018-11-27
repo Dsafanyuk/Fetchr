@@ -3,7 +3,7 @@
 <LandingHeader></LandingHeader>
     <div class="orders">
         <h3>Recent Orders</h3>
-        <table class="table-responsive-md">
+        <table class="order table-responsive-md">
             <thead>
                 <tr>
                     <th>Order #</th>
@@ -14,7 +14,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="order in orders">
+                <tr v-for="order in orders" :key="order.order_id">
                     <td>{{order.order_id}}</td>
                     <td>{{fixDate(order.time_created)}}</td>
                     <td>{{order.delivery_status}}</td>
@@ -34,6 +34,7 @@
 import LandingHeader from './mini-components/LandingHeader.vue';
 import LandingFooter from './mini-components/LandingFooter.vue';
 import OrderSummary from './mini-components/OrderSummary.vue';
+import browserCookies from 'browser-cookies';
 import axios from 'axios';
 
 export default {
@@ -45,7 +46,7 @@ export default {
     };
   },
   mounted: function() {
-    axios.get('http://localhost:3000/api/users/1/orders').then((response) => {
+    axios.get('http://127.0.0.1:3000/api/users/' + browserCookies.get('userId') + '/orders').then((response) => {
       this.orders = response.data;
     });
   },
@@ -68,24 +69,24 @@ export default {
 </script>
 
 <style>
-    thead tr {
+    .order thead tr {
         border: 1px solid black;
     }
 
-    th, td {
+    .order th, td {
         padding: 15px;
         text-align: left;
     }
     
-    tbody tr:nth-child(odd) {
+    .order tbody tr:nth-child(odd) {
         background-color: #f2f2f2;
     }
     
-    tbody tr:nth-child(even) {
+    .order tbody tr:nth-child(even) {
         background-color: #F0FFF0;
     }
 
-    table {
+    .order {
         width: 70%;
     }
 

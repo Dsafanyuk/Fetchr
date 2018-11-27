@@ -1,22 +1,19 @@
 <template>
-    <v-dialog width="500">
+    <v-dialog width="570">
             <button slot="activator" class="btn btn-outline-success my-2 my-sm-0" type="button">View</button>
                 <v-card>
-                <v-card-title class="headline grey lighten-2" primary-title >
-                    Order Summary
-                </v-card-title>
-                <v-divider></v-divider>
-                <div v-for="product in products">
-                    <v-card-text class="product">
-                        {{product.product_name}}
-                        ${{product.price.toFixed(2)}}
-                        {{product.quantity}}
-                    </v-card-text>
-                    <v-divider></v-divider>
-                </div>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                </v-card-actions>
+                    <v-card-title class="headline grey lighten-2" primary-title >
+                        Order Summary
+                    </v-card-title>
+                    <v-data-table 
+                        :headers="headers"
+                        :items="products">
+                        <template slot="items" slot-scope="props">
+                            <td>{{ props.item.product_name }}</td>
+                            <td class="text-xs-left">{{ props.item.price }}</td>
+                            <td class="text-xs-left">{{ props.item.quantity }}</td>
+                        </template>
+                    </v-data-table>
             </v-card>
         </v-dialog>
 </template>
@@ -30,19 +27,22 @@
         },
         data() {
             return {
-                products: {}
+                headers: [
+                    { text: 'Product', align: 'left', value:'product_name' },
+                    { text: 'Total', align: 'left', value:'price' },
+                    { text: 'Quantity', align: 'left', value:'quantity' }
+                ],
+                products: [{}]
             };
         },
         mounted: function() {
-            axios.get('http://localhost:3000/api/orders/' + this.productID + '/summary').then((response) => {
-            this.products = response.data;
+            axios.get('http://127.0.0.1:3000/api/orders/' + this.productID + '/summary').then((response) => {
+                this.products = response.data.map((product) => {
+                    product.price = '$' + product.price.toFixed(2)
+                    product.value = false
+                    return product
+                })
             });
         },
     };
 </script>
-
-<style>
-    .product {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-</style>

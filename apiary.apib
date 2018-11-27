@@ -40,9 +40,12 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
         ]
         
 ### List single user [GET /users/{user_id}]
+<<<<<<< Updated upstream
 + Parameters
     + user_id (number) - ID of the order in the form of an integer
     
+=======
+>>>>>>> Stashed changes
 + Response 200 (application/json)
 
         [
@@ -302,6 +305,7 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
 
 + Response 200 (application/json)
 
+<<<<<<< Updated upstream
         [
             {
                 "product_id": 22,
@@ -320,3 +324,50 @@ Fetchr api is the backend to the snack courier service from Devs that Deliver
                 "total_sold": 3
             }
         ]
+=======
+        {
+            "deleted_at":"TIME"
+        }
+
+## Products [/products]
+
+### List all products [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "product_id": 1,
+                "product_name": "Arizona Tea",
+                "price": 0.99,
+                "category": "drinks",
+                "product_url": "https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg",
+                "total_sold": 100.00
+            },
+            {
+                "product_id": 2,
+                "product_name": "Doritos small",
+                "price": 1.99,
+                "category": "snacks",
+                "product_url": "https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg",
+                "total_sold": 100.00
+            }
+        ]
+
+### List a single product [GET /products/{product_id}]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "product_id": 1,
+                "product_name": "Arizona Tea",
+                "price": 0.99,
+                "category": "drinks",
+                "product_url": "https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg"
+            }
+        ]
+
+### Filter products by category [GET /products/filter/{category}]
+
+>>>>>>> Stashed changes

@@ -9,7 +9,8 @@ Need extra money? Sign up to be a courier! View open orders and make a quick buc
 **Team Name**: Devs that Deliver
 
 **Project Name**: Fetchr
-___
+
+---
 
 ## Meet the team
 
@@ -25,11 +26,10 @@ ___
 
 **Communications Coordinate**: Benji Kintaudi
 
-___
-
+---
 ## Run the api
 
-Change into project folder 
+Change into project folder
 
 `cd Fetchr`
 
@@ -45,13 +45,14 @@ Start api server
 
 `npm start`
 
+### [API Documentation](https://fetchr1.docs.apiary.io/#)
+
 Test using Postman [install here](https://www.getpostman.com/apps) or browser:
 
 http://localhost:3000/api/user
 
-http://localhost:3000/api/user/1
+http://localhost:3000/api/users/1
 
 http://localhost:3000/api/order
 
 http://localhost:3000/api/order/1
-

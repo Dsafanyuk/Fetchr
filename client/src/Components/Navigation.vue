@@ -1,7 +1,8 @@
 <template >
 
 <div id="navigation">
-  <a href="/register">Sign up </a>
+  <a href="/register">Sign up </a> </br>
+  <a href="/dashboard"> landing </a>
 
 </div>
 

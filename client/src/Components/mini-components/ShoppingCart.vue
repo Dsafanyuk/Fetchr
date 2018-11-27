@@ -1,11 +1,15 @@
 <template>
   <div class="shopping-cart">
-
+   <div class="shopping-cart-header">
+     <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">3</span>
+     <div class="shopping-cart-total">
+       <span class="lighter-text">Total:</span>
+       <span class="main-color-text">$2,229.97</span>
+     </div>
+   </div> <!--end shopping-cart-header -->
 
    <ul class="shopping-cart-items">
-     <CartItems></CartItems>
-     <CartItems></CartItems>
-
+     <CartItems v-for="item in items"> </CartItems>
    </ul>
 
    <a href="#" class="button">Checkout</a>
@@ -14,7 +18,6 @@
 
 <script>
 import CartItems from './CartItems.vue'
-
 export default {
 
   data() {
@@ -24,6 +27,11 @@ export default {
   },
   components: {
     CartItems : CartItems,
+  },
+  computed : {
+    total (){
+      return 0;
+    }
   }
 };
 </script>

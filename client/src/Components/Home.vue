@@ -1,4 +1,3 @@
-
 <template >
 <body class="is-boxed has-animations">
       <div class="body-wrap boxed-container">
@@ -152,7 +151,6 @@
                       </div>
                   </div>
               </section>
-
 
               <section class="features-extended section">
                   <div class="container">

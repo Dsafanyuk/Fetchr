@@ -331,5 +331,4 @@ export default {
 
 <style scoped lang="css">
 @import './custom_css/home_page.css';
->>>>>>> Stashed changes
 </style>

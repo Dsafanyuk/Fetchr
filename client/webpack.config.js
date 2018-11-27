@@ -76,10 +76,6 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
     noInfo: false,
     overlay: true,
     watchOptions: {

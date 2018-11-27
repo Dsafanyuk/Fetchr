@@ -10,11 +10,10 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-<<<<<<< Updated upstream
-=======
+
     "jwt-decode": "^2.2.0",
     "vue": "^2.5.11",
->>>>>>> Stashed changes
+
     "graphql": "^14.0.2",
     "node-pre-gyp": "^0.11.0",
     "pug": "^2.0.3",

@@ -8,7 +8,7 @@ import Home      from './Components/Home.vue'
 import Login     from './Components/Login.vue'
 import Register  from './Components/Register.vue'
 import Landing   from './Components/Landing.vue'
-import RecentOrders    from './Components/RecentOrders.vue'
+import Orders    from './Components/Orders.vue'
 
 import VueMaterial from 'vue-material'
 import 'vuetify/dist/vuetify.min.css'
@@ -23,7 +23,7 @@ const routes = [
   {path : '/login',    component : Login     },
   {path : '/register', component : Register  },
   {path : '/dashboard',  component : Landing },
-  {path : '/recentorders',  component : RecentOrders }
+  {path : '/orders',  component : Orders }
 ];
 
 const router = new VueRouter({

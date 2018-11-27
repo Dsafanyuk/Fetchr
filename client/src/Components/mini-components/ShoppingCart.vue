@@ -34,13 +34,13 @@
 </template>
 
 <script>
-// (function(){
+(function(){
 
-//   $("#cart").on("click", function() {
-//     $(".shopping-cart").fadeToggle( "fast");
-//   });
+  $("#cart").on("click", function() {
+    $(".shopping-cart").fadeToggle( "fast");
+  });
 
-// })();
+})();
 export default {
   props: {
   },

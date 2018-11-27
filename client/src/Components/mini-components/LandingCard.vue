@@ -85,14 +85,12 @@
       favorite: function () {
         let api_url = `http://127.0.0.1:3000/api/users/favorite`;
 
-        console.log(browserCookies.get('userId'));
         api.post(api_url, {
           user_id: browserCookies.get('userId'),
           product_id: this.product.product_id,
         })
         .then((response) => {
           if (response.status == 200) {
-            console.log(response);
             this.isFavorite = 'true';
             console.log(`After favoriting, isFavorite = ${this.isFavorite}`)
             this.$toasted.success('Favorited').goAway(1000);
@@ -148,12 +146,6 @@
         }
       },
     },
-    // computed:{
-    //   isFavorite: function(){
-    //     return this.product.is_favorite
-    //     this.$forceUpdate();
-    //   }
-    // }
   };
 </script>
 

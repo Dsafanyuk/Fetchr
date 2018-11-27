@@ -1,7 +1,7 @@
 <template >
-<v-app>
+  <v-app>
+      <LandingHeader v-on:showcart="displayCart" ></LandingHeader>
  <div>
-   <LandingHeader v-on:showcart="displayCart" ></LandingHeader>
  <div class="container bootstrap snippet">
     <div class="row">
      <div class="col-sm-10"><h1>Header</h1></div>
@@ -61,7 +61,7 @@
                     <label class="control-label">State</label>
                     <p class="form-control-static" id="card-profile-email">XX</p>
                    </div>
-                <button class="btn"><a href="" type="button">Edit Profile</a></button>
+                <button class="btn"><a href="" type="button">  Edit Profile  </a></button>
                </div>
               </div>
 
@@ -79,7 +79,7 @@
                          </p>
                      </div>
                     </div>
-                     <button class="btn"><a href="" type="button">View order</a></button>
+                     <button class="btn"><a href="" type="button">  View Order  </a ></button>
                    </div>
                 </div>
                </div>
@@ -92,12 +92,14 @@
     </div>
  </div>
  </div>
-</v-app>
+ <LandingFooter></LandingFooter>
+ </v-app>
     </template>
 
     <script>
     import Navigation from './Navigation.vue';
     import LandingHeader from './mini-components/LandingHeader.vue';
+    import LandingFooter from './mini-components/LandingFooter.vue';
 
     export default {
       data() {
@@ -105,7 +107,8 @@
       },
       components: {
         Navigation: Navigation,
-        LandingHeader: LandingHeader},
+        LandingHeader: LandingHeader,
+        LandingFooter: LandingFooter},
     };
     </script>
 

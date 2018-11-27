@@ -23,8 +23,7 @@ const routes = [
   { path: '/login', component: Login },
   { path: '/register', component: Register },
   { path: '/dashboard', component: Landing },
-  { path: '/account', component: Account },
-  { path: '/editprofil', component: Editprofil }
+  { path: '/account', component: Account }
 
 ];
 

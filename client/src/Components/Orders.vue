@@ -67,3 +67,7 @@ export default {
 }
 
 </script>
+
+<style lang="css">
+    @import 'custom_css/orders.css';
+</style>

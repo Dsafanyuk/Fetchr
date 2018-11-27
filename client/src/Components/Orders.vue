@@ -68,6 +68,6 @@ export default {
 
 </script>
 
-<style lang="css">
+<style scoped lang="css">
     @import 'custom_css/orders.css';
 </style>

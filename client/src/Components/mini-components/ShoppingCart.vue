@@ -31,20 +31,23 @@ export default {
   },
   created: function loadItems(){
     this.Items = State.data.cart;
+    // Set the number of item in the cart
     this.nbOfItems = this.Items.length;
-    //if (this.nbOfItems === 0)
+
+    // Get the current Total
+      var currentTotal = this.total;
+
+      this.Items.forEach (function(item){
+      currentTotal = currentTotal + item.price;
+    });
+    // Update the total
+    this.total = (Math.floor (currentTotal * 100)/100)
 
   },
   components: {
     CartItems : CartItems,
-  },
-  computed : {
-    total (){
-      return _.sumBy(this.Items, function(Item) {
-           this.total = (Item.price * Item.qty);
-    })
   }
-}
+
 };
 </script>
 

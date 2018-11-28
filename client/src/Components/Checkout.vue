@@ -42,13 +42,13 @@
                 { text: 'Price', align: 'left', value:'p_price' },
                 { text: 'Quantity', align: 'left', value:'p_quan' }
             ],
-            //This is the products recieved from cart
-            productsRecieved: []
+            //This is the products received from cart
+            productsReceived: []
         };
       },
       mounted: function() {
-        //Set this.productsRecieved to the prods from cart
-        this.productsRecieved = [
+        //Set this.productsReceived to the prods from cart
+        this.productsReceived = [
             {
                 p_id: '1',
                 p_name: 'Pepe Cola',
@@ -70,7 +70,7 @@
         ]
             
         //setting prods in table
-        this.products = this.productsRecieved.map((product) => {
+        this.products = this.productsReceived.map((product) => {
                     //put price in right format
                     product.p_price = product.p_price.toFixed(2)
                     //this is for the v-data-table

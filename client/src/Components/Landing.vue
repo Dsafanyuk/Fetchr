@@ -128,12 +128,10 @@ export default {
             return this.products;
         } else if (category === 'favorites') {
             return this.products.filter((product) => {
-                console.log(product.is_favorite);
                 return product.is_favorite === 'true';
             });
         } else {
             return this.products.filter((product) => {
-                console.log(product.category === category);
                 return product.category === category;
             });
         }

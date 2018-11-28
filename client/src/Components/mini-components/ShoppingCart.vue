@@ -1,15 +1,15 @@
 <template>
   <div class="shopping-cart">
    <div class="shopping-cart-header">
-     <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">3</span>
+     <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">{{nbOfItems}}</span>
      <div class="shopping-cart-total">
        <span class="lighter-text">Total:</span>
-       <span class="main-color-text">$2,229.97</span>
+       <span class="main-color-text">:${{total}}</span>
      </div>
    </div> <!--end shopping-cart-header -->
 
    <ul class="shopping-cart-items">
-     <CartItems v-for="item in items"> </CartItems>
+     <CartItems v-for="Item in Items" :Item="Item"  :key="Item.product_id"> </CartItems>
    </ul>
 
    <a href="#" class="button">Checkout</a>
@@ -18,21 +18,33 @@
 
 <script>
 import CartItems from './CartItems.vue'
+import State from '../assets/js/shoppingCartState'
+import _ from 'lodash'
 export default {
 
   data() {
     return {
-      Items : {},
-    };
+      Items : [],
+      total: 0,
+      nbOfItems : 0,
+              };
+  },
+  created: function loadItems(){
+    this.Items = State.data.cart;
+    this.nbOfItems = this.Items.length;
+    //if (this.nbOfItems === 0)
+
   },
   components: {
     CartItems : CartItems,
   },
   computed : {
     total (){
-      return 0;
-    }
+      return _.sumBy(this.Items, function(Item) {
+           this.total = (Item.price * Item.qty);
+    })
   }
+}
 };
 </script>
 

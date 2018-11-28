@@ -101,15 +101,11 @@
         if (this.inCart) {
           this.inCart = false;
           this.$toasted.success('Removed from cart').goAway(1000);
-          console.log ("PralAdd called");
-          State.add(this.product);
-
-
-
 
         } else {
           this.inCart = true;
           this.$toasted.success('Added to cart').goAway(1000);
+          State.add(this.product);
         }
       },
       inc () {

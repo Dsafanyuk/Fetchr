@@ -54,6 +54,14 @@
                             value="Misc"
                         >
                         <label for="tab5">Misc</label>
+                        <input
+                            v-model="selectedCategory"
+                            id="tab6"
+                            type="radio"
+                            name="tabs"
+                            value="Favorites"
+                        >
+                        <label for="tab6">Favorites</label>
                     </div>
                 </div>
             </div>
@@ -118,8 +126,14 @@ export default {
         console.log(`Category = ${category}`)
         if (category === 'popular' || !category){
             return this.products;
+        } else if (category === 'favorites') {
+            return this.products.filter((product) => {
+                console.log(product.is_favorite);
+                return product.is_favorite === 'true';
+            });
         } else {
             return this.products.filter((product) => {
+                console.log(product.category === category);
                 return product.category === category;
             });
         }

@@ -2,7 +2,8 @@ const knex = require('knex')(require('../db'));
 
 // GET /order
 function showAllOrders(req, res) {
-  knex('orders').select('*')
+  knex('orders')
+    .select('*')
     .then((rows) => {
       res.send(rows).status(200);
     })
@@ -15,7 +16,8 @@ function showAllOrders(req, res) {
 
 // GET /order/{order_id}
 function showOneOrder(req, res) {
-  knex('orders').where('order_id', req.params.order_id)
+  knex('orders')
+    .where('order_id', req.params.order_id)
     .then((rows) => {
       res.send(rows).status(200);
     })
@@ -29,11 +31,14 @@ function showOneOrder(req, res) {
 // POST /orders
 function createOrder(req, res) {
   const request = req.body;
-  knex('orders').insert(request)
+  knex('orders')
+    .insert(request)
     // if order successfully inserted
     .then((order_id) => {
       // Select the order that was just created
-      knex('orders').select('*').where('order_id', order_id)
+      knex('orders')
+        .select('*')
+        .where('order_id', order_id)
         .then((rows) => {
           res.status(201).send(`Order created for id ${rows[0].order_id}`);
         });
@@ -49,7 +54,8 @@ function createOrder(req, res) {
 // UPDATE /orders{id}
 function updateOrder(req, res) {
   const order = req.body;
-  knex('orders').where('order_id', req.params.order_id)
+  knex('orders')
+    .where('order_id', req.params.order_id)
     .update({
       customer_id: order.customer_id,
       courier_id: order.courier_id,

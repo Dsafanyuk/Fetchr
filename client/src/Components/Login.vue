@@ -11,14 +11,36 @@
           <div class="form-group">
             <h4 class="text-center form_h"> Login in on our Platform </h4>
           </div>
-          <div class="form-group">
-            <input type="email" class="form-control" v-model="cEmail" placeholder="Email" value="" />
-          </div>
-          <div class="form-group">
-            <input type="password" class="form-control" v-model="cPassword" required placeholder="Password *" value="" />
-          </div>
+          <form>
+            <v-text-field
+              v-validate="'required|email'"
+              type="email"
+              v-model="cEmail"
+              :error-messages="errors.collect('cEmail')"
+              data-vv-name="cEmail"
+              placeholder="Email"
+              value=""
+              solo
+              required
+            ></v-text-field>
+            <v-text-field
+              v-validate="'required'"
+              type="password"
+              v-model="cPassword"
+              :error-messages="errors.collect('cPassword')"
+              data-vv-name="cPassword"
+              placeholder="Password *"
+              value=""
+              solo
+              required
+            ></v-text-field>
+          </form>
           <div class="form-group text-center">
-            <input type="submit" @click="loginCustomer" class="btnRegister" value="Login" />
+            <v-btn 
+              round color="cyan" dark
+              type="submit"
+              @click="loginCustomer"
+            >Login</v-btn>
           </div>
         </div>
       </div>
@@ -27,25 +49,41 @@
 </template>
 <script>
   import axios from 'axios'
-  import * as jwtDecode from 'jwt-decode'
 
   const api = axios.create({
     withCredentials: true,
   });
 
   export default {
+    $_veeValidate: {
+      validator: 'new'
+    },
+
     //******************************************* Component Name  ********************************/
     name: "login",
     data() {
       return {
         cEmail: '',
         cPassword: '',
+        dictionary: {
+          attributes: {
+            cEmail: 'E-mail Address',
+            cPassword: 'Password'
+          }
+        }
       }
     },
+
+    mounted () {
+      this.$validator.localize('en', this.dictionary)
+    },
+
     methods: {
       loginCustomer(e) {
         let api_url = "http://127.0.0.1:3000/api/users";
 
+        console.log(this.cPassword);
+        console.log(this.cEmail);
         if (this.cEmail && this.cPassword) {
           api({
             url: '/login', method: 'post', baseURL: api_url, data: {
@@ -54,14 +92,17 @@
             },
           })
             .then((response) => {
+              console.log(response.status);
               if (response.status == 200) {
                 this.$router.push('/dashboard');
               }
             })
             .catch((error) => {
               console.log(error);
+              alert('Wrong email or password');
             });
         } else {
+          this.$validator.validateAll();
           console.log('at least 1 null field');
         }
       }

@@ -16,9 +16,10 @@ import 'vuetify/dist/vuetify.min.css';
 
 Vue.use(VueRouter);
 Vue.use(Vuetify);
+Vue.use(VeeValidate);
 Vue.use(VueToast);
 Vue.use(VueMaterial);
-/* ----------------------- Routes Declaration -----------------*/
+/*----------------------- Routes Declaration -----------------*/
 const routes = [
   {path: '/', component: Home},
   {path: '/login', component: Login},

@@ -100,7 +100,7 @@ export default {
   //******************************************* Methods Begin Here  ********************************/
   methods: {
     registerCustomer(e) {
-      let api_url = "http://127.0.0.1:3000/api/users/register";
+      let api_url = "http://fetchrapp.com:3000/api/users/register";
 
       if (
         this.cFirstname &&

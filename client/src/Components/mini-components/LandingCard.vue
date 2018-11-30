@@ -72,7 +72,7 @@ export default {
   components: {},
   methods: {
     favorite: function() {
-      let api_url = `http://127.0.0.1:3000/api/users/favorite`;
+      let api_url = `http://fetchrapp.com:3000/api/users/favorite`;
 
       console.log(browserCookies.get("userId"));
 

@@ -13,7 +13,7 @@
           </form>
           <div class="col-md-4 ">
             <div class=" icons_div btn-group " style=" float: right;">
-             <button type="button" class="btn btn-secondary">Hi, {{ user }}</button>
+             <button type="button" class="btn btn-secondary">Hi, {{ user.first_name }}</button>
              <button type="button" class="btn btn-secondary btn_space dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
              <span class="sr-only">Toggle Dropdown</span>
             </button>
@@ -44,7 +44,7 @@ export default {
   data() {
     name: 'LandingHeader';
     return {
-      user: ''
+      user: {}
     };
   },
   mounted: function() {
@@ -57,7 +57,7 @@ export default {
     })
       .then((response) => {
         if (response.status == 200) {
-          this.user = response.data[0].first_name;
+          this.user = response.data[0];
         }
       })
       .catch((error) => {

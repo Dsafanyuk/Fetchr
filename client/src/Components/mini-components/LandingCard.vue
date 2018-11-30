@@ -60,12 +60,13 @@ export default {
       product_name: String,
       price: Number,
       category: String,
-      product_url: String
+      product_url: String,
+      is_favorite: Boolean
     }
   },
   data() {
     return {
-      isFavorite: false,
+      isFavorite: this.product.is_favorite,
       inCart: false
     };
   },
@@ -74,36 +75,58 @@ export default {
     favorite: function() {
       let api_url = `http://fetchrapp.com:3000/api/users/favorite`;
 
+      api
+        .post(api_url, {
+          user_id: browserCookies.get("userId"),
+          product_id: this.product.product_id
+        })
+        .then(response => {
+          if (response.status == 200) {
+            this.isFavorite = "true";
+            console.log(`After favoriting, isFavorite = ${this.isFavorite}`);
+            this.$toasted.success("Favorited").goAway(1000);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          this.$toasted.error("Error favoriting").goAway(1000);
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          }
+        });
+    },
+    unfavorite: function() {
+      let api_url = `http://fetchrapp.com:3000/api/users/unfavorite`;
       console.log(browserCookies.get("userId"));
-
-      if (this.isFavorite) {
-        this.isFavorite = false;
-        this.$toasted.success("Unfavorited").goAway(1000);
-      } else {
-        api
-          .post(api_url, {
-            user_id: browserCookies.get("userId"),
-            product_id: this.product.product_id
-          })
-          .then(response => {
-            if (response.status == 200) {
-              console.log(response);
-            }
-          })
-          .catch(error => {
-            console.log(error);
-            if (error.response) {
-              // The request was made and the server responded with a status code
-              // that falls out of the range of 2xx
-              console.log(error.response.data);
-              console.log(error.response.status);
-              console.log(error.response.headers);
-            }
-          });
-
-        this.isFavorite = true;
-        this.$toasted.success("Favorited").goAway(1000);
-      }
+      console.log(this.product.product_id);
+      api
+        .post(api_url, {
+          user_id: browserCookies.get("userId"),
+          product_id: this.product.product_id
+        })
+        .then(response => {
+          if (response.status == 200) {
+            console.log(response);
+            this.isFavorite = "false";
+            console.log(`After unfavoriting, isFavorite = ${this.isFavorite}`);
+            this.$toasted.success("Unfavorited").goAway(1000);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          this.$toasted.error("Error unfavoriting").goAway(1000);
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          }
+        });
     },
     addToCart: function() {
       if (this.inCart) {
@@ -118,5 +141,6 @@ export default {
 };
 </script>
 
-<style scoped lang="css" src="../custom_css/landing_card.scss">
+
+<style  lang="css" src="../custom_css/landing_card.scss">
 </style>

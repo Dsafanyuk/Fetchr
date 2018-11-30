@@ -97,7 +97,7 @@ export default {
         return this.products;
       } else if (category === "favorites") {
         return this.products.filter(product => {
-          return product.is_favorite === "true";
+          return product.is_favorite == "true";
         });
       } else {
         return this.products.filter(product => {

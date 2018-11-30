@@ -193,7 +193,7 @@
                             .then((response) => {
                                 if (response.status == 200) {
                                     console.log('logged in');
-                                    this.$router.push('/dashboard');
+                                    this.$router.push('/login');
                                 }
                             })
                             .catch(function (error) {

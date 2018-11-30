@@ -48,6 +48,11 @@ export default {
     {
 
       this.$emit('showcart', 'show');
+    },
+    logout: function() {
+        browsercookies.erase('userId');
+        browsercookies.erase('authCookie');
+        this.$router.push('/login');
     }
 
   },
@@ -72,7 +77,6 @@ export default {
 .icons_div {
 float : right ;
 }
-
 .btn_space {
   margin-right: 10px;
 }

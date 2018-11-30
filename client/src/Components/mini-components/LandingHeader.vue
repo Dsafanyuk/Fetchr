@@ -19,7 +19,7 @@
             </button>
                <div class="dropdown-menu">
                <a class="dropdown-item" href="#">My Account</a>
-               <a class="dropdown-item" href="#">My Orders</a>
+               <a class="dropdown-item" v-on:click="gotoOrders">My Orders</a>
                <div class="dropdown-divider"></div>
                <a v-on:click='logout()' class="dropdown-item" href="#">Log Out</a>
                </div>
@@ -53,6 +53,9 @@ export default {
         browsercookies.erase('userId');
         browsercookies.erase('authCookie');
         this.$router.push('/login');
+    },
+    gotoOrders: function() {
+      this.$router.push('/orders')
     }
   }
 };

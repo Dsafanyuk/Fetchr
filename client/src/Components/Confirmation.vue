@@ -32,6 +32,5 @@
         
 </script>
         
-<style scoped lang="css">
-    @import 'custom_css/confirmation.css';
+<style scoped lang="css" src='./custom_css/confirmation.css'>
 </style>

@@ -9,7 +9,6 @@
           >${{product.price.toFixed(2)}}</span>
           <img :src="product.product_url" :alt="product.product_name">
         </div>
-        {{isFavorite}}
         <ul class="card-action-buttons">
           <li>
             <a
@@ -49,11 +48,11 @@
 import axios from "axios";
 import Toasted from "vue-toasted";
 import browserCookies from "browser-cookies";
-
+import _ from "lodash";
+import State from "../assets/js/shoppingCartState";
 const api = axios.create({
   withCredentials: true
 });
-
 export default {
   props: {
     product: {
@@ -68,14 +67,14 @@ export default {
   data() {
     return {
       isFavorite: this.product.is_favorite,
-      inCart: false
+      inCart: false,
+      shared: State.data
     };
   },
   components: {},
   methods: {
     favorite: function() {
       let api_url = `http://fetchrapp.com:3000/api/users/favorite`;
-
       api
         .post(api_url, {
           user_id: browserCookies.get("userId"),
@@ -136,12 +135,23 @@ export default {
       } else {
         this.inCart = true;
         this.$toasted.success("Added to cart").goAway(1000);
+        State.add(this.product);
       }
+    },
+    inc() {
+      State.inc(this.product);
+    },
+    dec() {
+      State.dec(this.product);
+    }
+  },
+  computed: {
+    quantityIncart() {
+      return 0;
     }
   }
 };
 </script>
-
 
 <style  lang="css" src="../custom_css/landing_card.scss">
 </style>

@@ -34,11 +34,20 @@
 import Landing from '../Landing.vue';
 import ShoppingCart from './ShoppingCart.vue'
 import browsercookies from 'browser-cookies';
+import axios from 'axios';
 
 export default {
   data() {
     name: 'LandingHeader';
     return {};
+  },
+  mounted: function() {
+    axios.get(`http://127.0.0.1:3000/api/users/${browsercookies.get('userId')}`, { headers: {
+      authToken: browsercookies.get('authCookie')
+    }})
+      .then((x) => {
+        console.log(x)
+      })
   },
   components: {
     ShoppingCart: ShoppingCart

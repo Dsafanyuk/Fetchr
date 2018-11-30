@@ -34,9 +34,7 @@ router.post('/login', loginController.loginUser);
 
 router.get('/login', userController.showLogin);
 
-router.get('/', userController.showAllUsers);
-
-router.post('/:user_id/', verifyToken, userController.showOneUser); // eslint-disable-line no-use-before-define
+router.get('/:user_id/', verifyToken, userController.showOneUser); // eslint-disable-line no-use-before-define
 
 router.get('/:user_id/orders', userController.showUserOrders);
 
@@ -50,7 +48,7 @@ router.post('/', userController.createUser);
 // Verify token
 function verifyToken(req, res, next) {
   // Get jwt in cookies
-  const jwtCookie = req.body.clientToken;
+  const jwtCookie = req.headers.authToken;
 
   console.log(jwtCookie);
 

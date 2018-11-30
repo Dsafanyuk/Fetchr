@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import VueToast from 'vue-toasted';
-
+import VueMaterial from 'vue-material';
 import App from './Components/App.vue';
 import VueRouter from 'vue-router';
 import Home from './Components/Home.vue';

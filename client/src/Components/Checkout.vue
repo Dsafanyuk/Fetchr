@@ -9,7 +9,7 @@
             <template slot="items" slot-scope="props">
                 <td>{{ props.item.product_name }}</td>
                 <td class="text-xs-left">${{ props.item.price }}</td>
-                <td class="text-xs-left">1</td>
+                <td class="text-xs-left">{{ props.item.quantity }}</td>
             </template>
         </v-data-table>
         <div class="submitOrderButton">

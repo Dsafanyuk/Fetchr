@@ -13,7 +13,7 @@
           </form>
           <div class="col-md-4 ">
             <div class=" icons_div btn-group " style=" float: right;">
-             <button type="button" class="btn btn-secondary">Hi Josh!</button>
+             <button type="button" class="btn btn-secondary">Hi, {{ user }}</button>
              <button type="button" class="btn btn-secondary btn_space dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
              <span class="sr-only">Toggle Dropdown</span>
             </button>
@@ -36,18 +36,33 @@ import ShoppingCart from './ShoppingCart.vue'
 import browsercookies from 'browser-cookies';
 import axios from 'axios';
 
+const api = axios.create({
+  withCredentials: true,
+});
+
 export default {
   data() {
     name: 'LandingHeader';
-    return {};
+    return {
+      user: ''
+    };
   },
   mounted: function() {
-    axios.get(`http://127.0.0.1:3000/api/users/${browsercookies.get('userId')}`, { headers: {
-      authToken: browsercookies.get('authCookie')
-    }})
-      .then((x) => {
-        console.log(x)
+    console.log(browsercookies.get('authCookie'))
+
+    api.get(`http://127.0.0.1:3000/api/users/${browsercookies.get('userId')}`, {
+      headers: {
+        authtoken: browsercookies.get('authCookie')
+      }
+    })
+      .then((response) => {
+        if (response.status == 200) {
+          this.user = response.data[0].first_name;
+        }
       })
+      .catch((error) => {
+        console.log(error);
+      });
   },
   components: {
     ShoppingCart: ShoppingCart

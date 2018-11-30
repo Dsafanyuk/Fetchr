@@ -69,9 +69,6 @@ export default {
   created: function loadProducts() {
     console.log(browserCookies.get("userId"));
     let loadingProductsToast = this.$toasted.show("Loading products...");
-    console.log(process.env.NODE_ENV);
-    console.log(process.env.ROOT_API);
-    console.log(process.env.VUE_APP_ROOT_API);
     axios
       .get(`http://${process.env.API_URL}:3000/api/products`, {
         headers: {

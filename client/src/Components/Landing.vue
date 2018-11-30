@@ -70,7 +70,7 @@ export default {
     console.log(browserCookies.get("userId"));
     let loadingProductsToast = this.$toasted.show("Loading products...");
     axios
-      .get(`http://${process.env.API_URL}:3000/api/products`, {
+      .get(`http://fetchrapp.com:3000/api/products`, {
         headers: {
           user_id: browserCookies.get("userId")
         }

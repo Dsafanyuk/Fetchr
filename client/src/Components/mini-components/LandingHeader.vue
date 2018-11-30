@@ -48,10 +48,8 @@ export default {
     {
 
       this.$emit('showcart', 'show');
-    }
+    },
 
-  },
-  methods: {
     logout: function() {
         browsercookies.erase('userId');
         browsercookies.erase('authCookie');

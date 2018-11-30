@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
+import VeeValidate from 'vee-validate';
 import VueToast from 'vue-toasted';
 import VueMaterial from 'vue-material';
 import App from './Components/App.vue';

@@ -9,6 +9,7 @@
           >${{product.price.toFixed(2)}}</span>
           <img :src="product.product_url" :alt="product.product_name">
         </div>
+        {{isFavorite}}
         <ul class="card-action-buttons">
           <li>
             <a
@@ -16,8 +17,8 @@
               id="favorite"
               class="btn-floating waves-effect waves-light red accent-2"
             >
-              <i v-if="isFavorite" class="material-icons like">favorite</i>
-              <i v-if="!isFavorite" class="material-icons like">favorite_border</i>
+              <i v-if="isFavorite == 'true'" class="material-icons like">favorite</i>
+              <i v-if="isFavorite == 'false'" class="material-icons like">favorite_border</i>
             </a>
           </li>
           <li>

@@ -4,7 +4,7 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul class="custom_url col-md-4 navbar-nav  mt-2 ">
             <li class="nav-item active">
-              <img src="../images/fetchr_header_logo.png"  height="70" class="d-inline-block align-top" align="left">
+              <img v-on:click="goToDashboard" src="../images/fetchr_header_logo.png"  height="70" class="d-inline-block align-top" align="left">
             </li>
           </ul>
           <form class="col-md-4 form-inline my-2 my-lg-0">
@@ -13,7 +13,11 @@
           </form>
           <div class="col-md-4 ">
             <div class=" icons_div btn-group " style=" float: right;">
+<<<<<<< HEAD
              <button type="button" class="btn btn-secondary">Hi, {{ firstName }}</button>
+=======
+             <button type="button" class="btn btn-secondary">Hi, {{ user.first_name }}</button>
+>>>>>>> 7794b290246fcc885b48c2f25b00f45542933c8c
              <button type="button" class="btn btn-secondary btn_space dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
              <span class="sr-only">Toggle Dropdown</span>
             </button>
@@ -44,7 +48,11 @@ export default {
   data() {
     name: 'LandingHeader';
     return {
+<<<<<<< HEAD
       firstName: browsercookies.get('first_name')
+=======
+      user: {}
+>>>>>>> 7794b290246fcc885b48c2f25b00f45542933c8c
     };
   },
   mounted: function() {
@@ -57,11 +65,15 @@ export default {
     })
       .then((response) => {
         if (response.status == 200) {
+<<<<<<< HEAD
           // Make cookies from user information, response.data[0] is an Obj
           for(let userDetail in response.data[0]) {
             let userValue = response.data[0][userDetail]
             browsercookies.set(userDetail, `${userValue}`);
           }
+=======
+          this.user = response.data[0];
+>>>>>>> 7794b290246fcc885b48c2f25b00f45542933c8c
         }
       })
       .catch((error) => {
@@ -81,7 +93,10 @@ export default {
     logout: function() {
         browsercookies.erase('userId');
         browsercookies.erase('authCookie');
-        this.$router.push('/login');
+        window.location.href = 'http://127.0.0.1:8080/login';
+    },
+    goToDashboard: function() {
+      this.$router.push('/dashboard');
     },
     gotoOrders: function() {
       this.$router.push('/orders')

@@ -48,9 +48,7 @@ router.post('/', userController.createUser);
 // Verify token
 function verifyToken(req, res, next) {
   // Get jwt in cookies
-  const jwtCookie = req.headers.authToken;
-
-  console.log(jwtCookie);
+  const jwtCookie = req.headers.authtoken;
 
   // Check if there is cookie
   if (typeof jwtCookie === 'string') {

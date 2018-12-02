@@ -78,7 +78,7 @@
                 })
                 axios.post('http://127.0.0.1:3000/api/orders/',
                     {
-                        customer_id: browserCookies.get('userId'),
+                        customer_id: browserCookies.get('user_id'),
                         delivery_status: 'pending',
                         order_total: total,
                         productsWithQuantity: productsWithQuantity

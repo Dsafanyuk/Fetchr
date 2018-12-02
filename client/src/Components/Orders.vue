@@ -48,7 +48,7 @@ export default {
   },
   mounted: function() {
       console.log(State.data)
-    axios.get('http://127.0.0.1:3000/api/users/' + browserCookies.get('userId') + '/orders').then((response) => {
+    axios.get('http://127.0.0.1:3000/api/users/' + browserCookies.get('user_id') + '/orders').then((response) => {
       this.orders = response.data;
     });
   },

@@ -74,7 +74,7 @@ export default {
     favorite: function() {
       let api_url = `http://127.0.0.1:3000/api/users/favorite`;
 
-      console.log(browserCookies.get("userId"));
+      console.log(browserCookies.get("user_id"));
 
       if (this.isFavorite) {
         this.isFavorite = false;
@@ -82,7 +82,7 @@ export default {
       } else {
         api
           .post(api_url, {
-            user_id: browserCookies.get("userId"),
+            user_id: browserCookies.get("user_id"),
             product_id: this.product.product_id
           })
           .then(response => {

@@ -101,12 +101,12 @@ export default {
   },
   props: {},
   created: function loadProducts() {
-    console.log(browserCookies.get('userId'))
+    console.log(browserCookies.get('user_id'))
     let loadingProductsToast = this.$toasted.show('Loading products...');
     axios
       .get('http://127.0.0.1:3000/api/products',{
           headers: {
-              user_id : browserCookies.get('userId')
+              user_id : browserCookies.get('user_id')
           }
       })
       .then((response) => {

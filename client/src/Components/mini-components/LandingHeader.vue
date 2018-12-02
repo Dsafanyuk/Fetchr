@@ -50,7 +50,7 @@ export default {
   mounted: function() {
     console.log(browsercookies.get('authCookie'))
 
-    api.get(`http://127.0.0.1:3000/api/users/${browsercookies.get('userId')}`, {
+    api.get(`http://127.0.0.1:3000/api/users/${browsercookies.get('user_id')}`, {
       headers: {
         authtoken: browsercookies.get('authCookie')
       }
@@ -79,7 +79,7 @@ export default {
     },
 
     logout: function() {
-        browsercookies.erase('userId');
+        browsercookies.erase('user_id');
         browsercookies.erase('authCookie');
         window.location.href = 'http://127.0.0.1:8080/login';
     },

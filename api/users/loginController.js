@@ -35,7 +35,6 @@ function loginUser(req, res) {
             res.status(500).send(err);
           } else {
             res.cookie('authCookie', token, { maxAge: 900000 });
-            res.cookie('userId', user.user_id, { maxAge: 900000 });
             res.json({
               token,
             });

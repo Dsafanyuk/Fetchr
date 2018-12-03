@@ -11,14 +11,24 @@
         </div>
         <ul class="card-action-buttons">
           <li>
-            <a
-              v-on:click="favorite()"
-              id="favorite"
-              class="btn-floating waves-effect waves-light red accent-2"
-            >
-              <i v-if="isFavorite == 'true'" class="material-icons like">favorite</i>
-              <i v-if="isFavorite == 'false'" class="material-icons like">favorite_border</i>
-            </a>
+            <div v-if="isFavorite == 'true'">
+              <a
+                v-on:click="unfavorite()"
+                id="favorite"
+                class="btn-floating waves-effect waves-light red accent-2"
+              >
+                <i class="material-icons like">favorite</i>
+              </a>
+            </div>
+            <div v-if="isFavorite == 'false'">
+              <a
+                v-on:click="favorite()"
+                id="favorite"
+                class="btn-floating waves-effect waves-light red accent-2"
+              >
+                <i class="material-icons like">favorite_border</i>
+              </a>
+            </div>
           </li>
           <li>
             <a v-on:click="addToCart()" id="buy" class="btn-floating waves-effect waves-light blue">
@@ -50,9 +60,8 @@ import Toasted from "vue-toasted";
 import browserCookies from "browser-cookies";
 import _ from "lodash";
 import State from "../assets/js/shoppingCartState";
-const api = axios.create({
-  withCredentials: true
-});
+
+const api = axios.create();
 export default {
   props: {
     product: {
@@ -74,9 +83,8 @@ export default {
   components: {},
   methods: {
     favorite: function() {
-      let api_url = `http://fetchrapp.com:3000/api/users/favorite`;
       api
-        .post(api_url, {
+        .post("api/users/favorite", {
           user_id: browserCookies.get("userId"),
           product_id: this.product.product_id
         })
@@ -100,11 +108,10 @@ export default {
         });
     },
     unfavorite: function() {
-      let api_url = `http://fetchrapp.com:3000/api/users/unfavorite`;
       console.log(browserCookies.get("userId"));
       console.log(this.product.product_id);
       api
-        .post(api_url, {
+        .post("/api/users/unfavorite", {
           user_id: browserCookies.get("userId"),
           product_id: this.product.product_id
         })

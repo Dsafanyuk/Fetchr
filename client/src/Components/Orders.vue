@@ -38,6 +38,8 @@ import browserCookies from "browser-cookies";
 import axios from "axios";
 import State from "./assets/js/shoppingCartState";
 
+const api = axios.create();
+
 export default {
   data() {
     name: return {
@@ -46,12 +48,8 @@ export default {
   },
   mounted: function() {
     console.log(State.data);
-    axios
-      .get(
-        "http://fetchrapp.com:3000/api/users/" +
-          browserCookies.get("userId") +
-          "/orders"
-      )
+    api
+      .get("/api/users/" + browserCookies.get("userId") + "/orders")
       .then(response => {
         this.orders = response.data;
       });

@@ -53,9 +53,7 @@ import browserCookies from "browser-cookies";
 import axios from "axios";
 import Toasted from "vue-toasted";
 
-const api = axios.create({
-  withCredentials: true
-});
+const api = axios.create();
 
 export default {
   data() {
@@ -67,21 +65,28 @@ export default {
   },
   props: {},
   created: function loadProducts() {
-    console.log(browserCookies.get("userId"));
     let loadingProductsToast = this.$toasted.show("Loading products...");
-    axios
-      .get(`http://fetchrapp.com:3000/api/products`, {
+    api
+      .get(`/api/products`, {
         headers: {
           user_id: browserCookies.get("userId")
         }
       })
       .then(response => {
         this.products = response.data;
-        console.log(this.products);
         loadingProductsToast.text("Products loaded!").goAway(5000);
       })
       .catch(error => {
-        console.log(error);
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", error.message);
+        }
         loadingProductsToast.goAway();
         this.$toasted.error("Something went wrong");
       });
@@ -92,7 +97,6 @@ export default {
         .toLowerCase()
         .split(" ")
         .join("_");
-      console.log(`Category = ${category}`);
       if (category === "popular" || !category) {
         return this.products;
       } else if (category === "favorites") {

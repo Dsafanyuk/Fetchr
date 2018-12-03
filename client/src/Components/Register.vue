@@ -112,7 +112,7 @@
 
 <script>
 import axios from "axios";
-
+const api = axios.create();
     export default {
         $_veeValidate: {
             validator: 'new'
@@ -168,8 +168,6 @@ import axios from "axios";
                 this.$validator.reset()
             },
             registerCustomer(e) {
-                let api_url = 'http://fetchrapp.com:3000/api/users/register';
-
                 if (
                     this.cFirstname &&
                     this.cLastname &&
@@ -181,8 +179,8 @@ import axios from "axios";
                 ) {
                     // Replace with a Validator Lib
                     if (this.cPassword === this.cRepeatPassword) {
-                        axios
-                            .post(api_url, {
+                        api
+                            .post('api/users/register', {
                                 first_name: this.cFirstname,
                                 last_name: this.cLastname,
                                 email_address: this.cEmail,

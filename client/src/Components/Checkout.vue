@@ -29,6 +29,8 @@ import browserCookies from "browser-cookies";
 import axios from "axios";
 import State from "./assets/js/shoppingCartState";
 
+const api = axios.create();
+
 export default {
   data() {
     name: return {
@@ -69,8 +71,8 @@ export default {
           quantity: product.quantity
         });
       });
-      axios
-        .post("http://fetchrapp.com:3000/api/orders/", {
+      api
+        .post("/api/orders/", {
           customer_id: browserCookies.get("userId"),
           delivery_status: "pending",
           order_total: total,

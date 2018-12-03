@@ -12,6 +12,7 @@ import Landing from './Components/Landing.vue';
 import Orders from './Components/Orders.vue';
 import Checkout from './Components/Checkout.vue';
 import Confirmation from './Components/Confirmation.vue';
+import axios from 'axios';
 
 import 'vuetify/dist/vuetify.min.css';
 
@@ -36,6 +37,13 @@ const router = new VueRouter({
   mode: 'history',
 });
 
+if (process.env.NODE_ENV == 'production') {
+  axios.defaults.baseURL = 'http://fetchrapp.com:3000';
+} else {
+  axios.defaults.baseURL = 'http://127.0.0.1:3000';
+}
+
+axios.defaults.withCredentials = true; // force axios to have withCredentials with all requests.
 new Vue({
   el: '#app',
   template: '<App/>',

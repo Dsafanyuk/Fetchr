@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "description": "Fetchr Client App",
-  "author": "Drew Twelse",
+  "author": "Devs That Deliver",
   "scripts": {
     "build": "NODE_ENV=production webpack --progress --hide-modules --mode=production",
-    "dev": "NODE_ENV=development webpack-dev-server --open --hot --config webpack.config.js --mode=production"
+    "dev": "NODE_ENV=development webpack-dev-server --open --hot --config webpack.config.js --mode=development",
+    "dev:prod": "NODE_ENV=production webpack-dev-server --open --hot --config webpack.config.js --mode=production"
   },
   "dependencies": {
     "axios": "^0.18.0",

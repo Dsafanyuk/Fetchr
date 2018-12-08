@@ -47,27 +47,6 @@ export default {
       firstName: browsercookies.get('first_name')
     };
   },
-  mounted: function() {
-    console.log(browsercookies.get('authCookie'))
-
-    api.get(`http://127.0.0.1:3000/api/users/${browsercookies.get('user_id')}`, {
-      headers: {
-        authtoken: browsercookies.get('authCookie')
-      }
-    })
-      .then((response) => {
-        if (response.status == 200) {
-          // Make cookies from user information, response.data[0] is an Obj
-          for(let userDetail in response.data[0]) {
-            let userValue = response.data[0][userDetail]
-            browsercookies.set(userDetail, `${userValue}`);
-          }
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  },
   components: {
     ShoppingCart: ShoppingCart
   },
@@ -79,8 +58,11 @@ export default {
     },
 
     logout: function() {
-        browsercookies.erase('user_id');
-        browsercookies.erase('authCookie');
+        let allCookies = browsercookies.all();
+        for(let cookieName in allCookies) {
+          browsercookies.erase(cookieName);
+        }
+
         window.location.href = 'http://127.0.0.1:8080/login';
     },
     goToDashboard: function() {

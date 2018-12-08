@@ -87,17 +87,13 @@
 
     methods: {
       loginCustomer(e) {
-        let api_url = "http://127.0.0.1:3000/api/users";
-
         console.log(this.cPassword);
         console.log(this.cEmail);
         if (this.cEmail && this.cPassword) {
-          api({
-            url: '/login', method: 'post', baseURL: api_url, data: {
+          api.post('http://127.0.0.1:3000/api/users/login', {
               email_address: this.cEmail,
               password: this.cPassword
-            },
-          })
+            })
             .then((response) => {
               console.log(response.status);
               if (response.status == 200) {

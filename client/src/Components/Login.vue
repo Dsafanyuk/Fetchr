@@ -57,9 +57,7 @@
   import axios from 'axios'
   import Toasted from 'vue-toasted';
 
-  const api = axios.create({
-    withCredentials: true,
-  });
+const api = axios.create();
 
   export default {
     $_veeValidate: {
@@ -87,13 +85,11 @@
 
     methods: {
       loginCustomer(e) {
-        console.log(this.cPassword);
-        console.log(this.cEmail);
         if (this.cEmail && this.cPassword) {
-          api.post('http://127.0.0.1:3000/api/users/login', {
+          api.post('api/users/login', {
               email_address: this.cEmail,
               password: this.cPassword
-            })
+          })
             .then((response) => {
               console.log(response.status);
               if (response.status == 200) {
@@ -117,7 +113,7 @@
         this.$router.push('/register');
       }
     }
-  }
+  };
 </script>
 
 <style lang="css">

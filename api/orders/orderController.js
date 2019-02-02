@@ -2,7 +2,8 @@ const knex = require('knex')(require('../db'));
 
 // GET /order
 function showAllOrders(req, res) {
-  knex('orders').select('*')
+  knex('orders')
+    .select('*')
     .then((rows) => {
       res.send(rows).status(200);
     })
@@ -15,7 +16,8 @@ function showAllOrders(req, res) {
 
 // GET /order/{order_id}
 function showOneOrder(req, res) {
-  knex('orders').where('order_id', req.params.order_id)
+  knex('orders')
+    .where('order_id', req.params.order_id)
     .then((rows) => {
       res.send(rows).status(200);
     })
@@ -29,14 +31,41 @@ function showOneOrder(req, res) {
 // POST /orders
 function createOrder(req, res) {
   const request = req.body;
-  knex('orders').insert(request)
+
+  let order = {
+    customer_id: request.customer_id,
+    delivery_status: request.delivery_status,
+    order_total: request.order_total,
+  };
+
+  let productsWithQuantity = request.productsWithQuantity;
+
+  knex('orders')
+    .insert(order)
     // if order successfully inserted
     .then((order_id) => {
-      // Select the order that was just created
-      knex('orders').select('*').where('order_id', order_id)
-        .then((rows) => {
-          res.status(201).send(`Order created for id ${rows[0].order_id}`);
+      //add the new order_id to the json
+      let orderProducts = productsWithQuantity.map((product) => {
+        product.order_id = order_id[0];
+        return product;
+      });
+      return orderProducts;
+    })
+    .then((orderProducts) => {
+      //insert the products to the summary
+      knex('order_summary')
+        .insert(orderProducts)
+        .then(() => {})
+        .catch((err) => {
+          res.status(500).send({
+            message: `${err}`,
+          });
         });
+      return orderProducts[0].order_id;
+    })
+    .then((order_id) => {
+      //if successful send back order id
+      res.send({status: 'success', message: order_id}).status(200);
     })
     // else send err
     .catch((err) => {
@@ -49,7 +78,8 @@ function createOrder(req, res) {
 // UPDATE /orders{id}
 function updateOrder(req, res) {
   const order = req.body;
-  knex('orders').where('order_id', req.params.order_id)
+  knex('orders')
+    .where('order_id', req.params.order_id)
     .update({
       customer_id: order.customer_id,
       courier_id: order.courier_id,

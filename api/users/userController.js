@@ -143,7 +143,7 @@ function favorites(req, res) {
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
     });
 }
-// POST /users/{user_id}/wallet
+// POST /users/wallet
 function addBalance(req,res){
   knex('users')
   .where('user_id', req.body.user_id)
@@ -163,7 +163,7 @@ function addBalance(req,res){
 // GET /users/{user_id}/wallet
 function checkBalance(req, res) {
   knex('users').select('wallet')
-    .where('user_id', req.body.user_id)
+    .where('user_id', req.params.user_id)
     .then((balance) => {
       res.send(balance).status(200)
     })

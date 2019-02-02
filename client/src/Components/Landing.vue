@@ -62,7 +62,8 @@ export default {
     return {
       active: "Popular",
       seen: false,
-      products: []
+      products: [],
+      interval: null
     };
   },
   props: {},

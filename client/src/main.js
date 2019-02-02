@@ -13,10 +13,12 @@ import Orders from './Components/Orders.vue';
 import Checkout from './Components/Checkout.vue';
 import Confirmation from './Components/Confirmation.vue';
 import axios from 'axios';
+import babel_polyfill from 'babel-polyfill';
 
 import 'vuetify/dist/vuetify.min.css';
 
 Vue.use(VueRouter);
+Vue.use(babel_polyfill)
 Vue.use(VeeValidate);
 Vue.use(VueToast);
 Vue.use(VueMaterial);

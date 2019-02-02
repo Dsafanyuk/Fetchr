@@ -24,7 +24,7 @@ router.post('/register', [
 
 router.post('/wallet', userController.addBalance);
 
-router.get('/wallet', userController.checkBalance);
+router.get('/:user_id/wallet', userController.checkBalance);
 
 router.post('/favorite', userController.favorite);
 

@@ -1,7 +1,4 @@
 <template>
-  <!-- Image and text -->
-  <!-- <v-toolbar></v-toolbar>
-  <v-text-field label='Search' required></v-text-field>-->
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul class="custom_url col-md-4 navbar-nav mt-2">
@@ -73,17 +70,17 @@ import Landing from "../Landing.vue";
 import ShoppingCart from "./ShoppingCart.vue";
 import browsercookies from "browser-cookies";
 import axios from "axios";
+import browserCookies from "browser-cookies";
 
-const api = axios.create({
-  withCredentials: true
-});
+const api = axios.create();
 
 export default {
   data() {
     name: "LandingHeader";
     return {
       firstName: browsercookies.get("first_name"),
-      walletBalance: browsercookies.get("wallet"),
+      interval: null,
+      walletBalance: "",
       menu: [
         { title: "Account", icon: "fas fa-user-alt fa-s" },
         { title: "Orders", icon: "far fa-list-alt fa-s" },
@@ -101,11 +98,22 @@ export default {
   components: {
     ShoppingCart: ShoppingCart
   },
+  created: function getWalletBalance() {
+    api
+      .get("/api/users/" + browserCookies.get("user_id") + "/wallet")
+      .then(response => {
+        console.log(response.data[0].wallet);
+        this.walletBalance = response.data[0].wallet.toFixed(2);
+      })
+      .catch(err => {
+        console.log(err.data);
+        this.walletBalance = "error";
+      });
+  },
   methods: {
     showShoppingCart: function() {
       this.$emit("showcart", "show");
     },
-
     menuActions: function(menuItem) {
       switch (menuItem) {
         case "Account": {
@@ -117,7 +125,8 @@ export default {
           break;
         }
         case "Wallet": {
-          this.$router.push("/wallet");
+          // this.$router.push("/wallet");
+
           break;
         }
         case "Logout":
@@ -135,6 +144,9 @@ export default {
       this.$router.push("/dashboard");
     }
   }
+  // beforeDestroy() {
+  //   clearInterval(this.interval);
+  // }
 };
 </script>
 

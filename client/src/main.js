@@ -17,10 +17,17 @@ import axios from 'axios';
 import 'vuetify/dist/vuetify.min.css';
 
 Vue.use(VueRouter);
-Vue.use(Vuetify);
 Vue.use(VeeValidate);
 Vue.use(VueToast);
 Vue.use(VueMaterial);
+Vue.use(Vuetify, {
+  theme: {
+    primary: '#344955',
+    secondary: '#232534',
+    lightened: "#4a6572",
+    accent: '#f9aa33'
+  }
+})
 /*----------------------- Routes Declaration -----------------*/
 const routes = [
   {path: '/', component: Home},

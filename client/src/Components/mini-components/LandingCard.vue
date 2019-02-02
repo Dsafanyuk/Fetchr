@@ -5,36 +5,28 @@
         <div class="card-img">
           <span
             href="#"
-            class="btn-floating btn-large price waves-effect waves-light brown darken-3"
+            class="btn-floating btn-large price waves-effect waves-light custom"
           >${{product.price.toFixed(2)}}</span>
           <img :src="product.product_url" :alt="product.product_name">
         </div>
         <ul class="card-action-buttons">
           <li>
             <div v-if="isFavorite == 'true'">
-              <a
-                v-on:click="unfavorite()"
-                id="favorite"
-                class="btn-floating waves-effect waves-light red accent-2"
-              >
-                <i class="material-icons like">favorite</i>
-              </a>
+              <v-btn fab color="primary" v-on:click="unfavorite()">
+                <v-icon id="favorite" color="white">favorite</v-icon>
+              </v-btn>
             </div>
-            <div v-if="isFavorite == 'false'">
-              <a
-                v-on:click="favorite()"
-                id="favorite"
-                class="btn-floating waves-effect waves-light red accent-2"
-              >
-                <i class="material-icons like">favorite_border</i>
-              </a>
+            <div v-else-if="isFavorite == 'false'">
+              <v-btn fab color="primary" v-on:click="favorite()">
+                <v-icon id="favorite" color="white">favorite_border</v-icon>
+              </v-btn>
             </div>
           </li>
           <li>
-            <a v-on:click="addToCart()" id="buy" class="btn-floating waves-effect waves-light blue">
-              <i v-if="inCart" class="material-icons buy">check</i>
-              <i v-if="!inCart" class="material-icons buy">add_shopping_cart</i>
-            </a>
+            <v-btn fab v-on:click="addToCart()" id="buy" color="accent">
+              <v-icon v-if="inCart" color="white">check</v-icon>
+              <v-icon v-if="!inCart" color="white">add_shopping_cart</v-icon>
+            </v-btn>
           </li>
         </ul>
         <div class="card-content">
@@ -77,10 +69,12 @@ export default {
     return {
       isFavorite: this.product.is_favorite,
       inCart: false,
-      shared: State.data
+      shared: State.data,
+      productDetail: this.product.is_favorite
     };
   },
   components: {},
+  watch: {},
   methods: {
     favorite: function() {
       api
@@ -90,9 +84,10 @@ export default {
         })
         .then(response => {
           if (response.status == 200) {
+            console.log(response);
             this.isFavorite = "true";
-            console.log(`After favoriting, isFavorite = ${this.isFavorite}`);
-            this.$toasted.success("Favorited").goAway(1000);
+            this.product.is_favorite = "true";
+            this.$toasted.success("Added to favorites!").goAway(1000);
           }
         })
         .catch(error => {
@@ -115,10 +110,10 @@ export default {
         })
         .then(response => {
           if (response.status == 200) {
-            console.log(response);
             this.isFavorite = "false";
+            this.product.is_favorite = "false";
             console.log(`After unfavoriting, isFavorite = ${this.isFavorite}`);
-            this.$toasted.success("Unfavorited").goAway(1000);
+            this.$toasted.success("Removed from favorites!").goAway(1000);
           }
         })
         .catch(error => {
@@ -159,4 +154,7 @@ export default {
 </script>
 
 <style scoped lang="css" src="../custom_css/landing_card.scss">
+.btn-floating {
+  background-color: #344955 !important;
+}
 </style>

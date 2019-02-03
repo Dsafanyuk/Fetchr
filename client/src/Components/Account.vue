@@ -80,6 +80,7 @@
     import Navigation from './Navigation.vue';
     import LandingHeader from './mini-components/LandingHeader.vue';
     import LandingFooter from './mini-components/LandingFooter.vue';
+    import browsercookies from 'browser-cookies';
 
     export default {
       data() {
@@ -101,7 +102,7 @@
        created: function loadUserInfo() {
          api.get("/api/users/login")
        },
-       
+
       components: {
         Navigation: Navigation,
         LandingHeader: LandingHeader,

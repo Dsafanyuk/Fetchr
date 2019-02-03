@@ -13,6 +13,7 @@ import Orders from './Components/Orders.vue';
 import Checkout from './Components/Checkout.vue';
 import Confirmation from './Components/Confirmation.vue';
 import axios from 'axios';
+import Account from './Components/Account.vue';
 
 import 'vuetify/dist/vuetify.min.css';
 
@@ -30,6 +31,7 @@ const routes = [
   {path: '/orders', component: Orders},
   {path: '/confirmation', component: Confirmation},
   {path: '/checkout', component: Checkout},
+  {path: '/account', component: Account},
 ];
 
 const router = new VueRouter({

@@ -2,96 +2,76 @@
   <v-app>
       <LandingHeader v-on:showcart="displayCart" ></LandingHeader>
  <div>
- <div class="container bootstrap snippet">
-    <div class="row">
-     <div class="col-sm-10"><h1>Header</h1></div>
-  </div>
+
     <div class="row">
        <div class=" col-sm-3 hidden-xs">
           <div class="text-center">
-      <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-square img-thumbnail" alt="avatar">
-      <h6>Upload a different photo...</h6>
-      <input type="file" class="text-center center-block file-upload">
-      </div></hr><br>
+             <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-square img-thumbnail" alt="avatar">
+             <h6>Upload a different photo...</h6>
+             <input type="file" class="text-center center-block file-upload">
+          </div><br>
 
-
-        <div class="panel panel-default">
-          <div class="panel-heading">Account Overview</div>
-        </div>
-
-        <div class="panel panel-default">
-          <div class="panel-heading"><a href="">My Profile</a></div>
-        </div>
-
-        <div class="panel panel-default">
-          <div class="panel-heading"><a href="">My Orders</a></div>
-             <div class="panel-body">
-                <li class="list-group-item text-right"><span class="pull-left"><strong>Number of Orders</strong></span> 5</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span> 29</li>
-             </div>
-          </div>
-      </div><!--/col-3-->
-
-     <div class=" col-sm-9">
-        <h3>Account Overview</h3>
-         <div class="tab-content">
-          <div class="tab-pane active" id="home">
-          <hr>
-             <div class="row">
-              <div class="col-sm-6">
-               <div class="well card profile" id>
-                <h3 class="text-primary">Profile</h3>
-                   <div class="form-group">
-                    <label class="control-label">First name</label>
-                    <p class="form-control-static" id="card-profile-email">John</p>
-                   </div>
-                   <div class="form-group">
-                    <label class="control-label">Last name</label>
-                    <p class="form-control-static" id="card-profile-email">Done</p>
-                   </div>
-                   <div class="form-group">
-                    <label class="control-label">Email</label>
-                    <p class="form-control-static" id="card-profile-email">your@email.com</p>
-                   </div>
-                   <div class="form-group">
-                    <label class="control-label">Date of birth</label>
-                    <p class="form-control-static" id="card-profile-email">MM/DD/YYYY</p>
-                   </div>
-                   <div class="form-group">
-                    <label class="control-label">State</label>
-                    <p class="form-control-static" id="card-profile-email">XX</p>
-                   </div>
-                <button class="btn"><a href="" type="button">  Edit Profile  </a></button>
-               </div>
-              </div>
-
-              <div class="col-sm-6">
-               <div class="well card" id>
-                <h3 class="text-primary">My Orders</h3>
-                   <div class="row">
-                    <div class="col-sm-6">
-                     <div class="form-group">
-                      <label for="email"><h6>Number of Orders: 15</h6></label>
-                     </div>
-                     <div class="form-group">
-                         <p class="input-group"> Currently in the
-                          <i class="glyphicon glyphicon-shopping-cart"></i> : 1
-                         </p>
-                     </div>
-                    </div>
-                     <button class="btn"><a href="" type="button">  View Order  </a ></button>
-                   </div>
-                </div>
-               </div>
+         <div class = "col-sm-6 hidden-xs">
+            <div class="panel pane-warning ">
+               <div class="panel-heading">Account Overview</div>
             </div>
 
+            <div class="dropdown">
+               <div class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">My Profile</div>
+                  <ul class="dropdown-menu">
+                     <li><a href="#"><strong>Edit Profile</strong></a></li>
+                     <li><a href="#"><strong>Social Media</strong></a></li>
+                  </ul>
+              </div><br>
+
+             <div class="dropdown">
+                <div class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">My Orders</div>
+                   <ul class="dropdown-menu">
+                      <li><a href="/orders"><strong>View Orders</strong></a></li>
+                   </ul>
+               </div>
+            </div>
+      </div><!--/col-3-->
+
+      <div class=" col-sm-9">
+         <h3 class="text-warning">Account Overview</h3>
+         <div class="tab-content">
+            <div class="tab-pane active" id="home">
+               <div class="row">
+                  <div class="col-sm-6">
+                     <div class="well card profile">
+                        <div class="form-group">
+                          <p class="control-label">First name</p>
+                          <p class="form-control-static" id="card-profile-email">{{ firstName }}</p>
+                        </div>
+
+                        <div class="form-group">
+                           <p class="control-label">Last name</p>
+                          <p class="form-control-static" id="card-profile-email">{{ lastName }}</p>
+                        </div>
+
+                        <div class="form-group">
+                          <p class="control-label">Email</p>
+                          <p class="form-control-static" id="card-profile-email">{{ emailAddress }}</p>
+                        </div>
+
+                        <div class="form-group">
+                           <p class="control-label">Room number</p>
+                           <p class="form-control-static" id="card-profile-email">{{ roomNumber }}</p>
+                        </div>
+
+                        <div class="form-group">
+                           <p class="control-label">Phone Number</p>
+                           <p class="form-control-static" id="card-profile-email">{{ phoneNumber }}</p>
+                        </div>
+                    </div>
+                 </div>
+              </div>
+            </div>
          </div>
-       </div>
-        </div>
-     </div>
-    </div>
- </div>
- </div>
+      </div>
+   </div>
+</div>
  <LandingFooter></LandingFooter>
  </v-app>
     </template>
@@ -103,8 +83,25 @@
 
     export default {
       data() {
-        return {};
-      },
+       return {
+           firstName: browsercookies.get('first_name'),
+          lastName: browsercookies.get('lasst_name'),
+           roomNumber: browsercookies.get('room_num'),
+           phoneNumber: browsercookies.get('phone_number'),
+           emailAddress: browsercookies.get('email_address')
+         };
+       },
+
+       components: {
+         Navigation: Navigation,
+         LandingHeader: LandingHeader,
+         LandingFooter: LandingFooter,
+       },
+
+       created: function loadUserInfo() {
+         api.get("/api/users/login")
+       },
+       
       components: {
         Navigation: Navigation,
         LandingHeader: LandingHeader,

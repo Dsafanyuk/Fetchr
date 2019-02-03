@@ -18,13 +18,8 @@
              <span class="sr-only">Toggle Dropdown</span>
             </button>
                <div class="dropdown-menu">
-<<<<<<< HEAD
-               <a class="dropdown-item" href="/account">My Account</a>
-               <a class="dropdown-item" href="#">My Orders</a>
-=======
-               <a class="dropdown-item" href="#">My Account</a>
-               <a class="dropdown-item" v-on:click="gotoOrders">My Orders</a>
->>>>>>> a3662f23fb474a5edf9355f9cd31663ee1cc434f
+                  <a class="dropdown-item" href="/account">My Account</a>
+                  <a class="dropdown-item" v-on:click="gotoOrders">My Orders</a>
                <div class="dropdown-divider"></div>
                <a v-on:click='logout()' class="dropdown-item" href="#">Log Out</a>
                </div>
@@ -37,8 +32,9 @@
 </template>
 <script>
 import Landing from '../Landing.vue';
-import ShoppingCart from './ShoppingCart.vue'
+import ShoppingCart from './ShoppingCart.vue';
 import browsercookies from 'browser-cookies';
+import Account from '../Account.vue';
 import axios from 'axios';
 
 const api = axios.create({

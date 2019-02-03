@@ -9,26 +9,6 @@
           >${{product.price.toFixed(2)}}</span>
           <img :src="product.product_url" :alt="product.product_name">
         </div>
-        <ul class="card-action-buttons">
-          <li>
-            <div v-if="isFavorite == 'true'">
-              <v-btn fab color="primary" v-on:click="unfavorite()">
-                <v-icon id="favorite" color="white">favorite</v-icon>
-              </v-btn>
-            </div>
-            <div v-else-if="isFavorite == 'false'">
-              <v-btn fab color="primary" v-on:click="favorite()">
-                <v-icon id="favorite" color="white">favorite_border</v-icon>
-              </v-btn>
-            </div>
-          </li>
-          <li>
-            <v-btn fab v-on:click="addToCart()" id="buy" color="accent">
-              <v-icon v-if="inCart" color="white">check</v-icon>
-              <v-icon v-if="!inCart" color="white">add_shopping_cart</v-icon>
-            </v-btn>
-          </li>
-        </ul>
         <div class="card-content">
           <div class="row">
             <div class="col s12">
@@ -41,6 +21,37 @@
             </div>
           </div>
         </div>
+        <div style="display:flex" class="btn_container">
+          <div class="favorite_button">
+            <v-btn
+              id="fave_btn"
+              block
+              color="primary"
+              v-if="isFavorite == 'true'"
+              v-on:click="unfavorite()"
+              dark
+              :ripple="false"
+            >
+              <v-icon medium>favorite</v-icon>
+            </v-btn>
+            <v-btn
+              id="fave_btn"
+              block
+              color="primary"
+              v-if="isFavorite == 'false'"
+              v-on:click="favorite()"
+              :ripple="false"
+            >
+              <v-icon medium>favorite_border</v-icon>
+            </v-btn>
+          </div>
+          <div class="cart_button">
+            <v-btn id="cart_btn" block color="accent" v-on:click="addToCart()" :ripple="false">
+              <v-icon medium v-if="inCart">check</v-icon>
+              <v-icon medium v-if="!inCart">add_shopping_cart</v-icon>
+            </v-btn>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -50,7 +61,6 @@
 import axios from "axios";
 import Toasted from "vue-toasted";
 import browserCookies from "browser-cookies";
-import _ from "lodash";
 import State from "../assets/js/shoppingCartState";
 
 const api = axios.create();

@@ -6,7 +6,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="category-wrapper">
-            <v-tabs centered light icons-and-text v-model="active">
+            <v-tabs centered light icons-and-text v-model="active" show-arrows>
               <v-tabs-slider color="orange"></v-tabs-slider>
               <v-tab href="#Popular">Popular
                 <v-icon>fas fa-fire-alt</v-icon>

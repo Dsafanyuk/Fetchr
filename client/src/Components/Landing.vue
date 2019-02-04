@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <LandingHeader v-on:showcart="displayCart"></LandingHeader>
+    <LandingHeader v-on:showcart="displayCart" v-model="search_input"></LandingHeader>
     <ShoppingCart v-if="seen"></ShoppingCart>
     <div class="container-fluid">
       <div class="row">
@@ -63,10 +63,10 @@ export default {
       active: "Popular",
       seen: false,
       products: [],
-      interval: null
+      interval: null,
+      search_input: ""
     };
   },
-  props: {},
   created: function loadProducts() {
     let loadingProductsToast = this.$toasted.show("Loading products...");
     api
@@ -96,6 +96,36 @@ export default {
   },
   computed: {
     filteredProducts() {
+      if (this.search_input) {
+        console.log("hello");
+        return this.products.filter(product => {
+          return (
+            product.product_name
+              .toLowerCase()
+              .includes(this.search_input.toLowerCase()) ||
+            product.category
+              .toLowerCase()
+              .includes(this.search_input.toLowerCase())
+          );
+        });
+      }
+      var category = this.active
+        .toLowerCase()
+        .split(" ")
+        .join("_");
+      if (category === "popular" || !category) {
+        return this.products;
+      } else if (category === "favorites") {
+        return this.products.filter(product => {
+          return product.is_favorite == "true";
+        });
+      } else {
+        return this.products.filter(product => {
+          return product.category === category;
+        });
+      }
+    },
+    searchResults() {
       var category = this.active
         .toLowerCase()
         .split(" ")

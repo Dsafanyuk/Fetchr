@@ -21,6 +21,8 @@
           type="search"
           placeholder="Search for a product"
           aria-label="Search"
+          :value="search"
+          @input="$emit('input', $event.target.value)"
         >
       </div>
 
@@ -75,6 +77,7 @@ import browserCookies from "browser-cookies";
 const api = axios.create();
 
 export default {
+  props: ["search"],
   data() {
     name: "LandingHeader";
     return {
@@ -102,7 +105,6 @@ export default {
     api
       .get("/api/users/" + browserCookies.get("user_id") + "/wallet")
       .then(response => {
-        console.log(response.data[0].wallet);
         this.walletBalance = response.data[0].wallet.toFixed(2);
       })
       .catch(err => {

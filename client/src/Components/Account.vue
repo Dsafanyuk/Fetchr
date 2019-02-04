@@ -1,44 +1,39 @@
 <template >
   <v-app>
-      <LandingHeader v-on:showcart="displayCart" ></LandingHeader>
- <div>
+<div class='col-md-12 col-xs-12'>
+   <div>
+      <LandingHeader v-on:showcart="displayCart" ></LandingHeader><br>
+   </div>
 
-    <div class="row">
-       <div class=" col-sm-3 hidden-xs">
-          <div class="text-center">
-             <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-square img-thumbnail" alt="avatar">
-             <h6>Upload a different photo...</h6>
-             <input type="file" class="text-center center-block file-upload">
-          </div><br>
+   <div class="col-sm-2 row">
+      <div class="  hidden-xs">
+         <div class=" hidden-xs panel pane-warning ">
+            <div class="panel-heading">Account Overview</div>
+         </div><br>
 
-         <div class = "col-sm-6 hidden-xs">
-            <div class="panel pane-warning ">
-               <div class="panel-heading">Account Overview</div>
-            </div>
+         <div class=" hidden-xs dropdown">
+                <div class=" hidden-xs btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">My Profile</div>
+                   <ul class="dropdown-menu">
+                      <li><a href="#"><strong>Edit Profile</strong></a></li>
+                      <li><a href="#"><strong>Social Media</strong></a></li>
+                   </ul>
+               </div><br>
 
-            <div class="dropdown">
-               <div class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">My Profile</div>
-                  <ul class="dropdown-menu">
-                     <li><a href="#"><strong>Edit Profile</strong></a></li>
-                     <li><a href="#"><strong>Social Media</strong></a></li>
-                  </ul>
-              </div><br>
-
-             <div class="dropdown">
-                <div class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">My Orders</div>
+          <div class="dropdown">
+                <div class=" hidden-xs btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">My Orders</div>
                    <ul class="dropdown-menu">
                       <li><a href="/orders"><strong>View Orders</strong></a></li>
                    </ul>
                </div>
-            </div>
+         </div>
       </div><!--/col-3-->
 
-      <div class=" col-sm-9">
+      <div class=" col-sm-10">
          <h3 class="text-warning">Account Overview</h3>
          <div class="tab-content">
             <div class="tab-pane active" id="home">
                <div class="row">
-                  <div class="col-sm-6">
+                  <div class="col-sm-8">
                      <div class="well card profile">
                         <div class="form-group">
                           <p class="control-label">First name</p>
@@ -71,7 +66,7 @@
          </div>
       </div>
    </div>
-</div>
+
  <LandingFooter></LandingFooter>
  </v-app>
     </template>

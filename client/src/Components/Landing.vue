@@ -124,23 +124,6 @@ export default {
           return product.category === category;
         });
       }
-    },
-    searchResults() {
-      var category = this.active
-        .toLowerCase()
-        .split(" ")
-        .join("_");
-      if (category === "popular" || !category) {
-        return this.products;
-      } else if (category === "favorites") {
-        return this.products.filter(product => {
-          return product.is_favorite == "true";
-        });
-      } else {
-        return this.products.filter(product => {
-          return product.category === category;
-        });
-      }
     }
   },
   components: {

@@ -31,7 +31,7 @@
             </div>
           </li>
           <li>
-            <a v-on:click="addToCart()" id="buy" class="btn-floating waves-effect waves-light blue">
+            <a v-on:click="addItem" id="buy" class="btn-floating waves-effect waves-light blue">
               <i v-if="inCart" class="material-icons buy">check</i>
               <i v-if="!inCart" class="material-icons buy">add_shopping_cart</i>
             </a>
@@ -143,6 +143,19 @@ export default {
         State.add(this.product);
       }
     },
+    addItem: function() {
+      if (this.inCart) {
+        this.inCart = false;
+        this.$toasted.success("Removed from cart").goAway(1000);
+        this.$store.commit('removeItem', this.product);
+        this.$forceUpdate();
+      } else {
+        this.inCart = true;
+        this.$toasted.success("Added to cart").goAway(1000);
+        this.$store.commit('addItem', this.product);
+        this.$forceUpdate();
+      }
+    },
     inc() {
       State.inc(this.product);
     },
@@ -150,11 +163,13 @@ export default {
       State.dec(this.product);
     }
   },
-  computed: {
-    quantityIncart() {
-      return 0;
-    }
-  }
+  mounted() {
+    this.$store.getters.cartItems.forEach( (item) => {
+      if(item.product_id === this.product.product_id) {
+        this.inCart = true;
+      }
+    });
+  },
 };
 </script>
 

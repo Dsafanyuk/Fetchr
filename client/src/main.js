@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Vuex from 'vuex';
 import Vuetify from 'vuetify';
 import VeeValidate from 'vee-validate';
 import VueToast from 'vue-toasted';
@@ -30,6 +31,7 @@ Vue.use(Vuetify, {
     accent: '#f9aa33'
   }
 })
+Vue.use(Vuex);
 /*----------------------- Routes Declaration -----------------*/
 const routes = [
   {path: '/', component: Home},
@@ -52,10 +54,45 @@ if (process.env.NODE_ENV == 'production') {
   axios.defaults.baseURL = 'http://127.0.0.1:3000';
 }
 
+const store = new Vuex.Store({
+  state: {
+    count: 0,
+    cart: [],
+  },
+  mutations: {
+    addItem: (state, product) => {
+      state.cart.push(product);
+    },
+    removeItem: (state, product) => {
+      state.cart = state.cart.filter((obj)=>{
+        return obj.product_id !== product.product_id
+      })
+    }
+  },
+  getters: {
+    cartItems(state) {
+      return state.cart;
+    },
+    totalCartItems(state) {
+      return state.cart.length;
+    },
+    totalCartPrice(state) {
+      var total = 0;
+      
+      state.cart.forEach (function(item){
+        total = total + item.price;
+      });
+
+      return total.toFixed(2);
+    },
+  }
+});
+
 axios.defaults.withCredentials = true; // force axios to have withCredentials with all requests.
 new Vue({
   el: '#app',
   template: '<App/>',
+  store: store,
   router,
   render: (h) => h(App),
 });

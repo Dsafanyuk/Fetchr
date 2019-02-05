@@ -3,7 +3,7 @@
     <LandingHeader></LandingHeader>
     <div class="checkout">
       <h3>Checkout</h3>
-      <v-data-table :headers="headers" :items="products">
+      <v-data-table :headers="headers" :items="items">
         <template slot="items" slot-scope="props">
           <td>{{ props.item.product_name }}</td>
           <td class="text-xs-left">${{ props.item.price }}</td>
@@ -44,24 +44,29 @@ export default {
       productsReceived: []
     };
   },
-  mounted: function() {
-    this.productsReceived = State.data.cart;
-    //setting prods in table
-    this.products = this.productsReceived.map(product => {
-      //put price in right format
-      product.price = product.price.toFixed(2);
-      //this is for the v-data-table
-      product.value = false;
-      product.quantity = 1;
-      return product;
-    });
+  computed: {
+    items: function() {
+      return this.$store.getters.cartItems
+    }
   },
+  // mounted: function() {
+  //   this.productsReceived = State.data.cart;
+  //   //setting prods in table
+  //   this.products = this.productsReceived.map(product => {
+  //     //put price in right format
+  //     product.price = product.price.toFixed(2);
+  //     //this is for the v-data-table
+  //     product.value = false;
+  //     product.quantity = 1;
+  //     return product;
+  //   });
+  // },
   methods: {
     checkout: function(event) {
       let router = this.$router;
-
       let total = 0;
       let productsWithQuantity = [];
+      
       this.productsReceived.map(product => {
         //get the total of the products for the order
         total += parseFloat(product.price);

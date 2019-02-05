@@ -62,6 +62,7 @@ import axios from "axios";
 import Toasted from "vue-toasted";
 import browserCookies from "browser-cookies";
 import State from "../assets/js/shoppingCartState";
+import _ from "lodash";
 
 const api = axios.create();
 export default {
@@ -148,6 +149,19 @@ export default {
         State.add(this.product);
       }
     },
+    addItem: function() {
+      if (this.inCart) {
+        this.inCart = false;
+        this.$toasted.success("Removed from cart").goAway(1000);
+        this.$store.commit("removeItem", this.product);
+        this.$forceUpdate();
+      } else {
+        this.inCart = true;
+        this.$toasted.success("Added to cart").goAway(1000);
+        this.$store.commit("addItem", this.product);
+        this.$forceUpdate();
+      }
+    },
     inc() {
       State.inc(this.product);
     },
@@ -155,10 +169,12 @@ export default {
       State.dec(this.product);
     }
   },
-  computed: {
-    quantityIncart() {
-      return 0;
-    }
+  mounted() {
+    this.$store.getters.cartItems.forEach(item => {
+      if (item.product_id === this.product.product_id) {
+        this.inCart = true;
+      }
+    });
   }
 };
 </script>

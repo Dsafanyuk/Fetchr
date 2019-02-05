@@ -65,9 +65,6 @@
 </template>
 
 <script>
-import CartItems from "./CartItems.vue";
-import State from "../assets/js/shoppingCartState";
-import _ from "lodash";
 export default {
   props: {
     value: Boolean
@@ -164,30 +161,22 @@ export default {
         }
       ],
       Items: [],
-      total: 0,
       nbOfItems: 0
     };
   },
-  created: function loadItems() {
-    this.Items = State.data.cart;
-    // Set the number of item in the cart
-    this.nbOfItems = this.Items.length;
-
-    // Get the current Total
-    var currentTotal = this.total;
-
-    this.Items.forEach(function(item) {
-      currentTotal = currentTotal + item.price;
-    });
-    // Update the total
-    this.total = Math.floor(currentTotal * 100) / 100;
-  },
-  methods: {
-    checkout: function(event) {
-      this.$router.push("/checkout");
-    }
-  },
   computed: {
+    // Return all items in the cart
+    items: function() {
+      return this.$store.getters.cartItems;
+    },
+    // Return total price in the cart
+    total: function() {
+      return this.$store.getters.totalCartPrice;
+    },
+    // Return number of items
+    numberOfItems: function() {
+      return this.$store.getters.totalCartItems;
+    },
     show: {
       get() {
         console.log(`GET constructor ${this.value}`);
@@ -200,9 +189,12 @@ export default {
       }
     }
   },
-  components: {
-    CartItems: CartItems
-  }
+  methods: {
+    checkout: function(event) {
+      this.$router.push("/checkout");
+    }
+  },
+  components: {}
 };
 </script>
 

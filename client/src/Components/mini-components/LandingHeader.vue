@@ -110,6 +110,17 @@ export default {
   created: function() {
     this.getWalletBalance();
   },
+  created: function getWalletBalance() {
+    api
+      .get("/api/users/" + browserCookies.get("user_id") + "/wallet")
+      .then(response => {
+        this.walletBalance = response.data[0].wallet.toFixed(2);
+      })
+      .catch(err => {
+        console.log(err.data);
+        this.walletBalance = "error";
+      });
+  },
   methods: {
     getWalletBalance: function() {
       api
@@ -156,6 +167,9 @@ export default {
       this.$router.push("/dashboard");
     }
   }
+  // beforeDestroy() {
+  //   clearInterval(this.interval);
+  // }
 };
 </script>
 

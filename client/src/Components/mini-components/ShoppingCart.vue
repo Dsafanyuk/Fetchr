@@ -9,9 +9,8 @@
         <v-data-table
           :headers="headers"
           :items="desserts"
-          class="elevation-1"
           hide-headers
-          total-items="10"
+          :total-items="10"
           hide-actions
         >
           <template slot="items" slot-scope="props">
@@ -24,8 +23,8 @@
                 <v-icon color="primary">add_circle</v-icon>
               </v-btn>
             </td>
-            <td class="text-xs-right">Price</td>
-            <td class="text-xs-right">
+            <td class="text-xs-right" :colspan="2">Price</td>
+            <td class="text-xs-center">
               <v-btn icon>
                 <v-icon color="error">delete_forever</v-icon>
               </v-btn>
@@ -33,14 +32,12 @@
           </template>
           <template slot="footer">
             <td></td>
-            <td></td>
-            <td>
+            <td class="text-xs-right">
               <strong>Total</strong>
             </td>
-            <td :colspan="headers.length">$$TOTAL$$</td>
+            <td class="text-xs-left" :colspan="headers.length">$$TOTAL$$</td>
           </template>
         </v-data-table>
-        <v-divider></v-divider>
         <div class="text-xs-center">
           <v-btn color="gray">Continue Shopping</v-btn>
           <v-btn dark color="green">Checkout &nbsp;&nbsp;

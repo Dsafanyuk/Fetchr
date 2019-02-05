@@ -1,5 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark">
+    <ShoppingCart v-model="showCart"></ShoppingCart>
     <Wallet
       v-model="showWallet"
       v-on:updateWallet="getWalletBalance()"
@@ -64,7 +65,7 @@
           </v-list>
         </v-menu>
       </div>
-      <div class="text-xs-right col-xs-1" id="shopping_cart">
+      <div class="text-xs-right col-xs-1" id="shopping_cart" @click="showShoppingCart()">
         <v-btn fab color="#f9aa33">
           <v-icon color="white">shopping_cart</v-icon>
         </v-btn>
@@ -88,6 +89,7 @@ export default {
     return {
       firstName: browserCookies.get("first_name"),
       showWallet: false,
+      showCart: false,
       walletBalance: "",
       menu: [
         { title: "Account", icon: "fas fa-user-alt fa-s" },
@@ -110,17 +112,6 @@ export default {
   created: function() {
     this.getWalletBalance();
   },
-  created: function getWalletBalance() {
-    api
-      .get("/api/users/" + browserCookies.get("user_id") + "/wallet")
-      .then(response => {
-        this.walletBalance = response.data[0].wallet.toFixed(2);
-      })
-      .catch(err => {
-        console.log(err.data);
-        this.walletBalance = "error";
-      });
-  },
   methods: {
     getWalletBalance: function() {
       api
@@ -137,6 +128,7 @@ export default {
     },
     showShoppingCart: function() {
       this.$emit("showcart", "show");
+      this.showCart = true;
     },
     menuActions: function(menuItem) {
       switch (menuItem) {

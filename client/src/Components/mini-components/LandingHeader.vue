@@ -1,5 +1,10 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark">
+    <Wallet
+      v-model="showWallet"
+      v-on:updateWallet="getWalletBalance()"
+      :walletBalance="walletBalance"
+    ></Wallet>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul class="custom_url col-md-4 navbar-nav mt-2">
         <li class="nav-item active">
@@ -70,9 +75,9 @@
 <script>
 import Landing from "../Landing.vue";
 import ShoppingCart from "./ShoppingCart.vue";
-import browsercookies from "browser-cookies";
-import axios from "axios";
+import Wallet from "./Wallet";
 import browserCookies from "browser-cookies";
+import axios from "axios";
 
 const api = axios.create();
 
@@ -81,8 +86,8 @@ export default {
   data() {
     name: "LandingHeader";
     return {
-      firstName: browsercookies.get("first_name"),
-      interval: null,
+      firstName: browserCookies.get("first_name"),
+      showWallet: false,
       walletBalance: "",
       menu: [
         { title: "Account", icon: "fas fa-user-alt fa-s" },
@@ -99,20 +104,26 @@ export default {
     };
   },
   components: {
-    ShoppingCart: ShoppingCart
+    ShoppingCart: ShoppingCart,
+    Wallet: Wallet
   },
-  created: function getWalletBalance() {
-    api
-      .get("/api/users/" + browserCookies.get("user_id") + "/wallet")
-      .then(response => {
-        this.walletBalance = response.data[0].wallet.toFixed(2);
-      })
-      .catch(err => {
-        console.log(err.data);
-        this.walletBalance = "error";
-      });
+  created: function() {
+    this.getWalletBalance();
   },
   methods: {
+    getWalletBalance: function() {
+      api
+        .get("/api/users/" + browserCookies.get("user_id") + "/wallet")
+        .then(response => {
+          this.walletBalance = response.data[0].wallet.toFixed(2);
+          browserCookies.set("wallet", this.walletBalance);
+        })
+        .catch(err => {
+          console.log(err.data);
+          this.walletBalance = "error";
+        });
+      console.log("Retrieved wallet balance");
+    },
     showShoppingCart: function() {
       this.$emit("showcart", "show");
     },
@@ -127,15 +138,14 @@ export default {
           break;
         }
         case "Wallet": {
-          // this.$router.push("/wallet");
-
+          this.showWallet = true;
           break;
         }
         case "Logout":
           {
-            let allCookies = browsercookies.all();
+            let allCookies = browserCookies.all();
             for (let cookieName in allCookies) {
-              browsercookies.erase(cookieName);
+              browserCookies.erase(cookieName);
             }
             window.location.href = "http://127.0.0.1:8080/login";
           }
@@ -146,9 +156,6 @@ export default {
       this.$router.push("/dashboard");
     }
   }
-  // beforeDestroy() {
-  //   clearInterval(this.interval);
-  // }
 };
 </script>
 

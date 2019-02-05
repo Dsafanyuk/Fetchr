@@ -14,7 +14,7 @@ import Checkout from './Components/Checkout.vue';
 import Confirmation from './Components/Confirmation.vue';
 import axios from 'axios';
 import Account from './Components/Account.vue';
-
+import Edit_Acct from './Components/edit_acct.vue';
 import 'vuetify/dist/vuetify.min.css';
 
 Vue.use(VueRouter);
@@ -32,6 +32,7 @@ const routes = [
   {path: '/confirmation', component: Confirmation},
   {path: '/checkout', component: Checkout},
   {path: '/account', component: Account},
+  {path: '/edit_acct', component: Edit_Acct},
 ];
 
 const router = new VueRouter({

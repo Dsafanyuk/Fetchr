@@ -1,45 +1,46 @@
 <template >
   <v-app>
-<div class='col-md-12 col-xs-12'>
-   <div>
-      <LandingHeader v-on:showcart="displayCart" ></LandingHeader><br>
-   </div>
+     <LandingHeader v-on:showcart="displayCart" ></LandingHeader><br>
+       <div class="container">
+           <h3 class="text-warning"><br>Account Overview</h3><hr>
+           <div class="row">
 
-   <div class=" col-sm-10">
-      <h3 class="text-warning">Account Overview</h3>
-      <div class="tab-content">
-         <div class="tab-pane active" id="home">
-            <div class="row">
-               <div class="col-sm-8">
-                  <div class="well card profile">
+           <!-- personal info for -->
+              <div class="col-sm-12">
+                    <form class="form-horizontal" role="form">
                        <div class="form-group">
-                          <p class="control-label"><strong class='text-warning'>First name</strong>: {{ firstName }}</p>
+                          <p><strong class='text-warning'>First name</strong>: {{ firstName }}</p>
                        </div>
 
                        <div class="form-group">
-                          <p class="control-label"><strong class='text-warning'>Last name</strong>: {{ lastName }}</p>
+                          <p><strong class='text-warning'>Last name</strong>: {{ lastName }}</p>
                        </div>
 
                        <div class="form-group">
-                          <p class="control-label"><strong class='text-warning'>Email</strong>: {{ emailAddress }}</p>
+                          <p><strong class='text-warning'>Email address</strong>: {{ emailAddress}}</p>
                        </div>
 
                        <div class="form-group">
-                          <p class="control-label"><strong class='text-warning'>Room number</strong>: {{ roomNumber }}</p>
+                          <p><strong class='text-warning'>Room number</strong>: {{ roomNumber }}</p>
                        </div>
 
                        <div class="form-group">
-                          <p class="control-label"><strong class='text-warning'>Phone Number</strong>: {{ phoneNumber }}</p>
+                          <p ><strong class='text-warning'>Phone Number</strong>: {{ phoneNumber }}</p>
                        </div>
-                    </div>
-                 </div>
-             </div>
-          </div>
-       </div>
-    </div>
-</div>
-<LandingFooter></LandingFooter>
-</v-app>
+
+                       <div class="form-group text-right">
+                          <v-btn
+                              round color="cyan"
+                              type="submit"
+                              href="/edit_acct"
+                          >Edit</v-btn>
+                       </div>
+                   </form>
+               </div>
+            </div>
+         </div>
+      <LandingFooter></LandingFooter>
+   </v-app>
 </template>
 
     <script>

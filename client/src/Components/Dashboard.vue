@@ -1,10 +1,7 @@
 <template>
-  <body class="fixed-left">
-
-      <!-- Begin page -->
-      <div id="wrapper">
+  <body>
   <DashboardHeader> </DashboardHeader>
-</div>
+
 </body>
 
 
@@ -29,11 +26,6 @@ export default {
 </script>
 
 <style scoped="true">
-@import "dashboard_assets/css/core.css";
-@import "dashboard_assets/css/bootstrap.min.css";
-@import "dashboard_assets/css/components.css";
-@import "dashboard_assets/css/icons.css";
-@import "dashboard_assets/css/pages.css";
-@import "dashboard_assets/css/responsive.css";
+
 
 </style>

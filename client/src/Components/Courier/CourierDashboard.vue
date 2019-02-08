@@ -47,9 +47,13 @@
       CourierOrderTable      : CourierOrderTable,
       CourierAcceptedOrders  : CourierAcceptedOrders,
     },
+    created :function loadOrders() {
+      this.getAcceptedOrders();
+      this.getAvailableOrders();
+    },
     methods: {
       getAcceptedOrders() {
-        let loadingOrdersToast = this.$toasted.show("Loading orders...");
+        let loadingOrdersToast = this.$toasted.show("Loading accepted orders...");
         api
           .get(`/api/courier/` + user + `/acceptedOrders`)
           .then(response => { 
@@ -57,6 +61,7 @@
               order.building = this.buildings[order.room_num.slice(0, 1) - 1];
               return order;
             });
+            loadingOrdersToast.text("accepted orders loaded!").goAway(5000);
           })
           .catch(error => {
             if (error.response) {

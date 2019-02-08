@@ -14,7 +14,6 @@ function showCourierOrders(req, res) {
     .whereNull('courier_id')
     .whereNot('customer_id', req.params.user_id)
     .then((orders) => {
-      console.log(orders)
       res.send(orders);
     })
     .catch((err) => {
@@ -39,7 +38,6 @@ function acceptedOrders(req, res) {
     )
     .where('courier_id', req.params.user_id)
     .then((orders) => {
-      console.log(orders)
       res.send(orders);
     })
     .catch((err) => {

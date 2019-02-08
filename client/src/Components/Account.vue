@@ -30,11 +30,12 @@
 
                        <div class="form-group text-right">
                           <v-btn
-                              round color="cyan"
+                              rectangle color="light blue"
                               type="submit"
-                              href="/edit_acct"
-                          >Edit</v-btn>
+                              href="#"
+                          >Update Profile</v-btn>
                        </div>
+                       <hr>
                    </form>
                </div>
             </div>

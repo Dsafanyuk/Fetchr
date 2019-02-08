@@ -12,16 +12,25 @@ import Landing from './Components/Landing.vue';
 import Orders from './Components/Orders.vue';
 import Checkout from './Components/Checkout.vue';
 import Confirmation from './Components/Confirmation.vue';
+import Account from './Components/Account.vue'
 import axios from 'axios';
-import Account from './Components/Account.vue';
-import Edit_Acct from './Components/edit_acct.vue';
+import babel_polyfill from 'babel-polyfill';
+
 import 'vuetify/dist/vuetify.min.css';
 
 Vue.use(VueRouter);
-Vue.use(Vuetify);
+Vue.use(babel_polyfill)
 Vue.use(VeeValidate);
 Vue.use(VueToast);
 Vue.use(VueMaterial);
+Vue.use(Vuetify, {
+  theme: {
+    primary: '#344955',
+    secondary: '#232534',
+    lightened: "#4a6572",
+    accent: '#f9aa33'
+  }
+})
 /*----------------------- Routes Declaration -----------------*/
 const routes = [
   {path: '/', component: Home},
@@ -32,7 +41,6 @@ const routes = [
   {path: '/confirmation', component: Confirmation},
   {path: '/checkout', component: Checkout},
   {path: '/account', component: Account},
-  {path: '/edit_acct', component: Edit_Acct},
 ];
 
 const router = new VueRouter({

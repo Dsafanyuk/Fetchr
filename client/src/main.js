@@ -12,7 +12,7 @@ import Landing from './Components/Landing.vue';
 import Orders from './Components/Orders.vue';
 import Checkout from './Components/Checkout.vue';
 import Confirmation from './Components/Confirmation.vue';
-import Dashboard from './Components/Dashboard.vue';
+import CourierDashboard from './Components/Courier/CourierDashboard.vue';
 import axios from 'axios';
 
 import 'vuetify/dist/vuetify.min.css';
@@ -31,7 +31,7 @@ const routes = [
   {path: '/orders', component: Orders},
   {path: '/confirmation', component: Confirmation},
   {path: '/checkout', component: Checkout},
-  {path: '/dashboard', component : Dashboard},
+  {path: '/dashboard', component : CourierDashboard},
 ];
 
 const router = new VueRouter({

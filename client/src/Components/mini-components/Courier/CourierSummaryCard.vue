@@ -128,7 +128,7 @@
 </script>
 
 <style scoped="true">
-  @import "../dashboard_assets/css/core.css";
-  @import "../dashboard_assets/css/materialdesignicons.css";
-  @import "../dashboard_assets/css/components.css";
+  @import "../../assets/courier/css/core.css";
+  @import "../../assets/courier/css/materialdesignicons.css";
+  @import "../../assets/courier/css/components.css";
 </style>

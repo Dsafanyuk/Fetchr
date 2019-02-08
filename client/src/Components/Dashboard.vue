@@ -2,6 +2,7 @@
 
   <body>
     <DashboardHeader> </DashboardHeader>
+    <StatsBar> </StatsBar>
 
   </body>
 
@@ -11,6 +12,7 @@
 
 <script>
   import DashboardHeader from "./mini-components/DashboardHeader.vue";
+  import  StatsBar from "./mini-components/StatsCard.vue"
 
   export default {
     data() {
@@ -18,6 +20,7 @@
     },
     components: {
       DashboardHeader: DashboardHeader,
+      StatsBar       : StatsBar ,
     },
     methods: {
 

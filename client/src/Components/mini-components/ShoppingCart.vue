@@ -56,13 +56,6 @@ export default {
   },
   data() {
     return {
-      headers: [
-        { text: "Calories", value: "calories" },
-        { text: "Fat (g)", value: "fat" },
-        { text: "Carbs (g)", value: "carbs" },
-        { text: "Protein (g)", value: "protein" },
-        { text: "Iron (%)", value: "iron" }
-      ],
     };
   },
   computed: {

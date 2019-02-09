@@ -67,7 +67,7 @@
         >
       </div>
 
-      <div class="text-xs-right col-xs-1 offset-md-6">
+      <div class="text-xs-right col-xs-1 offset-md-5">
         <v-menu fixed>
           <v-btn
             v-if="!firstName"

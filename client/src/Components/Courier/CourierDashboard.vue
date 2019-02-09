@@ -1,18 +1,20 @@
 <template>
-
   <body>
     <CourierHeader> </CourierHeader>
     <CourierSummaryCard class="summarycard"> </CourierSummaryCard>
     <v-app>
-      <button type="button" v-on:click="getAvailableOrders">Refresh Available Orders</button>
-      <CourierOrderTable :orders="orders" ></CourierOrderTable>
-      <button type="button" v-on:click="getAcceptedOrders">Refresh Accepted Orders</button>
-      <CourierAcceptedOrders :orders="acceptedOrders" ></CourierAcceptedOrders>
+      <div class="row">
+        <div class="col-lg-6">
+          <button type="button" v-on:click="getAvailableOrders">Refresh Available Orders</button>
+          <CourierOrderTable :orders="orders" v-on:accepted="getAvailableOrders(); getAcceptedOrders();"></CourierOrderTable>
+        </div>
+        <div class="col-lg-6">
+          <button type="button" v-on:click="getAcceptedOrders">Refresh Accepted Orders</button>
+          <CourierAcceptedOrders :orders="acceptedOrders" v-on:delivered="getAcceptedOrders"></CourierAcceptedOrders>
+        </div>
+      </div>
     </v-app>
   </body>
-
-
-
 </template>
 
 <script>

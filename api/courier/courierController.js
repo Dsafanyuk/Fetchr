@@ -72,8 +72,30 @@ function acceptOrder(req, res) {
       console.log(err);
     });
 }
+
+// POST
+function deliverOrder(req, res) {
+  knex('orders')
+    .where('order_id', req.params.order_id)
+    .update('delivery_status', 'delivered')
+    .then((rows) => {
+      if (rows == 1) {
+        res.send("success");
+      }
+      else {
+        res.send("fail");
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: `${err}`,
+      }); // FOR DEBUGGING ONLY, dont send exact message in prod
+      console.log(err);
+    });
+}
 module.exports = {
   acceptOrder,
   acceptedOrders,
   showCourierOrders,
+  deliverOrder,
 };

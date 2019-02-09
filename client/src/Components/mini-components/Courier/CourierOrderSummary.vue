@@ -10,8 +10,9 @@
             <td class="text-xs-left">{{ props.item.quantity }}</td>
             </template>
         </v-data-table>
-        <div class="text-xs-center pt-2">
-            <v-btn color="orange" v-on:click="acceptOrder">Accept</v-btn>
+        <div class="text-xs-center pt-2" >
+            <v-btn v-if="accept" color="orange" v-on:click="acceptOrder">Accept</v-btn>
+            <v-btn v-if="deliver" color="green" v-on:click="deliverOrder">Deliver</v-btn>
         </div>
         </v-card>
     </v-dialog>
@@ -26,7 +27,9 @@
     export default {
     name: 'CourierOrderSummary',
     props: {
-        productID: Number
+        orderID: Number,
+        accept: Boolean,
+        deliver: Boolean,
     },
     data() {
         return {
@@ -44,7 +47,7 @@
             if (event) {
                 api.post(`/api/courier/accept`, {
                     courier_id: browserCookies.get("userId"),
-                    order_id: this.productID,
+                    order_id: this.orderID,
                 }).then(response => {
                     if (response.data == "success") {
                         this.dialog = false;
@@ -52,6 +55,7 @@
                             position: "top-center", 
                             duration : 5000
                         });
+                        this.$emit("accepted");
                     } else {
                         this.$toasted.error('Oops! This order has already been accepted. :(', {
                             position: "top-center", 
@@ -60,15 +64,35 @@
                     } 
                 })
             }
+        },
+        deliverOrder: function(event) {
+            if (event) {
+                api.post(`/api/courier/${this.orderID}/deliverOrder`)
+                    .then(response => {
+                        if (response.data == 'success') {
+                            this.dialog = false;
+                            this.$toasted.show('Order delivered!', {
+                                position: "top-center", 
+                                duration : 5000
+                            });
+                            this.$emit("delivered");
+                        } else {
+                            this.$toasted.error('Oops! :(', {
+                                position: "top-center", 
+                                duration : 5000
+                            });
+                        }
+                    })
+            }
         }
     },
     mounted: function() {
-        api.get(`/api/orders/${this.productID}/summary`).then(response => {
-        this.products = response.data.map(product => {
-            product.price = "$" + product.price.toFixed(2);
-            product.value = false;
-            return product;
-        });
+        api.get(`/api/orders/${this.orderID}/summary`).then(response => {
+            this.products = response.data.map(product => {
+                product.price = "$" + product.price.toFixed(2);
+                product.value = false;
+                return product;
+            });
         });
     }
     };

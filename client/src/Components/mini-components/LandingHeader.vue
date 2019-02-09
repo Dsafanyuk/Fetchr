@@ -159,9 +159,6 @@ export default {
       this.$router.push("/dashboard");
     }
   }
-  // beforeDestroy() {
-  //   clearInterval(this.interval);
-  // }
 };
 </script>
 

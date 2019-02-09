@@ -65,9 +65,6 @@ const store = new Vuex.Store({
       Vue.set(state.cart[product.product_id], 'quantity', 1 );
     },
     removeItem: (state, product) => {
-      // state.cart = state.cart.filter((obj)=>{
-      //   return obj.product_id !== product.product_id
-      // })
       Vue.delete(state.cart, product.product_id);
     },
     incQuantity: (state, product) => {

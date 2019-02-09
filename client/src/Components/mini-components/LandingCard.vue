@@ -61,8 +61,6 @@
 import axios from "axios";
 import Toasted from "vue-toasted";
 import browserCookies from "browser-cookies";
-import State from "../assets/js/shoppingCartState";
-import _ from "lodash";
 
 const api = axios.create();
 export default {

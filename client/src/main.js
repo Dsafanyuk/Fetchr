@@ -13,6 +13,7 @@ import Landing from './Components/Landing.vue';
 import Orders from './Components/Orders.vue';
 import Checkout from './Components/Checkout.vue';
 import Confirmation from './Components/Confirmation.vue';
+import Account from './Components/Account.vue'
 import axios from 'axios';
 import babel_polyfill from 'babel-polyfill';
 
@@ -41,6 +42,7 @@ const routes = [
   {path: '/orders', component: Orders},
   {path: '/confirmation', component: Confirmation},
   {path: '/checkout', component: Checkout},
+  {path: '/account', component: Account},
 ];
 
 const router = new VueRouter({

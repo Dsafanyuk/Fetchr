@@ -6,23 +6,22 @@
           class="headline justify-center text-xs-center font-weight-bold"
           primary-title
         >Your Shopping Cart</v-card-title>
-        <v-data-table
-          :items="items"
-          hide-headers
-          :total-items="10"
-          hide-actions
-        >
+        <v-data-table :items="items" hide-headers :total-items="10" hide-actions>
           <template slot="items" slot-scope="props">
             <td>{{ props.item.product_name }}</td>
             <td class="text-xs-right">
               <v-btn icon v-on:click="decQuantity(props.item)">
                 <v-icon color="primary">remove_circle</v-icon>
-              </v-btn>{{ props.item.quantity }}
+              </v-btn>
+              {{ props.item.quantity }}
               <v-btn icon v-on:click="incQuantity(props.item)">
                 <v-icon color="primary">add_circle</v-icon>
               </v-btn>
             </td>
-            <td class="text-xs-right" :colspan="2">{{ (props.item.price * props.item.quantity).toFixed(2) }}</td>
+            <td
+              class="text-xs-right"
+              :colspan="2"
+            >{{ (props.item.price * props.item.quantity).toFixed(2) }}</td>
             <td class="text-xs-center">
               <v-btn icon v-on:click="removeItem(props.item)">
                 <v-icon color="error">delete_forever</v-icon>
@@ -54,13 +53,12 @@ export default {
     value: Boolean
   },
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     // Return all items in the cart
     items: function() {
-      return this.$store.getters.cartItems
+      return this.$store.getters.cartItems;
     },
     // Return total price in the cart
     total: function() {
@@ -85,20 +83,20 @@ export default {
       this.$router.push("/checkout");
     },
     // Increase quantity for a product
-    incQuantity: function (product) {
+    incQuantity: function(product) {
       this.$store.commit("incQuantity", product);
     },
     // Decrease quantity for a product
-    decQuantity: function (product) {
-      if(product.quantity > 1) {
+    decQuantity: function(product) {
+      if (product.quantity > 1) {
         this.$store.commit("decQuantity", product);
       }
     },
     // Remove a product from cart
-    removeItem: function (product) {
+    removeItem: function(product) {
       this.$store.commit("removeItem", product);
-    },
-  },
+    }
+  }
 };
 </script>
 

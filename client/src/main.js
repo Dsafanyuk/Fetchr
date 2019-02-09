@@ -57,21 +57,30 @@ if (process.env.NODE_ENV == 'production') {
 const store = new Vuex.Store({
   state: {
     count: 0,
-    cart: [],
+    cart: {},
   },
   mutations: {
     addItem: (state, product) => {
-      state.cart.push(product);
+      Vue.set(state.cart, product.product_id, product);
+      Vue.set(state.cart[product.product_id], 'quantity', 1 );
     },
     removeItem: (state, product) => {
-      state.cart = state.cart.filter((obj)=>{
-        return obj.product_id !== product.product_id
-      })
+      // state.cart = state.cart.filter((obj)=>{
+      //   return obj.product_id !== product.product_id
+      // })
+      Vue.delete(state.cart, product.product_id);
+    },
+    incQuantity: (state, product) => {
+      console.log(state.cart[product.product_id]);
+      state.cart[product.product_id].quantity++;
+    },
+    decQuantity: (state, product) => {
+      state.cart[product.product_id].quantity--;
     }
   },
   getters: {
     cartItems(state) {
-      return state.cart;
+      return Object.values(state.cart);
     },
     totalCartItems(state) {
       return state.cart.length;
@@ -79,12 +88,12 @@ const store = new Vuex.Store({
     totalCartPrice(state) {
       var total = 0;
       
-      state.cart.forEach (function(item){
-        total = total + item.price;
-      });
+      Object.values(state.cart).forEach(cartItem=>{
+          total += cartItem.price * cartItem.quantity
+      })
 
       return total.toFixed(2);
-    },
+    }
   }
 });
 

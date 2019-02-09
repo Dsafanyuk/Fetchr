@@ -5,9 +5,15 @@
       <h3>Checkout</h3>
       <v-data-table :headers="headers" :items="items">
         <template slot="items" slot-scope="props">
+          <td align="center"><img :src="props.item.product_url" style="width:20%; height:250%;"></td>
           <td>{{ props.item.product_name }}</td>
-          <td class="text-xs-left">${{ props.item.price }}</td>
+          <td class="text-xs-left">${{ (props.item.price*props.item.quantity).toFixed(2) }}</td>
           <td class="text-xs-left">{{ props.item.quantity }}</td>
+          <td>
+            <v-btn icon v-on:click="removeItem(props.item)">
+              <v-icon color="error">delete_forever</v-icon>
+            </v-btn>
+          </td>
         </template>
       </v-data-table>
       <div class="submitOrderButton">
@@ -36,40 +42,30 @@ export default {
     name: return {
       products: [],
       headers: [
+        { text: "", align: "center"},
         { text: "Name", align: "left", value: "product_name" },
         { text: "Price", align: "left", value: "price" },
-        { text: "Quantity", align: "left", value: "quantity" }
+        { text: "Quantity", align: "left", value: "quantity" },
+        { text: "Remove", align:"left"}
       ],
       //This is the products recieved from cart
       productsReceived: []
     };
   },
+  // Returns an array of objects
   computed: {
     items: function() {
       return this.$store.getters.cartItems
     }
   },
-  // mounted: function() {
-  //   this.productsReceived = State.data.cart;
-  //   //setting prods in table
-  //   this.products = this.productsReceived.map(product => {
-  //     //put price in right format
-  //     product.price = product.price.toFixed(2);
-  //     //this is for the v-data-table
-  //     product.value = false;
-  //     product.quantity = 1;
-  //     return product;
-  //   });
-  // },
   methods: {
     checkout: function(event) {
       let router = this.$router;
       let total = 0;
       let productsWithQuantity = [];
-      
-      this.productsReceived.map(product => {
-        //get the total of the products for the order
-        total += parseFloat(product.price);
+
+      this.$store.getters.cartItems.map(product => {
+
         //put all the products into a json array
         productsWithQuantity.push({
           product_id: product.product_id,
@@ -80,7 +76,7 @@ export default {
         .post("/api/orders/", {
           customer_id: browserCookies.get("user_id"),
           delivery_status: "pending",
-          order_total: total,
+          order_total: this.$store.getters.totalCartPrice,
           productsWithQuantity: productsWithQuantity
         })
         .then(function(response) {
@@ -90,7 +86,11 @@ export default {
         .catch(function(response) {
           console.log(response);
         });
-    }
+    },
+    // Remove an item from cart
+    removeItem: function (product) {
+      this.$store.commit("removeItem", product);
+    },
   },
   components: {
     LandingHeader: LandingHeader,

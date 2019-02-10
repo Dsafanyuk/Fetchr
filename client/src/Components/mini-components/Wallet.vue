@@ -92,25 +92,23 @@ export default {
     }
   },
   computed: {
+    walletBalance: function() {
+      return this.$store.getters["wallet/walletBalance"];
+    },
     show: {
       get() {
         console.log(`GET constructor ${this.value}`);
-        return this.$store.getters.walletIsActive;
+        return this.$store.getters["wallet/walletIsActive"];
       },
       set(value) {
-        console.log(`set constructor ${value}`);
-
-        this.$store.commit("toggleWallet", value);
+        this.$store.commit("wallet/toggleWallet", value);
       }
     },
     validAmountChosen() {
       if (!this.selectedAmount) {
         return true;
       } else return false;
-    },
-    ...mapGetters("wallet", {
-      walletBalance: "walletBalance"
-    })
+    }
   }
 };
 </script>

@@ -8,22 +8,19 @@ const state = {
 }
 
 const actions = {
-    getWalletBalance(state) {
-        return new Promise((resolve, reject) => {
-            api.get("/api/users/" + browserCookies.get("user_id") + "/wallet")
-                .then(response => {
-                    state.commit('setWallet', response.data[0].wallet.toFixed(2))
-                    resolve()
-                })
-                .catch(() => {
-                    this.walletBalance = "error";
-                    reject()
-                });
-        })
+    getWalletBalance: (state) => {
+        api.get("/api/users/" + browserCookies.get("user_id") + "/wallet")
+            .then(response => {
+                state.commit('setWallet', response.data[0].wallet.toFixed(2))
+            })
+            .catch(() => {
+                this.walletBalance = "error";
+            });
     }
 }
 const mutations = {
     setWallet: (state, value) => {
+        console.log(value)
         state.walletBalance = value
     },
     toggleWallet: (state, value) => {

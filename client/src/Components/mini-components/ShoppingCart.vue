@@ -43,7 +43,7 @@
         </v-data-table>
         <div class="text-xs-center">
           <v-btn color="gray">Continue Shopping</v-btn>
-          <v-btn v-on:click="checkout" dark color="green">Checkout &nbsp;&nbsp;
+          <v-btn v-on:click="checkout(false)" dark color="green">Checkout &nbsp;&nbsp;
             <v-icon>check</v-icon>
           </v-btn>
         </div>
@@ -68,9 +68,6 @@ export default {
       total: "totalCartPrice",
       numberOfItems: "totalCartItems"
     }),
-    ...mapGetters("wallet", {
-      walletBalance: "walletBalance"
-    }),
     show: {
       get() {
         return this.$store.getters["cart/cartIsActive"];
@@ -82,7 +79,7 @@ export default {
   },
   methods: {
     // Go to checkout page
-    checkout: function(event) {
+    checkout: function(value) {
       this.$router.push("/checkout");
       this.$store.commit("cart/toggleCart", value);
     },

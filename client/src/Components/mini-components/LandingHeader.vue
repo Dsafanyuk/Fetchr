@@ -120,7 +120,6 @@ export default {
     return {
       firstName: browserCookies.get("first_name"),
       showCart: false,
-      walletBalance: this.$store.getters["wallet/walletBalance"],
       menu: [
         { title: "Account", icon: "fas fa-user-alt fa-s" },
         { title: "Orders", icon: "far fa-list-alt fa-s" },
@@ -142,6 +141,11 @@ export default {
   created: function() {
     this.$store.dispatch("wallet/getWalletBalance");
   },
+  computed: {
+    walletBalance: function() {
+      return this.$store.getters["wallet/walletBalance"];
+    }
+  },
   methods: {
     showWallet: function(value) {
       this.$store.commit("wallet/toggleWallet", value);
@@ -161,7 +165,7 @@ export default {
           break;
         }
         case "Wallet": {
-          this.$store.commit("cart/toggleWallet", true);
+          this.$store.commit("wallet/toggleWallet", true);
           break;
         }
         case "Logout":

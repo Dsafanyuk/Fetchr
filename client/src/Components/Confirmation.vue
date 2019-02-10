@@ -27,8 +27,8 @@ export default {
   },
   // Clear the cart
   created: function emptyCart() {
-    this.$store.getters.cartItems.map(product => {
-      this.$store.commit("removeItem", product);
+    this.$store.getters["cart/cartItems"].map(product => {
+      this.$store.commit("cart/removeItem", product);
     });
   }
 };

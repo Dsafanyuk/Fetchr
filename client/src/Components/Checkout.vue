@@ -117,7 +117,7 @@ export default {
           .post("/api/orders/", {
             customer_id: browserCookies.get("user_id"),
             delivery_status: "pending",
-            order_total: this.$store.getters.totalCartPrice,
+            order_total: this.$store.getters["cart/totalCartPrice"],
             productsWithQuantity: productsWithQuantity
           })
           .then(function(response) {
@@ -144,7 +144,7 @@ export default {
       }
     },
     showWallet: function(value) {
-      this.$store.commit("toggleWallet", value);
+      this.$store.commit("wallet/toggleWallet", value);
     }
   },
   components: {

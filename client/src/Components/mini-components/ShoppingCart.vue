@@ -1,7 +1,12 @@
 <template>
   <div class="text-xs-center">
-    <v-dialog v-model="show" width="750">
+    <v-dialog v-model="show" width="750" transition="false">
       <v-card>
+        <div class="text-xs-right">
+          <v-btn icon small color="gray " top @click="show = !show">
+            <v-icon>clear</v-icon>
+          </v-btn>
+        </div>
         <v-card-title
           class="headline justify-center text-xs-center font-weight-bold"
           primary-title
@@ -48,6 +53,8 @@
 </template>
 
 <script>
+import { mapState, mapActions, mapGetters } from "vuex";
+
 export default {
   props: {
     value: Boolean
@@ -56,24 +63,20 @@ export default {
     return {};
   },
   computed: {
-    // Return all items in the cart
-    items: function() {
-      return this.$store.getters.cartItems;
-    },
-    // Return total price in the cart
-    total: function() {
-      return this.$store.getters.totalCartPrice;
-    },
-    // Return number of items
-    numberOfItems: function() {
-      return this.$store.getters.totalCartItems;
-    },
+    ...mapGetters("cart", {
+      items: "cartItems",
+      total: "totalCartPrice",
+      numberOfItems: "totalCartItems"
+    }),
+    ...mapGetters("wallet", {
+      walletBalance: "walletBalance"
+    }),
     show: {
       get() {
-        return this.value;
+        return this.$store.getters["cart/cartIsActive"];
       },
       set(value) {
-        this.$emit("input", value);
+        this.$store.commit("cart/toggleCart", value);
       }
     }
   },
@@ -81,20 +84,21 @@ export default {
     // Go to checkout page
     checkout: function(event) {
       this.$router.push("/checkout");
+      this.$store.commit("cart/toggleCart", value);
     },
     // Increase quantity for a product
     incQuantity: function(product) {
-      this.$store.commit("incQuantity", product);
+      this.$store.commit("cart/incQuantity", product);
     },
     // Decrease quantity for a product
     decQuantity: function(product) {
       if (product.quantity > 1) {
-        this.$store.commit("decQuantity", product);
+        this.$store.commit("cart/decQuantity", product);
       }
     },
     // Remove a product from cart
     removeItem: function(product) {
-      this.$store.commit("removeItem", product);
+      this.$store.commit("cart/removeItem", product);
     }
   }
 };

@@ -85,7 +85,7 @@ export default {
   computed: {
     // Check if item is in cart, returns boolean value
     inCart: function() {
-      return this.$store.getters.cartItems.includes(this.product);
+      return this.$store.getters["cart/cartItems"].includes(this.product);
     }
   },
   methods: {
@@ -144,10 +144,10 @@ export default {
     // Add item to cart
     addItem: function() {
       this.$toasted.success("Added to cart").goAway(1000);
-      this.$store.commit("addItem", this.product);
+      this.$store.commit("cart/addItem", this.product);
       this.$forceUpdate();
-    },
-  },
+    }
+  }
 };
 </script>
 

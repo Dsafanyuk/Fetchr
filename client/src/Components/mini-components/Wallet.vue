@@ -97,7 +97,6 @@ export default {
     },
     show: {
       get() {
-        console.log(`GET constructor ${this.value}`);
         return this.$store.getters["wallet/walletIsActive"];
       },
       set(value) {

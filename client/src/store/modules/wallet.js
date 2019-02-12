@@ -20,7 +20,6 @@ const actions = {
 }
 const mutations = {
     setWallet: (state, value) => {
-        console.log(value)
         state.walletBalance = value
     },
     toggleWallet: (state, value) => {

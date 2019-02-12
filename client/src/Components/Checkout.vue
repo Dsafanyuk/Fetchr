@@ -1,59 +1,79 @@
 <template>
   <v-app>
     <LandingHeader></LandingHeader>
+    {{itemIsFixedHeight.blankRows}}
     <div class="checkout">
       <h3>Checkout</h3>
-      <v-data-table :items="items" hide-headers>
-        <template slot="items" slot-scope="props">
-          <td align="center">
-            <img :src="props.item.product_url">
-          </td>
-          <td>{{ props.item.product_name }}</td>
-          <td class="text-xs-left">${{ (props.item.price*props.item.quantity).toFixed(2) }}</td>
-          <td class="text-xs-left">
-            <v-btn icon v-on:click="decQuantity(props.item)">
-              <v-icon color="primary">remove_circle</v-icon>
-            </v-btn>
-            {{ props.item.quantity }}
-            <v-btn icon v-on:click="incQuantity(props.item)">
-              <v-icon color="primary">add_circle</v-icon>
-            </v-btn>
-          </td>
-          <td>
-            <v-btn icon v-on:click="removeItem(props.item)">
-              <v-icon color="error">delete_forever</v-icon>
-            </v-btn>
-          </td>
-        </template>
-        <template slot="footer">
-          <td></td>
-          <td class="text-xs-right">
-            <strong>Total</strong>
-          </td>
-          <td class="text-xs-left" :colspan="4">{{total}}</td>
-        </template>
-      </v-data-table>
-      <div class="submitOrderButton text-xs-center">
-        <v-btn
-          v-if="sufficientFunds == true && this.items.length"
-          type="submit"
-          v-on:click="checkout"
-        >Submit Order</v-btn>
-        <div v-else-if="sufficientFunds == false" class="text-xs-center">
-          <v-alert outline :value="true" type="warning">
-            <strong>Insufficient Funds:</strong>
-            <br>
-            <h4>{{walletBalance}}</h4>
-            <v-btn
-              type="submit"
-              color="success"
-              v-on:click="showWallet(true)"
-            >Refill Wallet &nbsp;&nbsp;
-              <v-icon>fas fa-money-bill-wave</v-icon>
-            </v-btn>
-          </v-alert>
-        </div>
-      </div>
+      <v-layout row>
+        <v-flex md8>
+          <v-data-table
+            :items="items"
+            hide-headers
+            :total-items="items.length"
+            hide-actions
+            class="elevation-1"
+          >
+            <template slot="items" slot-scope="props">
+              <td align="center">
+                <img :src="props.item.product_url" class="checkout-img">
+              </td>
+              <td class="body-2">{{ props.item.product_name }}</td>
+              <td class="text-xs-left">${{ (props.item.price*props.item.quantity).toFixed(2) }}</td>
+              <td class="text-xs-left">
+                <v-btn icon v-on:click="decQuantity(props.item)">
+                  <v-icon color="primary">remove_circle</v-icon>
+                </v-btn>
+                {{ props.item.quantity }}
+                <v-btn icon v-on:click="incQuantity(props.item)">
+                  <v-icon color="primary">add_circle</v-icon>
+                </v-btn>
+              </td>
+              <td>
+                <v-btn icon v-on:click="removeItem(props.item)">
+                  <v-icon color="error">delete_forever</v-icon>
+                </v-btn>
+              </td>
+            </template>
+            <template slot="footer">
+              <td class="text-xs-right" :colspan="2">
+                <strong>Total</strong>
+              </td>
+              <td class="text-xs-left" :colspan="4">{{total}}</td>
+            </template>
+          </v-data-table>
+        </v-flex>
+        <v-spacer></v-spacer>
+        <v-flex md3>
+          <v-card>
+            <div
+              class="submitOrderButton text-xs-center"
+              v-if="sufficientFunds == true && items.length"
+            >
+              <v-alert outline :value="true" type="success">
+                <h4>Ready to Order!</h4>
+                <br>
+                <strong>Remaing Balance after order:</strong>
+                <h5>{{walletAfterTransaction}}</h5>
+                <v-btn type="submit" v-on:click="checkout" color="accent">Submit Order</v-btn>
+              </v-alert>
+            </div>
+            <div v-else-if="sufficientFunds == false" class="text-xs-center">
+              <v-alert outline :value="true" type="warning">
+                <strong>Insufficient Funds:</strong>
+                <br>
+                <h4>{{walletBalance}}</h4>
+                <v-btn
+                  type="submit"
+                  color="success"
+                  v-on:click="showWallet(true)"
+                >Refill Wallet &nbsp;&nbsp;
+                  <v-icon>fas fa-money-bill-wave</v-icon>
+                </v-btn>
+              </v-alert>
+            </div>
+          </v-card>
+        </v-flex>
+      </v-layout>
     </div>
     <LandingFooter></LandingFooter>
   </v-app>
@@ -81,15 +101,21 @@ export default {
     ...mapGetters("wallet", {
       walletBalance: "walletBalance"
     }),
-    // items: function() {
-    //   return this.$store.getters.cartItems;
-    // },
-    // total: function() {
-    //   return this.$store.getters.totalCartPrice;
-    // },
-    // walletBalance: function() {
-    //   return this.$store.getters.walletBalance;
-    // },
+    itemIsFixedHeight: function() {
+      let modulus = this.items.length % 5;
+      if (modulus != 0) {
+        return { isTrue: true, blankRows: modulus };
+      } else {
+        return false;
+      }
+    },
+    itemFixedLength: function() {
+      return this.items.length % 5;
+    },
+    walletAfterTransaction: function() {
+      let balance = this.walletBalance - this.total;
+      return balance.toFixed(2);
+    },
     sufficientFunds: function() {
       if (parseFloat(this.walletBalance, 10) >= parseFloat(this.total, 10)) {
         console.log(this.walletBalance, 10);
@@ -153,7 +179,6 @@ export default {
   }
 };
 </script>
-    
     <style scoped lang="css" src='./custom_css/checkout.css'>
 </style>
     

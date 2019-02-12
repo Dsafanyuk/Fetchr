@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <LandingHeader></LandingHeader>
-    {{itemIsFixedHeight.blankRows}}
     <div class="checkout">
       <h3>Checkout</h3>
       <v-layout row>
@@ -101,17 +100,6 @@ export default {
     ...mapGetters("wallet", {
       walletBalance: "walletBalance"
     }),
-    itemIsFixedHeight: function() {
-      let modulus = this.items.length % 5;
-      if (modulus != 0) {
-        return { isTrue: true, blankRows: modulus };
-      } else {
-        return false;
-      }
-    },
-    itemFixedLength: function() {
-      return this.items.length % 5;
-    },
     walletAfterTransaction: function() {
       let balance = this.walletBalance - this.total;
       return balance.toFixed(2);

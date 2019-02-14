@@ -9,11 +9,11 @@ import VueRouter from 'vue-router';
 import Home from './Components/Home.vue';
 import Login from './Components/Login.vue';
 import Register from './Components/Register.vue';
-import Landing from './Components/Landing.vue';
+import Dashboard from './Components/Landing.vue';
 import Orders from './Components/Orders.vue';
 import Checkout from './Components/Checkout.vue';
 import Confirmation from './Components/Confirmation.vue';
-import CourierDashboard from './Components/Courier/CourierDashboard.vue';
+import Courier from './Components/Courier/CourierDashboard.vue';
 import Account from './Components/Account.vue'
 import axios from 'axios';
 import babel_polyfill from 'babel-polyfill';
@@ -39,11 +39,11 @@ const routes = [
   {path: '/', component: Home},
   {path: '/login', component: Login},
   {path: '/register', component: Register},
-  {path: '/landing', component: Landing},
+  {path: '/courier', component: Courier},
   {path: '/orders', component: Orders},
   {path: '/confirmation', component: Confirmation},
   {path: '/checkout', component: Checkout},
-  {path: '/dashboard', component : CourierDashboard},
+  {path: '/dashboard', component : Dashboard},
   {path: '/account', component: Account},
 ];
 

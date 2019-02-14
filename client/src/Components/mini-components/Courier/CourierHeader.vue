@@ -132,11 +132,15 @@
           <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
             <a class="dropdown-item" href="#">
               <i class="mdi mdi-account mr-2 text-success"></i>
-              Profile
+              Account
             </a>
             <a class="dropdown-item" href="#">
-              <i class="mdi mdi-account mr-2 text-success"></i>
-              Settings
+              <i class="mdi mdi-shopping mr-2 text-success"></i>
+              Orders
+            </a>
+            <a class="dropdown-item" href="#">
+              <i class="mdi mdi-square-inc-cash mr-2 text-success"></i>
+              Wallet
             </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">

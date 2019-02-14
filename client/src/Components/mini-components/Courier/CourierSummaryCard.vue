@@ -11,8 +11,8 @@
             </div>
 
             <div class="table-detail">
-              <h4 class="m-t-0 m-b-5"><b>12560</b></h4>
-              <p class="text-muted m-b-0 m-t-0">Total Orders</p>
+              <h4 class="m-t-0 m-b-5"><b>{{avalaible_orders}}</b></h4>
+              <p class="text-muted m-b-0 m-t-0">Total Available Orders</p>
             </div>
             <div class="table-detail text-right">
               <span data-plugin="peity-bar" data-colors="#34d3eb,#ebeff2" data-width="120" data-height="45" style="display: none;">5,3,9,6,5,9,7,3,5,2,9,7,2,1</span><svg class="peity" height="45" width="120">
@@ -50,8 +50,8 @@
             </div>
 
             <div class="table-detail">
-              <h4 class="m-t-0 m-b-5"><b>12560</b></h4>
-              <p class="text-muted m-b-0 m-t-0">Open Orders</p>
+              <h4 class="m-t-0 m-b-5"><b>{{delivered_orders}}</b></h4>
+              <p class="text-muted m-b-0 m-t-0">Total Delivered Orders</p>
             </div>
             <div class="table-detail text-right">
               <span data-plugin="peity-bar" data-colors="#34d3eb,#ebeff2" data-width="120" data-height="45" style="display: none;">5,3,9,6,5,9,7,3,5,2,9,7,2,1</span><svg class="peity" height="45" width="120">
@@ -89,7 +89,7 @@
             </div>
 
             <div class="table-detail">
-              <h4 class="m-t-0 m-b-5"><b>12560</b></h4>
+              <h4 class="m-t-0 m-b-5"><b>{{revenue}}</b></h4>
               <p class="text-muted m-b-0 m-t-0">Total Revenue</p>
             </div>
             <div class="table-detail text-right">
@@ -124,7 +124,50 @@
 </template>
 
 <script>
+import axios from "axios";
+import browserCookies from "browser-cookies";
+import Toasted from 'vue-toasted';
+const api = axios.create();
+const user = browserCookies.get("user_id");
 
+export default {
+name: 'CourierOrderSummary',
+props: {
+    productID: Number
+},
+data() {
+    return {
+      avalaible_orders : 0,
+      delivered_orders  : 0,
+      revenue : 0,
+}},
+methods : {
+  getAvailableOrders (){
+    api.get('/api/courier/'+ user + '/countAvailableOrder').then(response => {
+    this.avalaible_orders = response.data[0][0]['count_av'];
+    });
+
+  },
+  getTotalDelivered (){
+    api.get('/api/courier/'+ user + '/getTotalDelivered').then(response => {
+    this.delivered_orders = response.data[0][0]['count_d'];
+    });
+  },
+  getRevenue (){
+    api.get('/api/courier/'+ user + '/getRevenue').then(response => {
+    this.revenue = response.data[0][0]['revenue'];
+    });
+  }
+
+},
+
+mounted: function() {
+this.getAvailableOrders();
+this.getTotalDelivered();
+this.getRevenue();
+
+}
+};
 </script>
 
 <style scoped="true">

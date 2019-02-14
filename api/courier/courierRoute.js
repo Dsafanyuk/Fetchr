@@ -5,7 +5,10 @@ const courierController = require('./courierController');
 
 router.get('/:user_id/order', courierController.showCourierOrders);
 router.get('/:user_id/acceptedOrders', courierController.acceptedOrders);
+router.get('/:user_id/countAvailableOrder', courierController.countAvailableOrder);
+router.get('/:user_id/getTotalDelivered', courierController.countDelivered);
+router.get('/:user_id/getRevenue', courierController.getRevenue);
 router.post('/accept', courierController.acceptOrder);
-router.post('/:order_id/deliverOrder', courierController.deliverOrder);
+
 
 module.exports = router;

@@ -46,7 +46,7 @@
         acceptOrder: function (event) {
             if (event) {
                 api.post(`/api/courier/accept`, {
-                    courier_id: browserCookies.get("userId"),
+                    courier_id: browserCookies.get("user_id"),
                     order_id: this.orderID,
                 }).then(response => {
                     if (response.data == "success") {
@@ -87,13 +87,15 @@
         }
     },
     mounted: function() {
-        api.get(`/api/orders/${this.orderID}/summary`).then(response => {
-            this.products = response.data.map(product => {
-                product.price = "$" + product.price.toFixed(2);
-                product.value = false;
-                return product;
+        if (this.orderID != '') {
+            api.get(`/api/orders/${this.orderID}/summary`).then(response => {
+                this.products = response.data.map(product => {
+                    product.price = "$" + product.price.toFixed(2);
+                    product.value = false;
+                    return product;
+                });
             });
-        });
+        }
     }
     };
 </script>

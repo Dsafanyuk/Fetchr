@@ -1,37 +1,41 @@
 <template>
   <v-app>
-    <LandingHeader v-on:showcart="displayCart"></LandingHeader>
+    <LandingHeader v-on:showcart="displayCart" v-model="search_input"></LandingHeader>
     <ShoppingCart v-if="seen"></ShoppingCart>
+    <div class="category-wrapper shadow">
+      <v-tabs centered light icons-and-text v-model.lazy="active" show-arrows max>
+        <v-tabs-slider color="orange"></v-tabs-slider>
+        <v-tab href="#Popular">Popular
+          <v-icon>fas fa-fire-alt</v-icon>
+        </v-tab>
+
+        <v-tab href="#Snacks">Snacks
+          <v-icon>fas fa-hamburger</v-icon>
+        </v-tab>
+
+        <v-tab href="#Drinks">Drinks
+          <v-icon>fas fa-mug-hot</v-icon>
+        </v-tab>
+
+        <v-tab href="#Personal">Personal
+          <v-icon>fas fa-toilet-paper</v-icon>
+        </v-tab>
+        <v-tab href="#Electronics">Electronics
+          <v-icon>fas fa-headphones-alt</v-icon>
+        </v-tab>
+        <v-tab href="#School Supplies">School Supplies
+          <v-icon>fas fa-paperclip</v-icon>
+        </v-tab>
+        <v-tab href="#Misc">Misc
+          <v-icon>fas fa-random</v-icon>
+        </v-tab>
+
+        <v-tab href="#Favorites">Favorites
+          <v-icon>fas fa-heart</v-icon>
+        </v-tab>
+      </v-tabs>
+    </div>
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="category-wrapper">
-            <input v-model="selectedCategory" id="tab1" type="radio" name="tabs" value="Popular">
-            <label for="tab1">
-              <span>
-                Popular
-                <i class="material-icons" style="vertical-align: middle;">whatshot</i>
-              </span>
-            </label>
-            <input v-model="selectedCategory" id="tab2" type="radio" name="tabs" value="Snacks">
-            <label for="tab2">Snacks</label>
-            <input v-model="selectedCategory" id="tab3" type="radio" name="tabs" value="Drinks">
-            <label for="tab3">Drinks</label>
-            <input
-              v-model="selectedCategory"
-              id="tab4"
-              type="radio"
-              name="tabs"
-              value="School Supplies"
-            >
-            <label for="tab4">School Supplies</label>
-            <input v-model="selectedCategory" id="tab5" type="radio" name="tabs" value="Misc">
-            <label for="tab5">Misc</label>
-            <input v-model="selectedCategory" id="tab6" type="radio" name="tabs" value="Favorites">
-            <label for="tab6">Favorites</label>
-          </div>
-        </div>
-      </div>
       <div class="row">
         <LandingCard
           v-for="product in filteredProducts"
@@ -40,6 +44,7 @@
         ></LandingCard>
       </div>
     </div>
+
     <LandingFooter></LandingFooter>
   </v-app>
 </template>
@@ -58,12 +63,20 @@ const api = axios.create();
 export default {
   data() {
     return {
+      active: "Popular",
       seen: false,
-      products: {},
-      selectedCategory: "Popular"
+      products: [],
+      interval: null,
+      search_input: "",
+      snacksProducts: [],
+      drinksProducts: [],
+      personalProducts: [],
+      electronicsProducts: [],
+      school_suppliesProducts: [],
+      miscProducts: [],
+      favoriteProducts: []
     };
   },
-  props: {},
   created: function loadProducts() {
     let loadingProductsToast = this.$toasted.show("Loading products...");
     api
@@ -74,7 +87,7 @@ export default {
       })
       .then(response => {
         this.products = response.data;
-        loadingProductsToast.text("Products loaded!").goAway(5000);
+        loadingProductsToast.text("Products loaded!").goAway(500);
       })
       .catch(error => {
         if (error.response) {
@@ -93,7 +106,19 @@ export default {
   },
   computed: {
     filteredProducts() {
-      var category = this.selectedCategory
+      if (this.search_input) {
+        return this.products.filter(product => {
+          return (
+            product.product_name
+              .toLowerCase()
+              .includes(this.search_input.toLowerCase()) ||
+            product.category
+              .toLowerCase()
+              .includes(this.search_input.toLowerCase())
+          );
+        });
+      }
+      var category = this.active
         .toLowerCase()
         .split(" ")
         .join("_");
@@ -122,6 +147,46 @@ export default {
       else {
         this.seen = true;
       }
+    },
+    sortProducts() {
+      let allProducts = this.products;
+      this.snacksProducts = allProducts.filter(product => {
+        allProducts.splice(
+          allProducts.indexOf(allProducts[product]),
+          allProducts.indexOf(allProducts[product]) + 1
+        );
+        return product.category == "snacks";
+      });
+      this.drinksProducts = allProducts.filter(product => {
+        allProducts.splice(
+          allProducts.indexOf(allProducts[product]),
+          allProducts.indexOf(allProducts[product]) + 1
+        );
+
+        return product.category == "drinks";
+      });
+      this.personalProducts = allProducts.filter(product => {
+        allProducts.splice(
+          allProducts.indexOf(allProducts[product]),
+          allProducts.indexOf(allProducts[product]) + 1
+        );
+        return product.category == "personal";
+      });
+      this.electronicsProducts = allProducts.filter(product => {
+        console.log(allProducts.indexOf(allProducts[product]));
+        return product.category == "electronics";
+      });
+      this.school_suppliesProducts = allProducts.filter(product => {
+        allProducts.splice(
+          allProducts.indexOf(allProducts[product]),
+          allProducts.indexOf(allProducts[product]) + 1
+        );
+        return product.category == "school_supplies";
+      });
+      this.miscProducts = allProducts.filter(product => {
+        console.log(allProducts.indexOf(allProducts[product]));
+        return product.category == "misc";
+      });
     }
   }
 };
@@ -129,4 +194,10 @@ export default {
 
 <style lang="scss">
 @import "custom_css/landing.scss";
+a {
+  text-decoration: none !important;
+}
+a:hover {
+  color: #4a6572 !important;
+}
 </style>

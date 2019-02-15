@@ -1,23 +1,20 @@
 <template>
     <v-card>
-        <v-card-title>
-            Your Orders
-            <v-spacer></v-spacer>
-            <v-text-field
-            v-model="search"
-            append-icon="search"
-            label="Search"
-            single-line
-            hide-details
-            ></v-text-field>
-        </v-card-title>
         <v-data-table :headers="headers" :items="orders">
             <template slot="items" slot-scope="props">
+                <td>{{props.item.order_id}}</td>
                 <td>{{props.item.first_name}}</td>
-                <td>{{props.item.building}}</td>
                 <td>{{props.item.room_num}}</td>
-                <td>{{props.item.delivery_status}}</td>
-                <td><CourierOrderSummary :orderID="props.item.order_id" :accept=false :deliver=true v-on:delivered="delivered"></CourierOrderSummary></td>
+                <td>{{props.item.time_created}}</td>
+                <td>
+                    <CourierOrderSummary
+                        v-if="props.item.order_id != ''"
+                        :orderID="props.item.order_id" 
+                        :accept=false
+                        :deliver="props.item.delivery_status == 'in progress'" 
+                        v-on:delivered="delivered">
+                    </CourierOrderSummary>
+                </td>
             </template>
         </v-data-table>
     </v-card>
@@ -30,17 +27,17 @@
         data() {
         return {
             headers: [
+                { text: "Order #", align: "left", value: 'order_id'},
                 { text: "Name", align: "left", value: 'first_name'},
-                { text: "Building", align: "left", value: 'building' },
                 { text: "Room #", align: "left", value: 'room_num' },
-                { text: "Delivery Status", align: "left", value: 'delivery_status' },
-                { text: " ", align: "left" },
+                { text: "Time Created", align: "left", value: 'time_created' },
+                { text: "", align: "left", value: 'delivery_status' },
             ],
-            search: '',
+            isNotDelivered: true,
         };
         }, 
         props: {
-        orders: Array,
+            orders: Array,
         },
         computed: {},
         components: {
@@ -48,15 +45,12 @@
         },
         methods: {
             delivered() {
-            this.$emit('delivered');
-            }
-        }
+                this.$emit('delivered');
+            },
+        },
     };
     </script>
     
     <style scoped lang="css">
-        .v-datatable{
-            margin-top: 200px !important;
-        }
     </style>
     

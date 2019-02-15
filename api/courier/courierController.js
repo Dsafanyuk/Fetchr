@@ -31,10 +31,7 @@ function acceptedOrders(req, res) {
       'order_id',
       'first_name',
       'room_num',
-      'delivery_status',
-      'time_delivered',
       'orders.time_created',
-      'order_total',
     )
     .where('courier_id', req.params.user_id)
     .then((orders) => {

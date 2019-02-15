@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import browserCookies from 'browser-cookies'
 import Vuex from 'vuex';
 import Vuetify from 'vuetify';
 import VeeValidate from 'vee-validate';
@@ -16,12 +17,11 @@ import Confirmation from './Components/Confirmation.vue';
 import Courier from './Components/Courier/CourierDashboard.vue';
 import Account from './Components/Account.vue'
 import axios from 'axios';
-import babel_polyfill from 'babel-polyfill';
+import store from './store'
 
 import 'vuetify/dist/vuetify.min.css';
 
 Vue.use(VueRouter);
-Vue.use(babel_polyfill)
 Vue.use(VeeValidate);
 Vue.use(VueToast);
 Vue.use(VueMaterial);
@@ -51,6 +51,8 @@ const router = new VueRouter({
   routes,
   mode: 'history',
 });
+
+const api = axios.create();
 
 if (process.env.NODE_ENV == 'production') {
   axios.defaults.baseURL = 'http://fetchrapp.com:3000';

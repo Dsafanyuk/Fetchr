@@ -174,4 +174,5 @@ this.getRevenue();
   @import "../../assets/courier/css/core.css";
   @import "../../assets/courier/css/materialdesignicons.css";
   @import "../../assets/courier/css/components.css";
+
 </style>

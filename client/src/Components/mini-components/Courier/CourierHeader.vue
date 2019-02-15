@@ -168,4 +168,7 @@
 @import "../../assets/courier/css/vendor.bundle.base.css";
 @import "../../assets/courier/css/style.css";
 .logo_img{ height: 55px !important}
+.d-flex>* {
+flex: none !important;
+}
 </style>

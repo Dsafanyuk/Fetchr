@@ -54,13 +54,13 @@ const router = new VueRouter({
 
 // Called before every route
 router.beforeEach((to, from, next) => {
-  console.log(to);
-  console.log(store.getters["login/isLoggedIn"]);
+  
   if(store.getters["login/isLoggedIn"]) {
     next();
   } else if((to.path == "/login") || (to.path == "/register") || (to.path == "/")) {
     next();
   } else {
+    // Redirect to login page
     next({path:'/login'});
   }
 })

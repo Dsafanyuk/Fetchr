@@ -9,6 +9,9 @@ const socketApi = {};
 socketApi.io = io;
 
 io.on('connection', function (socket) {
+    socket.on('connection', function(date){
+        console.log('connected')
+    })
     socket.on('disconnect',function(data){
         console.log('disconnected', data)
     })

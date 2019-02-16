@@ -1,12 +1,12 @@
 import Vue from 'vue';
-import browserCookies from 'browser-cookies'
 import Vuex from 'vuex';
 import Vuetify from 'vuetify';
 import VeeValidate from 'vee-validate';
 import VueToast from 'vue-toasted';
-import VueMaterial from 'vue-material';
 import App from './Components/App.vue';
 import VueRouter from 'vue-router';
+import VueSocketio from 'vue-socket.io-extended'
+import io from 'socket.io-client'
 import Home from './Components/Home.vue';
 import Login from './Components/Login.vue';
 import Register from './Components/Register.vue';
@@ -14,17 +14,17 @@ import Dashboard from './Components/Landing.vue';
 import Orders from './Components/Orders.vue';
 import Checkout from './Components/Checkout.vue';
 import Confirmation from './Components/Confirmation.vue';
-import Courier from './Components/Courier/CourierDashboard.vue';
+import CourierDashboard from './Components/Courier/CourierDashboard.vue';
 import Account from './Components/Account.vue'
 import axios from 'axios';
 import store from './store'
 
 import 'vuetify/dist/vuetify.min.css';
+Vue.use(VueSocketio, io('http://127.0.0.1:3000?userid=1',{autoConnect: false}), { store });
 
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
 Vue.use(VueToast);
-Vue.use(VueMaterial);
 Vue.use(Vuetify, {
   theme: {
     primary: '#344955',
@@ -39,11 +39,11 @@ const routes = [
   {path: '/', component: Home},
   {path: '/login', component: Login},
   {path: '/register', component: Register},
-  {path: '/courier', component: Courier},
   {path: '/orders', component: Orders},
   {path: '/confirmation', component: Confirmation},
   {path: '/checkout', component: Checkout},
-  {path: '/dashboard', component : Dashboard},
+  {path: '/courier', component : CourierDashboard},
+  {path: '/dashboard', component: Dashboard},
   {path: '/account', component: Account},
 ];
 
@@ -52,7 +52,6 @@ const router = new VueRouter({
   mode: 'history',
 });
 
-const api = axios.create();
 
 if (process.env.NODE_ENV == 'production') {
   axios.defaults.baseURL = 'http://fetchrapp.com:3000';

@@ -1,6 +1,6 @@
 const knex = require('knex')(require('../db'));
 
-// GET /order
+// GET /courier/:user_id/order
 function showCourierOrders(req, res) {
   knex('orders').innerJoin('users', 'orders.customer_id', 'users.user_id')
     .select(
@@ -24,13 +24,14 @@ function showCourierOrders(req, res) {
     });
 }
 
-// GET /order
+// GET /courier/:user_id/order/accepted
 function acceptedOrders(req, res) {
   knex('orders').innerJoin('users', 'orders.customer_id', 'users.user_id')
     .select(
       'order_id',
       'first_name',
       'room_num',
+      'delivery_status',
       'orders.time_created',
     )
     .where('courier_id', req.params.user_id)

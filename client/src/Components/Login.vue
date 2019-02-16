@@ -54,7 +54,7 @@
   </v-app>
 </template>
 <script>
-  import axios from '../axios.js'
+  import axios from '../axios'
   import Toasted from 'vue-toasted';
 
   export default {

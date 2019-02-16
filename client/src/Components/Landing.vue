@@ -55,7 +55,7 @@ import LandingFooter from "./mini-components/LandingFooter.vue";
 import LandingCard from "./mini-components/LandingCard.vue";
 import ShoppingCart from "./mini-components/ShoppingCart.vue";
 import browserCookies from "browser-cookies";
-import axios from "../axios.js";
+import axios from "../axios";
 import Toasted from "vue-toasted";
 
 export default {

@@ -90,12 +90,12 @@
         let loadingOrdersToast = this.$toasted.show("Loading accepted orders...");
         api
           .get(`/api/courier/` + user + `/acceptedOrders`)
-          .then(response => { 
+          .then(response => {
             response.data.map((order) => {
-              let newOrder = { 
-                order_id: order.order_id, 
-                first_name: order.first_name, 
-                room_num: this.buildings[order.room_num.slice(0, 1) - 1] + ' ' + order.room_num, 
+              let newOrder = {
+                order_id: order.order_id,
+                first_name: order.first_name,
+                room_num: this.buildings[order.room_num.slice(0, 1) - 1] + ' ' + order.room_num,
                 time_created: this.fixDateTime(order.time_created)
               }
               if (order.delivery_status == 'in progress') {
@@ -137,10 +137,10 @@
           .get(`/api/courier/` + user + `/order`)
           .then(response => {
             this.orders = response.data.map((order) => {
-              let newOrder = { 
-                order_id: order.order_id, 
-                first_name: order.first_name, 
-                room_num: this.buildings[order.room_num.slice(0, 1) - 1] + ' ' + order.room_num, 
+              let newOrder = {
+                order_id: order.order_id,
+                first_name: order.first_name,
+                room_num: this.buildings[order.room_num.slice(0, 1) - 1] + ' ' + order.room_num,
                 time_created: this.fixDateTime(order.time_created)
               }
               counter++;
@@ -189,6 +189,9 @@
 <style scoped="true">
 .v-tabs__container--icons-and-text{
   height: 79px !important;
+}
+.summarycard {
+  margin-top : 100px;
 }
 
 </style>

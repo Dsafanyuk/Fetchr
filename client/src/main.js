@@ -59,6 +59,7 @@ if (process.env.NODE_ENV == 'production') {
 } else {
   axios.defaults.baseURL = 'http://127.0.0.1:3000';
 }
+
 axios.defaults.withCredentials = true; // force axios to have withCredentials with all requests.
 new Vue({
   el: '#app',

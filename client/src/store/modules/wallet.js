@@ -4,7 +4,7 @@ const api = axios.create();
 
 const state = {
     showWallet: false,
-    walletBalance: null,
+    walletBalance: '',
 }
 
 const actions = {

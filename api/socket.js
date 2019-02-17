@@ -9,15 +9,12 @@ const socketApi = {};
 socketApi.io = io;
 
 io.on('connection', function (socket) {
-    socket.on('connection', function(date){
-        console.log('connected')
-    })
+    console.log('connected')
     socket.on('disconnect',function(data){
-        console.log('disconnected', data)
+        console.log('disconnected')
     })
     socket.on('ORDER_CREATED', function(client){
         updateOpenOrders(client,socket)
-        // io.emit('UPDATE_OPEN_ORDERS')
     })
     socket.on('ORDER_ACCEPTED', function (client){
         updateAcceptedOrders(client,socket)

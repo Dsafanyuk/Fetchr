@@ -20,8 +20,8 @@ import axios from 'axios';
 import store from './store'
 
 import 'vuetify/dist/vuetify.min.css';
-Vue.use(VueSocketio, io('http://127.0.0.1:3000?userid=1',{autoConnect:true}), { store });
-
+Vue.use(VueSocketio, io('http://127.0.0.1:3000'), {store});
+console.log(Object.keys(store._actions))
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
 Vue.use(VueToast);

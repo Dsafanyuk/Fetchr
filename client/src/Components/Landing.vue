@@ -76,7 +76,6 @@ export default {
     };
   },
   created: function loadProducts() {
-    this.$socket.emit("ORDER_CREATED");
     let loadingProductsToast = this.$toasted.show("Loading products...");
     axios
       .get(`/api/products`)

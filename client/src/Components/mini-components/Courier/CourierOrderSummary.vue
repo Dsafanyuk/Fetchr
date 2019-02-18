@@ -56,6 +56,7 @@ export default {
                 position: "top-center",
                 duration: 5000
               });
+              this.$socket.emit("ORDER_ACCEPTED");
             } else {
               this.$toasted.error(
                 "Oops! This order has already been accepted. :(",
@@ -87,7 +88,7 @@ export default {
               position: "top-center",
               duration: 5000
             });
-            this.$emit("delivered");
+            this.$socket.emit("ORDER_DELIVERED");
           } else {
             this.$toasted.error("Oops! :(", {
               position: "top-center",

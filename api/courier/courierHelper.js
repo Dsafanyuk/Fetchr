@@ -13,7 +13,6 @@ let months = [
     "Dec"
 ] 
 const fixDateTime = function (date) {
-    console.log(date)
     if (date != "") {
         date = new Date(date);
         let minutes = date.getMinutes();

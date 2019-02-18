@@ -18,7 +18,7 @@ import CourierOrderSummary from "../mini-components/Courier/CourierOrderSummary"
 export default {
   data() {
     return {
-      pagination: { sortBy: "column1", descending: false, rowsPerPage: -1 },
+      pagination: { sortBy: "order_id", descending: true, rowsPerPage: 5 },
       headers: [
         { text: "Order #", align: "left", value: "order_id" },
         { text: "Name", align: "left", value: "first_name" },

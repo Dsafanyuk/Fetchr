@@ -1,7 +1,6 @@
 const browserCookies = require('browser-cookies')
 const user = browserCookies.get("user_id");
 import axios from '../../axios'
-import Vue from 'vue'
 
 let blankOrder = {
     order_id: "",
@@ -118,14 +117,23 @@ const actions = {
                 this.$toasted.error("Something went wrong");
             });
     },
-    socket_updateOpenOrders: (state) =>{
+    socket_updateOpenOrders: ({state, getters, commit, dispatch}) =>{
         console.log('EVENT RECEIVED: UPDATE_OPEN_ORDERS')
+        dispatch('clearAllOrders').then(()=>{
+            dispatch('refreshAllOrders')
+        })
     },
-    socket_updateAcceptedOrders: (state) => {
+    socket_updateAcceptedOrders: ({ state, getters, commit, dispatch }) => {
         console.log('EVENT RECEIVED: UPDATE_ACCEPTED_ORDERS')
+        dispatch('clearAllOrders').then(() => {
+            dispatch('refreshAllOrders')
+        })
     },
-    socket_updateDeliveredOrders: (state) => {
+    socket_updateDeliveredOrders: ({ state, getters, commit, dispatch }) => {
         console.log('EVENT RECEIVED: UPDATE_DELIVERED_ORDERS')
+        dispatch('clearAllOrders').then(() => {
+            dispatch('refreshAllOrders')
+        })
     },
 }
 export default {

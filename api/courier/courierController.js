@@ -142,7 +142,6 @@ function deliverOrder(req, res) {
       time_delivered: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
     })
     .then((rows) => {
-      console.log(rows)
       res.status(200).send('success');
     })
     .catch((err) => {

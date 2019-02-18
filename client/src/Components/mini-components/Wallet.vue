@@ -92,6 +92,7 @@
       },
       addToWallet() {
         this.transactionIsProcessing = true;
+        this.selectedAmount = parseFloat(this.selectedAmount).toFixed(2);
         if (parseFloat(this.selectedAmount) + parseFloat(this.walletBalance) < 1000) {
           console.log("true");
           axios

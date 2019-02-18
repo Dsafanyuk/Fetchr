@@ -49,11 +49,9 @@
   
   <script>
   import browserCookies from "browser-cookies";
-  import axios from "axios";
+  import axios from "../../axios";
   import { mapGetters } from "vuex";
   import toasted from "vue-toasted";
-  
-  const api = axios.create();
   
   export default {
     props: {
@@ -96,7 +94,7 @@
         this.transactionIsProcessing = true;
         if (parseFloat(this.selectedAmount) + parseFloat(this.walletBalance) < 1000) {
           console.log("true");
-          api
+          axios
             .post("/api/users/" + browserCookies.get("user_id") + "/wallet", {
               amount: this.selectedAmount
             })

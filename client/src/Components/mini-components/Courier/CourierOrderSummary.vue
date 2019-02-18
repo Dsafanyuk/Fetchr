@@ -19,10 +19,9 @@
 </template>
         
 <script>
-import axios from "axios";
+import axios from "../../../axios";
 import browserCookies from "browser-cookies";
 import Toasted from "vue-toasted";
-const api = axios.create();
 
 export default {
   name: "CourierOrderSummary",
@@ -45,7 +44,7 @@ export default {
   methods: {
     acceptOrder: function(event) {
       if (event) {
-        api
+        axios
           .post(`/api/courier/accept`, {
             courier_id: browserCookies.get("user_id"),
             order_id: this.orderID
@@ -57,7 +56,6 @@ export default {
                 position: "top-center",
                 duration: 5000
               });
-              this.$emit("accepted");
             } else {
               this.$toasted.error(
                 "Oops! This order has already been accepted. :(",
@@ -67,12 +65,22 @@ export default {
                 }
               );
             }
+          })
+          .then(() => {
+            this.$store.dispatch("courier/clearAllOrders");
+          })
+          .then(() => {
+            this.$store.dispatch("courier/refreshAllOrders");
           });
       }
     },
     deliverOrder: function(event) {
-      if (event) {
-        api.post(`/api/courier/${this.orderID}/deliverOrder`).then(response => {
+      axios
+        .post(`/api/courier/deliver`, {
+          courier_id: browserCookies.get("user_id"),
+          order_id: this.orderID
+        })
+        .then(response => {
           if (response.data == "success") {
             this.dialog = false;
             this.$toasted.show("Order delivered!", {
@@ -86,13 +94,18 @@ export default {
               duration: 5000
             });
           }
+        })
+        .then(() => {
+          this.$store.dispatch("courier/clearAllOrders");
+        })
+        .then(() => {
+          this.$store.dispatch("courier/refreshAllOrders");
         });
-      }
     }
   },
   mounted: function() {
     if (this.orderID != "") {
-      api.get(`/api/orders/${this.orderID}/summary`).then(response => {
+      axios.get(`/api/orders/${this.orderID}/summary`).then(response => {
         this.products = response.data.map(product => {
           product.price = "$" + product.price.toFixed(2);
           product.value = false;

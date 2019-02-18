@@ -16,12 +16,10 @@ import Checkout from './Components/Checkout.vue';
 import Confirmation from './Components/Confirmation.vue';
 import CourierDashboard from './Components/Courier/CourierDashboard.vue';
 import Account from './Components/Account.vue'
-import axios from 'axios';
 import store from './store'
 
 import 'vuetify/dist/vuetify.min.css';
 Vue.use(VueSocketio, io('http://127.0.0.1:3000'), {store});
-console.log(Object.keys(store._actions))
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
 Vue.use(VueToast);
@@ -52,14 +50,19 @@ const router = new VueRouter({
   mode: 'history',
 });
 
+// Called before every route
+router.beforeEach((to, from, next) => {
+  
+  if(store.getters["login/isLoggedIn"]) {
+    next();
+  } else if((to.path == "/login") || (to.path == "/register") || (to.path == "/")) {
+    next();
+  } else {
+    // Redirect to login page
+    next({path:'/login'});
+  }
+})
 
-if (process.env.NODE_ENV == 'production') {
-  axios.defaults.baseURL = 'http://fetchrapp.com:3000';
-} else {
-  axios.defaults.baseURL = 'http://127.0.0.1:3000';
-}
-
-axios.defaults.withCredentials = true; // force axios to have withCredentials with all requests.
 new Vue({
   el: '#app',
   template: '<App/>',

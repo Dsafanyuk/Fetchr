@@ -5,7 +5,7 @@
         <td>{{props.item.order_id}}</td>
         <td>{{props.item.first_name}}</td>
         <td>{{props.item.room_num}}</td>
-        <td>{{props.item.time_created}}</td>
+        <td>{{props.item.time_delivered}}</td>
         <td>
           <CourierOrderSummary v-if="props.item.order_id != ''" :orderID="props.item.order_id"></CourierOrderSummary>
         </td>
@@ -23,7 +23,7 @@ export default {
         { text: "Order #", align: "left", value: "order_id" },
         { text: "Name", align: "left", value: "first_name" },
         { text: "Room #", align: "left", value: "room_num" },
-        { text: "Time Created", align: "left", value: "time_created" },
+        { text: "Time Delivered", align: "left", value: "time_delivered" },
         { text: " ", align: "left", value: "delivery_status" }
       ],
       isNotDelivered: true

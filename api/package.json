@@ -17,11 +17,13 @@
     "jsonwebtoken": "^8.3.0",
     "jwt-simple": "^0.5.5",
     "knex": "^0.15.2",
+    "moment": "^2.24.0",
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "socket.io": "^2.2.0",
     "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {

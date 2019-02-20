@@ -17,7 +17,7 @@
     </v-card>
   </v-dialog>
 </template>
-        
+
 <script>
 import axios from "../../../axios";
 import browserCookies from "browser-cookies";
@@ -117,4 +117,3 @@ export default {
   }
 };
 </script>
-    

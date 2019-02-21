@@ -30,7 +30,7 @@
                   placeholder="$" 
                   v-model="selectedAmount" 
                   class="otherAmount">
-                <v-chip v-else slot-scope="{ active }" :selected="active" @click="otherClick">other</v-chip>
+                <v-chip v-else slot-scope="{ active }" :selected="active" @click="customAmount">other</v-chip>
               </v-item>
             </v-item-group>
           </v-card-actions>
@@ -80,7 +80,7 @@
           return true;
         }
       },
-      otherClick() {
+      customAmount() {
         this.selectedAmount = null;
         this.otherChosen = true;
         //set focus
@@ -94,7 +94,6 @@
         this.transactionIsProcessing = true;
         this.selectedAmount = parseFloat(this.selectedAmount).toFixed(2);
         if (parseFloat(this.selectedAmount) + parseFloat(this.walletBalance) < 1000) {
-          console.log("true");
           axios
             .post("/api/users/" + browserCookies.get("user_id") + "/wallet", {
               amount: this.selectedAmount
@@ -109,16 +108,7 @@
               this.selectAmount(null);
             })
             .catch(error => {
-              if (error.response) {
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-              } else if (error.request) {
-                console.log(error.request);
-              } else {
-                // Something happened in setting up the request that triggered an Error
-                console.log("Error", error.message);
-              }
+              console.log(error)
             });
         } else {
           this.$toasted.error("You're Too Rich! Give More To Charity pls").goAway(3000)

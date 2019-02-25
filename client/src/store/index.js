@@ -5,7 +5,7 @@ import cart from './modules/cart'
 import wallet from './modules/wallet'
 import courier from './modules/courier'
 import login from './modules/login'
-
+import chat from './modules/chat'
 Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV !== 'production'
@@ -27,6 +27,7 @@ export default new Vuex.Store({
         courier,
         wallet,
         login,
+        chat,
     },
     strict: debug,
 });

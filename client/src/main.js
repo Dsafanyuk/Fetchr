@@ -16,7 +16,9 @@ import Checkout from './Components/Checkout.vue';
 import Confirmation from './Components/Confirmation.vue';
 import CourierDashboard from './Components/Courier/CourierDashboard.vue';
 import Account from './Components/Account.vue'
+import Chat from './Components/Chat/Chat.vue'
 import store from './store'
+import * as firebase from 'firebase'
 
 import 'vuetify/dist/vuetify.min.css';
 Vue.use(VueSocketio, io('http://127.0.0.1:3000'), {store});
@@ -43,6 +45,7 @@ const routes = [
   {path: '/courier', component : CourierDashboard},
   {path: '/dashboard', component: Dashboard},
   {path: '/account', component: Account},
+  {path: '/chat', component: Chat}
 ];
 
 const router = new VueRouter({
@@ -52,7 +55,7 @@ const router = new VueRouter({
 
 // Called before every route
 router.beforeEach((to, from, next) => {
-  
+
   if(store.getters["login/isLoggedIn"]) {
     next();
   } else if((to.path == "/login") || (to.path == "/register") || (to.path == "/")) {
@@ -69,4 +72,14 @@ new Vue({
   store: store,
   router,
   render: (h) => h(App),
+  created () {
+    firebase.initializeApp({
+    apiKey: "AIzaSyAMV114OOLoOo0rIRzmLo4WR_S_Q6G-P6o",
+    authDomain: "fetchr-768e2.firebaseapp.com",
+    databaseURL: "https://fetchr-768e2.firebaseio.com",
+    projectId: "fetchr-768e2",
+    storageBucket: "fetchr-768e2.appspot.com",
+    messagingSenderId: "981262313357"
+  })
+  }
 });

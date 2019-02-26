@@ -53,14 +53,6 @@
           class="shadow-lg"
           mandatory
         >
-          <v-text-field
-            append-icon="mic"
-            class="mx-3"
-            flat
-            label="Search"
-            prepend-inner-icon="search"
-            solo-inverted
-          ></v-text-field>
           <v-tabs-slider color="accent"></v-tabs-slider>
           <v-tab href="#baby1">Available</v-tab>
           <v-tab href="#baby2">Accepted</v-tab>

@@ -13,7 +13,7 @@
 
     <!-- MOBILE AND TABLETS -->
     <div class="hidden-lg-and-up row">
-      <div class="col-md-3">
+      <div class="col-md-10 offset-md-1 col-sm-5">
         <v-tabs height="80px" centered light show-arrows grow v-model.lazy="active">
           <v-tabs-slider color="accent"></v-tabs-slider>
           <v-tab href="#baby1">Available</v-tab>

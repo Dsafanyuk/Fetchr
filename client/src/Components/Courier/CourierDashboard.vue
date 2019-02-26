@@ -14,7 +14,7 @@
     <!-- MOBILE AND TABLETS -->
     <div class="hidden-lg-and-up row">
       <div class="col-md-10 offset-md-1 col-sm-5">
-        <v-tabs height="80px" centered light show-arrows grow v-model.lazy="active">
+        <v-tabs height="80px" centered light show-arrows grow v-model.lazy="active" mandatory>
           <v-tabs-slider color="accent"></v-tabs-slider>
           <v-tab href="#baby1">Available</v-tab>
           <v-tab href="#baby2">Accepted</v-tab>
@@ -43,7 +43,24 @@
     <!-- Computers -->
     <div class="row hidden-md-and-down">
       <div class="col-lg-10 offset-lg-1">
-        <v-tabs height="80px" centered light show-arrows grow v-model="active" class="shadow-lg">
+        <v-tabs
+          height="80px"
+          centered
+          light
+          show-arrows
+          grow
+          v-model="active"
+          class="shadow-lg"
+          mandatory
+        >
+          <v-text-field
+            append-icon="mic"
+            class="mx-3"
+            flat
+            label="Search"
+            prepend-inner-icon="search"
+            solo-inverted
+          ></v-text-field>
           <v-tabs-slider color="accent"></v-tabs-slider>
           <v-tab href="#baby1">Available</v-tab>
           <v-tab href="#baby2">Accepted</v-tab>
@@ -86,7 +103,7 @@ import axios from "../../axios";
 export default {
   data() {
     return {
-      active: "Available",
+      active: "baby1",
       summaryOrder: {},
       summaryIsActive: false
     };
@@ -146,5 +163,4 @@ export default {
 .summarycard {
   margin-top: 1%;
 }
-
 </style>

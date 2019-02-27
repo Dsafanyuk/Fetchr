@@ -47,7 +47,7 @@
                                   <v-card-text>Are You sure you want to change your firstname?</v-card-text>
                                      <v-card-actions>
                                         <v-btn color="primary" flat @click="ask_dialog1 = false">no</v-btn>
-                                        <v-btn color="primary" flat v-on:click="editfirstname(true)" @click="ask_dialog1 = false; dialog1 = false">yes</v-btn>
+                                        <v-btn color="primary" flat v-on:click="editfirstname" @click="ask_dialog1 = false; dialog1 = false">yes</v-btn>
                                      </v-card-actions>
                                   </v-card>
                                </v-dialog>
@@ -90,7 +90,7 @@
                                   <v-card-text>Are You sure you want to change your lastname?</v-card-text>
                                      <v-card-actions>
                                         <v-btn color="primary" flat @click="ask_dialog2 = false">no</v-btn>
-                                        <v-btn color="primary" flat v-on:click="editlastname(true)" @click="ask_dialog2 = false; dialog2 = false">yes</v-btn>
+                                        <v-btn color="primary" flat v-on:click="editlastname" @click="ask_dialog2 = false; dialog2 = false">yes</v-btn>
                                      </v-card-actions>
                                   </v-card>
                                </v-dialog>
@@ -133,7 +133,7 @@
                                   <v-card-text>Are You sure you want to change your email address?</v-card-text>
                                      <v-card-actions>
                                         <v-btn color="primary" flat @click="ask_dialog3 = false">no</v-btn>
-                                        <v-btn color="primary" flat v-on:click="editea(true)" @click="ask_dialog3 = false; dialog3 = false">yes</v-btn>
+                                        <v-btn color="primary" flat v-on:click="editea" @click="ask_dialog3 = false; dialog3 = false">yes</v-btn>
                                      </v-card-actions>
                                   </v-card>
                                </v-dialog>
@@ -176,7 +176,7 @@
                                   <v-card-text>Are You sure you want to change your room number?</v-card-text>
                                      <v-card-actions>
                                         <v-btn color="primary" flat @click="ask_dialog4 = false">no</v-btn>
-                                        <v-btn color="primary" flat v-on:click="editroomnumber(true)" @click="ask_dialog4 = false; dialog4 = false">yes</v-btn>
+                                        <v-btn color="primary" flat v-on:click="editroomnum" @click="ask_dialog4 = false; dialog4 = false">yes</v-btn>
                                      </v-card-actions>
                                   </v-card>
                                </v-dialog>
@@ -219,7 +219,7 @@
                                   <v-card-text>Are You sure you want to change your lastname?</v-card-text>
                                      <v-card-actions>
                                         <v-btn color="primary" flat @click="ask_dialog5 = false">no</v-btn>
-                                        <v-btn color="primary" flat v-on:click="editphonenumber(true)" @click="ask_dialog5 = false; dialog5 = false">yes</v-btn>
+                                        <v-btn color="primary" flat v-on:click="editphonenumber" @click="ask_dialog5 = false; dialog5 = false">yes</v-btn>
                                      </v-card-actions>
                                   </v-card>
                                </v-dialog>
@@ -240,6 +240,7 @@
 import LandingHeader from "./mini-components/LandingHeader.vue";
 import LandingFooter from "./mini-components/LandingFooter.vue";
 import browsercookies from "browser-cookies";
+import Axios from 'axios';
 
 export default {
    data() {
@@ -285,16 +286,15 @@ export default {
      editfirstname: function(){
         this.dialog1 = true ;
         this.firstName = this.new_firstName;
-        browsercookies.erase('first_name'),
-        browsercookies.set('first_name', this.new_firstName, {expires: 1});
-        api
+        browsercookies.sets('first_name', this.new_firstName,{expires: 30});
+        axio
            .post('api/Account/updatefirstname', {
-              
+               first_name: this.new_firstName
            })
            .then((response) => {
                if (response.status == 200) {
-                  console.log('logged in');
-                  this.$router.push('/login');
+                  console.log('Saved');
+                  this.$router.push('/register');
               }
            })
            .catch(function (error) {
@@ -322,7 +322,7 @@ export default {
         this.lastName = this.new_lastName;
         browsercookies.erase('last_name'),
         browsercookies.set('last_name', this.new_lastName, {expires: 1});
-        api
+        axios
            .post('api/Account/updatelastname', {
               
            })
@@ -387,7 +387,7 @@ export default {
 
      },
 
-     editroomnumber: function(){
+     editroomnum: function(){
         this.editrn = true ;
         this.roomNumber = this.new_roomNumber;
         browsercookies.erase('room_num'),
@@ -426,7 +426,7 @@ export default {
         this.editpn = true ;
         this.phoneNumber = this.new_phoneNumber;
         browsercookies.erase('phone_number'),
-        browsercookies.set('phone_number', this.new_roomNumber, {expires: 1});
+        browsercookies.set('phone_number', this.new_phoneNumber, {expires: 1});
         api
            .post('api/Account/updatephonenumber', {
               

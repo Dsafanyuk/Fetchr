@@ -37,7 +37,6 @@ function updatelastname(req, res){
     })
     .then((products) => {
       res.status(200);
-      // res.cookie("first_name", req.body.firstName, { maxAge: 24*60*60*1000 });
     })
     .catch((err) => {
       res.status(500).json({
@@ -58,7 +57,6 @@ function updateemailaddress(req, res){
     })
     .then((products) => {
       res.status(200);
-      // res.cookie("first_name", req.body.firstName, { maxAge: 24*60*60*1000 });
     })
     .catch((err) => {
       res.status(500).json({
@@ -79,7 +77,6 @@ function updateroomnumber(req, res){
     })
     .then((products) => {
       res.status(200);
-      // res.cookie("first_name", req.body.firstName, { maxAge: 24*60*60*1000 });
     })
     .catch((err) => {
       res.status(500).json({
@@ -100,7 +97,6 @@ function updatephonenumber(req, res){
     })
     .then((products) => {
       res.status(200);
-      // res.cookie("first_name", req.body.firstName, { maxAge: 24*60*60*1000 });
     })
     .catch((err) => {
       res.status(500).json({

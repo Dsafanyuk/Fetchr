@@ -1,0 +1,49 @@
+{
+  "name": "fetchr",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fetchr Client App",
+  "author": "Devs That Deliver",
+  "scripts": {
+    "build": "NODE_ENV=production webpack --progress --hide-modules --mode=production",
+    "dev": "webpack-dev-server --env.DEBUG=socket.io* --hot --config webpack.config.js --mode=development",
+    "dev:prod": "NODE_ENV=production webpack-dev-server --open --hot --config webpack.config.js --mode=production --compress"
+  },
+  "dependencies": {
+    "acorn": "^6.1.0",
+    "axios": "^0.18.0",
+    "browser-cookies": "^1.2.0",
+    "socket.io-client": "^2.2.0",
+    "vee-validate": "^2.1.7",
+    "vue": "^2.6.2",
+    "vue-router": "^3.0.1",
+    "vue-socket.io-extended": "^3.2.1",
+    "vue-toasted": "^1.1.25",
+    "vuetify": "^1.5.0",
+    "vuex": "^3.1.0",
+    "vuex-persistedstate": "^2.5.4",
+    "webpack-merge": "^4.2.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.4",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^6.0.6",
+    "vue-loader": "^14.2.4",
+    "vue-template-compiler": "^2.6.2",
+    "vuex-persistedstate": "^2.5.4",
+    "webpack": "^4.29.1",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "license": "MIT"
+}

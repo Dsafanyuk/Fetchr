@@ -93,6 +93,71 @@ export default {
   computed: {
     walletBalance: function() {
       return this.$store.getters["wallet/walletBalance"];
+    }
+  },
+  methods: {
+    // so they cant type letters into the other amount field if we care about that kind of thing
+    // from stack overflow
+    isNumber: function(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    },
+    customAmount() {
+      this.selectedAmount = null;
+      this.otherChosen = true;
+      //set focus
+      setTimeout(() => {
+        document.getElementsByClassName("otherAmount")[0].focus();
+      }, 20);
+    },
+    selectAmount(n) {
+      this.selectedAmount = n;
+      this.otherChosen = false;
+    },
+    addToWallet() {
+      this.transactionIsProcessing = true;
+      this.selectedAmount = parseFloat(this.selectedAmount).toFixed(2);
+      if (
+        parseFloat(this.selectedAmount) + parseFloat(this.walletBalance) <
+        1000
+      ) {
+        axios
+          .post("/api/users/" + browserCookies.get("user_id") + "/wallet", {
+            amount: this.selectedAmount
+          })
+          .then(response => {
+            console.log(response.status);
+            if (response.status == 200) {
+              console.log("transaction successful");
+              this.$store.dispatch("wallet/getWalletBalance");
+            }
+            this.transactionIsProcessing = false;
+            this.selectAmount(null);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
+        this.$toasted
+          .error("You're Too Rich! Give More To Charity pls")
+          .goAway(3000);
+        this.transactionIsProcessing = false;
+        this.selectAmount(null);
+      }
+    }
+  },
+  computed: {
+    walletBalance: function() {
+      return this.$store.getters["wallet/walletBalance"];
     },
     show: {
       get() {
@@ -110,6 +175,31 @@ export default {
   }
 };
 </script>
-
-<style>
+  
+  <style scoped>
+.blurin {
+  animation-name: blurin;
+  animation-duration: 0.4s;
+  animation-fill-mode: forwards;
+}
+.otherAmount {
+  border-style: solid;
+  display: inline-block;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  width: 62px;
+  height: 32px;
+  border-color: #e0e0e0;
+  outline: none;
+}
+@keyframes blurin {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 </style>
+  

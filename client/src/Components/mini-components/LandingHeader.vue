@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="visible-xs text-xs-center" @click="showShoppingCart()">
+    <div class="visible-xs text-xs-center" @click="showShoppingCart(true)">
       <v-btn fixed light round bottom raised color="lightened" class="floating-cart navbar-toggler">
         <span class="text--lighten-1 btn-text">Shopping Cart&nbsp;&nbsp;</span>
         <v-icon color="white">shopping_cart</v-icon>
@@ -97,9 +97,12 @@
         </v-menu>
       </div>
       <div class="text-xs-right col-xs-1" id="shopping_cart" @click="showShoppingCart(true)">
-        <v-btn fab color="#f9aa33">
-          <v-icon color="white">shopping_cart</v-icon>
-        </v-btn>
+        <v-badge color="red" right overlap>
+          <span slot="badge" v-if="numOfItemsInCart>0">{{numOfItemsInCart}}</span>
+          <v-btn fab color="#f9aa33" icon class="ma-0">
+            <v-icon medium color="white">shopping_cart</v-icon>
+          </v-btn>
+        </v-badge>
       </div>
     </div>
   </nav>
@@ -141,6 +144,9 @@ export default {
   computed: {
     walletBalance: function() {
       return this.$store.getters["wallet/walletBalance"];
+    },
+    numOfItemsInCart: function() {
+      return this.$store.getters["cart/totalCartItems"];
     }
   },
   methods: {

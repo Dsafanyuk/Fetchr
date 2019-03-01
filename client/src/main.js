@@ -18,9 +18,10 @@ import Confirmation from './Components/layouts/MainDashboard/components/Confirma
 import CourierDashboard from './Components/Courier/CourierDashboard.vue';
 import Account from './Components/layouts/MainDashboard/components/Account.vue';
 import store from './store'
-
 import 'vuetify/dist/vuetify.min.css';
-Vue.use(VueSocketio, io('http://127.0.0.1:3000?userid=1',{autoConnect: false}), { store });
+Vue.use(VueSocketio, 
+        io(process.env.NODE_ENV === 'production' ? 'http://fetchrapp.com:3000'  : 'http://127.0.0.1:3000'),
+        {store});
 
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
@@ -73,7 +74,6 @@ const router = new VueRouter({
 
 // Called before every route
 router.beforeEach((to, from, next) => {
-  
   if(store.getters["login/isLoggedIn"]) {
     next();
   } else if((to.path == "/login") || (to.path == "/register") || (to.path == "/home")) {

@@ -1,29 +1,78 @@
 <template>
 <body>
-  <CourierHeader></CourierHeader>
-  <CourierSummaryCard class="summarycard"></CourierSummaryCard>
   <v-app>
-    <div class="row">
-      <div class="col-lg-6">
-        <button type="button" v-on:click="getAvailableOrders">Refresh Available Orders</button>
-        <CourierAvailableOrders
-          :orders="orders"
-          v-on:accepted="getAvailableOrders(); getAcceptedOrders();"
-        ></CourierAvailableOrders>
-      </div>
-      <div class="col-lg-6">
-        <button type="button" v-on:click="getAcceptedOrders">Refresh Accepted Orders</button>
-        <v-tabs height="80px" centered light icons-and-text show-arrows>
+    <CourierOrderSummary
+      v-if="summaryOrder.order_id"
+      :selectedOrder="summaryOrder"
+      :summaryIsActive="summaryIsActive"
+      v-model="summaryIsActive"
+      @closeDialog="summaryIsActive"
+    ></CourierOrderSummary>
+    <CourierHeader></CourierHeader>
+    <CourierSummaryCard class="summarycard"></CourierSummaryCard>
+
+    <!-- MOBILE AND TABLETS -->
+    <div class="hidden-lg-and-up row">
+      <div class="col-md-10 offset-md-1 col-sm-5">
+        <v-tabs height="80px" centered light show-arrows grow v-model.lazy="active" mandatory>
           <v-tabs-slider color="accent"></v-tabs-slider>
-          <v-tab href="#baby1">Accepted</v-tab>
-          <v-tab href="#baby2">Delivered</v-tab>
-          <v-tab-item v-for="i in 2" :key="i" :value="'baby' + i">
-            <CourierAcceptedOrders
+          <v-tab href="#baby1">Available</v-tab>
+          <v-tab href="#baby2">Accepted</v-tab>
+          <v-tab href="#baby3">Delivered</v-tab>
+          <v-tab-item v-for="i in 3" :key="i" :value="'baby' + i">
+            <CourierAvailableOrders
               v-if="i == 1"
+              :orders="availableOrders"
+              @toggleSummary="toggleOrderSummary"
+            ></CourierAvailableOrders>
+            <CourierAcceptedOrders
+              v-if="i == 2"
               :orders="acceptedOrders"
-              v-on:delivered="getAcceptedOrders"
+              @toggleSummary="toggleOrderSummary"
             ></CourierAcceptedOrders>
-            <CourierDeliveredOrders v-if="i == 2" :orders="deliveredOrders"></CourierDeliveredOrders>
+            <CourierDeliveredOrders
+              v-if="i == 3"
+              :orders="deliveredOrders"
+              @toggleSummary="toggleOrderSummary"
+            ></CourierDeliveredOrders>
+          </v-tab-item>
+        </v-tabs>
+      </div>
+    </div>
+
+    <!-- Computers -->
+    <div class="row hidden-md-and-down">
+      <div class="col-lg-10 offset-lg-1">
+        <v-tabs
+          height="80px"
+          centered
+          light
+          show-arrows
+          grow
+          v-model="active"
+          class="shadow-lg"
+          mandatory
+        >
+          <v-tabs-slider color="accent"></v-tabs-slider>
+          <v-tab href="#baby1">Available</v-tab>
+          <v-tab href="#baby2">Accepted</v-tab>
+          <v-tab href="#baby3">Delivered</v-tab>
+          <v-tab-item v-for="i in 3" :key="i" :value="'baby' + i">
+            <CourierAvailableOrders
+              v-if="i == 1"
+              :orders="availableOrders"
+              @toggleSummary="toggleOrderSummary"
+            ></CourierAvailableOrders>
+            <CourierAcceptedOrders
+              v-if="i == 2"
+              :orders="acceptedOrders"
+              @toggleSummary="toggleOrderSummary"
+            ></CourierAcceptedOrders>
+            <CourierDeliveredOrders
+              v-if="i == 3"
+              :orders="deliveredOrders"
+              @toggleSummary="toggleOrderSummary"
+            ></CourierDeliveredOrders>
           </v-tab-item>
         </v-tabs>
       </div>
@@ -33,6 +82,7 @@
 </template>
 
 <script>
+import CourierOrderSummary from "../mini-components/Courier/CourierOrderSummary";
 import CourierHeader from "../mini-components/Courier/CourierHeader.vue";
 import CourierDeliveredOrders from "./CourierDeliveredOrders";
 import CourierSummaryCard from "../mini-components/Courier/CourierSummaryCard.vue";
@@ -40,45 +90,14 @@ import CourierAvailableOrders from "./CourierAvailableOrders";
 import CourierAcceptedOrders from "./CourierAcceptedOrders";
 import browserCookies from "browser-cookies";
 import Toasted from "vue-toasted";
-import axios from "axios";
-const api = axios.create();
-const user = browserCookies.get("user_id");
+import axios from "../../axios";
 
 export default {
   data() {
     return {
-      orders: [],
-      acceptedOrders: [],
-      deliveredOrders: [],
-      buildings: [
-        "Ballard",
-        "Coberly",
-        "Griffith",
-        "Dixon",
-        "Bradley",
-        "Young"
-      ],
-      months: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-      ],
-      blankOrder: {
-        order_id: "",
-        first_name: "",
-        building: "",
-        order_total: "",
-        time_created: ""
-      }
+      active: "baby1",
+      summaryOrder: {},
+      summaryIsActive: false
     };
   },
   components: {
@@ -86,117 +105,44 @@ export default {
     CourierSummaryCard: CourierSummaryCard,
     CourierAvailableOrders: CourierAvailableOrders,
     CourierAcceptedOrders: CourierAcceptedOrders,
-    CourierDeliveredOrders: CourierDeliveredOrders
+    CourierDeliveredOrders: CourierDeliveredOrders,
+    CourierOrderSummary: CourierOrderSummary
   },
-  created: function loadOrders() {
-    this.getAcceptedOrders();
+  created: function clearOrders() {
+    this.$store.dispatch("courier/clearAllOrders");
+  },
+  mounted: function loadOrder() {
     this.getAvailableOrders();
+    this.getAcceptedOrders();
+    this.getDeliveredOrders();
+  },
+  computed: {
+    availableOrders() {
+      return this.$store.getters["courier/availableOrders"];
+    },
+    deliveredOrders() {
+      return this.$store.getters["courier/deliveredOrders"];
+    },
+    acceptedOrders() {
+      return this.$store.getters["courier/acceptedOrders"];
+    }
   },
   methods: {
+    toggleOrderSummary(value) {
+      if (value) this.summaryOrder = value;
+      else this.summaryOrder = "";
+
+      if (this.toggleSummary) this.summaryIsActive = false;
+      else this.summaryIsActive = true;
+    },
+    getDeliveredOrders() {
+      this.$store.dispatch("courier/getDeliveredOrders");
+    },
     getAcceptedOrders() {
-      let aCounter = 0;
-      let dCounter = 0;
-      let loadingOrdersToast = this.$toasted.show("Loading accepted orders...");
-      api
-        .get(`/api/courier/${user}/order/accepted`)
-        .then(response => {
-          response.data.map(order => {
-            console.log(order);
-            let newOrder = {
-              order_id: order.order_id,
-              first_name: order.first_name,
-              room_num:
-                this.buildings[order.room_num.slice(0, 1) - 1] +
-                " " +
-                order.room_num,
-              time_created: this.fixDateTime(order.time_created)
-            };
-            if (order.delivery_status == "in progress") {
-              this.acceptedOrders.push(newOrder);
-              aCounter++;
-            } else {
-              this.deliveredOrders.push(newOrder);
-              dCounter++;
-            }
-          });
-          for (let i = 5; i > aCounter % 5; i--) {
-            this.acceptedOrders.push(this.blankOrder);
-          }
-          for (let i = 5; i > dCounter % 5; i--) {
-            this.deliveredOrders.push(this.blankOrder);
-          }
-          loadingOrdersToast.text("accepted orders loaded!").goAway(5000);
-        })
-        .catch(error => {
-          if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log(error);
-            console.log("Error", error.message);
-          }
-          loadingOrdersToast.goAway();
-          this.$toasted.error("Something went wrong");
-        });
+      this.$store.dispatch("courier/getAcceptedOrders");
     },
     getAvailableOrders() {
-      let counter = 0;
-      let loadingOrdersToast = this.$toasted.show("Loading orders...");
-      api
-        .get(`/api/courier/` + user + `/order`)
-        .then(response => {
-          this.orders = response.data.map(order => {
-            let newOrder = {
-              order_id: order.order_id,
-              first_name: order.first_name,
-              room_num:
-                this.buildings[order.room_num.slice(0, 1) - 1] +
-                " " +
-                order.room_num,
-              time_created: this.fixDateTime(order.time_created)
-            };
-            counter++;
-            return newOrder;
-          });
-          for (let i = 5; i > counter % 5; i--) {
-            this.orders.push(this.blankOrder);
-          }
-          loadingOrdersToast.text("orders loaded!").goAway(5000);
-        })
-        .catch(error => {
-          if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
-          }
-          loadingOrdersToast.goAway();
-          this.$toasted.error("Something went wrong");
-        });
-    },
-    fixDateTime(date) {
-      if (date != "") {
-        date = new Date(date);
-        let minutes = date.getMinutes();
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        let goodDate =
-          this.months[date.getMonth()] +
-          " " +
-          date.getDate() +
-          " " +
-          date.getHours() +
-          ":" +
-          minutes;
-        return goodDate;
-      }
+      this.$store.dispatch("courier/getAvailableOrders");
     }
   }
 };
@@ -207,6 +153,6 @@ export default {
   height: 79px !important;
 }
 .summarycard {
-  margin-top: 100px;
+  margin-top: 1%;
 }
 </style>

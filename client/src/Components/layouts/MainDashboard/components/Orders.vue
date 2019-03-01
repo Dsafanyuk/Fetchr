@@ -40,7 +40,6 @@ export default {
     };
   },
   mounted: function() {
-    console.log(this.$route.path);
     axios
       .get("/api/users/" + browserCookies.get("user_id") + "/orders")
       .then(response => {

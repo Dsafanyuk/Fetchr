@@ -53,7 +53,7 @@
     <div class="collapse navbar-collapse col-md-6 offset-md-3" id="navbarTogglerDemo03">
       <div class="col-md-6">
         <input
-            v-if="isLanding"
+          v-if="isLanding"
           class="form-control mr-sm-2"
           size="30"
           type="search"
@@ -142,8 +142,8 @@ export default {
       return this.$store.getters["wallet/walletBalance"];
     },
     isLanding: function() {
-        return (this.$route.path == '/dashboard')
-    },
+      return this.$route.path == "/dashboard";
+    }
   },
   methods: {
     showWallet: function(value) {

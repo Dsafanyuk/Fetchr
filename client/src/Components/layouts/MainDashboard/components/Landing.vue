@@ -71,12 +71,10 @@ export default {
     };
   },
   mounted: function loadProducts() {
-    console.log(this.$route.path);
     let loadingProductsToast = this.$toasted.show("Loading products...");
     axios
       .get(`/api/products`)
       .then(response => {
-        console.log(response);
         this.products = response.data;
         loadingProductsToast.text("Products loaded!").goAway(500);
       })

@@ -33,9 +33,11 @@
                                                 <input type="text" v-model="new_firstName" class="Edit_dialog">
                                               </div>
                                            </div>        
-                                        <v-card-actions row justify-right>
-                                           <v-btn round color="cyan" flat @click="dialog1 = false">Close</v-btn>
-                                           <v-btn round color="cyan" flat type="button" @click="ask_dialog1 = !ask_dialog1">Save</v-btn>
+                                        <v-card-actions >
+                                           <div class="form-group text-right">
+                                              <v-btn round color="cyan" flat type="button" @click="dialog1 = false">Close</v-btn>
+                                              <v-btn round color="cyan" flat type="submit" @click="ask_dialog1 = !ask_dialog1">Save</v-btn>
+                                           </div>
                                         </v-card-actions>
                                      </v-card-text>
                                      <div style="flex: 1 1 auto;"></div>
@@ -255,7 +257,7 @@ export default {
          dialog3 : false,
          dialog4 : false,
          dialog5 : false,
-	      ask_dialog1 : false,
+  ask_dialog1 : false,                                                                                              
          ask_dialog2 : false,
          ask_dialog3 : false,
          ask_dialog4 : false,
@@ -286,10 +288,81 @@ export default {
      editfirstname: function(){
         this.dialog1 = true ;
         this.firstName = this.new_firstName;
-        browsercookies.sets('first_name', this.new_firstName,{expires: 30});
-        axio
+        browsercookies.erase('first_name'),
+        browsercookies.set('first_name', this.new_firstName);
+        axios
            .post('api/Account/updatefirstname', {
-               first_name: this.new_firstName
+               firstname: new_firstName
+           })
+           .then((response) => {
+               if (response.status == 200) {
+                  console.log('Saved');
+                  this.$router.push('/account');
+              }
+           })
+           .catch(function (error) {
+              if (error.response.status == 400) {
+                toasted.error(error.response.data, {
+                   theme: "primary",
+                   position: "top-center",
+                   duration : 5000
+                  });
+              }
+              console.log(error);
+              if (error.response) {
+                 // The request was made and the server responded with a status code
+                 // that falls out of the range of 2xx
+                 console.log(error.response.data);
+                 console.log(error.response.status);
+                 console.log(error.response.headers);
+              }
+           });
+
+     },
+
+     editlastname: function(){
+        this.dialog2 = true ;
+        this.lastName = this.new_lastName;
+        browsercookies.erase('last_name'),
+        browsercookies.set('last_name', this.new_firstName);
+        axios
+           .post('api/Account/updatelastname', {
+               firstname: new_firstName
+           })
+           .then((response) => {
+               if (response.status == 200) {
+                  console.log('Saved');
+                  this.$router.push('/account');
+              }
+           })
+           .catch(function (error) {
+              if (error.response.status == 400) {
+                toasted.error(error.response.data, {
+                   theme: "primary",
+                   position: "top-center",
+                   duration : 5000
+                  });
+              }
+              console.log(error);
+              if (error.response) {
+                 // The request was made and the server responded with a status code
+                 // that falls out of the range of 2xx
+                 console.log(error.response.data);
+                 console.log(error.response.status);
+                 console.log(error.response.headers);
+              }
+           });
+
+     },
+
+     editea: function(){
+        this.dialog3 = true ;
+        this.emailAddress = this.new_emailAddress;
+        browsercookies.erase('email_address'),
+        browsercookies.set('emailAddress', this.new_emailAddress);
+        axios
+           .post('api/Account/updateemailaddress', {
+               emailAddress: new_emailAddress
            })
            .then((response) => {
                if (response.status == 200) {
@@ -317,89 +390,19 @@ export default {
 
      },
 
-     editlastname: function(){
-        this.editln = true ;
-        this.lastName = this.new_lastName;
-        browsercookies.erase('last_name'),
-        browsercookies.set('last_name', this.new_lastName, {expires: 1});
-        axios
-           .post('api/Account/updatelastname', {
-              
-           })
-           .then((response) => {
-               if (response.status == 200) {
-                  console.log('logged in');
-                  this.$router.push('/login');
-              }
-           })
-           .catch(function (error) {
-              if (error.response.status == 400) {
-                toasted.error(error.response.data, {
-                   theme: "primary",
-                   position: "top-center",
-                   duration : 5000
-                  });
-              }
-              console.log(error);
-              if (error.response) {
-                 // The request was made and the server responded with a status code
-                 // that falls out of the range of 2xx
-                 console.log(error.response.data);
-                 console.log(error.response.status);
-                 console.log(error.response.headers);
-              }
-           });
-
-     },
-
-     editea: function(){
-        this.editem = true ;
-        this.emailAddress = this.new_emailAddress;
-        browsercookies.erase('email_address'),
-        browsercookies.set('email_address', this.new_emailAddress, {expires: 1});
-        api
-           .post('api/Account/updateemailaddress', {
-              
-           })
-           .then((response) => {
-               if (response.status == 200) {
-                  console.log('logged in');
-                  this.$router.push('/login');
-              }
-           })
-           .catch(function (error) {
-              if (error.response.status == 400) {
-                toasted.error(error.response.data, {
-                   theme: "primary",
-                   position: "top-center",
-                   duration : 5000
-                  });
-              }
-              console.log(error);
-              if (error.response) {
-                 // The request was made and the server responded with a status code
-                 // that falls out of the range of 2xx
-                 console.log(error.response.data);
-                 console.log(error.response.status);
-                 console.log(error.response.headers);
-              }
-           });
-
-     },
-
      editroomnum: function(){
-        this.editrn = true ;
+        this.dialog4 = true ;
         this.roomNumber = this.new_roomNumber;
-        browsercookies.erase('room_num'),
-        browsercookies.set('room_num', this.new_roomNumber, {expires: 1});
-        api
-           .post('api/Account/updateroomnumber', {
-              
+        browsercookies.erase('roomNumber'),
+        browsercookies.set('roomNumber', this.new_roomNumber);
+        axios
+           .post('api/Account/roomnumber', {
+               roomNumber: new_roomNumber
            })
            .then((response) => {
                if (response.status == 200) {
-                  console.log('logged in');
-                  this.$router.push('/login');
+                  console.log('Saved');
+                  this.$router.push('/register');
               }
            })
            .catch(function (error) {
@@ -423,18 +426,18 @@ export default {
      },
 
      editphonenumber: function(){
-        this.editpn = true ;
+        this.dialog5 = true ;
         this.phoneNumber = this.new_phoneNumber;
-        browsercookies.erase('phone_number'),
-        browsercookies.set('phone_number', this.new_phoneNumber, {expires: 1});
-        api
+        browsercookies.erase('phoneNumber'),
+        browsercookies.set('phoneNumber', this.new_phoneNumber);
+        axios
            .post('api/Account/updatephonenumber', {
-              
+               phoneNumber: new_phoneNumber
            })
            .then((response) => {
                if (response.status == 200) {
-                  console.log('logged in');
-                  this.$router.push('/login');
+                  console.log('Saved');
+                  this.$router.push('/register');
               }
            })
            .catch(function (error) {
@@ -454,6 +457,7 @@ export default {
                  console.log(error.response.headers);
               }
            });
+
      },    
   }
 };

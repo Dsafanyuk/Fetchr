@@ -3,11 +3,14 @@ const router = express.Router();
 const knex = require('knex')(require('../db'));
 module.exports = {
   updatefirstname,
-
+  updatelastname,
+  updateemailaddress,
+  updateroomnumber,
+  updatephonenumber
 };
 /* Update fn codes*/
 function updatefirstname(req, res){
-  console.log(req.body.user_id, req.body.firstName)
+  console.log(req.body.user_id)
   knex('users')
     .where('user_id', req.body.user_id)
     .update({

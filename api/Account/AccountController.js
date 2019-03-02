@@ -1,3 +1,4 @@
+const {validationResult} = require('express-validator/check');
 const express = require('express');
 const router = express.Router();
 const knex = require('knex')(require('../db'));
@@ -39,38 +40,6 @@ function updatelastname(req, res){
       }); // FOR DEBUGGING ONLY, dont json exact message in prod
       console.log(err);
     })
-}
-
-/* Update ea codes*/
-function updateemailaddress(req, res){
-  knex('users')
-    .select('*')
-    .where('email_address', req.body.email_address)
-    .then((users) => {
-      if (users.length) {
-        res.status(400).send('There is an account already associated with this email address.');
-      } 
-      else {
-              knex('users')
-                .where('user_id', req.body.user_id)
-                .update({
-                   email_address: req.body.emailAddress,
-    
-                })
-                .then((products) => {
-                   res.status(307, './login');
-                })
-                .catch((err) => {
-                   res.status(500).send({
-                      message: `${err}`,
-                   }); // FOR DEBUGGING ONLY, dont json exact message in prod
-                console.log(err);
-                });
-           
-        }
-      })
-      return 0;
-        
 }
 
 /* Update rn codes*/

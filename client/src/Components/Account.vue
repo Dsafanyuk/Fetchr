@@ -2,7 +2,7 @@
    <v-app>
       <LandingHeader v-on:showcart="displayCart"></LandingHeader>
       <br>
-         <div class="container">
+         <div class="container ">
             <h3 class="v-primary"><br>Account Overview</h3>
             <hr>
             <div class="row">
@@ -21,7 +21,7 @@
                                 <span><i> edit</i></span>
                             </a>
                             <!--dialog boxes-->
-                            <v-layout row justify-center>
+                            <v-layout row >
                                <!--first dialog box to edit first name-->
                                <v-dialog v-model="dialog1"  max-width="400px">
                                   <v-card tile>
@@ -30,14 +30,13 @@
                                            <div class="form-group col-sm-12">
                                               <label class="text-warning control-label col-sm-4 " for="firstName">First Name:</label>
                                               <div class="col-sm-8">
-                                                <input type="text" v-model="new_firstName" class="Edit_dialog">
+                                                <input for="fnHelp" type="text" v-model="new_firstName" class="Edit_dialog" maxlength="15" required="true">
                                               </div>
+                                              <small id="fnHelp" class="form-text text-muted col-sm-12" >  The First Name field may not be greater than 15 characters</small>
                                            </div>        
-                                        <v-card-actions >
-                                           <div class="form-group text-right">
-                                              <v-btn round color="cyan" flat type="button" @click="dialog1 = false">Close</v-btn>
-                                              <v-btn round color="cyan" flat type="submit" @click="ask_dialog1 = !ask_dialog1">Save</v-btn>
-                                           </div>
+                                        <v-card-actions>
+                                           <v-btn round color="cyan" flat type="button" @click="dialog1 = false">Close</v-btn>
+                                           <v-btn round color="cyan" flat type="submit" @click="ask_dialog1 = !ask_dialog1">Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
                                      <div style="flex: 1 1 auto;"></div>
@@ -75,8 +74,9 @@
                                            <div class="form-group col-sm-12">
                                               <label class="text-warning control-label col-sm-4 " for="lastName">Last Name:</label>
                                               <div class="col-sm-8">
-                                                <input type="text" v-model="new_lastName" class="Edit_dialog">
+                                                <input for="lnHelp" type="text" v-model="new_lastName" class="Edit_dialog" maxlength="15" required="true">
                                               </div>
+                                              <small id="lnHelp" class="form-text text-muted col-sm-12" >  The Last Name field may not be greater than 15 characters</small>
                                            </div>        
                                         <v-card-actions row justify-right>
                                            <v-btn round color="cyan" flat @click="dialog2 = false">Close</v-btn>
@@ -99,10 +99,11 @@
                             </v-layout>
                           </div>
                       </div><br>
-                      <!-- display label and user email address with option to edit-->
+                      
+                       <!--display label and user room number with option to edit-->
                       <div class="row col-sm-12">
                          <div class="col-sm-10">
-                            <strong class="text-warning">Email address</strong>: {{ emailAddress }}
+                            <strong class="text-warning">Room number</strong>: {{ roomNumber }}
                          </div>
                          <div class="col-sm-2">
                             <a href="#" v-on:click="dialog3 = true">
@@ -110,16 +111,17 @@
                             </a>
                             <!--dialog boxes-->
                             <v-layout row justify-center>
-                               <!--first dialog box to edit last name-->
+                               <!--first dialog box to edit room number-->
                                <v-dialog v-model="dialog3"  max-width="400px">
                                   <v-card tile>
-                                     <v-card-title class="v-primary"><strong>Edit Your Email Address</strong></v-card-title>
+                                     <v-card-title class="v-primary"><strong>Edit Your room number</strong></v-card-title>
                                         <v-card-text>
                                            <div class="form-group col-sm-12">
-                                              <label class="text-warning control-label col-sm-5 " for="emailAdddress">Email Address:</label>
+                                              <label type="number" class="text-warning control-label col-sm-5 " for="roomNumber">Room Number:</label>
                                               <div class="col-sm-7">
-                                                <input type="text" v-model="new_emailAddress" class="Edit_dialog">
+                                                <input for="nHelp" onKeyDown="if(this.value.length==4 && event.keyCode!=8) return false;" placeholder="####" v-model="new_phoneNumber" class="Edit_dialog"/>
                                               </div>
+                                              <small id="rnHelp" class="form-text text-muted col-sm-12" ><br>The Room Number field may not be greater than 4 characters</small>
                                            </div>        
                                         <v-card-actions row justify-right>
                                            <v-btn round color="cyan" flat @click="dialog3 = false">Close</v-btn>
@@ -129,56 +131,13 @@
                                      <div style="flex: 1 1 auto;"></div>
                                   </v-card>
                                </v-dialog>
-                               <!--confirmation dialog box to edit last name-->
-                               <v-dialog v-model="ask_dialog3" max-width="200px">
-                                  <v-card>
-                                  <v-card-text>Are You sure you want to change your email address?</v-card-text>
-                                     <v-card-actions>
-                                        <v-btn color="primary" flat @click="ask_dialog3 = false">no</v-btn>
-                                        <v-btn color="primary" flat v-on:click="editea" @click="ask_dialog3 = false; dialog3 = false">yes</v-btn>
-                                     </v-card-actions>
-                                  </v-card>
-                               </v-dialog>
-                            </v-layout>
-                          </div>
-                      </div><br>
-                      <!-- display label and user room number with option to edit-->
-                      <div class="row col-sm-12">
-                         <div class="col-sm-10">
-                            <strong class="text-warning">Room number</strong>: {{ roomNumber }}
-                         </div>
-                         <div class="col-sm-2">
-                            <a href="#" v-on:click="dialog4 = true">
-                               <span><i> edit</i></span>
-                            </a>
-                            <!--dialog boxes-->
-                            <v-layout row justify-center>
-                               <!--first dialog box to edit room nuber-->
-                               <v-dialog v-model="dialog4"  max-width="400px">
-                                  <v-card tile>
-                                     <v-card-title class="v-primary"><strong>Edit Your room number</strong></v-card-title>
-                                        <v-card-text>
-                                           <div class="form-group col-sm-12">
-                                              <label class="text-warning control-label col-sm-5 " for="roomNumber">Room Number:</label>
-                                              <div class="col-sm-7">
-                                                <input type="text" v-model="new_roomNumber" class="Edit_dialog">
-                                              </div>
-                                           </div>        
-                                        <v-card-actions row justify-right>
-                                           <v-btn round color="cyan" flat @click="dialog4 = false">Close</v-btn>
-                                           <v-btn round color="cyan" flat type="button" @click="ask_dialog4 = !ask_dialog4">Save</v-btn>
-                                        </v-card-actions>
-                                     </v-card-text>
-                                     <div style="flex: 1 1 auto;"></div>
-                                  </v-card>
-                               </v-dialog>
-                               <!--confirmation dialog box to edit last name-->
+                               <!--confirmation dialog box to edit room number-->
                                <v-dialog v-model="ask_dialog4" max-width="200px">
                                   <v-card>
                                   <v-card-text>Are You sure you want to change your room number?</v-card-text>
                                      <v-card-actions>
                                         <v-btn color="primary" flat @click="ask_dialog4 = false">no</v-btn>
-                                        <v-btn color="primary" flat v-on:click="editroomnum" @click="ask_dialog4 = false; dialog4 = false">yes</v-btn>
+                                        <v-btn color="primary" flat v-on:click="editroomnum" @click="ask_dialog3 = false; dialog3 = false">yes</v-btn>
                                      </v-card-actions>
                                   </v-card>
                                </v-dialog>
@@ -191,25 +150,26 @@
                             <strong class="text-warning">Phone Number</strong>: {{ phoneNumber }}
                          </div>
                          <div class="col-sm-2">
-                            <a href="#" v-on:click="dialog5 = true">
+                            <a href="#" v-on:click="dialog4 = true">
                                <span><i> edit</i></span>
                             </a>
                             <!--dialog boxes-->
                             <v-layout row justify-center>
                                <!--first dialog box to edit phone number-->
-                               <v-dialog v-model="dialog5"  max-width="400px">
+                               <v-dialog v-model="dialog4"  max-width="400px">
                                   <v-card tile>
                                      <v-card-title class="v-primary"><strong>Edit Your Phone number</strong></v-card-title>
                                         <v-card-text>
                                            <div class="form-group col-sm-12">
                                               <label class="text-warning control-label col-sm-5 " for="phone number">Phone Number:</label>
                                               <div class="col-sm-7">
-                                                <input type="text" v-model="new_phoneNumber" class="Edit_dialog">
+                                                <input type="number" for="pnHelp"  onKeyDown="if(this.value.length==10 && event.keyCode!=8) return false;" placeholder="##########" v-model="new_phoneNumber" class="Edit_dialog" maxlength="10"/>
                                               </div>
+                                              <small id="pnHelp" class="form-text text-muted col-sm-12" ><br>The Phone Number field may not be greater than 10 numbers</small>
                                            </div>        
                                         <v-card-actions row justify-right>
-                                           <v-btn round color="cyan" flat @click="dialog5 = false">Close</v-btn>
-                                           <v-btn round color="cyan" flat type="button" @click="ask_dialog5 = !ask_dialog5">Save</v-btn>
+                                           <v-btn round color="cyan" flat @click="dialog4 = false">Close</v-btn>
+                                           <v-btn round color="cyan" flat type="button" @click="ask_dialog4 = !ask_dialog4">Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
                                      <div style="flex: 1 1 auto;"></div>
@@ -220,21 +180,32 @@
                                   <v-card>
                                   <v-card-text>Are You sure you want to change your lastname?</v-card-text>
                                      <v-card-actions>
-                                        <v-btn color="primary" flat @click="ask_dialog5 = false">no</v-btn>
-                                        <v-btn color="primary" flat v-on:click="editphonenumber" @click="ask_dialog5 = false; dialog5 = false">yes</v-btn>
+                                        <v-btn color="primary" flat @click="ask_dialog4 = false">no</v-btn>
+                                        <v-btn color="primary" flat v-on:click="editphonenumber" @click="ask_dialog4 = false; dialog4 = false">yes</v-btn>
                                      </v-card-actions>
                                   </v-card>
                                </v-dialog>
                             </v-layout>
                           </div>
                       </div><br>
-            </div>
-            <hr>
-          </form>
+                      <!-- display label and user email address with no option to edit-->
+                      <div class="row col-sm-10">
+                         <div class="col-sm-10" >
+                            <v-tooltip bottom>
+                               <template v-slot:activator="{ on }">
+                                  <span v-on="on"><strong for="emailHelp" class="text-warning">Email address</strong>: {{ emailAddress }}</span>
+                               </template>
+                                  <span>Vue only</span>
+                            </v-tooltip>
+                         </div>
+                      </div><br>
+                    </div>
+                 <hr>
+                 </form>
+              </div>
+           </div>
         </div>
-      </div>
-    </div>
-    <LandingFooter></LandingFooter>
+     <LandingFooter></LandingFooter>
   </v-app>
 </template>
 
@@ -256,17 +227,14 @@ export default {
          dialog2 : false,
          dialog3 : false,
          dialog4 : false,
-         dialog5 : false,
-  ask_dialog1 : false,                                                                                              
+         ask_dialog1 : false,                                                                                              
          ask_dialog2 : false,
          ask_dialog3 : false,
          ask_dialog4 : false,
-         ask_dialog5 : false,
          new_firstName:'',
 	      new_lastName:'',
-	      new_emailAddress:'',
 	      new_phoneNumber:'',
-	      new_roomNumber:''
+         new_roomNumber:'',
     };
   },
 
@@ -330,42 +298,6 @@ export default {
         axios
            .post('api/Account/updatelastname', {
                lastame: this.new_lastName,
-               user_id: browsercookies.get('user_id')
-           })
-           .then((response) => {
-               if (response.status == 200) {
-                  console.log('Saved');
-                  this.$router.push('/account');
-              }
-           })
-           .catch(function (error) {
-              if (error.response.status == 400) {
-                toasted.error(error.response.data, {
-                   theme: "primary",
-                   position: "top-center",
-                   duration : 5000
-                  });
-              }
-              console.log(error);
-              if (error.response) {
-                 // The request was made and the server responded with a status code
-                 // that falls out of the range of 2xx
-                 console.log(error.response.data);
-                 console.log(error.response.status);
-                 console.log(error.response.headers);
-              }
-           });
-
-     },
-
-     editea: function(){
-        this.dialog3 = true ;
-        this.emailAddress = this.new_emailAddress;
-        browsercookies.erase('email_address'),
-        browsercookies.set('email_address', this.new_emailAddress);
-        axios
-           .post('api/Account/updateemailaddress', {
-               emailAddress: this.new_emailAddress,
                user_id: browsercookies.get('user_id')
            })
            .then((response) => {

@@ -242,7 +242,7 @@
 import LandingHeader from "./mini-components/LandingHeader.vue";
 import LandingFooter from "./mini-components/LandingFooter.vue";
 import browsercookies from "browser-cookies";
-import Axios from 'axios';
+import axios from '../axios';
 
 export default {
    data() {
@@ -291,8 +291,10 @@ export default {
         browsercookies.erase('first_name'),
         browsercookies.set('first_name', this.new_firstName);
         axios
-           .post('api/Account/updatefirstname', {
-               firstname: new_firstName
+           .post('api/account/updatefirstname', {
+               firstName: this.new_firstName,
+               user_id: browsercookies.get('user_id')
+
            })
            .then((response) => {
                if (response.status == 200) {
@@ -324,10 +326,11 @@ export default {
         this.dialog2 = true ;
         this.lastName = this.new_lastName;
         browsercookies.erase('last_name'),
-        browsercookies.set('last_name', this.new_firstName);
+        browsercookies.set('last_name', this.new_lastName);
         axios
            .post('api/Account/updatelastname', {
-               firstname: new_firstName
+               lastame: this.new_lastName,
+               user_id: browsercookies.get('user_id')
            })
            .then((response) => {
                if (response.status == 200) {
@@ -359,15 +362,16 @@ export default {
         this.dialog3 = true ;
         this.emailAddress = this.new_emailAddress;
         browsercookies.erase('email_address'),
-        browsercookies.set('emailAddress', this.new_emailAddress);
+        browsercookies.set('email_address', this.new_emailAddress);
         axios
            .post('api/Account/updateemailaddress', {
-               emailAddress: new_emailAddress
+               emailAddress: this.new_emailAddress,
+               user_id: browsercookies.get('user_id')
            })
            .then((response) => {
                if (response.status == 200) {
                   console.log('Saved');
-                  this.$router.push('/register');
+                  this.$router.push('/account');
               }
            })
            .catch(function (error) {
@@ -393,16 +397,17 @@ export default {
      editroomnum: function(){
         this.dialog4 = true ;
         this.roomNumber = this.new_roomNumber;
-        browsercookies.erase('roomNumber'),
-        browsercookies.set('roomNumber', this.new_roomNumber);
+        browsercookies.erase('room_num'),
+        browsercookies.set('room_num', this.new_roomNumber);
         axios
-           .post('api/Account/roomnumber', {
-               roomNumber: new_roomNumber
+           .post('api/Account/updateroomnumber', {
+               roomNumber: this.new_roomNumber,
+               user_id: browsercookies.get('user_id')
            })
            .then((response) => {
                if (response.status == 200) {
                   console.log('Saved');
-                  this.$router.push('/register');
+                  this.$router.push('/account');
               }
            })
            .catch(function (error) {
@@ -428,16 +433,17 @@ export default {
      editphonenumber: function(){
         this.dialog5 = true ;
         this.phoneNumber = this.new_phoneNumber;
-        browsercookies.erase('phoneNumber'),
-        browsercookies.set('phoneNumber', this.new_phoneNumber);
+        browsercookies.erase('phone_number'),
+        browsercookies.set('phone_number', this.new_phoneNumber);
         axios
            .post('api/Account/updatephonenumber', {
-               phoneNumber: new_phoneNumber
+               phoneNumber: this.new_phoneNumber,
+               user_id: browsercookies.get('user_id')
            })
            .then((response) => {
                if (response.status == 200) {
                   console.log('Saved');
-                  this.$router.push('/register');
+                  this.$router.push('/account');
               }
            })
            .catch(function (error) {

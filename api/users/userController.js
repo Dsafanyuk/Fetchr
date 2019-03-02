@@ -92,7 +92,7 @@ function favorite(req, res) {
       product_id: req.body.product_id,
     })
     .then(() => {
-      res.send(200).status(200);
+      res.status(200);
     })
     .catch((err) => {
       res.status(500).send({

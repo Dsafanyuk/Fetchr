@@ -1,16 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const knex = require('knex')(require('../db'));
-module.exports = {
-  updatefirstname,
-  updatelastname,
-  updateemailaddress,
-  updateroomnumber,
-  updatephonenumber
-};
+
 /* Update fn codes*/
 function updatefirstname(req, res){
-  console.log(req.body.user_id)
   knex('users')
     .where('user_id', req.body.user_id)
     .update({
@@ -31,7 +24,6 @@ function updatefirstname(req, res){
 
 /* Update ln codes*/
 function updatelastname(req, res){
-  console.log(req.body.user_id, req.body.lastName)
   knex('users')
     .where('user_id', req.body.user_id)
     .update({
@@ -51,27 +43,38 @@ function updatelastname(req, res){
 
 /* Update ea codes*/
 function updateemailaddress(req, res){
-  console.log(req.body.user_id, req.body.emailAddress)
   knex('users')
-    .where('user_id', req.body.user_id)
-    .update({
-      email_address: req.body.emailAddress,
-
-    })
-    .then((products) => {
-      res.status(200);
-    })
-    .catch((err) => {
-      res.status(500).json({
-        message: `${err}`,
-      }); // FOR DEBUGGING ONLY, dont json exact message in prod
-      console.log(err);
-    })
+    .select('*')
+    .where('email_address', req.body.email_address)
+    .then((users) => {
+      if (users.length) {
+        res.status(400).send('There is an account already associated with this email address.');
+      } 
+      else {
+              knex('users')
+                .where('user_id', req.body.user_id)
+                .update({
+                   email_address: req.body.emailAddress,
+    
+                })
+                .then((products) => {
+                   res.status(307, './login');
+                })
+                .catch((err) => {
+                   res.status(500).send({
+                      message: `${err}`,
+                   }); // FOR DEBUGGING ONLY, dont json exact message in prod
+                console.log(err);
+                });
+           
+        }
+      })
+      return 0;
+        
 }
 
 /* Update rn codes*/
 function updateroomnumber(req, res){
-  console.log(req.body.user_id, req.body.roomNumber)
   knex('users')
     .where('user_id', req.body.user_id)
     .update({
@@ -91,7 +94,6 @@ function updateroomnumber(req, res){
 
 /* Update pn codes*/
 function updatephonenumber(req, res){
-  console.log(req.body.user_id, req.body.phoneNumber)
   knex('users')
     .where('user_id', req.body.user_id)
     .update({
@@ -108,3 +110,11 @@ function updatephonenumber(req, res){
       console.log(err);
     })
 }
+
+module.exports = {
+  updatefirstname,
+  updatelastname,
+  updateemailaddress,
+  updateroomnumber,
+  updatephonenumber
+};

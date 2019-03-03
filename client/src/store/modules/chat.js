@@ -14,11 +14,12 @@ const ChatModule = {
   },
   actions: {
     sendMessage ({commit}, payload) {
-      let chatID = payload.chatID
+      console.log(payload.content);
+      let chatID = payload.chat_id
       const message = {
         user: payload.username,
         content: payload.content,
-        date: payload.date
+        //date: payload.date
       }
       firebase.database().ref('messages').child(chatID).child('messages').push(message)
         .then(
@@ -32,18 +33,25 @@ const ChatModule = {
         )
     },
     loadChats ({commit}) {
+      // Load all the chats having the Current Logged user (Creator or Receiver)
       firebase.database().ref('chats').on('value', function (snapshot) {
         commit('setChats', snapshot.val())
       })
     },
-    createChat ({commit}, payload) {
+    createChat ({commit,dispatch}, payload,) {
+      // Generate a conversation ID
       let newPostKey = firebase.database().ref().child('chats').push().key
+
       let updates = {}
-      updates['/chats/' + newPostKey] = {name: payload.chatName}
-      firebase.database().ref().update(updates)
-      return new Promise((resolve, reject) => {
-        resolve(newPostKey)
-      })
+            updates['/chats/' + newPostKey] = {name: payload.sender_id + "" + payload.receiver+""+payload.or_id, creator:payload.sender_id, receiver:payload.receiver }
+            firebase.database().ref().update(updates)
+            console.log("Here");
+            dispatch('sendMessage',{chat_id : newPostKey, content : payload.message, username: payload.sender_id });
+      /*return new Promise((resolve, reject) => {
+              resolve(newPostKey)
+            })*/
+
+
     }
   },
   getters: {

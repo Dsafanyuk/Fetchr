@@ -23,10 +23,11 @@
   //import EmojiPicker from './EmojiPicker.vue'
   import Chats from './Chats.vue'
   import * as firebase from 'firebase'
-
+  import browserCookies from "browser-cookies";
   export default {
     data () {
       return {
+        username :  browserCookies.get("username"),
         content: '',
         chatMessages: [],
         emojiPanel: false,
@@ -139,6 +140,7 @@
       },
       sendMessage () {
         if (this.content !== '') {
+          console.log(this.id);
           this.$store.dispatch('sendMessage', { username: this.username, content: this.content, date: new Date().toString(), chatID: this.id })
           this.content = ''
         }

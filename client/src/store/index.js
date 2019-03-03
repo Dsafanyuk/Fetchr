@@ -27,7 +27,7 @@ export default new Vuex.Store({
         courier,
         wallet,
         login,
-        chat,
+        chat
     },
     strict: debug,
 });

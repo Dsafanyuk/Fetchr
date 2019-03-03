@@ -1,6 +1,7 @@
 <template>
   <v-app>
-    <LandingHeader></LandingHeader>
+    <LandingHeader>
+    </LandingHeader>
     <div class="orders">
       <h3>Recent Orders</h3>
       <table class="order table-responsive-md">
@@ -20,28 +21,57 @@
             <td>{{order.delivery_status}}</td>
             <td>${{order.order_total.toFixed(2)}}</td>
             <td>
-              <OrderSummary :productID="order.order_id"></OrderSummary>
+              <v-dialog v-model="dialog" persistent max-width="600px">
+                <v-btn slot="activator" color="primary" dark> Chat </v-btn>
+                <v-card>
+                  <v-card-title>
+                    <span class="headline"> Write a Message to the Courier </span> </v-card-title>
+                  <v-card-text>
+                    <v-container grid-list-md>
+                      <v-layout wrap>
+
+                        <v-textarea name="input-7-1" v-model="msg_content" value="" hint="Type Here">
+                        </v-textarea>
+                      </v-layout>
+                    </v-container>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer>
+                    </v-spacer>
+                    <v-btn color="blue darken-1" flat @click="dialog = false"> Close </v-btn>
+                    <v-btn color="success" @click="createChat(order.order_id)"> Send </v-btn>
+                    </v-card-actions> </v-card>
+              </v-dialog>
+            </td>
+            <td>
+                <button @click="viewOrder(order.order_id)" class="btn btn-outline-dark my-2 my-sm-0" type="button">View</button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <LandingFooter></LandingFooter>
+    <LandingFooter>
+</LandingFooter>
   </v-app>
 </template>
-
 <script>
 import LandingHeader from "./mini-components/LandingHeader.vue";
 import LandingFooter from "./mini-components/LandingFooter.vue";
 import OrderSummary from "./mini-components/OrderSummary.vue";
 import browserCookies from "browser-cookies";
 import axios from "../axios";
+import {mapActions} from "vuex";
 
 export default {
   data() {
-    name: return {
-      orders: {}
+    return {
+      orders: {},
+      dialog: false,
+      msg_content: '',
+      user_id: browserCookies.get("user_id"),
     };
+
+
   },
   mounted: function() {
     axios
@@ -80,10 +110,27 @@ export default {
         ", " +
         date.getFullYear();
       return goodDate;
+    },
+    createChat: function(order_id) {
+    // Get the User_id of the Receiver
+      axios
+      .get("/api/orders/" + order_id)
+      .then(response => {
+      var receiver_id = response.data[0]['courier_id'];
+        this.$store.dispatch('createChat',{message: this.msg_content, sender_id : this.user_id, receiver : receiver_id, or_id : order_id });
+      });
+
+    },
+    getCourierId: function(courier_id) {
+      return axios
+        .get("/api/orders/" + courier_id)
+        .then(response => {
+          return response.data;
+        });
     }
+
   }
 };
 </script>
-
 <style scoped lang="css" src='./custom_css/orders.css'>
 </style>

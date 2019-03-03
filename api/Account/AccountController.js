@@ -83,7 +83,6 @@ function updatephonenumber(req, res){
 module.exports = {
   updatefirstname,
   updatelastname,
-  updateemailaddress,
   updateroomnumber,
   updatephonenumber
 };

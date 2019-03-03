@@ -1,6 +1,6 @@
-let express = require('express');
+const express = require('express');
+const router = express.Router();
 
-let router = express.Router();
 const accountController = require('./AccountController');
 
 router.post('/updatefirstname', accountController.updatefirstname);

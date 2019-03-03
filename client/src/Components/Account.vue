@@ -31,8 +31,8 @@
                                               <label class="text-warning control-label col-sm-4 " for="firstName">First Name:</label>
                                               <div class="col-sm-8">
                                                 <input for="fnHelp" type="text" v-model="new_firstName" class="Edit_dialog" maxlength="15" required="true">
-                                              </div>
-                                              <small id="fnHelp" class="form-text text-muted col-sm-12" >  The First Name field may not be greater than 15 characters</small>
+                                              </div><br>
+                                              <small id="fnHelp" class="form-text text-danger col-sm-12">*The First Name field may not be greater than 15 characters</small>
                                            </div>        
                                         <v-card-actions>
                                            <v-btn round color="cyan" flat type="button" @click="dialog1 = false">Close</v-btn>
@@ -43,7 +43,7 @@
                                   </v-card>
                                </v-dialog>
                                <!--confirmation dialog box to edit first name-->
-                               <v-dialog v-model="ask_dialog1" max-width="200px">
+                               <v-dialog v-model="ask_dialog1" max-width="300px">
                                   <v-card>
                                   <v-card-text>Are You sure you want to change your firstname?</v-card-text>
                                      <v-card-actions>
@@ -75,8 +75,8 @@
                                               <label class="text-warning control-label col-sm-4 " for="lastName">Last Name:</label>
                                               <div class="col-sm-8">
                                                 <input for="lnHelp" type="text" v-model="new_lastName" class="Edit_dialog" maxlength="15" required="true">
-                                              </div>
-                                              <small id="lnHelp" class="form-text text-muted col-sm-12" >  The Last Name field may not be greater than 15 characters</small>
+                                              </div><br>
+                                              <small id="lnHelp" class="form-text text-danger col-sm-12">*The Last Name field may not be greater than 15 characters</small>
                                            </div>        
                                         <v-card-actions row justify-right>
                                            <v-btn round color="cyan" flat @click="dialog2 = false">Close</v-btn>
@@ -87,7 +87,7 @@
                                   </v-card>
                                </v-dialog>
                                <!--confirmation dialog box to edit last name-->
-                               <v-dialog v-model="ask_dialog2" max-width="200px">
+                               <v-dialog v-model="ask_dialog2" max-width="300px">
                                   <v-card>
                                   <v-card-text>Are You sure you want to change your lastname?</v-card-text>
                                      <v-card-actions>
@@ -117,11 +117,11 @@
                                      <v-card-title class="v-primary"><strong>Edit Your room number</strong></v-card-title>
                                         <v-card-text>
                                            <div class="form-group col-sm-12">
-                                              <label type="number" class="text-warning control-label col-sm-5 " for="roomNumber">Room Number:</label>
+                                              <label class="text-warning control-label col-sm-5 " for="roomNumber">Room Number:</label>
                                               <div class="col-sm-7">
-                                                <input for="nHelp" onKeyDown="if(this.value.length==4 && event.keyCode!=8) return false;" placeholder="####" v-model="new_phoneNumber" class="Edit_dialog"/>
-                                              </div>
-                                              <small id="rnHelp" class="form-text text-muted col-sm-12" ><br>The Room Number field may not be greater than 4 characters</small>
+                                                <input type="number" for="nHelp" onKeyDown="if(this.value.length==4 && event.keyCode!=8) return false;" placeholder="####" v-model="new_roomNumber" class="Edit_dialog"/>
+                                              </div><br>
+                                              <small id="rnHelp" class="form-text text-danger col-sm-12" >*The Room Number field may not be greater than 4 characters</small>
                                            </div>        
                                         <v-card-actions row justify-right>
                                            <v-btn round color="cyan" flat @click="dialog3 = false">Close</v-btn>
@@ -132,11 +132,11 @@
                                   </v-card>
                                </v-dialog>
                                <!--confirmation dialog box to edit room number-->
-                               <v-dialog v-model="ask_dialog4" max-width="200px">
+                               <v-dialog v-model="ask_dialog3" max-width="300px">
                                   <v-card>
                                   <v-card-text>Are You sure you want to change your room number?</v-card-text>
                                      <v-card-actions>
-                                        <v-btn color="primary" flat @click="ask_dialog4 = false">no</v-btn>
+                                        <v-btn color="primary" flat @click="ask_dialog3 = false">no</v-btn>
                                         <v-btn color="primary" flat v-on:click="editroomnum" @click="ask_dialog3 = false; dialog3 = false">yes</v-btn>
                                      </v-card-actions>
                                   </v-card>
@@ -163,9 +163,9 @@
                                            <div class="form-group col-sm-12">
                                               <label class="text-warning control-label col-sm-5 " for="phone number">Phone Number:</label>
                                               <div class="col-sm-7">
-                                                <input type="number" for="pnHelp"  onKeyDown="if(this.value.length==10 && event.keyCode!=8) return false;" placeholder="##########" v-model="new_phoneNumber" class="Edit_dialog" maxlength="10"/>
-                                              </div>
-                                              <small id="pnHelp" class="form-text text-muted col-sm-12" ><br>The Phone Number field may not be greater than 10 numbers</small>
+                                                <input type="number" for="pnHelp"  onKeyDown="if(this.value.length==10 && event.keyCode!=8) return false;" placeholder="##########" v-model="new_phoneNumber" class="Edit_dialog " />
+                                              </div><br>
+                                              <small id="pnHelp" class="form-text text-muted-danger col-sm-12" >*The Phone Number field may not be greater than 10 numbers</small>
                                            </div>        
                                         <v-card-actions row justify-right>
                                            <v-btn round color="cyan" flat @click="dialog4 = false">Close</v-btn>
@@ -176,9 +176,9 @@
                                   </v-card>
                                </v-dialog>
                                <!--confirmation dialog box to edit phone number-->
-                               <v-dialog v-model="ask_dialog5" max-width="200px">
+                               <v-dialog v-model="ask_dialog4" max-width="300px">
                                   <v-card>
-                                  <v-card-text>Are You sure you want to change your lastname?</v-card-text>
+                                  <v-card-text>Are You sure you want to change your phone number??</v-card-text>
                                      <v-card-actions>
                                         <v-btn color="primary" flat @click="ask_dialog4 = false">no</v-btn>
                                         <v-btn color="primary" flat v-on:click="editphonenumber" @click="ask_dialog4 = false; dialog4 = false">yes</v-btn>
@@ -327,7 +327,7 @@ export default {
      },
 
      editroomnum: function(){
-        this.dialog4 = true ;
+        this.dialog3 = true ;
         this.roomNumber = this.new_roomNumber;
         browsercookies.erase('room_num'),
         browsercookies.set('room_num', this.new_roomNumber);
@@ -363,7 +363,7 @@ export default {
      },
 
      editphonenumber: function(){
-        this.dialog5 = true ;
+        this.dialog4 = true ;
         this.phoneNumber = this.new_phoneNumber;
         browsercookies.erase('phone_number'),
         browsercookies.set('phone_number', this.new_phoneNumber);

@@ -17,7 +17,6 @@
             <td class="text-xs-right">
               <v-btn icon v-on:click="decQuantity(props.item)">
                 <v-icon color="primary">remove_circle</v-icon>
-
               </v-btn>
               {{ props.item.quantity }}
               <v-btn icon v-on:click="incQuantity(props.item)">
@@ -44,9 +43,13 @@
           </template>
         </v-data-table>
         <div class="text-xs-center">
-          <v-btn @click="show = !show" color="gray">Continue Shopping</v-btn>
+          <v-btn color="gray">Continue Shopping</v-btn>
 
-          <v-btn v-on:click="checkout(false)" dark color="green">Checkout &nbsp;&nbsp;
+          <v-btn
+            :disabled="isEmpty"
+            v-on:click="checkout(false)"
+            color="success"
+          >Checkout &nbsp;&nbsp;
             <v-icon>check</v-icon>
           </v-btn>
         </div>
@@ -54,3 +57,62 @@
     </v-dialog>
   </div>
 </template>
+
+<script>
+import { mapState, mapActions, mapGetters } from "vuex";
+export default {
+  props: {
+    value: Boolean
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapGetters("cart", {
+      items: "cartItems",
+      total: "totalCartPrice",
+      numberOfItems: "totalCartItems"
+    }),
+    isEmpty() {
+      if (this.$store.getters["cart/totalCartItems"]) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    show: {
+      get() {
+        return this.$store.getters["cart/cartIsActive"];
+      },
+      set(value) {
+        this.$store.commit("cart/toggleCart", value);
+      }
+    }
+  },
+  methods: {
+    // Go to checkout page
+    checkout: function(value) {
+      this.$router.push("/checkout");
+      this.$store.commit("cart/toggleCart", value);
+    },
+    // Increase quantity for a product
+    incQuantity: function(product) {
+      this.$store.commit("cart/incQuantity", product);
+    },
+    // Decrease quantity for a product
+    decQuantity: function(product) {
+      if (product.quantity > 1) {
+        this.$store.commit("cart/decQuantity", product);
+      }
+    },
+    // Remove a product from cart
+    removeItem: function(product) {
+      this.$store.commit("cart/removeItem", product);
+    }
+  }
+};
+</script>
+
+<style scoped lang="scss">
+@import "../../custom_css/ShoppingCart.scss";
+</style>

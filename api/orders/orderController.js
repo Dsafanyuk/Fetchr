@@ -61,7 +61,6 @@ function createOrder(req, res) {
             message: `${err}`,
           });
         });
-<<<<<<< HEAD
        return orderProducts[0].order_id;
     })
     .then((orderProducts) => {
@@ -86,16 +85,6 @@ function createOrder(req, res) {
     // else send err
     .catch((err) => {
       console.log(err)
-=======
-      return orderProducts[0].order_id;
-    })
-    .then((order_id) => {
-      //if successful send back order id
-      res.send({status: 'success', message: order_id}).status(200);
-    })
-    // else send err
-    .catch((err) => {
->>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -136,7 +125,12 @@ function showOneOrderSummary(req, res) {
       productList.forEach((product) => {
         product.price *= product.quantity; // eslint-disable-line no-param-reassign
       });
-      res.send(productList).status(200);
+      knex('orders')
+        .where('orders.order_id', req.params.order_id)
+        .select('delivery_status', 'customer_id')
+        .then((orderInfo) => {
+          res.send({productList, orderInfo}).status(200)
+        })
     })
     .catch((err) => {
       res.status(500).send({

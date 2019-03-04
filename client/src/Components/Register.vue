@@ -90,28 +90,18 @@
                                 solo
                                 required
                             ></v-text-field>
-<<<<<<< HEAD
                             <div class="alert alert-info alert-dismissable">
                               <a class="panel-close close" data-dismiss="alert">×</a>
-                              <p>Password <strong>must have at least:</strong>.<br>- 8 characters.<br>- an upperCase letter.</p>
+                              Password <strong>must have at least</strong>.<br>- 8 characters
                             </div>
                         </form>
                         <div class="form-group text-center">
                             <v-btn
-=======
-                        </form>
-                        <div class="form-group text-center">
-                            <v-btn 
->>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
                                 round color="cyan" dark
                                 type="submit"
                                 @click="registerCustomer"
                             >Register</v-btn>
-<<<<<<< HEAD
                             <v-btn
-=======
-                            <v-btn 
->>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
                                 round color="cyan" dark
                                 type="button"
                                 @click="clear"
@@ -125,19 +115,12 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 import axios from "../axios";
 import Toasted from 'vue-toasted';
-
-=======
-import axios from "axios";
-const api = axios.create();
->>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
     export default {
         $_veeValidate: {
             validator: 'new'
         },
-
         //******************************************* Component Name  ********************************/
         name: 'registration',
         data() {
@@ -170,11 +153,9 @@ const api = axios.create();
                 }
             };
         },
-
         mounted () {
             this.$validator.localize('en', this.dictionary)
         },
-
         //******************************************* Methods Begin Here  ********************************/
         methods: {
             clear () {
@@ -188,11 +169,7 @@ const api = axios.create();
                 this.$validator.reset()
             },
             registerCustomer(e) {
-<<<<<<< HEAD
                 let toasted = this.$toasted;
-
-=======
->>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
                 if (
                     this.cFirstname &&
                     this.cLastname &&
@@ -204,11 +181,7 @@ const api = axios.create();
                 ) {
                     // Replace with a Validator Lib
                     if (this.cPassword === this.cRepeatPassword) {
-<<<<<<< HEAD
                         axios
-=======
-                        api
->>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
                             .post('api/users/register', {
                                 first_name: this.cFirstname,
                                 last_name: this.cLastname,
@@ -219,12 +192,10 @@ const api = axios.create();
                             })
                             .then((response) => {
                                 if (response.status == 200) {
-                                    console.log('logged in');
                                     this.$router.push('/login');
                                 }
                             })
                             .catch(function (error) {
-<<<<<<< HEAD
                                 if (error.response.status == 400) {
                                     toasted.error(error.response.data, {
                                         theme: "primary",
@@ -232,8 +203,6 @@ const api = axios.create();
                                         duration : 5000
                                     });
                                 }
-=======
->>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
                                 console.log(error);
                                 if (error.response) {
                                     // The request was made and the server responded with a status code
@@ -243,10 +212,6 @@ const api = axios.create();
                                     console.log(error.response.headers);
                                 }
                             });
-
-                        console.log('Send HTTP Request to the API ');
-                    } else {
-                        console.log(' Password not equal');
                     }
                 } else {
                     this.$validator.validateAll();

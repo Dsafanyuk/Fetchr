@@ -23,21 +23,17 @@ function loginUser(req, res) {
 
       // Creates token and send it as a response
       if (passwordIsCorrect) {
-        console.log('password correct');
         // The payload
         user = {
           user_id: `${users[0].user_id}`,
           email_address: `${users[0].email_address}`,
         };
-<<<<<<< HEAD
         
         // Create jwt, expires in 1 hour
         jwt.sign({ user }, 'secretkey', (err, token) => {
           if (err) {
-            console.log('error in login');
             res.status(500).send(err);
           } else {
-            console.log('creating cookies..')
             Object.keys(users[0]).forEach((userDetail)=>{
               if(userDetail !== 'password') {
                 let userValue = `${users[0][userDetail]}`;
@@ -46,15 +42,6 @@ function loginUser(req, res) {
               }
             })
             
-=======
-        // Create jwt, expires in 1 hour
-        jwt.sign({ user }, 'secretkey', { expiresIn: 60 * 60 }, (err, token) => {
-          if (err) {
-            res.status(500).send(err);
-          } else {
-            res.cookie('authCookie', token, { maxAge: 900000 });
-            res.cookie('userId', user.user_id, { maxAge: 900000 });
->>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
             res.json({
               token,
             });

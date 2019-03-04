@@ -36,7 +36,11 @@ async function registerUser(req, res) {
     .where('email_address', newUser.email_address)
     .then((users) => {
       if (users.length) {
+<<<<<<< HEAD
         res.status(400).send('There is an account already associated with this email address.');
+=======
+        res.status(400).send('Duplicate entry');
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
       } else {
         knex('users')
           .insert(newUser)

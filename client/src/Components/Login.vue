@@ -54,9 +54,17 @@
   </v-app>
 </template>
 <script>
+<<<<<<< HEAD
   import axios from '../axios'
   import Toasted from 'vue-toasted';
 
+=======
+  import axios from 'axios'
+  import Toasted from 'vue-toasted';
+
+const api = axios.create();
+
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
   export default {
     $_veeValidate: {
       validator: 'new'
@@ -84,13 +92,18 @@
     methods: {
       loginCustomer(e) {
         if (this.cEmail && this.cPassword) {
+<<<<<<< HEAD
           axios.post('api/users/login', {
+=======
+          api.post('api/users/login', {
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
               email_address: this.cEmail,
               password: this.cPassword
           })
             .then((response) => {
               console.log(response.status);
               if (response.status == 200) {
+<<<<<<< HEAD
                 // Change login status, returns a promise
                 this.$store.dispatch('login/login').then(response => {
                   this.$router.push('/dashboard');
@@ -98,6 +111,9 @@
                   error => {
                     console.error("Login action failed");
                   });
+=======
+                this.$router.push('/dashboard');
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
               }
             })
             .catch((error) => {

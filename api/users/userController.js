@@ -1,5 +1,22 @@
 const knex = require('knex')(require('../db'));
 
+<<<<<<< HEAD
+=======
+// GET /users
+function showAllUsers(req, res) {
+  knex('users')
+    .select('*')
+    .then((rows) => {
+      res.send(rows).status(200);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: `${err}`,
+      }); // FOR DEBUGGING ONLY, dont send exact message in prod
+    });
+}
+
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
 // GET /users/{user_id}
 function showOneUser(req, res) {
   // Check user id with value at the parameter
@@ -24,7 +41,10 @@ function showUserOrders(req, res) {
   knex('orders')
     .select('*')
     .where('customer_id', req.params.user_id)
+<<<<<<< HEAD
     .orderBy('order_id', 'desc')
+=======
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
     .then((rows) => {
       res.send(rows);
     })
@@ -35,6 +55,14 @@ function showUserOrders(req, res) {
     });
 }
 
+<<<<<<< HEAD
+=======
+// GET /users/login
+function showLogin(req, res) {
+  res.send(`Welcome to the login page user: ${req.query.email}`);
+}
+
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
 // POST /user
 function createUser(req, res) {
   const request = req.body;
@@ -92,7 +120,11 @@ function favorite(req, res) {
       product_id: req.body.product_id,
     })
     .then(() => {
+<<<<<<< HEAD
       res.status(200);
+=======
+      res.send(200).status(200);
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
     })
     .catch((err) => {
       res.status(500).send({
@@ -139,6 +171,7 @@ function favorites(req, res) {
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
     });
 }
+<<<<<<< HEAD
 // POST /users/:user_id/wallet
 function addBalance(req,res){
   knex('users')
@@ -169,14 +202,26 @@ function checkBalance(req, res) {
     })
 }
 module.exports = {
+=======
+
+module.exports = {
+  showAllUsers,
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
   showOneUser,
   showUserOrders,
   createUser,
   updateUser,
+<<<<<<< HEAD
+=======
+  showLogin,
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
   creditCheck,
   favorite,
   favorites,
   unfavorite,
+<<<<<<< HEAD
   addBalance,
   checkBalance
+=======
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
 };

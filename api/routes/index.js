@@ -1,11 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const userRouter = require('../users/userRoute');
-const orderRouter = require('../orders/orderRoute');
-const productRouter = require('../products/productRoute');
-const courierRouter = require('../courier/courierRoute');
-const verifyToken = require('./verifyToken');
-const accountRouter = require('../account/accountRoute');
+var express = require('express');
+var router = express.Router();
+var userRouter = require('../users/userRoute');
+var orderRouter = require('../orders/orderRoute');
+var productRouter = require('../products/productRoute');
+var courierRouter = require('../courier/courierRoute');
+var verifyToken = require('./verifyToken');
+var accountRouter = require('../account/accountRoute');
 
 router.use('/users', userRouter);
 router.use('/orders', verifyToken, orderRouter);

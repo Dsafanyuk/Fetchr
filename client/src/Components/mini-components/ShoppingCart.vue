@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="text-xs-center">
     <v-dialog v-model="show" width="750" transition="false">
       <v-card>
@@ -101,9 +102,69 @@ export default {
       this.$store.commit("cart/removeItem", product);
     }
   }
+=======
+  <div class="shopping-cart">
+   <div class="shopping-cart-header">
+     <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">{{nbOfItems}}</span>
+     <div class="shopping-cart-total">
+       <span class="lighter-text">Total:</span>
+       <span class="main-color-text">:${{total}}</span>
+     </div>
+   </div> <!--end shopping-cart-header -->
+
+   <ul class="shopping-cart-items">
+     <CartItems v-for="Item in Items" :Item="Item"  :key="Item.product_id"> </CartItems>
+   </ul>
+
+   <a v-on:click="checkout" class="button">Checkout</a>
+ </div>
+</template>
+
+<script>
+import CartItems from './CartItems.vue'
+import State from '../assets/js/shoppingCartState'
+import _ from 'lodash'
+export default {
+
+  data() {
+    return {
+      Items : [],
+      total: 0,
+      nbOfItems : 0,
+              };
+  },
+  created: function loadItems(){
+    this.Items = State.data.cart;
+    // Set the number of item in the cart
+    this.nbOfItems = this.Items.length;
+
+    // Get the current Total
+      var currentTotal = this.total;
+
+      this.Items.forEach (function(item){
+      currentTotal = currentTotal + item.price;
+    });
+    // Update the total
+    this.total = (Math.floor (currentTotal * 100)/100)
+
+  },
+  methods:{
+    checkout: function(event) {
+      this.$router.push('/checkout');
+    }
+  },
+  components: {
+    CartItems : CartItems,
+  }
+
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
 };
 </script>
 
 <style scoped lang="scss">
+<<<<<<< HEAD
 @import "../custom_css/ShoppingCart.scss";
+=======
+@import '../custom_css/ShoppingCart.scss';
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
 </style>

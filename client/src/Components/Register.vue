@@ -90,6 +90,7 @@
                                 solo
                                 required
                             ></v-text-field>
+<<<<<<< HEAD
                             <div class="alert alert-info alert-dismissable">
                               <a class="panel-close close" data-dismiss="alert">×</a>
                               <p>Password <strong>must have at least:</strong>.<br>- 8 characters.<br>- an upperCase letter.</p>
@@ -97,11 +98,20 @@
                         </form>
                         <div class="form-group text-center">
                             <v-btn
+=======
+                        </form>
+                        <div class="form-group text-center">
+                            <v-btn 
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
                                 round color="cyan" dark
                                 type="submit"
                                 @click="registerCustomer"
                             >Register</v-btn>
+<<<<<<< HEAD
                             <v-btn
+=======
+                            <v-btn 
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
                                 round color="cyan" dark
                                 type="button"
                                 @click="clear"
@@ -115,9 +125,14 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 import axios from "../axios";
 import Toasted from 'vue-toasted';
 
+=======
+import axios from "axios";
+const api = axios.create();
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
     export default {
         $_veeValidate: {
             validator: 'new'
@@ -173,8 +188,11 @@ import Toasted from 'vue-toasted';
                 this.$validator.reset()
             },
             registerCustomer(e) {
+<<<<<<< HEAD
                 let toasted = this.$toasted;
 
+=======
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
                 if (
                     this.cFirstname &&
                     this.cLastname &&
@@ -186,7 +204,11 @@ import Toasted from 'vue-toasted';
                 ) {
                     // Replace with a Validator Lib
                     if (this.cPassword === this.cRepeatPassword) {
+<<<<<<< HEAD
                         axios
+=======
+                        api
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
                             .post('api/users/register', {
                                 first_name: this.cFirstname,
                                 last_name: this.cLastname,
@@ -202,6 +224,7 @@ import Toasted from 'vue-toasted';
                                 }
                             })
                             .catch(function (error) {
+<<<<<<< HEAD
                                 if (error.response.status == 400) {
                                     toasted.error(error.response.data, {
                                         theme: "primary",
@@ -209,6 +232,8 @@ import Toasted from 'vue-toasted';
                                         duration : 5000
                                     });
                                 }
+=======
+>>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
                                 console.log(error);
                                 if (error.response) {
                                     // The request was made and the server responded with a status code

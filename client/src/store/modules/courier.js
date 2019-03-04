@@ -1,7 +1,10 @@
 const browserCookies = require('browser-cookies')
 const user = browserCookies.get("user_id");
 import axios from '../../axios'
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0bc0b1315c52f629686439fe18b94b4e458e8741
 let blankOrder = {
     order_id: "",
     first_name: "",
@@ -118,18 +121,34 @@ const actions = {
             });
     },
     socket_updateOpenOrders: ({state, getters, commit, dispatch}) =>{
+<<<<<<< HEAD
         console.log('EVENT RECEIVED: UPDATE_OPEN_ORDERS')
         dispatch('clearAllOrders').then(()=>{
             dispatch('refreshAllOrders')
         })
     },
     socket_updateAcceptedOrders: ({ state, getters, commit, dispatch }) => {
+=======
+            dispatch('clearAllOrders').then(()=>{
+            dispatch('refreshAllOrders')
+        })
+    },
+    socket_updateAcceptedOrders: ({ state, getters, commit, dispatch }, data) => {
+        let notifyData = data
+        commit('notification/NOTIFY_ACCEPTED', notifyData, {root:true})
+>>>>>>> 0bc0b1315c52f629686439fe18b94b4e458e8741
         console.log('EVENT RECEIVED: UPDATE_ACCEPTED_ORDERS')
         dispatch('clearAllOrders').then(() => {
             dispatch('refreshAllOrders')
         })
     },
+<<<<<<< HEAD
     socket_updateDeliveredOrders: ({ state, getters, commit, dispatch }) => {
+=======
+    socket_updateDeliveredOrders: ({ state, getters, commit, dispatch }, data) => {
+        let notifyData = data
+        commit('notification/NOTIFY_DELIVERED', notifyData, {root:true})
+>>>>>>> 0bc0b1315c52f629686439fe18b94b4e458e8741
         console.log('EVENT RECEIVED: UPDATE_DELIVERED_ORDERS')
         dispatch('clearAllOrders').then(() => {
             dispatch('refreshAllOrders')

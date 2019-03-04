@@ -1,4 +1,5 @@
 .checkout {
+<<<<<<< HEAD
     padding-top: 3em;
     padding-bottom: 3em;
     padding-left: 10em;
@@ -7,3 +8,13 @@
   .checkout-img{
     max-height: 75px;
   }
+=======
+  padding-top: 3em;
+  padding-bottom: 3em;
+  padding-left: 10em;
+  padding-right: 10em;
+}
+.checkout-img{
+  max-height: 75px;
+}
+>>>>>>> 0bc0b1315c52f629686439fe18b94b4e458e8741

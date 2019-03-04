@@ -5,6 +5,10 @@ import cart from './modules/cart'
 import wallet from './modules/wallet'
 import courier from './modules/courier'
 import login from './modules/login'
+<<<<<<< HEAD
+=======
+import notification from './modules/notification'
+>>>>>>> 0bc0b1315c52f629686439fe18b94b4e458e8741
 
 Vue.use(Vuex)
 
@@ -27,6 +31,10 @@ export default new Vuex.Store({
         courier,
         wallet,
         login,
+<<<<<<< HEAD
+=======
+        notification,
+>>>>>>> 0bc0b1315c52f629686439fe18b94b4e458e8741
     },
     strict: debug,
 });

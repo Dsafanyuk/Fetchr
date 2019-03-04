@@ -20,7 +20,10 @@ const mutations = {
         Vue.delete(state.cart, product.product_id);
     },
     incQuantity: (state, product) => {
+<<<<<<< HEAD
         console.log(state.cart[product.product_id]);
+=======
+>>>>>>> 0bc0b1315c52f629686439fe18b94b4e458e8741
         state.cart[product.product_id].quantity++;
     },
     decQuantity: (state, product) => {
@@ -35,7 +38,11 @@ const getters = {
         return Object.values(state.cart);
     },
     totalCartItems(state) {
+<<<<<<< HEAD
         return state.cart.length;
+=======
+        return Object.keys(state.cart).length;
+>>>>>>> 0bc0b1315c52f629686439fe18b94b4e458e8741
     },
     totalCartPrice(state) {
         var total = 0;

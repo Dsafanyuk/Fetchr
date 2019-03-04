@@ -1,8 +1,8 @@
 <template >
    <v-app>
-      <LandingHeader v-on:showcart="displayCart"></LandingHeader>
+      
       <br>
-         <div class="container ">
+         <div class="container">
             <h3 class="v-primary"><br>Account Overview</h3>
             <hr>
             <div class="row">

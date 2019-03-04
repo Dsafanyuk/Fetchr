@@ -1,6 +1,5 @@
 <template >
    <v-app>
-      <LandingHeader v-on:showcart="displayCart"></LandingHeader>
       <br>
          <div class="container ">
             <h3 class="v-primary"><br>Account Overview</h3>
@@ -205,7 +204,6 @@
               </div>
            </div>
         </div>
-     <LandingFooter></LandingFooter>
   </v-app>
 </template>
 

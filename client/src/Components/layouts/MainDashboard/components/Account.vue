@@ -208,8 +208,6 @@
 </template>
 
 <script>
-import LandingHeader from "../../../mini-components/LandingHeader.vue";
-import LandingFooter from "../../../mini-components/LandingFooter.vue";
 import browsercookies from "browser-cookies";
 import axios from '../../../../axios';
 

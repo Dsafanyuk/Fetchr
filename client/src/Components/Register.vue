@@ -117,10 +117,12 @@
 <script>
 import axios from "../axios";
 import Toasted from 'vue-toasted';
+
     export default {
         $_veeValidate: {
             validator: 'new'
         },
+
         //******************************************* Component Name  ********************************/
         name: 'registration',
         data() {
@@ -153,9 +155,11 @@ import Toasted from 'vue-toasted';
                 }
             };
         },
+
         mounted () {
             this.$validator.localize('en', this.dictionary)
         },
+
         //******************************************* Methods Begin Here  ********************************/
         methods: {
             clear () {
@@ -170,6 +174,7 @@ import Toasted from 'vue-toasted';
             },
             registerCustomer(e) {
                 let toasted = this.$toasted;
+
                 if (
                     this.cFirstname &&
                     this.cLastname &&
@@ -212,6 +217,7 @@ import Toasted from 'vue-toasted';
                                     console.log(error.response.headers);
                                 }
                             });
+
                     }
                 } else {
                     this.$validator.validateAll();

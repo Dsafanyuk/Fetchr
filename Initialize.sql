@@ -112,10 +112,6 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0bc0b1315c52f629686439fe18b94b4e458e8741
 INSERT INTO `products` VALUES (1, 'Arizona Tea', 0.99, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Arizona%20Iced%20Tea.png');
 INSERT INTO `products` VALUES (2, 'Dunkin Iced Coffee', 1.08, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Dunkin%20Iced%20Coffee.png');
 INSERT INTO `products` VALUES (3, 'Bai ', 1.81, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Bai.png');
@@ -314,42 +310,6 @@ INSERT INTO `products` VALUES (218, 'Watch', 14.81, 'electronics', 'https://fetc
 INSERT INTO `products` VALUES (219, 'Water Bottle', 37.11, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/water_bottle.jpg');
 INSERT INTO `products` VALUES (220, 'White Out', 35.42, 'school_supplies', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/white_out.jpg');
 INSERT INTO `products` VALUES (222, 'Zipper', 21.87, 'personal', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/zipper.jpg');)
-<<<<<<< HEAD
-=======
-INSERT INTO `products` VALUES (1, 'Arizona Tea',0.99, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Arizona%20Iced%20Tea.png'),
-(2, 'Dunkin Iced Coffee',1.08, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Dunkin%20Iced%20Coffee.png'),
-(3, 'Bai ',1.81, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Bai.png'),
-(4, 'Coca Cola',2.42, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Coca%20Cola.png'),
-(5, 'Pepsi',3.38, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Pepsi.png'),
-(6, 'Sprite',2.33, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Sprite.png'),
-(7, 'Root Beer',1.49, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Root%20Beer.png'),
-(8, 'Milk',1.17, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Milk.png'),
-(9, 'Doritos Small',2.50, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Doritos.png'),
-(10, 'Pringles',2.57, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Pringles.png'),
-(11, 'Oreos',3.57, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Oreo.png'),
-(12, 'Pretzels',3.08, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Pretzels.png'),
-(13, 'Cheetos',2.70, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Cheetos.png'),
-(14, 'Cheez-It',1.21, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Cheez-It.jp2'),
-(16, 'Snickers',2.30, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Snickers.png'),
-(17, 'Chex Mix',4.35, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Chex%20Mix.png'),
-(18, 'Popcorn',2.46, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Popcorn.png'),
-(19, 'Indomie',3.52, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Indomie.png'),
-(20, 'Ice Cream',2.10, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Ice%20Cream.png'),
-(21, 'Pencils',3.00, 'school_supplies', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Pencils.png'),
-(22, 'Eraser',1.12, 'school_supplies', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Eraser.png'),
-(23, 'Stapler',1.88, 'school_supplies', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Stapler.png'),
-(24, 'Pen',0.92, 'school_supplies', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Pen.png'),
-(25, 'Notebooks',1.17, 'school_supplies', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Notebooks.png'),
-(26, 'Hole Puncher',2.85, 'school_supplies', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Hole%20Puncher.png'),
-(27, 'Nyquil',5.99, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Nyquil.png'),
-(28, 'Advil',2.01, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Advil.png'),
-(29, 'Umbrella',1.26, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Umbrella.png'),
-(30, 'Toilet Paper',3.70, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Toilet%20Paper.png'),
-(31, 'Tissues',1.02, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Tissues.png'),
-(32, 'Sewing Kit',3.96, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Sewing%20Kit.png')
->>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
-=======
->>>>>>> 0bc0b1315c52f629686439fe18b94b4e458e8741
 ;
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -424,15 +384,7 @@ UNLOCK TABLES;
 DROP VIEW IF EXISTS `product_records`;
 CREATE view fetchr_db.product_records as
 SELECT products.*,  ifnull(sum(order_summary.quantity),0) as 'total_sold' 
-<<<<<<< HEAD
-<<<<<<< HEAD
   FROM `products` left OUTER JOIN fetchr_db.order_summary
-=======
-  FROM fetchr_db.products left OUTER JOIN fetchr_db.order_summary
->>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
-=======
-  FROM `products` left OUTER JOIN fetchr_db.order_summary
->>>>>>> 0bc0b1315c52f629686439fe18b94b4e458e8741
     ON order_summary.product_id = products.product_id
  group by product_id;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

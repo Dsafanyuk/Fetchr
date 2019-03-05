@@ -9,6 +9,7 @@
 <script>
 import MainHeader from "./MainHeader.vue";
 import MainFooter from "./MainFooter.vue";
+
 export default {
   data() {
     return {
@@ -29,3 +30,4 @@ export default {
   background-color: #4a6572;
 }
 </style>
+

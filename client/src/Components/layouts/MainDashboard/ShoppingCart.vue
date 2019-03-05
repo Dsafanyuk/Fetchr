@@ -60,6 +60,7 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
+
 export default {
   props: {
     value: Boolean

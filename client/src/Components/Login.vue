@@ -56,10 +56,12 @@
 <script>
   import axios from '../axios'
   import Toasted from 'vue-toasted';
+
   export default {
     $_veeValidate: {
       validator: 'new'
     },
+
     //******************************************* Component Name  ********************************/
     name: "login",
     data() {
@@ -74,9 +76,11 @@
         }
       }
     },
+
     mounted () {
       this.$validator.localize('en', this.dictionary)
     },
+
     methods: {
       loginCustomer(e) {
         if (this.cEmail && this.cPassword) {
@@ -116,6 +120,7 @@
 
 <style lang="css">
   @import 'custom_css/registration.scss';
+
   a:hover {
     color:darkcyan!important;
     cursor: pointer;

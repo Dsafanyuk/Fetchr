@@ -16,7 +16,6 @@ function verifyToken(req, res, next) {
           req.token = decoded;
 
           if(req.token.user.user_id == user_id) {
-            console.log("authorized");
             next();
           }
           else {
@@ -38,4 +37,4 @@ function verifyToken(req, res, next) {
   
     return 0;
   }
-  module.exports = verifyToken;
+module.exports = verifyToken;

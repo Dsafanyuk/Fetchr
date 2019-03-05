@@ -12,6 +12,7 @@
 
 
 <script>
+
 export default {
   data() {
     name: return {};

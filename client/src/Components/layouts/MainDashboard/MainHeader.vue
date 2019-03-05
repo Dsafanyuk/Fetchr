@@ -108,6 +108,7 @@
 import ShoppingCart from "./ShoppingCart.vue";
 import Wallet from "./Wallet.vue";
 import browserCookies from "browser-cookies";
+
 export default {
   props: ["search"],
   data() {
@@ -148,6 +149,7 @@ export default {
     showWallet: function(value) {
       this.$store.commit("wallet/toggleWallet", value);
     },
+
     showShoppingCart: function(value) {
       this.$store.commit("cart/toggleCart", value);
     },
@@ -201,12 +203,14 @@ export default {
 .btn-txt {
   color: #fff !important;
 }
+
 .btn_space {
   margin-right: 10px;
 }
 nav {
   background-color: #232f34;
 }
+
 #shopping_cart {
   padding-left: 10px;
 }

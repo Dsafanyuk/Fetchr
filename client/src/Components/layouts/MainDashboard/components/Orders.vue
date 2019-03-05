@@ -29,9 +29,10 @@
 </template>
 
 <script>
-import OrderSummary from "../../../mini-components/OrderSummary.vue";
+import OrderSummary from "./OrderSummary.vue";
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios";
+
 export default {
   data() {
     name: return {
@@ -68,6 +69,7 @@ export default {
         "Nov",
         "Dec"
       ];
+
       let goodDate =
         months[date.getMonth()] +
         " " +

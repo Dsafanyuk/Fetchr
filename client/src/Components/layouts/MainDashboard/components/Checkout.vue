@@ -80,6 +80,7 @@
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios";
 import { mapState, mapActions, mapGetters } from "vuex";
+
 export default {
   data() {
     return {};
@@ -156,3 +157,4 @@ export default {
 </script>
     <style scoped lang="css" src='../../../custom_css/checkout.css'>
 </style>
+    

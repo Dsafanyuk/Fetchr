@@ -44,6 +44,7 @@
 import browserCookies from "browser-cookies";
 import axios from "../../../axios";
 import { mapGetters } from "vuex";
+
 export default {
   props: {
     value: Function

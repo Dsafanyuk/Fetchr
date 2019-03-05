@@ -57,6 +57,7 @@
       <script>
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios.js";
+
 export default {
   data() {
     return {
@@ -154,3 +155,4 @@ export default {
   color: rgb(249, 170, 51);
 }
 </style> 
+  

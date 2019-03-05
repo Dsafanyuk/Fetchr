@@ -47,11 +47,12 @@
 </template>
 
 <script>
-import LandingCard from "../../../mini-components/LandingCard.vue";
+import LandingCard from "./LandingCard.vue";
 import ShoppingCart from "../ShoppingCart.vue";
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios";
 import Toasted from "vue-toasted";
+
 export default {
   props: ["search"],
   data() {
@@ -133,6 +134,7 @@ export default {
           allProducts.indexOf(allProducts[product]),
           allProducts.indexOf(allProducts[product]) + 1
         );
+
         return product.category == "drinks";
       });
       this.personalProducts = allProducts.filter(product => {

@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 @keyframes shakeNbake{
   0% { transform: translateX(0px);}
   50% { transform: translateX(6px);}
@@ -22,7 +20,6 @@
 .cart_button #cart_btn {
   height: 100%;
 }
->>>>>>> 0bc0b1315c52f629686439fe18b94b4e458e8741
 .card-title {
   font-weight: 300;
   font-size: 2rem;
@@ -34,21 +31,6 @@
 }
 .card .card-img {
   position: relative;
-<<<<<<< HEAD
-  width: 250px;
-  height: 300px;
-  display: flex;
-}
-.card .card-img img {
-  border-radius: 2px 2px 0 0;
-  max-height: 100%;
-  max-width: 100%;
-  padding-left: 95px;
-  vertical-align: middle;
-  padding-top: 29px;
-  top: 50%;
-  object-fit: contain;
-=======
   width: 100%;
   height: 100%;
   display: flex;
@@ -67,7 +49,6 @@
   object-fit: contain;
   display: block;
   margin: auto;
->>>>>>> 0bc0b1315c52f629686439fe18b94b4e458e8741
 }
 .product-card .card .card-content {
   padding: 5px;
@@ -194,117 +175,6 @@
 }
 
 .red {
-<<<<<<< HEAD
-  background-color: #F44336 !important;
-}
-
-.red-text {
-  color: #F44336 !important;
-}
-
-.red.lighten-5 {
-  background-color: #FFEBEE !important;
-}
-
-.red-text.text-lighten-5 {
-  color: #FFEBEE !important;
-}
-
-.red.lighten-4 {
-  background-color: #FFCDD2 !important;
-}
-
-.red-text.text-lighten-4 {
-  color: #FFCDD2 !important;
-}
-
-.red.lighten-3 {
-  background-color: #EF9A9A !important;
-}
-
-.red-text.text-lighten-3 {
-  color: #EF9A9A !important;
-}
-
-.red.lighten-2 {
-  background-color: #E57373 !important;
-}
-
-.red-text.text-lighten-2 {
-  color: #E57373 !important;
-}
-
-.red.lighten-1 {
-  background-color: #EF5350 !important;
-}
-
-.red-text.text-lighten-1 {
-  color: #EF5350 !important;
-}
-
-.red.darken-1 {
-  background-color: #E53935 !important;
-}
-
-.red-text.text-darken-1 {
-  color: #E53935 !important;
-}
-
-.red.darken-2 {
-  background-color: #D32F2F !important;
-}
-
-.red-text.text-darken-2 {
-  color: #D32F2F !important;
-}
-
-.red.darken-3 {
-  background-color: #C62828 !important;
-}
-
-.red-text.text-darken-3 {
-  color: #C62828 !important;
-}
-
-.red.darken-4 {
-  background-color: #B71C1C !important;
-}
-
-.red-text.text-darken-4 {
-  color: #B71C1C !important;
-}
-
-.red.accent-1 {
-  background-color: #FF8A80 !important;
-}
-
-.red-text.text-accent-1 {
-  color: #FF8A80 !important;
-}
-
-.red.accent-2 {
-  background-color: #FF5252 !important;
-}
-
-.red-text.text-accent-2 {
-  color: #FF5252 !important;
-}
-
-.red.accent-3 {
-  background-color: #FF1744 !important;
-}
-
-.red-text.text-accent-3 {
-  color: #FF1744 !important;
-}
-
-.red.accent-4 {
-  background-color: #D50000 !important;
-}
-
-.red-text.text-accent-4 {
-  color: #D50000 !important;
-=======
   background-color: #f44336 !important;
 }
 
@@ -414,7 +284,6 @@
 
 .red-text.text-accent-4 {
   color: #d50000 !important;
->>>>>>> 0bc0b1315c52f629686439fe18b94b4e458e8741
 }
 
 .pink {
@@ -866,117 +735,6 @@
 }
 
 .blue {
-<<<<<<< HEAD
-  background-color: #2196F3 !important;
-}
-
-.blue-text {
-  color: #2196F3 !important;
-}
-
-.blue.lighten-5 {
-  background-color: #E3F2FD !important;
-}
-
-.blue-text.text-lighten-5 {
-  color: #E3F2FD !important;
-}
-
-.blue.lighten-4 {
-  background-color: #BBDEFB !important;
-}
-
-.blue-text.text-lighten-4 {
-  color: #BBDEFB !important;
-}
-
-.blue.lighten-3 {
-  background-color: #90CAF9 !important;
-}
-
-.blue-text.text-lighten-3 {
-  color: #90CAF9 !important;
-}
-
-.blue.lighten-2 {
-  background-color: #64B5F6 !important;
-}
-
-.blue-text.text-lighten-2 {
-  color: #64B5F6 !important;
-}
-
-.blue.lighten-1 {
-  background-color: #42A5F5 !important;
-}
-
-.blue-text.text-lighten-1 {
-  color: #42A5F5 !important;
-}
-
-.blue.darken-1 {
-  background-color: #1E88E5 !important;
-}
-
-.blue-text.text-darken-1 {
-  color: #1E88E5 !important;
-}
-
-.blue.darken-2 {
-  background-color: #1976D2 !important;
-}
-
-.blue-text.text-darken-2 {
-  color: #1976D2 !important;
-}
-
-.blue.darken-3 {
-  background-color: #1565C0 !important;
-}
-
-.blue-text.text-darken-3 {
-  color: #1565C0 !important;
-}
-
-.blue.darken-4 {
-  background-color: #0D47A1 !important;
-}
-
-.blue-text.text-darken-4 {
-  color: #0D47A1 !important;
-}
-
-.blue.accent-1 {
-  background-color: #82B1FF !important;
-}
-
-.blue-text.text-accent-1 {
-  color: #82B1FF !important;
-}
-
-.blue.accent-2 {
-  background-color: #448AFF !important;
-}
-
-.blue-text.text-accent-2 {
-  color: #448AFF !important;
-}
-
-.blue.accent-3 {
-  background-color: #2979FF !important;
-}
-
-.blue-text.text-accent-3 {
-  color: #2979FF !important;
-}
-
-.blue.accent-4 {
-  background-color: #2962FF !important;
-}
-
-.blue-text.text-accent-4 {
-  color: #2962FF !important;
-=======
   background-color: #2196f3 !important;
 }
 
@@ -1086,7 +844,6 @@
 
 .blue-text.text-accent-4 {
   color: #2962ff !important;
->>>>>>> 0bc0b1315c52f629686439fe18b94b4e458e8741
 }
 
 .light-blue {
@@ -1354,19 +1111,11 @@
 }
 
 .teal.lighten-1 {
-<<<<<<< HEAD
-  background-color: #26a69a !important;
-}
-
-.teal-text.text-lighten-1 {
-  color: #26a69a !important;
-=======
   background-color: #344955 !important;
 }
 
 .teal-text.text-lighten-1 {
   color: #344955 !important;
->>>>>>> 0bc0b1315c52f629686439fe18b94b4e458e8741
 }
 
 .teal.darken-1 {

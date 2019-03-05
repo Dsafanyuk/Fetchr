@@ -3,7 +3,6 @@
     <LandingHeader></LandingHeader>
     <div class="checkout">
       <h3>Checkout</h3>
-<<<<<<< HEAD
       <v-layout row>
         <v-flex md8>
           <v-data-table
@@ -74,22 +73,6 @@
           </v-card>
         </v-flex>
       </v-layout>
-=======
-      <v-data-table :headers="headers" :items="products">
-        <template slot="items" slot-scope="props">
-          <td>{{ props.item.product_name }}</td>
-          <td class="text-xs-left">${{ props.item.price }}</td>
-          <td class="text-xs-left">{{ props.item.quantity }}</td>
-        </template>
-      </v-data-table>
-      <div class="submitOrderButton">
-        <button
-          class="btn btn-outline-dark my-2 my-sm-0"
-          type="submit"
-          v-on:click="checkout"
-        >Submit Order</button>
-      </div>
->>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
     </div>
     <LandingFooter></LandingFooter>
   </v-app>
@@ -99,7 +82,6 @@
 import LandingHeader from "./mini-components/LandingHeader.vue";
 import LandingFooter from "./mini-components/LandingFooter.vue";
 import browserCookies from "browser-cookies";
-<<<<<<< HEAD
 import axios from "../axios";
 import { mapState, mapActions, mapGetters } from "vuex";
 
@@ -136,54 +118,12 @@ export default {
       let router = this.$router;
       let productsWithQuantity = [];
       this.items.map(product => {
-=======
-import axios from "axios";
-import State from "./assets/js/shoppingCartState";
-
-const api = axios.create();
-
-export default {
-  data() {
-    name: return {
-      products: [],
-      headers: [
-        { text: "Name", align: "left", value: "product_name" },
-        { text: "Price", align: "left", value: "price" },
-        { text: "Quantity", align: "left", value: "quantity" }
-      ],
-      //This is the products recieved from cart
-      productsReceived: []
-    };
-  },
-  mounted: function() {
-    this.productsReceived = State.data.cart;
-    //setting prods in table
-    this.products = this.productsReceived.map(product => {
-      //put price in right format
-      product.price = product.price.toFixed(2);
-      //this is for the v-data-table
-      product.value = false;
-      product.quantity = 1;
-      return product;
-    });
-  },
-  methods: {
-    checkout: function(event) {
-      let router = this.$router;
-
-      let total = 0;
-      let productsWithQuantity = [];
-      this.productsReceived.map(product => {
-        //get the total of the products for the order
-        total += parseFloat(product.price);
->>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
         //put all the products into a json array
         productsWithQuantity.push({
           product_id: product.product_id,
           quantity: product.quantity
         });
       });
-<<<<<<< HEAD
       this.$store.dispatch("wallet/getWalletBalance");
       if (this.sufficientFunds) {
         axios
@@ -218,22 +158,6 @@ export default {
     },
     showWallet: function(value) {
       this.$store.commit("wallet/toggleWallet", value);
-=======
-      api
-        .post("/api/orders/", {
-          customer_id: browserCookies.get("userId"),
-          delivery_status: "pending",
-          order_total: total,
-          productsWithQuantity: productsWithQuantity
-        })
-        .then(function(response) {
-          //go to the confirmation page and send it the order id
-          router.push("/confirmation?order=" + response.data.message);
-        })
-        .catch(function(response) {
-          console.log(response);
-        });
->>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
     }
   },
   components: {
@@ -242,10 +166,6 @@ export default {
   }
 };
 </script>
-<<<<<<< HEAD
-=======
-    
->>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
     <style scoped lang="css" src='./custom_css/checkout.css'>
 </style>
     

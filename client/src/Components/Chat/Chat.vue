@@ -41,7 +41,7 @@
     ],
     mounted () {
       this.loadChat()
-      this.$store.dispatch('loadOnlineUsers')
+    //  this.$store.dispatch('loadOnlineUsers')
     },
     components: {
       'message': Message,

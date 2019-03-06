@@ -3,17 +3,21 @@ import * as firebase from 'firebase'
 const ChatModule = {
   state: {
     chats: []
+
   },
   mutations: {
-    setMessagesEmpty (state) {
+    setMessagesEmpty(state) {
       state.messages = []
     },
-    setChats (state, payload) {
+    setChats(state, payload) {
       state.chats = payload
+      console.log("Set Chats " + state.chats);
     }
   },
   actions: {
-    sendMessage ({commit}, payload) {
+    sendMessage({
+      commit
+    }, payload) {
       console.log(payload.content);
       let chatID = payload.chat_id
       const message = {
@@ -23,8 +27,7 @@ const ChatModule = {
       }
       firebase.database().ref('messages').child(chatID).child('messages').push(message)
         .then(
-          (data) => {
-          }
+          (data) => {}
         )
         .catch(
           (error) => {
@@ -32,33 +35,50 @@ const ChatModule = {
           }
         )
     },
-    loadChats ({commit}) {
-      // Load all the chats having the Current Logged user (Creator or Receiver)
-      firebase.database().ref('chats').on('value', function (snapshot) {
-        commit('setChats', snapshot.val())
-      })
+    loadChats({commit}, payload) {
+      var chatList = []
+      // Loop going through each order
+      for (var key in payload.orders) {
+        if (payload.orders.hasOwnProperty(key)) {
+          // Get The chat keys using the Order Id
+          let chatref = firebase.database().ref('chats').orderByChild('order_id').equalTo(payload.orders[key]['order_id']).on("value", function(snapshot, dispatch) {
+            //console.log(Object.keys(snapshot.val())[0])
+            chatList.push(Object.keys(snapshot.val())[0])
+          })
+
+        }
+      }
+      commit('setChats', chatList);
+
     },
-    createChat ({commit,dispatch}, payload,) {
+    createChat({
+      commit,
+      dispatch
+    }, payload, ) {
       // Generate a conversation ID
       let newPostKey = firebase.database().ref().child('chats').push().key
 
       let updates = {}
-            updates['/chats/' + newPostKey] = {name: payload.sender_id + "" + payload.receiver+""+payload.or_id, creator:payload.sender_id, receiver:payload.receiver }
-            firebase.database().ref().update(updates)
-            console.log("Here");
-            dispatch('sendMessage',{chat_id : newPostKey, content : payload.message, username: payload.sender_id });
-      /*return new Promise((resolve, reject) => {
-              resolve(newPostKey)
-            })*/
-
-
+      updates['/chats/' + newPostKey] = {
+        name: payload.sender_id + "" + payload.receiver + "" + payload.or_id,
+        sender_id: payload.sender_id,
+        receiver: payload.receiver,
+        order_id: payload.or_id
+      }
+      firebase.database().ref().update(updates)
+      console.log("Here");
+      dispatch('sendMessage', {
+        chat_id: newPostKey,
+        content: payload.message,
+        username: payload.sender_id
+      });
     }
   },
   getters: {
-    messages (state) {
+    messages(state) {
       return state.messages
     },
-    chats (state) {
+    chats(state) {
       return state.chats
     }
   }

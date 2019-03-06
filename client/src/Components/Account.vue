@@ -235,8 +235,6 @@ export default {
   },
 
   components: {
-     LandingHeader: LandingHeader,
-     LandingFooter: LandingFooter
   },
 
 

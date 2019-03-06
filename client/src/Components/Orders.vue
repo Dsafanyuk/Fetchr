@@ -112,7 +112,6 @@ export default {
       return goodDate;
     },
     createChat: function(order_id) {
-    // Get the User_id of the Receiver
       axios
       .get("/api/orders/" + order_id)
       .then(response => {

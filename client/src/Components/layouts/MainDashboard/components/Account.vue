@@ -260,7 +260,6 @@ export default {
            })
            .then((response) => {
                if (response.status == 200) {
-                  console.log('Saved');
                   this.$router.push('/account');
               }
            })
@@ -296,7 +295,6 @@ export default {
            })
            .then((response) => {
                if (response.status == 200) {
-                  console.log('Saved');
                   this.$router.push('/account');
               }
            })
@@ -332,7 +330,6 @@ export default {
            })
            .then((response) => {
                if (response.status == 200) {
-                  console.log('Saved');
                   this.$router.push('/account');
               }
            })
@@ -368,7 +365,6 @@ export default {
            })
            .then((response) => {
                if (response.status == 200) {
-                  console.log('Saved');
                   this.$router.push('/account');
               }
            })

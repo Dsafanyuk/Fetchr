@@ -6,7 +6,7 @@ const knex = require('knex')(require('../db'));
 /* Update fn codes*/
 function updatefirstname(req, res){
   knex('users')
-    .where('user_id', req.body.user_id)
+    .where('user_id', user_id)
     .update({
       first_name: req.body.firstName,
 
@@ -26,7 +26,7 @@ function updatefirstname(req, res){
 /* Update ln codes*/
 function updatelastname(req, res){
   knex('users')
-    .where('user_id', req.body.user_id)
+    .where('user_id', user_id)
     .update({
       last_name: req.body.lastName,
 
@@ -45,7 +45,7 @@ function updatelastname(req, res){
 /* Update rn codes*/
 function updateroomnumber(req, res){
   knex('users')
-    .where('user_id', req.body.user_id)
+    .where('user_id', user_id)
     .update({
       room_num: req.body.roomNumber,
 
@@ -64,7 +64,7 @@ function updateroomnumber(req, res){
 /* Update pn codes*/
 function updatephonenumber(req, res){
   knex('users')
-    .where('user_id', req.body.user_id)
+    .where('user_id', user_id)
     .update({
       phone_number: req.body.phoneNumber,
 

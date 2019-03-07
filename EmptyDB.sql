@@ -114,7 +114,7 @@ INSERT INTO `products` VALUES (10, 'Pringles', 2.57, 'snacks', 'https://fetchrap
 INSERT INTO `products` VALUES (11, 'Oreos', 3.57, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Oreo.png');
 INSERT INTO `products` VALUES (12, 'Pretzels', 3.08, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Pretzels.png');
 INSERT INTO `products` VALUES (13, 'Cheetos', 2.70, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Cheetos.png');
-INSERT INTO `products` VALUES (14, 'Cheez-It', 1.21, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Cheez-It.jp2');
+INSERT INTO `products` VALUES (14, 'Cheez-It', 1.21, 'snacks', 'https://s3.us-east-2.amazonaws.com/fetchrapp/Product+Photos/cheeze-it.jpeg');
 INSERT INTO `products` VALUES (16, 'Snickers', 2.30, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Snickers.png');
 INSERT INTO `products` VALUES (17, 'Chex Mix', 4.35, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Chex%20Mix.png');
 INSERT INTO `products` VALUES (18, 'Popcorn', 2.46, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/Popcorn.png');
@@ -298,8 +298,13 @@ INSERT INTO `products` VALUES (216, 'Wallet', 33.91, 'personal', 'https://fetchr
 INSERT INTO `products` VALUES (218, 'Watch', 14.81, 'electronics', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/watch.jpg');
 INSERT INTO `products` VALUES (219, 'Water Bottle', 37.11, 'drinks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/water_bottle.jpg');
 INSERT INTO `products` VALUES (220, 'White Out', 35.42, 'school_supplies', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/white_out.jpg');
+<<<<<<< HEAD
 INSERT INTO `products` VALUES (222, 'Zipper', 21.87, 'personal', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/zipper.jpg')
 ;/*!40000 ALTER TABLE `products` ENABLE KEYS */;
+=======
+INSERT INTO `products` VALUES (222, 'Zipper', 21.87, 'personal', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/zipper.jpg');
+/*!40000 ALTER TABLE `products` ENABLE KEYS */;
+>>>>>>> 40752623c21feafc8d1cbff15237194ff34cde6f
 UNLOCK TABLES;
 
 

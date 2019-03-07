@@ -34,15 +34,15 @@ router.post('/unfavorite', verifyToken, userController.unfavorite);
 
 router.get('/:user_id/favorites', verifyToken, userController.favorites);
 
-router.get('/:user_id/creditCheck',  verifyToken, userController.creditCheck);
+router.get('/:user_id/creditCheck', verifyToken, userController.creditCheck);
 
 router.post('/login', loginController.loginUser);
 
-router.get('/:user_id/',  verifyToken, userController.showOneUser); // eslint-disable-line no-use-before-define
+router.get('/:user_id/', verifyToken, userController.showOneUser); // eslint-disable-line no-use-before-define
 
-router.get('/:user_id/orders',  verifyToken, userController.showUserOrders);
+router.get('/:user_id/orders', verifyToken, userController.showUserOrders);
 
-router.patch('/:user_id',  verifyToken, userController.updateUser);
+router.patch('/:user_id', verifyToken, userController.updateUser);
 
 router.post('/',  verifyToken, userController.createUser);
 

@@ -35,14 +35,7 @@ import LandingHeader from "./mini-components/LandingHeader.vue";
 import LandingFooter from "./mini-components/LandingFooter.vue";
 import OrderSummary from "./mini-components/OrderSummary.vue";
 import browserCookies from "browser-cookies";
-<<<<<<< HEAD
 import axios from "../axios";
-=======
-import axios from "axios";
-import State from "./assets/js/shoppingCartState";
-
-const api = axios.create();
->>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
 
 export default {
   data() {
@@ -51,14 +44,8 @@ export default {
     };
   },
   mounted: function() {
-<<<<<<< HEAD
     axios
       .get("/api/users/" + browserCookies.get("user_id") + "/orders")
-=======
-    console.log(State.data);
-    api
-      .get("/api/users/" + browserCookies.get("userId") + "/orders")
->>>>>>> 5749c5fdd381738159522ba089a84523f5da286f
       .then(response => {
         this.orders = response.data;
       });

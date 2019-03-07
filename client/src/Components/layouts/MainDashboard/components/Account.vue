@@ -35,7 +35,7 @@
                                            </div>        
                                         <v-card-actions>
                                            <v-btn round color="cyan" flat type="button" @click="dialog1 = false">Close</v-btn>
-                                           <v-btn round color="cyan" flat type="submit" @click="ask_dialog1 = !ask_dialog1">Save</v-btn>
+                                           <v-btn round color="cyan" flat type="submit"  @click="ask_dialog1 = !ask_dialog1">Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
                                      <div style="flex: 1 1 auto;"></div>
@@ -164,7 +164,7 @@
                                               <div class="col-sm-7">
                                                 <input type="number" for="pnHelp"  onKeyDown="if(this.value.length==10 && event.keyCode!=8) return false;" placeholder="##########" v-model="new_phoneNumber" class="Edit_dialog " />
                                               </div><br>
-                                              <small id="pnHelp" class="form-text text-muted-danger col-sm-12" >*The Phone Number field may not be greater than 10 numbers</small>
+                                              <small id="pnHelp" class="form-text text-danger col-sm-12" >*The Phone Number field may not be greater than 10 numbers</small>
                                            </div>        
                                         <v-card-actions row justify-right>
                                            <v-btn round color="cyan" flat @click="dialog4 = false">Close</v-btn>
@@ -231,7 +231,8 @@ export default {
 	      new_lastName:'',
 	      new_phoneNumber:'',
          new_roomNumber:'',
-    };
+      };
+
   },
 
   components: {
@@ -245,6 +246,21 @@ export default {
         else {
            this.seen = true;
         }
+     },
+
+     validfn(new_firstName){
+        if(this.new_firstName.lenght == " ")
+        {
+           this.new_firstName.setCustomValidity("Cannot be be empty.");
+           dialog1 = true;
+           ask_dialog1 = false;
+        }
+        else{
+           this.new_firstName("")
+           ask_dialog1 = false;
+           dialog1 = false;
+        }
+
      },
 
      editfirstname: function(){
@@ -264,7 +280,7 @@ export default {
               }
            })
            .catch(function (error) {
-              if (error.response.status == 400) {
+              if (error.response.status == 500) {
                 toasted.error(error.response.data, {
                    theme: "primary",
                    position: "top-center",

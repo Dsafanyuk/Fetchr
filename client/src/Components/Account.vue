@@ -164,7 +164,7 @@
                                               <div class="col-sm-7">
                                                 <input type="number" for="pnHelp"  onKeyDown="if(this.value.length==10 && event.keyCode!=8) return false;" placeholder="##########" v-model="new_phoneNumber" class="Edit_dialog " />
                                               </div><br>
-                                              <small id="pnHelp" class="form-text text-muted-danger col-sm-12" >*The Phone Number field may not be greater than 10 numbers</small>
+                                              <small id="pnHelp" class="form-text text-danger col-sm-12" >*The Phone Number field may not be greater than 10 numbers</small>
                                            </div>        
                                         <v-card-actions row justify-right>
                                            <v-btn round color="cyan" flat @click="dialog4 = false">Close</v-btn>
@@ -245,6 +245,18 @@ export default {
         else {
            this.seen = true;
         }
+     },
+
+     validfn(new_firstName){
+        if(this.new_firstName.lenght == " ")
+        {
+           this.new_firstName.setCustomValidity("Cannot be be empty.");
+        }
+        else{
+           this.new_firstName("")
+           ask_dialog1 != ask_dialog1;
+        }
+
      },
 
      editfirstname: function(){

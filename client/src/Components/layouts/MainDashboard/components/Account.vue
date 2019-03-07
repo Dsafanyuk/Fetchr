@@ -248,21 +248,6 @@ export default {
         }
      },
 
-     validfn(new_firstName){
-        if(this.new_firstName.lenght == " ")
-        {
-           this.new_firstName.setCustomValidity("Cannot be be empty.");
-           dialog1 = true;
-           ask_dialog1 = false;
-        }
-        else{
-           this.new_firstName("")
-           ask_dialog1 = false;
-           dialog1 = false;
-        }
-
-     },
-
      editfirstname: function(){
         this.dialog1 = true ;
         this.firstName = this.new_firstName;

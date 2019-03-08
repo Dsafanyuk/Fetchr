@@ -29,29 +29,18 @@
                                            <div class="form-group col-sm-12">
                                               <label class="text-warning control-label col-sm-4 " for="firstName">First Name:</label>
                                               <div class="col-sm-8">
-                                                <input for="fnHelp" type="text" v-model="new_firstName" class="Edit_dialog" maxlength="15" required="true">
+                                                <input for="fnHelp" type="text" v-model="new_firstName" class="Edit_dialog" maxlength="15" placeholder="Enter up to 15 characters." required>
                                               </div><br>
-                                              <small id="fnHelp" class="form-text text-danger col-sm-12">*The First Name field may not be greater than 15 characters</small>
+                                              <small id="fnHelp" class="form-text text-danger col-sm-12">{{first_name_errMessage}}</small>
                                            </div>        
                                         <v-card-actions>
                                            <v-btn round color="cyan" flat type="button" @click="dialog1 = false">Close</v-btn>
-                                           <v-btn round color="cyan" flat type="submit"  @click="ask_dialog1 = !ask_dialog1">Save</v-btn>
+                                           <v-btn round color="cyan" flat type="submit"  v-on:click="editfirstname" >Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
-                                     <div style="flex: 1 1 auto;"></div>
                                   </v-card>
                                </v-dialog>
-                               <!--confirmation dialog box to edit first name-->
-                               <v-dialog v-model="ask_dialog1" max-width="300px">
-                                  <v-card>
-                                  <v-card-text>Are You sure you want to change your firstname?</v-card-text>
-                                     <v-card-actions>
-                                        <v-btn color="primary" flat @click="ask_dialog1 = false">no</v-btn>
-                                        <v-btn color="primary" flat v-on:click="editfirstname" @click="ask_dialog1 = false; dialog1 = false">yes</v-btn>
-                                     </v-card-actions>
-                                  </v-card>
-                               </v-dialog>
-                            </v-layout>
+                               </v-layout>
                           </div>
                       </div><br>
                       <!-- display label and user last name with option to edit-->
@@ -73,32 +62,20 @@
                                            <div class="form-group col-sm-12">
                                               <label class="text-warning control-label col-sm-4 " for="lastName">Last Name:</label>
                                               <div class="col-sm-8">
-                                                <input for="lnHelp" type="text" v-model="new_lastName" class="Edit_dialog" maxlength="15" required="true">
+                                                <input for="lnHelp" type="text" v-model="new_lastName" class="Edit_dialog" maxlength="15" placeholder="Enter up to 15 characters." required>
                                               </div><br>
-                                              <small id="lnHelp" class="form-text text-danger col-sm-12">*The Last Name field may not be greater than 15 characters</small>
+                                              <small id="fnHelp" class="form-text text-danger col-sm-12">{{last_name_errMessage}}</small>
                                            </div>        
-                                        <v-card-actions row justify-right>
-                                           <v-btn round color="cyan" flat @click="dialog2 = false">Close</v-btn>
-                                           <v-btn round color="cyan" flat type="button" @click="ask_dialog2 = !ask_dialog2">Save</v-btn>
+                                        <v-card-actions>
+                                           <v-btn round color="cyan" flat type="button" @click="dialog2 = false">Close</v-btn>
+                                           <v-btn round color="cyan" flat type="submit"  v-on:click="editlastname" >Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
-                                     <div style="flex: 1 1 auto;"></div>
                                   </v-card>
                                </v-dialog>
-                               <!--confirmation dialog box to edit last name-->
-                               <v-dialog v-model="ask_dialog2" max-width="300px">
-                                  <v-card>
-                                  <v-card-text>Are You sure you want to change your lastname?</v-card-text>
-                                     <v-card-actions>
-                                        <v-btn color="primary" flat @click="ask_dialog2 = false">no</v-btn>
-                                        <v-btn color="primary" flat v-on:click="editlastname" @click="ask_dialog2 = false; dialog2 = false">yes</v-btn>
-                                     </v-card-actions>
-                                  </v-card>
-                               </v-dialog>
-                            </v-layout>
+                               </v-layout>
                           </div>
                       </div><br>
-                      
                        <!--display label and user room number with option to edit-->
                       <div class="row col-sm-12">
                          <div class="col-sm-10">
@@ -120,27 +97,16 @@
                                               <div class="col-sm-7">
                                                 <input type="number" for="nHelp" onKeyDown="if(this.value.length==4 && event.keyCode!=8) return false;" placeholder="####" v-model="new_roomNumber" class="Edit_dialog"/>
                                               </div><br>
-                                              <small id="rnHelp" class="form-text text-danger col-sm-12" >*The Room Number field may not be greater than 4 characters</small>
+                                              <small id="fnHelp" class="form-text text-danger col-sm-12">{{room_num_errMessage}}</small>
                                            </div>        
-                                        <v-card-actions row justify-right>
-                                           <v-btn round color="cyan" flat @click="dialog3 = false">Close</v-btn>
-                                           <v-btn round color="cyan" flat type="button" @click="ask_dialog3 = !ask_dialog3">Save</v-btn>
+                                        <v-card-actions>
+                                           <v-btn round color="cyan" flat type="button" @click="dialog3 = false">Close</v-btn>
+                                           <v-btn round color="cyan" flat type="submit"  v-on:click="editroomnum" >Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
-                                     <div style="flex: 1 1 auto;"></div>
                                   </v-card>
                                </v-dialog>
-                               <!--confirmation dialog box to edit room number-->
-                               <v-dialog v-model="ask_dialog3" max-width="300px">
-                                  <v-card>
-                                  <v-card-text>Are You sure you want to change your room number?</v-card-text>
-                                     <v-card-actions>
-                                        <v-btn color="primary" flat @click="ask_dialog3 = false">no</v-btn>
-                                        <v-btn color="primary" flat v-on:click="editroomnum" @click="ask_dialog3 = false; dialog3 = false">yes</v-btn>
-                                     </v-card-actions>
-                                  </v-card>
-                               </v-dialog>
-                            </v-layout>
+                               </v-layout>
                           </div>
                       </div><br>
                       <!-- display label and user phone number with option to edit-->
@@ -162,29 +128,18 @@
                                            <div class="form-group col-sm-12">
                                               <label class="text-warning control-label col-sm-5 " for="phone number">Phone Number:</label>
                                               <div class="col-sm-7">
-                                                <input type="number" for="pnHelp"  onKeyDown="if(this.value.length==10 && event.keyCode!=8) return false;" placeholder="##########" v-model="new_phoneNumber" class="Edit_dialog " />
+                                                <input type="number" for="pnHelp"  onKeyDown="if(this.value.length == 10 && event.keyCode != 8) return false;"  placeholder="##########" v-model="new_phoneNumber" class="Edit_dialog " />
                                               </div><br>
-                                              <small id="pnHelp" class="form-text text-danger col-sm-12" >*The Phone Number field may not be greater than 10 numbers</small>
+                                              <small id="fnHelp" class="form-text text-danger col-sm-12">{{phone_num_errMessage}}</small>
                                            </div>        
-                                        <v-card-actions row justify-right>
-                                           <v-btn round color="cyan" flat @click="dialog4 = false">Close</v-btn>
-                                           <v-btn round color="cyan" flat type="button" @click="ask_dialog4 = !ask_dialog4">Save</v-btn>
+                                        <v-card-actions>
+                                           <v-btn round color="cyan" flat type="button" @click="dialog4 = false">Close</v-btn>
+                                           <v-btn round color="cyan" flat type="submit"  v-on:click="editphonenumber" >Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
-                                     <div style="flex: 1 1 auto;"></div>
                                   </v-card>
                                </v-dialog>
-                               <!--confirmation dialog box to edit phone number-->
-                               <v-dialog v-model="ask_dialog4" max-width="300px">
-                                  <v-card>
-                                  <v-card-text>Are You sure you want to change your phone number??</v-card-text>
-                                     <v-card-actions>
-                                        <v-btn color="primary" flat @click="ask_dialog4 = false">no</v-btn>
-                                        <v-btn color="primary" flat v-on:click="editphonenumber" @click="ask_dialog4 = false; dialog4 = false">yes</v-btn>
-                                     </v-card-actions>
-                                  </v-card>
-                               </v-dialog>
-                            </v-layout>
+                               </v-layout>
                           </div>
                       </div><br>
                       <!-- display label and user email address with no option to edit-->
@@ -212,6 +167,7 @@ import browsercookies from "browser-cookies";
 import axios from '../../../../axios';
 
 export default {
+   
    data() {
       return {
          firstName: browsercookies.get("first_name"),
@@ -231,6 +187,11 @@ export default {
 	      new_lastName:'',
 	      new_phoneNumber:'',
          new_roomNumber:'',
+         first_name_errMessage : '',
+         last_name_errMessage: '',
+         room_num_errMessage: '',
+         phone_num_errMessage: '',
+         deny_null_message : "*The Field Cannot be empty ",
       };
 
   },
@@ -249,15 +210,15 @@ export default {
      },
 
      editfirstname: function(){
-        this.dialog1 = true ;
+        if (this.new_firstName )
+        {
         this.firstName = this.new_firstName;
         browsercookies.erase('first_name'),
         browsercookies.set('first_name', this.new_firstName);
         axios
            .post('api/account/updatefirstname', {
                firstName: this.new_firstName,
-               user_id: browsercookies.get('user_id')
-
+               user_id: browsercookies.get('user_id'),
            })
            .then((response) => {
                if (response.status == 200) {
@@ -272,121 +233,123 @@ export default {
                    duration : 5000
                   });
               }
-              console.log(error);
-              if (error.response) {
-                 // The request was made and the server responded with a status code
-                 // that falls out of the range of 2xx
-                 console.log(error.response.data);
-                 console.log(error.response.status);
-                 console.log(error.response.headers);
-              }
+
            });
+             this.dialog1 = false;
+        }
+        else{
+          this.first_name_errMessage = "*First Name cannot be empty";
+        }
 
      },
 
      editlastname: function(){
-        this.dialog2 = true ;
+        if (this.new_lastName )
+        {
         this.lastName = this.new_lastName;
         browsercookies.erase('last_name'),
         browsercookies.set('last_name', this.new_lastName);
         axios
-           .post('api/Account/updatelastname', {
-               lastame: this.new_lastName,
-               user_id: browsercookies.get('user_id')
+           .post('api/account/updatelastname', {
+               lastName: this.new_lastName,
+               user_id: browsercookies.get('user_id'),
            })
            .then((response) => {
                if (response.status == 200) {
-                  this.$router.push('/account');
               }
            })
            .catch(function (error) {
-              if (error.response.status == 400) {
+              if (error.response.status == 500) {
                 toasted.error(error.response.data, {
                    theme: "primary",
                    position: "top-center",
                    duration : 5000
                   });
               }
-              console.log(error);
-              if (error.response) {
-                 // The request was made and the server responded with a status code
-                 // that falls out of the range of 2xx
-                 console.log(error.response.data);
-                 console.log(error.response.status);
-                 console.log(error.response.headers);
-              }
+
            });
+             this.dialog2 = false;
+        }
+        else{
+          this.last_name_errMessage = "*Last Name cannot be empty";
+        }
 
      },
 
-     editroomnum: function(){
-        this.dialog3 = true ;
-        this.roomNumber = this.new_roomNumber;
-        browsercookies.erase('room_num'),
-        browsercookies.set('room_num', this.new_roomNumber);
-        axios
-           .post('api/Account/updateroomnumber', {
-               roomNumber: this.new_roomNumber,
-               user_id: browsercookies.get('user_id')
-           })
-           .then((response) => {
-               if (response.status == 200) {
-                  this.$router.push('/account');
-              }
-           })
-           .catch(function (error) {
-              if (error.response.status == 400) {
-                toasted.error(error.response.data, {
-                   theme: "primary",
-                   position: "top-center",
-                   duration : 5000
-                  });
-              }
-              console.log(error);
-              if (error.response) {
-                 // The request was made and the server responded with a status code
-                 // that falls out of the range of 2xx
-                 console.log(error.response.data);
-                 console.log(error.response.status);
-                 console.log(error.response.headers);
-              }
-           });
+   editroomnum: function(){
+        if(this.new_roomNumber )
+        {
+           if(this.new_roomNumber.length == 4){
+              this.roomNumber = this.new_roomNumber;
+              browsercookies.erase('room_num'),
+              browsercookies.set('room_num', this.new_roomNumber);
+              axios
+                 .post('api/account/updateroomnumber', {
+                     roomNumber: this.new_roomNumber,
+                     user_id: browsercookies.get('user_id'),
+                 })
+                 .then((response) => {
+                     if(response.status == 200) {
+                     }
+                 })
+                 .catch(function (error) {
+                    if(error.response.status == 500) {
+                       toasted.error(error.response.data, {
+                          theme: "primary",
+                          position: "top-center",
+                          duration : 5000
+                       });
+                    }
+
+                 });
+                 this.dialog3 = false;
+            }
+            else{
+               this.room_num_errMessage = "*The Room Number field must exactly contain 4 digits.";
+            }
+        }
+        else{
+          this.room_num_errMessage = this.deny_null_message;
+        }
 
      },
 
      editphonenumber: function(){
-        this.dialog4 = true ;
-        this.phoneNumber = this.new_phoneNumber;
-        browsercookies.erase('phone_number'),
-        browsercookies.set('phone_number', this.new_phoneNumber);
-        axios
-           .post('api/Account/updatephonenumber', {
-               phoneNumber: this.new_phoneNumber,
-               user_id: browsercookies.get('user_id')
-           })
-           .then((response) => {
-               if (response.status == 200) {
-                  this.$router.push('/account');
-              }
-           })
-           .catch(function (error) {
-              if (error.response.status == 400) {
-                toasted.error(error.response.data, {
-                   theme: "primary",
-                   position: "top-center",
-                   duration : 5000
-                  });
-              }
-              console.log(error);
-              if (error.response) {
-                 // The request was made and the server responded with a status code
-                 // that falls out of the range of 2xx
-                 console.log(error.response.data);
-                 console.log(error.response.status);
-                 console.log(error.response.headers);
-              }
-           });
+        
+        if(this.new_phoneNumber)
+        {
+           if(this.new_phoneNumber.length == 10){
+              this.phoneNumber = this.new_phoneNumber;
+              browsercookies.erase('phone_number'),
+              browsercookies.set('phone_number', this.new_phoneNumber);
+              axios
+                .post('api/account/updatephonenumber', {
+                    phoneNumber: this.new_phoneNumber,
+                    user_id: browsercookies.get('user_id'),
+                })
+                .then((response) => {
+                   if (response.status == 200) {
+                   }
+                })
+                .catch(function (error) {
+                   if(error.response.status == 500) {
+                      toasted.error(error.response.data, {
+                         theme: "primary",
+                         position: "top-center",
+                         duration : 5000
+                         });
+                   }
 
+                });
+                this.dialog4 = false;
+           }
+           else{
+               this.phone_num_errMessage = "*The Phone number field must exactly contain 10 digits.";
+           } 
+        }
+        else{
+          this.phone_num_errMessage = "*The Phone Number field is required";
+        }
      },    
   }
 };
@@ -402,7 +365,7 @@ export default {
       border-top: none;
       border-left: none;
       border-right: none;
-      width: 160px;
+      width: 180px;
       border-color: #e0e0e0;
       outline: none;
   }

@@ -25,7 +25,7 @@ function loginUser(req, res) {
           user_id: `${users[0].user_id}`,
           email_address: `${users[0].email_address}`,
         };
-        
+
         // Create jwt, expires in 1 hour
         jwt.sign({ user }, 'secretkey', (err, token) => {
           if (err) {
@@ -37,8 +37,8 @@ function loginUser(req, res) {
                 res.cookie(userDetail, userValue, { maxAge: 24 * 60 * 60 * 1000 }); // In miliseconds
                 res.cookie('token', token, { maxAge: 24 * 60 * 60 * 1000 });
               }
-            })
-            
+            });
+
             res.json({
               token,
             });

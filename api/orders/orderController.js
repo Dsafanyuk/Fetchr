@@ -61,7 +61,7 @@ function createOrder(req, res) {
             message: `${err}`,
           });
         });
-       return orderProducts[0].order_id;
+      return orderProducts[0].order_id;
     })
     .then((orderProducts) => {
       const order = orderProducts;
@@ -80,7 +80,6 @@ function createOrder(req, res) {
     })
     // else send err
     .catch((err) => {
-      console.log(err)
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -125,8 +124,8 @@ function showOneOrderSummary(req, res) {
         .where('orders.order_id', req.params.order_id)
         .select('delivery_status', 'customer_id')
         .then((orderInfo) => {
-          res.send({productList, orderInfo}).status(200)
-        })
+          res.send({ productList, orderInfo }).status(200);
+        });
     })
     .catch((err) => {
       res.status(500).send({

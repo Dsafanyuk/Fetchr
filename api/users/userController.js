@@ -178,5 +178,5 @@ module.exports = {
   favorites,
   unfavorite,
   addBalance,
-  checkBalance
+  checkBalance,
 };

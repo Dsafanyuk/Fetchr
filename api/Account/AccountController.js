@@ -1,4 +1,4 @@
-const {validationResult} = require('express-validator/check');
+const { validationResult } = require('express-validator/check');
 const express = require('express');
 const router = express.Router();
 const knex = require('knex')(require('../db'));
@@ -11,7 +11,7 @@ function updatefirstname(req, res){
       first_name: req.body.firstName,
 
     })
-    .then((products) => {
+    .then((users) => {
       res.status(200);
       // res.cookie("first_name", req.body.firstName, { maxAge: 24*60*60*1000 });
     })
@@ -31,7 +31,7 @@ function updatelastname(req, res){
       last_name: req.body.lastName,
 
     })
-    .then((products) => {
+    .then((users) => {
       res.status(200);
     })
     .catch((err) => {
@@ -50,7 +50,7 @@ function updateroomnumber(req, res){
       room_num: req.body.roomNumber,
 
     })
-    .then((products) => {
+    .then((users) => {
       res.status(200);
     })
     .catch((err) => {
@@ -63,13 +63,14 @@ function updateroomnumber(req, res){
 
 /* Update pn codes*/
 function updatephonenumber(req, res){
+  const errors = validationResult(req); // Validation errors, if there is any
   knex('users')
     .where('user_id', req.body.user_id)
     .update({
       phone_number: req.body.phoneNumber,
 
     })
-    .then((products) => {
+    .then((users) => {
       res.status(200);
     })
     .catch((err) => {

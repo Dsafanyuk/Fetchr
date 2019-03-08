@@ -97,7 +97,7 @@ router.beforeEach((to, from, next) => {
 new Vue({
   el: '#app',
   template: '<App/>',
-  store: store,
+  store,
   router,
   render: h => h(App),
 });

@@ -8,6 +8,14 @@ const state = {
     cart: {},
 
 }
+// const actions = {
+//     clearCart: (state) => {
+//         console.log(Object.values(state.cart));
+//         Object.values(state.cart).forEach(cartItem => {
+//             removeItem('removeItem', cartItem);
+//         })
+//     }
+// }
 const mutations = {
     toggleCart: (state, value) => {
         state.showCart = value
@@ -18,6 +26,11 @@ const mutations = {
     },
     removeItem: (state, product) => {
         Vue.delete(state.cart, product.product_id);
+    },
+    clearCart: (state) => {
+        Object.values(state.cart).forEach(cartItem => {
+            Vue.delete(state.cart, cartItem.product_id);
+        })
     },
     incQuantity: (state, product) => {
         state.cart[product.product_id].quantity++;

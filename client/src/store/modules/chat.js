@@ -41,9 +41,10 @@ const ChatModule = {
       for (var key in payload.orders) {
         if (payload.orders.hasOwnProperty(key)) {
           // Get The chat keys using the Order Id
-          let chatref = firebase.database().ref('chats').orderByChild('order_id').equalTo(payload.orders[key]['order_id']).on("value", function(snapshot, dispatch) {
-            //console.log(Object.keys(snapshot.val())[0])
-            chatList.push(Object.keys(snapshot.val())[0])
+          let chatref = firebase.database().ref('chats').orderByChild('order_id').equalTo(payload.orders[key]['order_id'])
+          .on("value", function(snapshot, dispatch) {
+            console.log(snapshot.val());
+            chatList.push({chat_key :Object.keys(snapshot.val())[0]})
           })
 
         }

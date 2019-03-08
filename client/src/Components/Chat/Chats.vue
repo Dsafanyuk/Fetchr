@@ -1,9 +1,10 @@
 <template>
   <v-list subheader>
     <v-subheader>Recent Chats</v-subheader>
-    <v-list-tile avatar v-for="(chat, index) in chats" v-bind:key="chat.order_id" @click="" :to="/chat/ + index">
+    <v-list-tile avatar v-for="(chat, index) in chats" v-bind:key="chat.order_id" @click="" :to="/chat/ + chat.chat_key">
+
       <v-list-tile-content>
-        <v-list-tile-title v-html="chat.order_id"></v-list-tile-title>
+        <v-list-tile-title v-html="chat.chat_key"></v-list-tile-title>
       </v-list-tile-content>
       <v-list-tile-action>
         <v-icon>chat_bubble</v-icon>
@@ -32,7 +33,9 @@
     },
     computed: {
       chats () {
-        return this.$store.getters.chats
+
+     return  this.$store.getters.chats
+
       }
     }
   }

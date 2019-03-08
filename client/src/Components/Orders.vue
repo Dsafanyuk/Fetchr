@@ -117,7 +117,7 @@ export default {
       .then(response => {
       var receiver_id = response.data[0]['courier_id'];
         this.$store.dispatch('createChat',{message: this.msg_content, sender_id : this.user_id, receiver : receiver_id, or_id : order_id });
-        this.$router.push("/chat");
+        this.$router.push("/chat/" + order_id);
       });
 
     },

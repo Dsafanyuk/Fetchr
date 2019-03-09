@@ -5,6 +5,7 @@ import VeeValidate from 'vee-validate';
 import VueToast from 'vue-toasted';
 import VueRouter from 'vue-router';
 import VueSocketio from 'vue-socket.io-extended'
+import App from './App.vue'
 import io from 'socket.io-client'
 import store from './store'
 import router from './router'

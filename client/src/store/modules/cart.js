@@ -8,14 +8,6 @@ const state = {
     cart: {},
 
 }
-// const actions = {
-//     clearCart: (state) => {
-//         console.log(Object.values(state.cart));
-//         Object.values(state.cart).forEach(cartItem => {
-//             removeItem('removeItem', cartItem);
-//         })
-//     }
-// }
 const mutations = {
     toggleCart: (state, value) => {
         state.showCart = value

@@ -168,6 +168,21 @@ function checkBalance(req, res) {
       })
     })
 }
+// GET /users/{user_id}/showInfo
+function showUserById(req, res)
+{
+    knex('users')
+      .select('first_name','last_name')
+      .where('user_id', req.params.user_id)
+      .then((rows) => {
+        res.send(rows).status(200);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: `${err}`,
+        });
+      });
+}
 module.exports = {
   showOneUser,
   showUserOrders,
@@ -178,5 +193,6 @@ module.exports = {
   favorites,
   unfavorite,
   addBalance,
-  checkBalance
+  checkBalance,
+  showUserById
 };

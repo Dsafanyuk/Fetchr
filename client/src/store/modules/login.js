@@ -24,6 +24,7 @@ const actions = {
     },
     logout: (state) => {
         state.commit('pending');
+      // REMOVE THIS AFTER TESTING DONE TODO
         return new Promise(resolve => {
             setTimeout(() => {
                 state.commit('logoutSuccess');

@@ -1,4 +1,3 @@
-const { validationResult } = require('express-validator/check');
 const express = require('express');
 const router = express.Router();
 const knex = require('knex')(require('../db'));

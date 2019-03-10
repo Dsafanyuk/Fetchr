@@ -35,7 +35,7 @@
                                            </div>        
                                         <v-card-actions>
                                            <v-btn round color="cyan" flat type="button" @click="first_name_dialog = false">Close</v-btn>
-                                           <v-btn round color="cyan" flat type="submit"  v-on:click="editfirstname" >Save</v-btn>
+                                           <v-btn round color="cyan" flat type="submit"  v-on:click="editFirstname" >Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
                                   </v-card>
@@ -68,7 +68,7 @@
                                            </div>        
                                         <v-card-actions>
                                            <v-btn round color="cyan" flat type="button" @click="last_name_dialog = false">Close</v-btn>
-                                           <v-btn round color="cyan" flat type="submit"  v-on:click="editlastname" >Save</v-btn>
+                                           <v-btn round color="cyan" flat type="submit"  v-on:click="editLastname" >Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
                                   </v-card>
@@ -101,7 +101,7 @@
                                            </div>        
                                         <v-card-actions>
                                            <v-btn round color="cyan" flat type="button" @click="dialroom_num_dialogog3 = false">Close</v-btn>
-                                           <v-btn round color="cyan" flat type="submit"  v-on:click="editroomnum" >Save</v-btn>
+                                           <v-btn round color="cyan" flat type="submit"  v-on:click="editRoomnum" >Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
                                   </v-card>
@@ -134,7 +134,7 @@
                                            </div>        
                                         <v-card-actions>
                                            <v-btn round color="cyan" flat type="button" @click="room_num_dialog = false">Close</v-btn>
-                                           <v-btn round color="cyan" flat type="submit"  v-on:click="editphonenumber" >Save</v-btn>
+                                           <v-btn round color="cyan" flat type="submit"  v-on:click="editPhonenumber" >Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
                                   </v-card>
@@ -205,11 +205,10 @@ export default {
         }
      },
 
-     editfirstname: function(){
+     editFirstname: function(){
         if (this.new_firstName )
         {
         this.firstName = this.new_firstName;
-        browsercookies.erase('first_name'),
         browsercookies.set('first_name', this.new_firstName);
         axios
            .post('api/account/updatefirstname', {
@@ -239,11 +238,10 @@ export default {
 
      },
 
-     editlastname: function(){
+     editLastname: function(){
         if (this.new_lastName )
         {
         this.lastName = this.new_lastName;
-        browsercookies.erase('last_name'),
         browsercookies.set('last_name', this.new_lastName);
         axios
            .post('api/account/updatelastname', {
@@ -272,12 +270,11 @@ export default {
 
      },
 
-   editroomnum: function(){
+   editRoomnum: function(){
         if(this.new_roomNumber )
         {
            if(this.new_roomNumber.length == 4){
               this.roomNumber = this.new_roomNumber;
-              browsercookies.erase('room_num'),
               browsercookies.set('room_num', this.new_roomNumber);
               axios
                  .post('api/account/updateroomnumber', {
@@ -310,13 +307,12 @@ export default {
 
      },
 
-     editphonenumber: function(){
+     editPhonenumber: function(){
         
         if(this.new_phoneNumber)
         {
            if(this.new_phoneNumber.length == 10){
               this.phoneNumber = this.new_phoneNumber;
-              browsercookies.erase('phone_number'),
               browsercookies.set('phone_number', this.new_phoneNumber);
               axios
                 .post('api/account/updatephonenumber', {

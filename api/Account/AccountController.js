@@ -11,13 +11,12 @@ function updatefirstname(req, res){
 
     })
     .then((users) => {
-      res.status(200);
-      // res.cookie("first_name", req.body.firstName, { maxAge: 24*60*60*1000 });
+      res.status(200); // res.cookie
     })
     .catch((err) => {
       res.status(500).json({
         message: `${err}`,
-      }); // FOR DEBUGGING ONLY, dont json exact message in prod
+      });
       console.log(err);
     })
 }
@@ -31,12 +30,12 @@ function updatelastname(req, res){
 
     })
     .then((users) => {
-      res.status(200);
+      res.status(200); // res.cookie
     })
     .catch((err) => {
       res.status(500).json({
         message: `${err}`,
-      }); // FOR DEBUGGING ONLY, dont json exact message in prod
+      });
       console.log(err);
     })
 }
@@ -50,7 +49,7 @@ function updateroomnumber(req, res){
 
     })
     .then((users) => {
-      res.status(200);
+      res.status(200); // res.cookie
     })
     .catch((err) => {
       res.status(500).json({
@@ -69,7 +68,7 @@ function updatephonenumber(req, res){
 
     })
     .then((users) => {
-      res.status(200);
+      res.status(200); // res.cookie
     })
     .catch((err) => {
       res.status(500).json({

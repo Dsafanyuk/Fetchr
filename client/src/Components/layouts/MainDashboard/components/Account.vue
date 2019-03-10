@@ -16,13 +16,13 @@
                            </div>
                            <div class="col-sm-2" justify-right>
                               <!--not showing <i class="glyphicon glyphicon-pencil"></i> -->
-                            <a href="#" v-on:click="dialog1 = true">
+                            <a href="#" v-on:click="first_name_dialog = true">
                                 <span><i> edit</i></span>
                             </a>
                             <!--dialog boxes-->
                             <v-layout row >
                                <!--first dialog box to edit first name-->
-                               <v-dialog v-model="dialog1"  max-width="400px">
+                               <v-dialog v-model="first_name_dialog"  max-width="400px">
                                   <v-card tile>
                                      <v-card-title class="v-primary"><strong>Edit Your first name</strong></v-card-title>
                                         <v-card-text>
@@ -34,7 +34,7 @@
                                               <small id="fnHelp" class="form-text text-danger col-sm-12">{{first_name_errMessage}}</small>
                                            </div>        
                                         <v-card-actions>
-                                           <v-btn round color="cyan" flat type="button" @click="dialog1 = false">Close</v-btn>
+                                           <v-btn round color="cyan" flat type="button" @click="first_name_dialog = false">Close</v-btn>
                                            <v-btn round color="cyan" flat type="submit"  v-on:click="editfirstname" >Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
@@ -49,13 +49,13 @@
                             <strong class="text-warning">Last name</strong>: {{ lastName }}
                          </div>
                          <div class="col-sm-2">
-                            <a  href="#" v-on:click="dialog2 = true">
+                            <a  href="#" v-on:click="last_name_dialog = true">
                                <span><i> edit</i></span>
                             </a>
                             <!--dialog boxes-->
                             <v-layout row justify-center>
                                <!--first dialog box to edit last name-->
-                               <v-dialog v-model="dialog2"  max-width="400px">
+                               <v-dialog v-model="last_name_dialog"  max-width="400px">
                                   <v-card tile>
                                      <v-card-title class="v-primary"><strong>Edit Your last name</strong></v-card-title>
                                         <v-card-text>
@@ -67,7 +67,7 @@
                                               <small id="fnHelp" class="form-text text-danger col-sm-12">{{last_name_errMessage}}</small>
                                            </div>        
                                         <v-card-actions>
-                                           <v-btn round color="cyan" flat type="button" @click="dialog2 = false">Close</v-btn>
+                                           <v-btn round color="cyan" flat type="button" @click="last_name_dialog = false">Close</v-btn>
                                            <v-btn round color="cyan" flat type="submit"  v-on:click="editlastname" >Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
@@ -82,13 +82,13 @@
                             <strong class="text-warning">Room number</strong>: {{ roomNumber }}
                          </div>
                          <div class="col-sm-2">
-                            <a href="#" v-on:click="dialog3 = true">
+                            <a href="#" v-on:click="room_num_dialog = true">
                                <span><i> edit</i></span>
                             </a>
                             <!--dialog boxes-->
                             <v-layout row justify-center>
                                <!--first dialog box to edit room number-->
-                               <v-dialog v-model="dialog3"  max-width="400px">
+                               <v-dialog v-model="room_num_dialog"  max-width="400px">
                                   <v-card tile>
                                      <v-card-title class="v-primary"><strong>Edit Your room number</strong></v-card-title>
                                         <v-card-text>
@@ -100,7 +100,7 @@
                                               <small id="fnHelp" class="form-text text-danger col-sm-12">{{room_num_errMessage}}</small>
                                            </div>        
                                         <v-card-actions>
-                                           <v-btn round color="cyan" flat type="button" @click="dialog3 = false">Close</v-btn>
+                                           <v-btn round color="cyan" flat type="button" @click="dialroom_num_dialogog3 = false">Close</v-btn>
                                            <v-btn round color="cyan" flat type="submit"  v-on:click="editroomnum" >Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
@@ -115,13 +115,13 @@
                             <strong class="text-warning">Phone Number</strong>: {{ phoneNumber }}
                          </div>
                          <div class="col-sm-2">
-                            <a href="#" v-on:click="dialog4 = true">
+                            <a href="#" v-on:click="room_num_dialog = true">
                                <span><i> edit</i></span>
                             </a>
                             <!--dialog boxes-->
                             <v-layout row justify-center>
                                <!--first dialog box to edit phone number-->
-                               <v-dialog v-model="dialog4"  max-width="400px">
+                               <v-dialog v-model="room_num_dialog"  max-width="400px">
                                   <v-card tile>
                                      <v-card-title class="v-primary"><strong>Edit Your Phone number</strong></v-card-title>
                                         <v-card-text>
@@ -133,7 +133,7 @@
                                               <small id="fnHelp" class="form-text text-danger col-sm-12">{{phone_num_errMessage}}</small>
                                            </div>        
                                         <v-card-actions>
-                                           <v-btn round color="cyan" flat type="button" @click="dialog4 = false">Close</v-btn>
+                                           <v-btn round color="cyan" flat type="button" @click="room_num_dialog = false">Close</v-btn>
                                            <v-btn round color="cyan" flat type="submit"  v-on:click="editphonenumber" >Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
@@ -175,14 +175,10 @@ export default {
          roomNumber: browsercookies.get("room_num"),
          phoneNumber: browsercookies.get("phone_number"),
          emailAddress: browsercookies.get("email_address"),
-         dialog1 : false,
-         dialog2 : false,
-         dialog3 : false,
-         dialog4 : false,
-         ask_dialog1 : false,                                                                                              
-         ask_dialog2 : false,
-         ask_dialog3 : false,
-         ask_dialog4 : false,
+         first_name_dialog : false,
+         last_name_dialog : false,
+         room_num_dialog : false,
+         phone_num_dialog : false,
          new_firstName:'',
 	      new_lastName:'',
 	      new_phoneNumber:'',
@@ -235,7 +231,7 @@ export default {
               }
 
            });
-             this.dialog1 = false;
+             this.first_name_dialog = false;
         }
         else{
           this.first_name_errMessage = "*First Name cannot be empty";
@@ -268,7 +264,7 @@ export default {
               }
 
            });
-             this.dialog2 = false;
+             this.last_name_dialog = false;
         }
         else{
           this.last_name_errMessage = "*Last Name cannot be empty";
@@ -302,7 +298,7 @@ export default {
                     }
 
                  });
-                 this.dialog3 = false;
+                 this.room_num_dialog = false;
             }
             else{
                this.room_num_errMessage = "*The Room Number field must exactly contain 4 digits.";
@@ -341,7 +337,7 @@ export default {
                    }
 
                 });
-                this.dialog4 = false;
+                this.room_num_dialog = false;
            }
            else{
                this.phone_num_errMessage = "*The Phone number field must exactly contain 10 digits.";

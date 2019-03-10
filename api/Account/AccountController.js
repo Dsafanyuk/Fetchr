@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const knex = require('knex')(require('../db'));
 
-/* Update fn codes*/
+/* Update first name update codes*/
 function updatefirstname(req, res){
   knex('users')
     .where('user_id', req.body.user_id)
@@ -23,7 +23,7 @@ function updatefirstname(req, res){
     })
 }
 
-/* Update ln codes*/
+/* Update last name update codes*/
 function updatelastname(req, res){
   knex('users')
     .where('user_id', req.body.user_id)
@@ -42,7 +42,7 @@ function updatelastname(req, res){
     })
 }
 
-/* Update rn codes*/
+/* Update room number updatecodes*/
 function updateroomnumber(req, res){
   knex('users')
     .where('user_id', req.body.user_id)
@@ -56,14 +56,13 @@ function updateroomnumber(req, res){
     .catch((err) => {
       res.status(500).json({
         message: `${err}`,
-      }); // FOR DEBUGGING ONLY, dont json exact message in prod
+      });
       console.log(err);
     })
 }
 
-/* Update pn codes*/
+/* Update phone number name update codes*/
 function updatephonenumber(req, res){
-  const errors = validationResult(req); // Validation errors, if there is any
   knex('users')
     .where('user_id', req.body.user_id)
     .update({
@@ -76,7 +75,7 @@ function updatephonenumber(req, res){
     .catch((err) => {
       res.status(500).json({
         message: `${err}`,
-      }); // FOR DEBUGGING ONLY, dont json exact message in prod
+      });
       console.log(err);
     })
 }

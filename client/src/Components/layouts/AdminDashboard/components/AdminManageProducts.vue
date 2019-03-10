@@ -92,7 +92,6 @@
             </td>
             <td class="text-xs-center px-0">
               <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-              <v-icon small @click="deleteItem(props.item)">delete</v-icon>
             </td>
           </tr>
         </template>
@@ -166,12 +165,6 @@ export default {
       this.editedIndex = this.products.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
-    },
-
-    deleteItem(item) {
-      const index = this.products.indexOf(item);
-      confirm("Are you sure you want to delete this item?") &&
-        this.products.splice(index, 1);
     },
 
     close() {

@@ -1,6 +1,7 @@
+/* eslint-disable consistent-return */
 const knex = require('knex')(require('../db'));
 const upload = require('../s3');
-const { insertNewProduct } = require('./adminHelper');
+const { insertNewProduct, updateProduct } = require('./adminHelper');
 
 const singleUpload = upload.single('imageFile');
 
@@ -25,7 +26,6 @@ function showAllProducts(req, res) {
 
 function addProduct(req, res) {
   singleUpload(req, res, (err, some) => {
-    console.log(req.headers['content-type']);
     console.log(req.body);
     if (err) {
       return res
@@ -40,9 +40,29 @@ function addProduct(req, res) {
       .catch(error => res.status(422).send({ message: error }));
   });
 }
+
+function editProduct(req, res) {
+  singleUpload(req, res, (err, some) => {
+    console.log(req.body);
+    if (err) {
+      return res
+        .status(422)
+        .send({ errors: [{ title: 'Image Upload Error', detail: err.message }] });
+    }
+    // Insert into database
+    const newProduct = req.body;
+    if (req.file) {
+      newProduct.product_url = req.file.location;
+    }
+    updateProduct(newProduct)
+      .then(result => res.json({ message: result }))
+      .catch(error => res.status(422).send({ message: error }));
+  });
+}
 // Make these functions available to the router
 
 module.exports = {
   showAllProducts,
   addProduct,
+  editProduct,
 };

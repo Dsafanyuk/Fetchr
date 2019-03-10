@@ -6,7 +6,7 @@
       </template>
       <v-card>
         <v-card-title>
-          <span class="headline">Product Change</span>
+          <span class="headline">{{formTitle}}</span>
         </v-card-title>
 
         <v-card-text>
@@ -39,7 +39,12 @@
                   ></v-select>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-switch v-model="editedItem.is_active" label="Activate Product"></v-switch>
+                  <v-switch
+                    true-value="true"
+                    false-value="false"
+                    v-model="editedItem.is_active"
+                    label="Activate Product"
+                  ></v-switch>
                 </v-flex>
 
                 <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
@@ -66,7 +71,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-          <v-btn color="blue darken-1" flat @click="save">Save</v-btn>
+          <v-btn color="blue darken-1" :loading="sending" flat @click="save">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -83,7 +88,7 @@
             <td class="text-xs-right">{{ props.item.price }}</td>
             <td class="text-xs-right">{{ props.item.category }}</td>
             <td class="text-xs-center">
-              <v-icon v-if="props.item.is_active">check</v-icon>
+              <v-icon v-if="props.item.is_active == 'true'">check</v-icon>
             </td>
             <td class="text-xs-center px-0">
               <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
@@ -109,33 +114,34 @@ export default {
         { text: "Active", align: "center", value: "is_active" },
         { text: "Actions", align: "center", value: "name", sortable: false }
       ],
-      dialogTitle: "",
       imageName: "",
       imageUrl: "",
       search: "",
+      sending: false,
       dialog: false,
       editedIndex: -1,
       editedItem: {
+        product_id: "",
         product_name: "",
         price: "",
         category: "",
-        is_active: true,
+        is_active: "false",
         imageFile: ""
       },
       defaultItem: {
         product_name: "",
         price: "",
         category: "",
-        is_active: true,
+        is_active: "false",
         imageFile: ""
       },
       categories: [
-        "Snacks",
-        "Drinks",
-        "School Supplies",
-        "Misc",
-        "Personal",
-        "Electronics"
+        "snacks",
+        "drinks",
+        "school_supplies",
+        "misc",
+        "personal",
+        "electronics"
       ]
     };
   },
@@ -145,6 +151,9 @@ export default {
   computed: {
     products() {
       return this.$store.getters["admin/showProducts"];
+    },
+    formTitle() {
+      return this.editedIndex === -1 ? "New Item" : "Edit Item";
     }
   },
   watch: {
@@ -176,23 +185,28 @@ export default {
     },
 
     save() {
-      // if (this.editedIndex > -1) {
-      //   Object.assign(this.products[this.editedIndex], this.editedItem);
-      // } else {
-      //   this.products.push(this.editedItem);
-      // }
       this.sendFile();
     },
     pickFile() {
       this.$refs.image.click();
     },
     sendFile() {
-      let formData = new FormData();
-      console.log(this.editedItem);
-      Object.keys(this.editedItem).forEach(formPart => {
-        formData.append(formPart, this.editedItem[formPart]);
-      });
-      this.$store.dispatch("admin/sendForm", formData);
+      this.sending = true;
+      if (this.editedIndex == -1) {
+        this.$store
+          .dispatch("admin/createNewProduct", this.editedItem)
+          .then(result => {
+            this.sending = false;
+            this.close();
+          });
+      } else {
+        this.$store
+          .dispatch("admin/editExistProduct", this.editedItem)
+          .then(result => {
+            this.sending = false;
+            this.close();
+          });
+      }
     },
     onFilePicked(e) {
       const files = e.target.files;

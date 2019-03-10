@@ -12,6 +12,9 @@ const mutations = {
   setProducts: (state, data) => {
     state.products.push(data);
   },
+  resetProducts: (state) => {
+    state.products = [];
+  },
 };
 
 const getters = {
@@ -28,11 +31,34 @@ const actions = {
       });
     });
   },
-  sendForm: ({ state }, data) => {
+  createNewProduct: ({ state, commit, dispatch }, data) => {
+    const formData = new FormData();
+    Object.keys(data).forEach((formPart) => {
+      formData.append(formPart, data[formPart]);
+    });
     axios
-      .post('api/admin/products', data)
+      .post('api/admin/products', formData)
       .then((response) => {
         console.log(response);
+        commit('resetProducts');
+        dispatch('retrieveProducts');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  editExistProduct: ({ state, commit, dispatch }, data) => {
+    const formData = new FormData();
+    Object.keys(data).forEach((formPart) => {
+      formData.append(formPart, data[formPart]);
+    });
+
+    axios
+      .put(`api/admin/product/${data.product_id}`, formData)
+      .then((response) => {
+        console.log(response);
+        commit('resetProducts');
+        dispatch('retrieveProducts');
       })
       .catch((err) => {
         console.log(err);

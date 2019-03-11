@@ -15,26 +15,59 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex sm12 md6 lg6>
-                  <v-text-field v-model="editedItem.first_name" label="First Name" required></v-text-field>
+                  <v-text-field
+                    v-model.lazy="editedItem.first_name"
+                    label="First Name"
+                    name="first-name"
+                    autocomplete="new-password"
+                    required
+                  ></v-text-field>
                 </v-flex>
                 <v-flex sm12 md6 lg6>
-                  <v-text-field v-model="editedItem.last_name" label="Last Name" required></v-text-field>
+                  <v-text-field
+                    name="last-name"
+                    v-model="editedItem.last_name"
+                    label="Last Name"
+                    required
+                  ></v-text-field>
                 </v-flex>
                 <v-flex sm12 md12>
-                  <v-text-field v-model="editedItem.phone_number" label="Phone Number" required></v-text-field>
+                  <v-text-field
+                    v-model="editedItem.phone_number"
+                    label="Phone Number"
+                    name="phone-number"
+                    required
+                    autocomplete="new-password"
+                  ></v-text-field>
                 </v-flex>
                 <v-flex sm12 md6 lg6>
-                  <v-text-field v-model="editedItem.wallet" label="Wallet" required></v-text-field>
+                  <v-text-field v-model="editedItem.wallet" name="wallet" label="Wallet" required></v-text-field>
                 </v-flex>
                 <v-flex sm12 md6 lg6>
-                  <v-text-field v-model="editedItem.room_num" label="Room Number" required></v-text-field>
+                  <v-text-field
+                    v-model="editedItem.room_num"
+                    name="room-number"
+                    label="Room Number"
+                    required
+                  ></v-text-field>
                 </v-flex>
                 <v-flex sm12 md12>
-                  <v-text-field v-model="editedItem.email_address" label="Email Address" required></v-text-field>
+                  <v-text-field
+                    v-model="editedItem.email_address"
+                    autocomplete="new-password"
+                    label="Email Address"
+                    required
+                  ></v-text-field>
                 </v-flex>
-                <!-- <v-flex sm12 md12>
-                  <v-text-field v-model="editedItem.password" label="Password" required></v-text-field>
-                </v-flex>-->
+                <v-flex sm12 md12 v-if="formTitle == 'New User'">
+                  <v-text-field
+                    v-model="editedItem.password"
+                    label="Password"
+                    required
+                    type="new-password"
+                    autocomplete="new-password"
+                  ></v-text-field>
+                </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-switch
                     true-value="true"
@@ -99,8 +132,6 @@ export default {
         { text: "Active", align: "center", value: "is_active" },
         { text: "Actions", align: "center", value: "name", sortable: false }
       ],
-      imageName: "",
-      imageUrl: "",
       search: "",
       sending: false,
       dialog: false,
@@ -113,8 +144,8 @@ export default {
         wallet: "",
         room_num: "",
         email_address: "",
-        is_active: ""
-        // password: ""
+        is_active: "",
+        password: ""
       },
       defaultItem: {
         user_id: "",
@@ -156,8 +187,6 @@ export default {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       }, 300);
-      this.$refs.form.reset();
-      this.imageUrl = "";
     },
     save() {
       this.sendForm();

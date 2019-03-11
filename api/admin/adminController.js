@@ -2,6 +2,7 @@
 const knex = require('knex')(require('../db'));
 const upload = require('../s3');
 const { insertNewProduct, updateProduct, updateUser } = require('./adminHelper');
+const { registerUser } = require('../users/registerController');
 
 const singleUpload = upload.single('imageFile');
 
@@ -43,7 +44,6 @@ function addProduct(req, res) {
 
 function editProduct(req, res) {
   singleUpload(req, res, (err, some) => {
-    console.log(req.body);
     if (err) {
       return res
         .status(422)
@@ -87,7 +87,9 @@ function showAllUsers(req, res) {
   }
 }
 
-function addUser(req, res) {}
+function addUser(req, res) {
+  registerUser(req, res);
+}
 
 function editUser(req, res) {
   const user = req.body;

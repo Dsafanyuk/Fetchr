@@ -31,7 +31,24 @@ function updateProduct(product) {
     });
 }
 
+function updateUser(user) {
+  return knex('users')
+    .where('user_id', user.user_id)
+    .update({
+      email_address: user.email_address,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      phone_number: user.phone_number,
+      wallet: user.wallet,
+      room_num: user.room_num,
+      is_active: user.is_active,
+    })
+    .then(success => console.log('success'))
+    .catch(err => console.log('err'));
+}
+
 module.exports = {
   insertNewProduct,
   updateProduct,
+  updateUser,
 };

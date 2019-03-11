@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 const knex = require('knex')(require('../db'));
 const upload = require('../s3');
-const { insertNewProduct, updateProduct } = require('./adminHelper');
+const { insertNewProduct, updateProduct, updateUser } = require('./adminHelper');
 
 const singleUpload = upload.single('imageFile');
 
@@ -59,10 +59,49 @@ function editProduct(req, res) {
       .catch(error => res.status(422).send({ message: error }));
   });
 }
-// Make these functions available to the router
 
+function showAllUsers(req, res) {
+  const userId = req.header('user_id');
+  if (userId) {
+    knex('users')
+      .select(
+        'user_id',
+        'email_address',
+        'first_name',
+        'last_name',
+        'phone_number',
+        'wallet',
+        'room_num',
+        'is_active',
+      )
+      .then((users) => {
+        res.json(users).status(200);
+      })
+      .catch((err) => {
+        res.status(500).json({
+          message: `${err}`,
+        }); // FOR DEBUGGING ONLY, dont json exact message in prod
+      });
+  } else {
+    res.status(400).send('User_id cookie not set');
+  }
+}
+
+function addUser(req, res) {}
+
+function editUser(req, res) {
+  const user = req.body;
+  updateUser(user)
+    .then(result => res.json({ message: result }))
+    .catch(error => res.status(422).send({ message: error }));
+}
+
+// Make these functions available to the router
 module.exports = {
   showAllProducts,
   addProduct,
   editProduct,
+  showAllUsers,
+  addUser,
+  editUser,
 };

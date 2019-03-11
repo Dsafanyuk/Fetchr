@@ -1,8 +1,10 @@
 import * as firebase from 'firebase'
+import axios from "../../axios";
 
 const ChatModule = {
   state: {
-    chats: []
+    chats: [],
+    UserInfo : "",
 
   },
   mutations: {
@@ -11,7 +13,9 @@ const ChatModule = {
     },
     setChats(state, payload) {
       state.chats = payload
-      console.log("Set Chats " + state.chats);
+    },
+    setInfo(state, UserInfo) {
+      state.UserInfo = UserInfo
     }
   },
   actions: {
@@ -35,21 +39,31 @@ const ChatModule = {
           }
         )
     },
-    loadChats({commit}, payload) {
+    loadChats({commit,dispatch,state}, payload) {
       var chatList = []
       // Loop going through each order
       for (var key in payload.orders) {
         if (payload.orders.hasOwnProperty(key)) {
           // Get The chat keys using the Order Id
           let chatref = firebase.database().ref('chats').orderByChild('order_id').equalTo(payload.orders[key]['order_id'])
-          .on("value", function(snapshot, dispatch) {
+          .on("value", function(snapshot) {
             var temp_chat_key = Object.keys(snapshot.val())[0]
-            chatList.push({chat_key : temp_chat_key,
-              sender_id : snapshot.val()[temp_chat_key]['sender_id'],
-             receiver_id : snapshot.val()[temp_chat_key]['receiver'],
-             order_id : snapshot.val()[temp_chat_key]['order_id'],
-            })
+            var temp_sender_id = snapshot.val()[temp_chat_key]['sender_id']
+            var temp_receiver_id = snapshot.val()[temp_chat_key]['receiver']
+            var temp_fullInfo = ""
 
+          axios
+          .get("/api/users/" + temp_receiver_id +  "/showInfo")
+          .then(response => {
+              temp_fullInfo = response.data[0]['first_name'] + " " + response.data[0]['last_name']
+              chatList.push({chat_key : temp_chat_key,
+                sender_id : temp_sender_id,
+               receiver_id :temp_receiver_id,
+               order_id : snapshot.val()[temp_chat_key]['order_id'],
+               userInfo : temp_fullInfo
+              })
+
+          });
           })
 
         }
@@ -57,10 +71,7 @@ const ChatModule = {
       commit('setChats', chatList);
 
     },
-    createChat({
-      commit,
-      dispatch
-    }, payload, ) {
+    createChat({commit,dispatch}, payload, ) {
       // Generate a conversation ID
       let newPostKey = firebase.database().ref().child('chats').push().key
 
@@ -78,7 +89,10 @@ const ChatModule = {
         content: payload.message,
         username: payload.sender_id
       });
-    }
+    },
+
+
+
   },
   getters: {
     messages(state) {
@@ -86,6 +100,9 @@ const ChatModule = {
     },
     chats(state) {
       return state.chats
+    },
+    chatInfo (state){
+      return state.UserInfo
     }
   }
 }

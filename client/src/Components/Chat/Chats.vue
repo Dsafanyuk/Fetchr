@@ -1,10 +1,10 @@
 <template>
   <v-list subheader>
     <v-subheader>Recent Chats</v-subheader>
-    <v-list-tile avatar v-for="(chat, index) in chats" v-bind:key="chat.order_id" @click="" :to="/chat/ + chat.order_id">
+    <v-list-tile avatar v-for="(chat, index) in chats" v-bind:key="chat.order_id" @click="loadChatRoom()" >
 
       <v-list-tile-content>
-        <v-list-tile-title >{{getNameByUserId(chat.sender_id)}}</v-list-tile-title>
+        <v-list-tile-title >{{chat.userInfo}}</v-list-tile-title>
       </v-list-tile-content>
       <v-list-tile-action>
         <v-icon>chat_bubble</v-icon>
@@ -20,7 +20,6 @@
     data () {
       return {
         recentChats: 'Recent Chats',
-        UserInfo : "",
         orders : {}
       }
     },
@@ -34,22 +33,17 @@
     },
     computed: {
       chats () {
-
+        console.log(this.$store.getters.chats);
      return  this.$store.getters.chats
 
       }
     },
     methods :{
-      getNameByUserId : function (user_id)
+      loadChatRoom : function()
       {
-
-          axios
-          .get("/api/users/" + user_id +  "/showInfo")
-          .then(response => {
-         console.log( response.data[0]['first_name'] + " " + response.data[0]['last_name'])
-          });
-
+        //Load Messages Code here
       }
+
 
     }
   }

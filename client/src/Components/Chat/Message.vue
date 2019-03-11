@@ -9,6 +9,7 @@
         <chat-image v-if="message.image" :imgsrc="message.image" @imageLoad="imageLoad"></chat-image>
       </div>
     </div>
+
   </div>
 </template>
 

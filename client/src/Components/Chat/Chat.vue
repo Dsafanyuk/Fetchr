@@ -33,7 +33,8 @@
         emojiPanel: false,
         currentRef: {},
         loading: false,
-        totalChatHeight: 0
+        totalChatHeight: 0,
+        currentChatRoom : null,
       }
     },
     props: [
@@ -140,9 +141,12 @@
       },
       sendMessage () {
         if (this.content !== '') {
-          console.log(this.id);
+      const  Message_data = {
+        OrderId  : this.currentChatRoom.Order_id,
+        Sender_id: this.currentChatRoom.sender_id,
+      }
           this.$store.dispatch('sendMessage', { username: this.username, content: this.content, date: new Date().toString(), chatID: this.id })
-          this.content = ''
+          this.content = '' // Clear after You send the Message
         }
       },
       scrollToEnd () {

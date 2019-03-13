@@ -1,7 +1,7 @@
 <template>
   <v-list subheader>
     <v-subheader>Recent Chats</v-subheader>
-    <v-list-tile avatar v-for="(chat, index) in chats" v-bind:key="chat.order_id" @click="loadChatRoom()" >
+    <v-list-tile avatar v-for="(chat, index) in chats" v-bind:key="chat.order_id" @click="loadChatRoom(chat.order_id,chat.receiver_id)" >
 
       <v-list-tile-content>
         <v-list-tile-title >{{chat.userInfo}}</v-list-tile-title>
@@ -39,9 +39,13 @@
       }
     },
     methods :{
-      loadChatRoom : function()
-      {
-        //Load Messages Code here
+      loadChatRoom: function(or_id, r_id) {
+        const chatData = {
+          OrderId: or_id,
+          ReceiverId: r_id
+        }
+        this.$emit("showRoom", chatData)
+
       }
 
 

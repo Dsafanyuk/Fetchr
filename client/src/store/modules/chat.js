@@ -19,25 +19,8 @@ const ChatModule = {
     }
   },
   actions: {
-    sendMessage({
-      commit
-    }, payload) {
-      console.log(payload.content);
-      let chatID = payload.chat_id
-      const message = {
-        user: payload.username,
-        content: payload.content,
-        //date: payload.date
-      }
-      firebase.database().ref('messages').child(chatID).child('messages').push(message)
-        .then(
-          (data) => {}
-        )
-        .catch(
-          (error) => {
-            console.log(error)
-          }
-        )
+    sendMessage({commit}, payload) {
+    firebase.database().ref("messages").push(payload)
     },
     loadChats({commit,dispatch,state}, payload) {
       var chatList = []
@@ -90,6 +73,7 @@ const ChatModule = {
         username: payload.sender_id
       });
     },
+
 
 
 

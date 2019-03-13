@@ -1,8 +1,8 @@
 <template>
   <v-layout row>
     <v-flex xs12 sm10 order-xs2 style="position: relative;">
-      <div class="chat-container" v-on:scroll="onScroll" ref="chatContainer" >
-        <message :messages="messages" @imageLoad="scrollToEnd"></message>
+      <div class="chat-container" v-on:scroll="onScroll" ref="chatContainer">
+        <message :message = "messages"></message>
       </div>
       <!--<emoji-picker :show="emojiPanel" @close="toggleEmojiPanel" @click="addMessage"></emoji-picker>-->
       <div class="typer">
@@ -13,7 +13,7 @@
       </div>
     </v-flex>
     <v-flex sm2 order-xs1 class="scrollable">
-      <chats></chats>
+      <chats @showRoom= "showMessages"></chats>
     </v-flex>
   </v-layout>
 </template>
@@ -94,7 +94,6 @@
         this.loading = false
         if (this.id !== undefined) {
           this.chatMessages = []
-          let chatID = this.id
           this.currentRef = firebase.database().ref('messages').child(chatID).child('messages').limitToLast(20)
           this.currentRef.on('child_added', this.onChildAdded)
         }
@@ -126,26 +125,16 @@
           )
         }
       },
-      processMessage (message) {
-        /*eslint-disable */
-        var imageRegex = /([^\s\']+).(?:jpg|jpeg|gif|png)/i
-        /*eslint-enable */
-        if (imageRegex.test(message.content)) {
-          message.image = imageRegex.exec(message.content)[0]
-        }
-        var emojiRegex = /([\u{1f300}-\u{1f5ff}\u{1f900}-\u{1f9ff}\u{1f600}-\u{1f64f}\u{1f680}-\u{1f6ff}\u{2600}-\u{26ff}\u{2700}-\u{27bf}\u{1f1e6}-\u{1f1ff}\u{1f191}-\u{1f251}\u{2934}-\u{1f18e}])/gu
-        if (emojiRegex.test(message.content)) {
-          message.content = message.content.replace(emojiRegex, '<span class="emoji">$1</span>')
-        }
-        return message
-      },
+
       sendMessage () {
         if (this.content !== '') {
       const  Message_data = {
-        OrderId  : this.currentChatRoom.Order_id,
-        Sender_id: this.currentChatRoom.sender_id,
+        OrderId  : this.currentChatRoom.OrderId,
+        ReceiverId: this.currentChatRoom.OrderId,
+        SenderId :  browserCookies.get("user_id"),
+        Content : this.content
       }
-          this.$store.dispatch('sendMessage', { username: this.username, content: this.content, date: new Date().toString(), chatID: this.id })
+          this.$store.dispatch('sendMessage', Message_data)
           this.content = '' // Clear after You send the Message
         }
       },
@@ -163,11 +152,18 @@
           container.scrollTop = difference
         })
       },
-      addMessage (emoji) {
-        this.content += emoji.value
-      },
       toggleEmojiPanel () {
         this.emojiPanel = !this.emojiPanel
+      },
+      showMessages (data){
+        // Update the Current Chat Room
+        this.currentChatRoom = data
+
+        let refmessages = firebase.database().ref('messages').orderByChild('OrderId').equalTo(data.OrderId).limitToLast(20)
+         //this.refmessages.on('child_added', this.onChildAdded)
+           refmessages.on("value", function(snapshot) {
+            console.log(snapshot.val())
+           })
       }
     }
   }

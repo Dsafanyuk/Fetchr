@@ -90,13 +90,14 @@
     },
     methods: {
       loadChat () {
-        this.totalChatHeight = this.$refs.chatContainer.scrollHeight
-        this.loading = false
-        if (this.id !== undefined) {
-          this.chatMessages = []
-          this.currentRef = firebase.database().ref('messages').child(chatID).child('messages').limitToLast(20)
-          this.currentRef.on('child_added', this.onChildAdded)
-        }
+      //  this.totalChatHeight = this.$refs.chatContainer.scrollHeight
+        //this.loading = false
+          let chatRef = firebase.database().ref('messages').orderByChild('OrderId').equalTo(this.currentChatRoom.OrderId).limitToLast(20)
+          chatRef.on("value", function(snapshot) {
+            console.log(" Chat Ref ")
+           console.log(snapshot.val())
+          })
+
       },
       onScroll () {
         let scrollValue = this.$refs.chatContainer.scrollTop

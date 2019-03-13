@@ -16,7 +16,7 @@ import Checkout from './Components/Checkout.vue';
 import Confirmation from './Components/Confirmation.vue';
 import CourierDashboard from './Components/Courier/CourierDashboard.vue';
 import Account from './Components/Account.vue'
-import Chat from './Components/Courier/Messages.vue'
+import Chat from './Components/Chat/Chat.vue'
 import store from './store'
 import * as firebase from 'firebase'
 

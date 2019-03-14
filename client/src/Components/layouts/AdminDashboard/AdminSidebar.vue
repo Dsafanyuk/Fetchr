@@ -3,6 +3,7 @@
     id="app-drawer"
     app
     dark
+    class="primary"
     floating
     persistent
     mobile-break-point="991"
@@ -16,6 +17,14 @@
         <v-list-tile-title class="title">Admin Panel</v-list-tile-title>
       </v-list-tile>
       <v-divider/>
+      <v-list-tile
+        :to="'/admin/dashboard'"
+        avatar
+        class="v-list-item"
+        :active-class="'action-tile'"
+      >
+        <v-list-tile-title color="white" :active-class="'action-tile'" v-text="'Dashboard'"/>
+      </v-list-tile>
       <v-list-group
         value="true"
         v-for="(link, i) in links"
@@ -49,11 +58,6 @@
 export default {
   data: () => ({
     links: [
-      {
-        to: "/admin/dashboard",
-        icon: "mdi-view-dashboard",
-        text: "Dashboard"
-      },
       {
         to: "/admin/products",
         icon: "mdi-account",

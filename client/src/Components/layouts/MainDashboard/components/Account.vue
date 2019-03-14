@@ -68,7 +68,7 @@
                                            </div>        
                                         <v-card-actions>
                                            <v-btn round color="cyan" flat type="button" @click="last_name_dialog = false">Close</v-btn>
-                                           <v-btn round color="cyan" flat type="submit"  v-on:click="editLastname" >Save</v-btn>
+                                           <v-btn round color="cyan" flat type="submit" @click="updateInfo('last_name')">Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
                                   </v-card>
@@ -101,7 +101,7 @@
                                            </div>        
                                         <v-card-actions>
                                            <v-btn round color="cyan" flat type="button" @click="dialroom_num_dialogog3 = false">Close</v-btn>
-                                           <v-btn round color="cyan" flat type="submit"  v-on:click="editRoomnum" >Save</v-btn>
+                                           <v-btn round color="cyan" flat type="submit" @click="updateInfo('room_num')">Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
                                   </v-card>
@@ -134,7 +134,7 @@
                                            </div>        
                                         <v-card-actions>
                                            <v-btn round color="cyan" flat type="button" @click="room_num_dialog = false">Close</v-btn>
-                                           <v-btn round color="cyan" flat type="submit"  v-on:click="editPhonenumber" >Save</v-btn>
+                                           <v-btn round color="cyan" flat type="submit" @click="updateInfo('phone_number')">Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
                                   </v-card>
@@ -186,7 +186,6 @@ export default {
          last_name_errMessage: '',
          room_num_errMessage: '',
          phone_num_errMessage: '',
-         deny_null_message : "*The Field Cannot be empty ",
       };
 
   },
@@ -211,28 +210,28 @@ export default {
             {
             // First name case codes
             case "first_name" :
-            this.$store.commit('account/UpdateAccountInfo',{fName : fieldname, data : this.new_firstName});
+            this.$store.commit('account/UpdateAccountInfo',{fname : fieldname, data : this.new_firstName});
             this.firstName = this.new_firstName;
             browsercookies.set('first_name', this.new_firstName);
             break;
 
             // Last name case codes
             case "last_name" :
-            this.$store.commit('account/UpdateAccountInfo',{lName : fieldname, data : this.new_lastName});
+            this.$store.commit('account/UpdateAccountInfo',{fname : fieldname, data : this.new_lastName});
             this.lastName = this.new_lastName;
             browsercookies.set('last_name', this.new_lastName);
             break;
 
             // Room number case codes
             case "room_num" : 
-            this.$store.commit('account/UpdateAccountInfo',{rNumber : fieldname, data : this.new_roomNumber});
+            this.$store.commit('account/UpdateAccountInfo',{fname : fieldname, data : this.new_roomNumber});
             this.roomNumber = this.new_roomNumber;
             browsercookies.set('room_num', this.new_roomNumber);
             break;
 
             // Phone number case codes
             case "phone_number" :
-            this.$store.commit('account/UpdateAccountInfo',{pNumber : fieldname, data : this.new_phoneNumber});
+            this.$store.commit('account/UpdateAccountInfo',{fname : fieldname, data : this.new_phoneNumber});
             this.phoneNumber = this.new_phoneNumber;
             browsercookies.set('phone_number', this.phoneNumber);
             break;

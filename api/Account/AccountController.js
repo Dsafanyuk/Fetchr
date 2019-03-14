@@ -58,13 +58,15 @@ function updateroomnumber(req, res){
       console.log(err);
     })
 }
-
 /* Update phone number name update codes*/
-function updatephonenumber(req, res){
-  knex('users')
+function updateInfo(req, res){
+  switch(req.body.fieldname) {
+    // Firstname 
+    case  "first_name": 
+    knex('users')
     .where('user_id', req.body.user_id)
     .update({
-      phone_number: req.body.phoneNumber,
+      first_name: req.body.data,
 
     })
     .then((users) => {
@@ -76,11 +78,14 @@ function updatephonenumber(req, res){
       });
       console.log(err);
     })
+    break 
+
+    
+    default :
+    console.log("Yoooo")
+  }
 }
 
 module.exports = {
-  updatefirstname,
-  updatelastname,
-  updateroomnumber,
-  updatephonenumber
+  updateInfo,
 };

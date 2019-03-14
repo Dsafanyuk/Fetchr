@@ -35,7 +35,7 @@
                                            </div>        
                                         <v-card-actions>
                                            <v-btn round color="cyan" flat type="button" @click="first_name_dialog = false">Close</v-btn>
-                                           <v-btn round color="cyan" flat type="submit"  v-on:click="editFirstname" >Save</v-btn>
+                                           <v-btn round color="cyan" flat type="submit"  @click="updateInfo('first_name')" >Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
                                   </v-card>
@@ -165,7 +165,6 @@
 <script>
 import browsercookies from "browser-cookies";
 import axios from '../../../../axios';
-
 export default {
    
    data() {
@@ -203,147 +202,37 @@ export default {
         else {
            this.seen = true;
         }
-     },
-
-     editFirstname: function(){
-        if (this.new_firstName )
-        {
-        this.firstName = this.new_firstName;
-        browsercookies.set('first_name', this.new_firstName);
-        axios
-           .post('api/account/updatefirstname', {
-               firstName: this.new_firstName,
-               user_id: browsercookies.get('user_id'),
-           })
-           .then((response) => {
-               if (response.status == 200) {
-                  this.$router.push('/account');
-              }
-           })
-           .catch(function (error) {
-              if (error.response.status == 500) {
-                toasted.error(error.response.data, {
-                   theme: "primary",
-                   position: "top-center",
-                   duration : 5000
-                  });
-              }
-
-           });
-             this.first_name_dialog = false;
-        }
-        else{
-          this.first_name_errMessage = "*First Name cannot be empty";
-        }
-
-     },
-
-     editLastname: function(){
-        if (this.new_lastName )
-        {
-        this.lastName = this.new_lastName;
-        browsercookies.set('last_name', this.new_lastName);
-        axios
-           .post('api/account/updatelastname', {
-               lastName: this.new_lastName,
-               user_id: browsercookies.get('user_id'),
-           })
-           .then((response) => {
-               if (response.status == 200) {
-              }
-           })
-           .catch(function (error) {
-              if (error.response.status == 500) {
-                toasted.error(error.response.data, {
-                   theme: "primary",
-                   position: "top-center",
-                   duration : 5000
-                  });
-              }
-
-           });
-             this.last_name_dialog = false;
-        }
-        else{
-          this.last_name_errMessage = "*Last Name cannot be empty";
-        }
-
-     },
-
-   editRoomnum: function(){
-        if(this.new_roomNumber )
-        {
-           if(this.new_roomNumber.length == 4){
-              this.roomNumber = this.new_roomNumber;
-              browsercookies.set('room_num', this.new_roomNumber);
-              axios
-                 .post('api/account/updateroomnumber', {
-                     roomNumber: this.new_roomNumber,
-                     user_id: browsercookies.get('user_id'),
-                 })
-                 .then((response) => {
-                     if(response.status == 200) {
-                     }
-                 })
-                 .catch(function (error) {
-                    if(error.response.status == 500) {
-                       toasted.error(error.response.data, {
-                          theme: "primary",
-                          position: "top-center",
-                          duration : 5000
-                       });
-                    }
-
-                 });
-                 this.room_num_dialog = false;
+     },  
+     updateInfo : function (fieldname)
+     {
+        if (this.checkField(fieldname))
+         {  
+            switch(fieldname)
+            {
+            case "first_name" :
+            this.$store.commit('account/UpdateAccountInfo',{fname : fieldname, data : this.new_firstName});
+            this.firstName = this.new_firstName;
+            browsercookies.set('first_name', this.new_firstName);
+            break;
             }
-            else{
-               this.room_num_errMessage = "*The Room Number field must exactly contain 4 digits.";
-            }
-        }
-        else{
-          this.room_num_errMessage = this.deny_null_message;
-        }
-
+         }
+         else
+         console.log(" Something is wrong ")
      },
-
-     editPhonenumber: function(){
-        
-        if(this.new_phoneNumber)
-        {
-           if(this.new_phoneNumber.length == 10){
-              this.phoneNumber = this.new_phoneNumber;
-              browsercookies.set('phone_number', this.new_phoneNumber);
-              axios
-                .post('api/account/updatephonenumber', {
-                    phoneNumber: this.new_phoneNumber,
-                    user_id: browsercookies.get('user_id'),
-                })
-                .then((response) => {
-                   if (response.status == 200) {
-                   }
-                })
-                .catch(function (error) {
-                   if(error.response.status == 500) {
-                      toasted.error(error.response.data, {
-                         theme: "primary",
-                         position: "top-center",
-                         duration : 5000
-                         });
-                   }
-
-                });
-                this.room_num_dialog = false;
-           }
-           else{
-               this.phone_num_errMessage = "*The Phone number field must exactly contain 10 digits.";
-           } 
-        }
-        else{
-          this.phone_num_errMessage = "*The Phone Number field is required";
-        }
-     },    
-  }
+   checkField : function(fieldName)
+   {
+      if(fieldName == 'first_name')
+      {
+                 if (this.new_firstName )
+                 return true 
+                 else
+                 {
+                 this.first_name_errMessage = "*First Name cannot be empty"
+                 return false
+                 }        
+      }
+   }    
+     }
 };
 </script>
 

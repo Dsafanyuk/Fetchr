@@ -209,11 +209,34 @@ export default {
          {  
             switch(fieldname)
             {
+            // First name case codes
             case "first_name" :
-            this.$store.commit('account/UpdateAccountInfo',{fname : fieldname, data : this.new_firstName});
+            this.$store.commit('account/UpdateAccountInfo',{fName : fieldname, data : this.new_firstName});
             this.firstName = this.new_firstName;
             browsercookies.set('first_name', this.new_firstName);
             break;
+
+            // Last name case codes
+            case "last_name" :
+            this.$store.commit('account/UpdateAccountInfo',{lName : fieldname, data : this.new_lastName});
+            this.lastName = this.new_lastName;
+            browsercookies.set('last_name', this.new_lastName);
+            break;
+
+            // Room number case codes
+            case "room_num" : 
+            this.$store.commit('account/UpdateAccountInfo',{rNumber : fieldname, data : this.new_roomNumber});
+            this.roomNumber = this.new_roomNumber;
+            browsercookies.set('room_num', this.new_roomNumber);
+            break;
+
+            // Phone number case codes
+            case "phone_number" :
+            this.$store.commit('account/UpdateAccountInfo',{pNumber : fieldname, data : this.new_phoneNumber});
+            this.phoneNumber = this.new_phoneNumber;
+            browsercookies.set('phone_number', this.phoneNumber);
+            break;
+
             }
          }
          else
@@ -223,13 +246,60 @@ export default {
    {
       if(fieldName == 'first_name')
       {
-                 if (this.new_firstName )
-                 return true 
-                 else
-                 {
-                 this.first_name_errMessage = "*First Name cannot be empty"
-                 return false
-                 }        
+         if(this.new_firstName )
+            return true 
+         else
+         {
+            this.first_name_errMessage = "*The first Name field is required"
+            return false
+         }        
+      }
+      else if(fieldName == 'last_name')
+      {
+         if(this.new_lastName )
+            return true 
+         else
+         {
+            this.last_name_errMessage = "*The last Name field is required"
+            return false
+         }   
+      }
+      else if(fieldName == 'room_num')
+      {
+         if(this.new_roomNumber)
+         {
+            if(this.new_roomNumber.length == 4)
+               return true
+            else
+            {
+               this.room_num_errMessage = "*The Room Number field must exactly contain 4 digits"
+               return false
+            }
+         }
+         else
+         {
+            this.room_num_errMessage = "*The room number field is required"
+            return false
+         }
+
+      }
+      else if(fieldName == 'phone_number')
+      {
+         if(this.new_phoneNumber)
+         {
+            if(this.new_phoneNumber.length == 10)
+               return true
+            else
+            {
+               this.phone_num_errMessage = "*The Phone number field must exactly contain 10 digits"
+               return false
+            }
+         }
+         else
+         {
+            this.room_num_errMessage = "*The Phone Number field is required"
+            return false
+         }
       }
    }    
      }

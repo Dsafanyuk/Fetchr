@@ -2,7 +2,18 @@
   <v-layout row>
     <v-flex xs12 sm10 order-xs2 style="position: relative;">
       <div class="chat-container" v-on:scroll="onScroll" ref="chatContainer">
-        <message :message = "messages"></message>
+        <!--<message :chatMessages = "messages"></message>-->
+
+          <div class="message" v-for="(message,index) in chatMessages" :class="{own: message.user == username}">
+            <div class="username" v-if="index>0 && messages[index-1].user != message.user">{{message.user}}</div>
+            <div class="username" v-if="index == 0">{{message.user}}</div>
+            <div style="margin-top: 5px"></div>
+            <div class="content">
+              <div v-html="message.Content"></div>
+              <chat-image v-if="message.image" :imgsrc="message.image" @imageLoad="imageLoad"></chat-image>
+            </div>
+          </div>
+
       </div>
       <!--<emoji-picker :show="emojiPanel" @close="toggleEmojiPanel" @click="addMessage"></emoji-picker>-->
       <div class="typer">
@@ -29,7 +40,7 @@
       return {
         username :  browserCookies.get("username"),
         content: '',
-        chatMessages: [],
+        chatMessages: {},
         emojiPanel: false,
         currentRef: {},
         loading: false,
@@ -57,6 +68,7 @@
         return this.$store.getters.user.username
       },
       onChildAdded () {
+        alert(" On child Added ")
         const that = this
         let onChildAdded = function (snapshot, newMessage = true) {
           let message = snapshot.val()
@@ -85,17 +97,17 @@
     watch: {
       '$route.params.id' (newId, oldId) {
         this.currentRef.off('child_added', this.onChildAdded)
-        this.loadChat()
+        //this.loadChat()
       }
     },
     methods: {
       loadChat () {
-      //  this.totalChatHeight = this.$refs.chatContainer.scrollHeight
-        //this.loading = false
+          //  this.totalChatHeight = this.$refs.chatContainer.scrollHeight
+          //this.loading = false
           let chatRef = firebase.database().ref('messages').orderByChild('OrderId').equalTo(this.currentChatRoom.OrderId).limitToLast(20)
           chatRef.on("value", function(snapshot) {
-            console.log(" Chat Ref ")
            console.log(snapshot.val())
+
           })
 
       },
@@ -153,18 +165,27 @@
           container.scrollTop = difference
         })
       },
-      toggleEmojiPanel () {
-        this.emojiPanel = !this.emojiPanel
-      },
+
       showMessages (data){
         // Update the Current Chat Room
         this.currentChatRoom = data
 
         let refmessages = firebase.database().ref('messages').orderByChild('OrderId').equalTo(data.OrderId).limitToLast(20)
-         //this.refmessages.on('child_added', this.onChildAdded)
+
+          var temp_data = []
            refmessages.on("value", function(snapshot) {
-            console.log(snapshot.val())
+             var data = snapshot.val()
+
+            for (var key in data  )
+            {
+              temp_data.push(data[key])
+            }
            })
+           //refmessages.on('child_added', this.onChildAdded)
+
+           this.chatMessages = temp_data
+
+
       }
     }
   }

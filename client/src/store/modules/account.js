@@ -11,7 +11,7 @@ const mutations = {
     {
         console.log (payload)
         axios.post('http://127.0.0.1:3000/api/account/updateInfo', {
-                    fieldname: payload.fname,
+                    fieldname: payload.new_user_input,
                     data : payload.data,
                     user_id: browsercookies.get('user_id')
                 })

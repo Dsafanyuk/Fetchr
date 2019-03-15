@@ -100,7 +100,7 @@
                                               <small id="fnHelp" class="form-text text-danger col-sm-12">{{room_num_errMessage}}</small>
                                            </div>        
                                         <v-card-actions>
-                                           <v-btn round color="cyan" flat type="button" @click="dialroom_num_dialogog3 = false">Close</v-btn>
+                                           <v-btn round color="cyan" flat type="button" @click="room_num_dialog = false">Close</v-btn>
                                            <v-btn round color="cyan" flat type="submit" @click="updateInfo('room_num')">Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
@@ -115,13 +115,13 @@
                             <strong class="text-warning">Phone Number</strong>: {{ phoneNumber }}
                          </div>
                          <div class="col-sm-2">
-                            <a href="#" v-on:click="room_num_dialog = true">
+                            <a href="#" v-on:click="phone_num_dialog = true">
                                <span><i> edit</i></span>
                             </a>
                             <!--dialog boxes-->
                             <v-layout row justify-center>
                                <!--first dialog box to edit phone number-->
-                               <v-dialog v-model="room_num_dialog"  max-width="400px">
+                               <v-dialog v-model="phone_num_dialog"  max-width="400px">
                                   <v-card tile>
                                      <v-card-title class="v-primary"><strong>Edit Your Phone number</strong></v-card-title>
                                         <v-card-text>
@@ -133,7 +133,7 @@
                                               <small id="fnHelp" class="form-text text-danger col-sm-12">{{phone_num_errMessage}}</small>
                                            </div>        
                                         <v-card-actions>
-                                           <v-btn round color="cyan" flat type="button" @click="room_num_dialog = false">Close</v-btn>
+                                           <v-btn round color="cyan" flat type="button" @click="phone_num_dialog = false">Close</v-btn>
                                            <v-btn round color="cyan" flat type="submit" @click="updateInfo('phone_number')">Save</v-btn>
                                         </v-card-actions>
                                      </v-card-text>
@@ -210,28 +210,28 @@ export default {
             {
             // First name case codes
             case "first_name" :
-            this.$store.commit('account/UpdateAccountInfo',{fname : fieldname, data : this.new_firstName});
+            this.$store.commit('account/UpdateAccountInfo',{new_user_input : fieldname, data : this.new_firstName});
             this.firstName = this.new_firstName;
             browsercookies.set('first_name', this.new_firstName);
             break;
 
             // Last name case codes
             case "last_name" :
-            this.$store.commit('account/UpdateAccountInfo',{fname : fieldname, data : this.new_lastName});
+            this.$store.commit('account/UpdateAccountInfo',{new_user_input : fieldname, data : this.new_lastName});
             this.lastName = this.new_lastName;
             browsercookies.set('last_name', this.new_lastName);
             break;
 
             // Room number case codes
             case "room_num" : 
-            this.$store.commit('account/UpdateAccountInfo',{fname : fieldname, data : this.new_roomNumber});
+            this.$store.commit('account/UpdateAccountInfo',{new_user_input : fieldname, data : this.new_roomNumber});
             this.roomNumber = this.new_roomNumber;
             browsercookies.set('room_num', this.new_roomNumber);
             break;
 
             // Phone number case codes
             case "phone_number" :
-            this.$store.commit('account/UpdateAccountInfo',{fname : fieldname, data : this.new_phoneNumber});
+            this.$store.commit('account/UpdateAccountInfo',{new_user_input : fieldname, data : this.new_phoneNumber});
             this.phoneNumber = this.new_phoneNumber;
             browsercookies.set('phone_number', this.phoneNumber);
             break;
@@ -245,8 +245,11 @@ export default {
    {
       if(fieldName == 'first_name')
       {
-         if(this.new_firstName )
-            return true 
+         if(this.new_firstName)
+         {
+            this.first_name_dialog = false
+            return true
+         } 
          else
          {
             this.first_name_errMessage = "*The first Name field is required"
@@ -256,7 +259,10 @@ export default {
       else if(fieldName == 'last_name')
       {
          if(this.new_lastName )
-            return true 
+         {
+            this.last_name_dialog = false
+            return true
+         }
          else
          {
             this.last_name_errMessage = "*The last Name field is required"
@@ -268,7 +274,10 @@ export default {
          if(this.new_roomNumber)
          {
             if(this.new_roomNumber.length == 4)
+            {
+               this.room_num_dialog = false
                return true
+            }
             else
             {
                this.room_num_errMessage = "*The Room Number field must exactly contain 4 digits"
@@ -287,7 +296,10 @@ export default {
          if(this.new_phoneNumber)
          {
             if(this.new_phoneNumber.length == 10)
+            {
+               this.phone_num_dialog = false
                return true
+            }
             else
             {
                this.phone_num_errMessage = "*The Phone number field must exactly contain 10 digits"
@@ -296,7 +308,7 @@ export default {
          }
          else
          {
-            this.room_num_errMessage = "*The Phone Number field is required"
+            this.phone_num_errMessage = "*The Phone Number field is required"
             return false
          }
       }

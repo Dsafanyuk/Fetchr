@@ -2,23 +2,21 @@
   <v-layout row>
     <v-flex xs12 sm10 order-xs2 style="position: relative;">
       <div class="chat-container" v-on:scroll="onScroll" ref="chatContainer">
-        <!--<message :chatMessages = "messages"></message>-->
+      <!--  <message :chatMessages = "messages"></message>-->
 
-          <div class="message" v-for="(message,index) in chatMessages" :class="{own: message.user == username}">
-            <div class="username" v-if="index>0 && messages[index-1].user != message.user">{{message.user}}</div>
-            <div class="username" v-if="index == 0">{{message.user}}</div>
-            <div style="margin-top: 5px"></div>
+      <div class="message" v-for="message in chatMessages">
+
             <div class="content">
-              <div v-html="message.Content"></div>
+
+              <div v-html="message.Content">{{message.OrderId}}</div>
               <chat-image v-if="message.image" :imgsrc="message.image" @imageLoad="imageLoad"></chat-image>
             </div>
           </div>
-
       </div>
       <!--<emoji-picker :show="emojiPanel" @close="toggleEmojiPanel" @click="addMessage"></emoji-picker>-->
       <div class="typer">
         <input type="text" placeholder="Type here..." v-on:keyup.enter="sendMessage" v-model="content">
-        <v-btn icon class="blue--text emoji-panel" @click="toggleEmojiPanel">
+        <v-btn icon class="blue--text emoji-panel">
           <v-icon>mood</v-icon>
         </v-btn>
       </div>
@@ -39,8 +37,9 @@
     data () {
       return {
         username :  browserCookies.get("username"),
+        test : "Haa",
         content: '',
-        chatMessages: {},
+        chatMessages: [],
         emojiPanel: false,
         currentRef: {},
         loading: false,
@@ -52,7 +51,7 @@
       'id'
     ],
     mounted () {
-      this.loadChat()
+    //  this.loadChat()
     //  this.$store.dispatch('loadOnlineUsers')
     },
     components: {
@@ -66,38 +65,6 @@
       },
       username () {
         return this.$store.getters.user.username
-      },
-      onChildAdded () {
-        alert(" On child Added ")
-        const that = this
-        let onChildAdded = function (snapshot, newMessage = true) {
-          let message = snapshot.val()
-          message.key = snapshot.key
-          /*eslint-disable */
-          var urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
-          /*eslint-enable */
-          message.content = message.content
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;')
-          message.content = message.content.replace(urlPattern, "<a href='$1'>$1</a>")
-          if (!newMessage) {
-            that.chatMessages.unshift(that.processMessage(message))
-            that.scrollTo()
-          } else {
-            that.chatMessages.push(that.processMessage(message))
-            that.scrollToEnd()
-          }
-        }
-        return onChildAdded
-      }
-    },
-    watch: {
-      '$route.params.id' (newId, oldId) {
-        this.currentRef.off('child_added', this.onChildAdded)
-        //this.loadChat()
       }
     },
     methods: {
@@ -166,32 +133,26 @@
         })
       },
 
-      showMessages (data){
+      showMessages(data) {
         // Update the Current Chat Room
         this.currentChatRoom = data
 
         let refmessages = firebase.database().ref('messages').orderByChild('OrderId').equalTo(data.OrderId).limitToLast(20)
+        //refmessages.on('child_added', this.onChildAdded)
+        let temp_data = []
+        refmessages.on("child_added", function(snapshot) {
+          var data = snapshot.val()
+          temp_data.push(data)
 
-          var temp_data = []
-           refmessages.on("value", function(snapshot) {
-             var data = snapshot.val()
-
-            for (var key in data  )
-            {
-              temp_data.push(data[key])
-            }
-           })
-           //refmessages.on('child_added', this.onChildAdded)
-
-           this.chatMessages = temp_data
-
-
+        })
+        this.chatMessages = temp_data
       }
     }
   }
 </script>
 
 <style>
+
   .scrollable {
     overflow-y: auto;
     height: 90vh;

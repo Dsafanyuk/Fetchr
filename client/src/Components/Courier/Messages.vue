@@ -30,7 +30,7 @@
 
 <script>
   import CourierHeader from "../mini-components/Courier/CourierHeader.vue";
-  import ChatRoom      from "../mini-components/Courier/ChatRoom.vue";
+  import ChatRoom   from "../mini-components/Courier/ChatRoom.vue";
   import Conversation  from "../mini-components/Courier/Conversation.vue";
 
   export default {

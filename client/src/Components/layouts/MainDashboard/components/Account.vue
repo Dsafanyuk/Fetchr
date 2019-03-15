@@ -321,4 +321,14 @@ export default {
 .v-primary {
    color: #344955;
 }
+.Edit_dialog {
+      border-style: solid;
+      display: inline-block;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      width: 160px;
+      border-color: #e0e0e0;
+      outline: none;
+  }
 </style>

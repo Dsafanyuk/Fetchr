@@ -202,36 +202,36 @@ export default {
            this.seen = true;
         }
      },  
-     updateInfo : function (fieldname)
+     updateInfo : function (fieldName)
      {
-        if (this.checkField(fieldname))
+        if (this.checkField(fieldName))
          {  
-            switch(fieldname)
+            switch(fieldName)
             {
             // First name case codes
             case "first_name" :
-            this.$store.commit('account/UpdateAccountInfo',{new_user_input : fieldname, data : this.new_firstName});
+            this.$store.commit('account/UpdateAccountInfo',{new_user_input : fieldName, data : this.new_firstName});
             this.firstName = this.new_firstName;
             browsercookies.set('first_name', this.new_firstName);
             break;
 
             // Last name case codes
             case "last_name" :
-            this.$store.commit('account/UpdateAccountInfo',{new_user_input : fieldname, data : this.new_lastName});
+            this.$store.commit('account/UpdateAccountInfo',{new_user_input : fieldName, data : this.new_lastName});
             this.lastName = this.new_lastName;
             browsercookies.set('last_name', this.new_lastName);
             break;
 
             // Room number case codes
             case "room_num" : 
-            this.$store.commit('account/UpdateAccountInfo',{new_user_input : fieldname, data : this.new_roomNumber});
+            this.$store.commit('account/UpdateAccountInfo',{new_user_input : fieldName, data : this.new_roomNumber});
             this.roomNumber = this.new_roomNumber;
             browsercookies.set('room_num', this.new_roomNumber);
             break;
 
             // Phone number case codes
             case "phone_number" :
-            this.$store.commit('account/UpdateAccountInfo',{new_user_input : fieldname, data : this.new_phoneNumber});
+            this.$store.commit('account/UpdateAccountInfo',{new_user_input : fieldName, data : this.new_phoneNumber});
             this.phoneNumber = this.new_phoneNumber;
             browsercookies.set('phone_number', this.phoneNumber);
             break;
@@ -320,15 +320,5 @@ export default {
 <style  lang="css">
 .v-primary {
    color: #344955;
-} 
-.Edit_dialog {
-      border-style: solid;
-      display: inline-block;
-      border-top: none;
-      border-left: none;
-      border-right: none;
-      width: 180px;
-      border-color: #e0e0e0;
-      outline: none;
-  }
+}
 </style>

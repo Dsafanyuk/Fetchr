@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const knex = require('knex')(require('../db'));
 
-/* Update phone number name update codes*/
+// Update the user info depending on wht is selected 
 function updateInfo(req, res){
-  switch(req.body.fieldname) {
-    // Firstname 
+  switch(req.body.fieldName) {
+    // These lines update the user Firstname 
     case  "first_name": 
     knex('users')
     .where('user_id', req.body.user_id)
@@ -24,7 +24,7 @@ function updateInfo(req, res){
     })
     break 
 
-    //last name
+    // These lines update the user last name
     case  "last_name": 
     knex('users')
     .where('user_id', req.body.user_id)
@@ -43,7 +43,7 @@ function updateInfo(req, res){
     })
     break
 
-    // Room number
+    // These lines update the user room number
     case  "room_num": 
     knex('users')
     .where('user_id', req.body.user_id)
@@ -62,7 +62,7 @@ function updateInfo(req, res){
     })
     break
 
-    // Phone number
+    // These lines update the user phone number
     case  "phone_number": 
     knex('users')
     .where('user_id', req.body.user_id)
@@ -80,10 +80,6 @@ function updateInfo(req, res){
       console.log(err);
     })
     break
-
-
-    default :
-    console.log("Yoooo")
   }
 }
 

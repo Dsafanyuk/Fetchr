@@ -6,7 +6,7 @@
           <span class="card-title text-center text-truncate heading">{{product.product_name}}</span>
         </div>
         <div class="card-img">
-          <img :src="product.product_url" :alt="product.product_name">
+          <img class="lozad" :data-src="product.product_url" :alt="product.product_name">
         </div>
         <hr>
         <h5 class="text-center headline">${{product.price.toFixed(2)}}</h5>
@@ -36,6 +36,18 @@
           </div>
           <div style="display:flex" class="cart_button">
             <v-btn
+              v-if="inCart"
+              id="cart_btn"
+              depressed
+              block
+              color="accent"
+              v-on:click="removeItem(product)"
+              :ripple="false"
+            >
+              <v-icon medium>check</v-icon>
+            </v-btn>
+            <v-btn
+              v-if="!(inCart)"
               id="cart_btn"
               depressed
               block
@@ -43,8 +55,7 @@
               v-on:click="addItem"
               :ripple="false"
             >
-              <v-icon medium v-if="inCart">check</v-icon>
-              <v-icon medium v-if="!inCart">add_shopping_cart</v-icon>
+              <v-icon medium>add_shopping_cart</v-icon>
             </v-btn>
           </div>
         </div>
@@ -57,6 +68,7 @@
 import axios from "../../../../axios";
 import Toasted from "vue-toasted";
 import browserCookies from "browser-cookies";
+import lozad from 'lozad';
 
 export default {
   props: {
@@ -72,11 +84,16 @@ export default {
   data() {
     return {
       isFavorite: this.product.is_favorite,
-      productDetail: this.product.is_favorite
+      productDetail: this.product.is_favorite,
     };
   },
   components: {},
   watch: {},
+  mounted() {
+    // lazy load the image
+    const observer = lozad();
+    observer.observe();
+  },
   computed: {
     // Check if item is in cart, returns boolean value
     inCart: function() {
@@ -141,6 +158,10 @@ export default {
       this.$toasted.success("Added to cart").goAway(1000);
       this.$store.commit("cart/addItem", this.product);
       this.$forceUpdate();
+    },
+    // Remove an item from cart
+    removeItem: function(product) {
+      this.$store.commit("cart/removeItem", product);
     }
   }
 };

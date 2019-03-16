@@ -1,6 +1,6 @@
 import * as firebase from 'firebase'
 import axios from "../../axios";
-
+import browserCookies from "browser-cookies";
 const ChatModule = {
   state: {
     chats: [],
@@ -34,9 +34,16 @@ const ChatModule = {
             var temp_sender_id = snapshot.val()[temp_chat_key]['sender_id']
             var temp_receiver_id = snapshot.val()[temp_chat_key]['receiver']
             var temp_fullInfo = ""
+            var id_to_request = 0
+            // This determine which info we need to display
+            if (temp_sender_id == browserCookies.get("user_id"))
+                id_to_request = temp_receiver_id // I don't wan't to display my own name in the chat room
+            else
+                id_to_request = temp_sender_id
+
 
           axios
-          .get("/api/users/" + temp_receiver_id +  "/showInfo")
+          .get("/api/users/" + id_to_request +  "/showInfo")
           .then(response => {
               temp_fullInfo = response.data[0]['first_name'] + " " + response.data[0]['last_name']
               chatList.push({chat_key : temp_chat_key,
@@ -66,7 +73,6 @@ const ChatModule = {
         order_id: payload.or_id
       }
       firebase.database().ref().update(updates)
-      console.log("Here");
       dispatch('sendMessage', {
         chat_id: newPostKey,
         content: payload.message,

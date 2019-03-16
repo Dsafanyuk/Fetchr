@@ -24,6 +24,7 @@
       }
     },
     created () {
+      // Get all the orderId where the current user is involved
       axios
         .get("/api/users/" + browserCookies.get("user_id") + "/orders")
         .then(response => {
@@ -34,7 +35,7 @@
     computed: {
       chats () {
         console.log(this.$store.getters.chats);
-     return  this.$store.getters.chats
+        return  this.$store.getters.chats
 
       }
     },

@@ -18,7 +18,8 @@ let blankDeliveredOrder = {
 const state = {
     availableOrders : [],
     acceptedOrders: [],
-    deliveredOrders: []
+    deliveredOrders: [],
+    isLoading: true,
 }
 const mutations = {
     addAvailableOrder: (state, data) => {
@@ -39,6 +40,12 @@ const mutations = {
     clearDeliveredOrder: (state, data) => {
         state.deliveredOrders = []
     },
+    stopLoading: (state, data) => {
+        state.isLoading = false;
+    },
+    startLoading: (state, data) => {
+        state.isLoading = true;
+    }
 }
 const getters = {
     availableOrders: (state) =>{
@@ -49,6 +56,9 @@ const getters = {
     },
     deliveredOrders: (state) => {
         return state.deliveredOrders
+    },
+    isLoading: (state) => {
+        return state.isLoading
     }
 }
 const actions = {
@@ -75,6 +85,9 @@ const actions = {
                 response.data.forEach(order => {
                     commit('addAvailableOrder', order)
                 })
+                
+                commit('stopLoading')
+
                 // Add blank 'orders' to even set data table rows to 5
                 for (let i = getters.availableOrders.length; i < 5; i++) {
                     commit('addAvailableOrder', blankOrder)
@@ -91,6 +104,9 @@ const actions = {
                 response.data.forEach(order => {
                     commit('addAcceptedOrder', order)
                 })
+
+                commit('stopLoading')
+
                 // Add blank 'orders' to even set data table rows to 5
                 for (let i = getters.acceptedOrders.length; i < 5; i++) {
                     commit('addAcceptedOrder', blankOrder)
@@ -105,6 +121,9 @@ const actions = {
                 response.data.forEach(order => {
                     commit('addDeliveredOrder', order)
                 })
+
+                commit('stopLoading')
+
                 // Add blank 'orders' to even set data table rows to 5
                 for (let i = getters.deliveredOrders.length; i < 5; i++) {
                     commit('addDeliveredOrder', blankDeliveredOrder)

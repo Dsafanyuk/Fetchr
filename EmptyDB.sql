@@ -90,7 +90,7 @@ CREATE TABLE `products` (
   `product_name` varchar(45) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `category` varchar(45) NOT NULL,
-  `product_url` varchar(200) DEFAULT NULL,
+  `product_url` varchar(200) NOT NULL DEFAULT NULL,
   `is_active` varchar(5) NOT NULL DEFAULT 'TRUE',
   PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=227 DEFAULT CHARSET=utf8mb4;

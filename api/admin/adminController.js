@@ -98,6 +98,40 @@ function editUser(req, res) {
     .catch(error => res.status(422).send({ message: error }));
 }
 
+function ordersPerDay(req, res) {
+  knex.raw(`select count(if(dayofweek(time_delivered) = 1, order_id, null)) as Sunday,
+                   count(if(dayofweek(time_delivered) = 2, order_id, null)) as Monday,
+                   count(if(dayofweek(time_delivered) = 3, order_id, null)) as Tuesday,
+                   count(if(dayofweek(time_delivered) = 4, order_id, null)) as Wednesday,
+                   count(if(dayofweek(time_delivered) = 5, order_id, null)) as Thursday,
+                   count(if(dayofweek(time_delivered) = 6, order_id, null)) as Friday,
+                   count(if(dayofweek(time_delivered) = 7, order_id, null)) as Saturday
+              from orders
+             where time_delivered > current_date - interval 7 day`)
+   .then((response) => { res.json(response) })
+   .catch((error) => {res.status(422).send({ message: error})});
+}
+
+function productsPerDay(req, res) {
+  knex.raw(`select sum(if(dayofweek(time_delivered) = 1, quantity, 0)) as Sunday,
+                   sum(if(dayofweek(time_delivered) = 2, quantity, 0)) as Monday,
+                   sum(if(dayofweek(time_delivered) = 3, quantity, 0)) as Tuesday,
+                   sum(if(dayofweek(time_delivered) = 4, quantity, 0)) as Wednesday,
+                   sum(if(dayofweek(time_delivered) = 5, quantity, 0)) as Thursday,
+                   sum(if(dayofweek(time_delivered) = 6, quantity, 0)) as Friday,
+                   sum(if(dayofweek(time_delivered) = 7, quantity, 0)) as Saturday
+              from orders
+              join order_summary on orders.order_id = order_summary.order_id
+             where time_delivered > current_date - interval 7 day`)
+   .then((response) => { res.json(response) })
+   .catch((error) => {res.status(422).send({ message: error})});
+}
+
+function prodsSoldByCat(req, res) {
+  knex.raw(`call prodsSoldByCat();`)
+   .then((response) => { res.json(response) })
+   .catch((error) => {res.status(422).send({ message: error})});
+}
 // Make these functions available to the router
 module.exports = {
   showAllProducts,
@@ -106,4 +140,7 @@ module.exports = {
   showAllUsers,
   addUser,
   editUser,
+  ordersPerDay,
+  productsPerDay,
+  prodsSoldByCat,
 };

@@ -11,4 +11,7 @@ router.get('/users', adminController.showAllUsers);
 router.post('/users', adminController.addUser);
 router.put('/user/:user_id', adminController.editUser);
 
+router.get('/graphs/ordersPerDay', adminController.ordersPerDay);
+router.get('/graphs/productsPerDay', adminController.productsPerDay);
+router.get('/graphs/prodsSoldByCat', adminController.prodsSoldByCat);
 module.exports = router;

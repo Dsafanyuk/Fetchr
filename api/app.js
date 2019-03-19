@@ -23,6 +23,7 @@ const corsOptions = {
 };
 
 const app = express();
+app.use(Sentry.Handlers.requestHandler());
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -42,11 +43,5 @@ app.get('*', (req, res, next) => {
   const err = new Error('Page Not Found');
   err.statusCode = 404;
   next(err);
-});
-app.use(Sentry.Handlers.errorHandler());
-// Optional fallthrough error handler
-app.use((err, req, res, next) => {
-  res.statusCode = 500;
-  res.end(`${res.sentry}\n`);
 });
 module.exports = app;

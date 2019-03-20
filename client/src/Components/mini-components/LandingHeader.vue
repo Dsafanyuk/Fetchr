@@ -184,7 +184,7 @@ export default {
 };
 </script>
 
-<style lang='css'>
+<style lang='css' >
 @import "../custom_css/landing.scss";
 @import "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css";
 @import "https://use.fontawesome.com/releases/v5.4.1/css/all.css";

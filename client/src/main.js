@@ -45,6 +45,7 @@ const routes = [
   {path: '/courier', component : CourierDashboard},
   {path: '/dashboard', component: Dashboard},
   {path: '/account', component: Account},
+  {path: '/chat/:order_id', component: Chat},
   {path: '/chat', component: Chat}
 ];
 

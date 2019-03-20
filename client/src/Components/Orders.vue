@@ -22,7 +22,7 @@
             <td>${{order.order_total.toFixed(2)}}</td>
             <td>
               <v-dialog v-model="dialog" persistent max-width="600px">
-                <v-btn slot="activator" color="primary" dark> Chat </v-btn>
+                <v-btn slot="activator"  @click="ischatexist(order.order_id)" color="primary" dark> Chat </v-btn>
                 <v-card>
                   <v-card-title>
                     <span class="headline"> Write a Message to the Courier </span> </v-card-title>
@@ -61,6 +61,7 @@ import OrderSummary from "./mini-components/OrderSummary.vue";
 import browserCookies from "browser-cookies";
 import axios from "../axios";
 import {mapActions} from "vuex";
+import * as firebase from 'firebase'
 
 export default {
   data() {
@@ -69,6 +70,7 @@ export default {
       dialog: false,
       msg_content: '',
       user_id: browserCookies.get("user_id"),
+
     };
 
 
@@ -127,7 +129,18 @@ export default {
         .then(response => {
           return response.data;
         });
-    }
+    },
+    ischatexist : function (o_id)
+    {
+      var isexist = false
+      let chatref = firebase.database().ref('messages').orderByChild('OrderId').equalTo(o_id)
+      chatref.on("value", function(snapshot) {
+      if(snapshot.exists())
+          isexist = true
+    })
+    if(isexist  === true)
+      this.$router.push("/chat/");
+  }
 
   }
 };

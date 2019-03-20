@@ -1,5 +1,4 @@
 <template>
-
                               	<div class="card-box">
                               		<h4 class="m-t-0 m-b-20 header-title"><b>Chat</b></h4>
 
@@ -7,7 +6,7 @@
                                           <ul class="conversation-list nicescroll" tabindex="5001" style="overflow: hidden; outline: none;">
                                               <li class="clearfix">
                                                   <div class="chat-avatar">
-                                                      <img src="../../images/face1.jpg" alt="male">
+                                                      <img src="../images/face1.jpg" alt="male">
                                                       <i>10:00</i>
                                                   </div>
                                                   <div class="conversation-text">
@@ -21,7 +20,7 @@
                                               </li>
                                               <li class="clearfix odd">
                                                   <div class="chat-avatar">
-                                                      <img src="../../images/face1.jpg" alt="Female">
+                                                      <img src="../images/face1.jpg" alt="Female">
                                                       <i>10:01</i>
                                                   </div>
                                                   <div class="conversation-text">
@@ -33,34 +32,7 @@
                                                       </div>
                                                   </div>
                                               </li>
-                                              <li class="clearfix">
-                                                  <div class="chat-avatar">
-                                                      <img src="../../images/face1.jpg" alt="male">
-                                                      <i>10:01</i>
-                                                  </div>
-                                                  <div class="conversation-text">
-                                                      <div class="ctext-wrap">
-                                                          <i>John Deo</i>
-                                                          <p>
-                                                              Yeah everything is fine
-                                                          </p>
-                                                      </div>
-                                                  </div>
-                                              </li>
-                                              <li class="clearfix odd">
-                                                  <div class="chat-avatar">
-                                                      <img src="../../images/face1.jpg" alt="male">
-                                                      <i>10:02</i>
-                                                  </div>
-                                                  <div class="conversation-text">
-                                                      <div class="ctext-wrap">
-                                                          <i>Smith</i>
-                                                          <p>
-                                                              Wow that's great
-                                                          </p>
-                                                      </div>
-                                                  </div>
-                                              </li>
+                                            
                                           </ul>
                                           <div class="row">
                                               <div class="col-sm-9 chat-inputbar">
@@ -79,7 +51,7 @@
 
 </script>
 <style scoped="true">
-  @import "../../assets/courier/css/core.css";
-  @import "../../assets/courier/css/materialdesignicons.css";
-  @import "../../assets/courier/css/components.css";
+  @import "../assets/courier/css/core.css";
+  @import "../assets/courier/css/materialdesignicons.css";
+  @import "../assets/courier/css/components.css";
 </style>

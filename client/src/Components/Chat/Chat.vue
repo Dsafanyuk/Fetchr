@@ -1,43 +1,58 @@
 <template>
-  <v-layout row>
-    <v-flex xs12 sm10 order-xs2 style="position: relative;">
-      <div class="chat-container" v-on:scroll="onScroll" ref="chatContainer">
-      <!--  <message :chatMessages = "messages"></message>-->
+  <body >
 
-      <div class="message" v-for="message in chatMessages">
+  <v-layout row class="chat_container" >
+    <v-flex xs12 sm3 md3 offset-sm1>
 
-            <div class="content">
 
-              <div v-html="message.Content">{{message.OrderId}}</div>
-              <chat-image v-if="message.image" :imgsrc="message.image" @imageLoad="imageLoad"></chat-image>
+      <chatroom @showRoom="fetchMessages"> </chatroom>
+    </v-flex>
+    <div col-md-6>
+      <div class="card-box">
+        <h4 class="m-t-0 m-b-20 header-title"><b>Chat</b></h4>
+
+        <div class="chat-conversation"   v-on:scroll="onScroll" ref="chatContainer">
+                <ul class="conversation-list nicescroll" tabindex="5001" style="overflow: scroll; outline: none;">
+                    <li  v-for="message in chatMessages" class="clearfix"   v-bind:class="displayMessages(message.SenderId)">
+
+                        <div class="conversation-text" >
+                            <div class="ctext-wrap">
+                              <!--  <i v-html="message.Content">John Deo</i>-->
+                                <p v-html="message.Content"> </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="row">
+                    <div class="col-sm-9 chat-inputbar">
+                        <input type="text" class="form-control chat-input" placeholder="Enter your text"
+                          v-on:keyup.enter="sendMessage" v-model="content">
+                    </div>
+                    <div class="col-sm-3 chat-send">
+                        <button type="submit" class="btn btn-md btn-info btn-block waves-effect waves-light"
+                        @click="sendMessage">Send</button>
+                    </div>
+                </div>
             </div>
-          </div>
       </div>
-      <!--<emoji-picker :show="emojiPanel" @close="toggleEmojiPanel" @click="addMessage"></emoji-picker>-->
-      <div class="typer">
-        <input type="text" placeholder="Type here..." v-on:keyup.enter="sendMessage" v-model="content">
-        <v-btn icon class="blue--text emoji-panel">
-          <v-icon>mood</v-icon>
-        </v-btn>
-      </div>
-    </v-flex>
-    <v-flex sm2 order-xs1 class="scrollable">
-      <chats @showRoom= "showMessages"></chats>
-    </v-flex>
-  </v-layout>
+
+    </div>
+</v-layout>
+
+
+</body>
 </template>
 
 <script>
-  import Message from './Message.vue'
-  //import EmojiPicker from './EmojiPicker.vue'
-  import Chats from './Chats.vue'
+  import ChatRoom from './ChatRoom.vue'
   import * as firebase from 'firebase'
   import browserCookies from "browser-cookies";
+  import Messages from './Messages.vue'
+  import LandingHeader from '../mini-components/LandingHeader.vue'
   export default {
     data () {
       return {
         username :  browserCookies.get("username"),
-        test : "Haa",
         content: '',
         chatMessages: [],
         emojiPanel: false,
@@ -55,17 +70,15 @@
     //  this.$store.dispatch('loadOnlineUsers')
     },
     components: {
-      'message': Message,
-      //'emoji-picker': EmojiPicker,
-      'chats': Chats
+      'chatroom': ChatRoom,
+      'message' : Messages,
+      'LandingHeader' : LandingHeader
     },
     computed: {
+
       messages () {
         return this.chatMessages
       },
-      username () {
-        return this.$store.getters.user.username
-      }
     },
     methods: {
       loadChat () {
@@ -110,7 +123,7 @@
         if (this.content !== '') {
       const  Message_data = {
         OrderId  : this.currentChatRoom.OrderId,
-        ReceiverId: this.currentChatRoom.OrderId,
+        ReceiverId: this.currentChatRoom.ReceiverId,
         SenderId :  browserCookies.get("user_id"),
         Content : this.content
       }
@@ -133,10 +146,9 @@
         })
       },
 
-      showMessages(data) {
+      fetchMessages(data) {
         // Update the Current Chat Room
         this.currentChatRoom = data
-
         let refmessages = firebase.database().ref('messages').orderByChild('OrderId').equalTo(data.OrderId).limitToLast(20)
         //refmessages.on('child_added', this.onChildAdded)
         let temp_data = []
@@ -146,14 +158,59 @@
 
         })
         this.chatMessages = temp_data
+        console.log(this.chatMessages);
+      },
+      // Style
+      displayMessages(SenderId)
+      {
+        console.log(browserCookies.get("user_id"));
+        if( SenderId == browserCookies.get("user_id") )
+          return "mymessage"
+
+      },
+      getFullName (id)
+      {
+        axios
+        .get("/api/users/" + id +  "/showInfo")
+        .then(response => {
+            fullname = response.data[0]['first_name'] + " " + response.data[0]['last_name']
+            chatList.push({chat_key : temp_chat_key,
+              sender_id : temp_sender_id,
+             receiver_id :temp_receiver_id,
+             order_id : snapshot.val()[temp_chat_key]['order_id'],
+             userInfo : temp_fullInfo
+            })
+
+        });
       }
+
     }
   }
 </script>
 
 <style>
-
-  .scrollable {
+@import "../assets/courier/css/core.css";
+@import "../assets/courier/css/materialdesignicons.css";
+@import "../assets/courier/css/components.css";
+.mymessage {
+  text-align: right;
+  color: #344955;
+}
+.mymessage .ctext-wrap{
+  color : white;
+  background: #34d3eb
+}
+.chat-conversation{
+  width: 600px
+}
+.chat_container{
+margin-top: 200px;
+}
+.message_container{
+  width: 600px;
+  margin-left: 10px;
+}
+scrollable {
     overflow-y: auto;
     height: 90vh;
   }

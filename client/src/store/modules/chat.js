@@ -82,7 +82,6 @@ const ChatModule = {
 
 
 
-
   },
   getters: {
     messages(state) {

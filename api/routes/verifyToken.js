@@ -5,7 +5,7 @@ function verifyToken(req, res, next) {
     const jwtCookie = req.header('token');
     // Get used id from browser cookies
     const user_id = req.header('user_id');
-  
+
 
     // Check if there is cookie
     if (typeof jwtCookie === 'string') {
@@ -16,7 +16,6 @@ function verifyToken(req, res, next) {
           req.token = decoded;
 
           if(req.token.user.user_id == user_id) {
-            console.log("authorized");
             next();
           }
           else {
@@ -25,7 +24,7 @@ function verifyToken(req, res, next) {
         } else {
           return res.status(403).json({ success: false, message: "Can't verify token" });
         }
-  
+
         return 0;
       });
     } else {
@@ -35,7 +34,7 @@ function verifyToken(req, res, next) {
         message: 'No token provided.',
       });
     }
-  
+
     return 0;
   }
-  module.exports = verifyToken;
+module.exports = verifyToken;

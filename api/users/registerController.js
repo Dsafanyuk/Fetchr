@@ -1,4 +1,4 @@
-const {validationResult} = require('express-validator/check');
+const { validationResult } = require('express-validator/check');
 
 const bcrypt = require('bcryptjs');
 const knex = require('knex')(require('../db'));
@@ -9,7 +9,7 @@ async function registerUser(req, res) {
 
   // If errors is not empty, return error messages
   if (!errors.isEmpty()) {
-    return res.status(422).json({errors: errors.array()});
+    return res.status(422).json({ errors: errors.array() });
   }
 
   // new user with information from the request
@@ -17,7 +17,7 @@ async function registerUser(req, res) {
     email_address: req.body.email_address,
     password: req.body.password,
     room_num: req.body.room_num,
-    phone_number: req.body.phone,
+    phone_number: req.body.phone_number,
     first_name: req.body.first_name,
     last_name: req.body.last_name,
   };
@@ -47,7 +47,7 @@ async function registerUser(req, res) {
               .select('*')
               .where('user_id', user_id)
               .then(() => {
-                res.redirect(307, './login');
+                res.status(200).send('user created successfully');
               });
           })
           // else send err

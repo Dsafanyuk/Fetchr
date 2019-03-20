@@ -6,6 +6,7 @@ const moment = require('moment');
 function availableOrders(req, res) {
   knex('orders').innerJoin('users', 'orders.customer_id', 'users.user_id')
     .select(
+      'user_id',
       'order_id',
       'first_name',
       'room_num',
@@ -33,6 +34,7 @@ function availableOrders(req, res) {
 function acceptedOrders(req, res) {
   knex('orders').innerJoin('users', 'orders.customer_id', 'users.user_id')
     .select(
+      'user_id',
       'order_id',
       'first_name',
       'room_num',
@@ -41,7 +43,7 @@ function acceptedOrders(req, res) {
     )
     .where({
       'courier_id': req.params.user_id,
-      'delivery_status': 'in progress'
+      'delivery_status': 'in-progress'
     })
     .then((orders) => {
       orders.forEach(order => {
@@ -61,6 +63,7 @@ function acceptedOrders(req, res) {
 function deliveredOrders(req, res) {
   knex('orders').innerJoin('users', 'orders.customer_id', 'users.user_id')
     .select(
+      'user_id',
       'order_id',
       'first_name',
       'room_num',
@@ -96,7 +99,7 @@ function countAvailableOrder(req, res ){
 function countDelivered(req, res ){
 
   knex.raw ('SELECT COUNT(*) as count_d FROM orders WHERE courier_id = '+ req.params.user_id +
-           ' AND delivery_status = \'pending\' ')
+           ' AND delivery_status = \'delivered\' ')
 .then((count_d) => {
      res.send(count_d);
  })
@@ -113,7 +116,7 @@ function acceptOrder(req, res) {
     .whereNull('courier_id')
     .andWhere('order_id', req.body.order_id)
     .update({
-      delivery_status: 'in progress',
+      delivery_status: 'in-progress',
       courier_id: req.body.courier_id,
     })
     .then((rows) => {
@@ -151,6 +154,18 @@ function deliverOrder(req, res) {
       console.log(err);
     });
 }
+
+function courierInfo(req, res) {
+    knex.raw(
+    `select courier_id, first_name, last_name, phone_number
+       from orders
+      inner join users on orders.courier_id = users.user_id
+      where order_id = ${req.params.order_id}`
+    )
+    .then((courierInfo) => {
+      res.send(courierInfo);
+    })
+}
 module.exports = {
   availableOrders,
   acceptedOrders,
@@ -160,4 +175,5 @@ module.exports = {
   countAvailableOrder,
   countDelivered,
   getRevenue,
+  courierInfo,
 };

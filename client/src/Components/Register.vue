@@ -4,7 +4,7 @@
             <div class="col-md-12 mx-auto register-right">
                 <div class="row register-form">
                     <div class="col-md-6 mx-auto">
-                        <img class="center_img" width="300px" height="300px" src="./images/logo.png">
+                        <img @click="goToLogin" class="center_img" width="300px" height="300px" src="./images/logo.png">
                     </div>
                     <div class="col-md-6 mx-auto">
                         <div class="form-group">
@@ -92,7 +92,7 @@
                             ></v-text-field>
                             <div class="alert alert-info alert-dismissable">
                               <a class="panel-close close" data-dismiss="alert">×</a>
-                              Password <strong>must have at least</strong>.<br>- 8 characters<br>- an uppercse letter<br>- a special character.
+                              Password <strong>must have at least</strong>.<br>- 8 characters
                             </div>
                         </form>
                         <div class="form-group text-center">
@@ -192,17 +192,16 @@ import Toasted from 'vue-toasted';
                                 last_name: this.cLastname,
                                 email_address: this.cEmail,
                                 room_num: this.cRoom,
-                                phone: this.cPhone,
+                                phone_number: this.cPhone,
                                 password: this.cPassword,
                             })
                             .then((response) => {
                                 if (response.status == 200) {
-                                    console.log('logged in');
                                     this.$router.push('/login');
                                 }
                             })
                             .catch(function (error) {
-                                if (error.response.status == 400) {
+                                if (error.response) {
                                     toasted.error(error.response.data, {
                                         theme: "primary",
                                         position: "top-center",
@@ -219,18 +218,19 @@ import Toasted from 'vue-toasted';
                                 }
                             });
 
-                        console.log('Send HTTP Request to the API ');
-                    } else {
-                        console.log(' Password not equal');
                     }
                 } else {
                     this.$validator.validateAll();
                 }
             },
+            goToLogin () {
+                this.$router.push('\login');
+            }
         },
     };
 </script>
 
 <style>
 @import "custom_css/registration.scss";
+@import "/src/Components/assets/css/bootstrap.min.css";
 </style>

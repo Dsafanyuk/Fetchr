@@ -52,7 +52,7 @@
 </template>
 <script>
 import browserCookies from "browser-cookies";
-import axios from "../axios";
+import axios from "../../../../axios";
 import {mapActions} from "vuex";
 import * as firebase from 'firebase'
 

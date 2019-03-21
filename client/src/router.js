@@ -1,4 +1,5 @@
 import VueRouter from 'vue-router';
+import browserCookies from 'browser-cookies';
 import MainLayout from './Components/layouts/MainDashboard/MainLayout.vue';
 import Home from './Components/Home.vue';
 import Login from './Components/Login.vue';
@@ -45,9 +46,13 @@ function requireAuth(to, from, next) {
 // Determines where we should redirect the user
 function proceed(next) {
   // Check load status
-  if (store.getters['login/getUserLoadStatus'] == 2) {
-    // Check if the user is logged in
-    if (store.getters['login/isLoggedIn']) {
+  if (store.getters['login/getUserLoadStatus'] === 2) {
+    // Check if the user is logged in & cookies have not expired
+    if (
+      store.getters['login/isLoggedIn']
+      && browserCookies.get('token')
+      && browserCookies.get('user_id')
+    ) {
       next();
     } else {
       next({ path: '/login' });

@@ -8,11 +8,11 @@
       <chatroom @showRoom="fetchMessages"> </chatroom>
     </v-flex>
     <div col-md-6>
-      <div class="card-box">
+      <div class="card-box" >
         <h4 class="m-t-0 m-b-20 header-title"><b>Chat</b></h4>
 
-        <div class="chat-conversation"  ref="chatContainer">
-                <ul class="conversation-list nicescroll" v-chat-scroll tabindex="5001" style="overflow: scroll; outline: none;">
+        <div class="chat-conversation" id="chat-conversation"  ref="chatContainer" style="max-height:300px; overflow-y: auto;">
+                <ul class="conversation-list"  v-chat-scroll tabindex="5001" >
                     <li  v-for="message in chatMessages" class="clearfix"   v-bind:class="displayMessages(message.SenderId)">
 
                         <div class="conversation-text" >
@@ -23,17 +23,42 @@
                         </div>
                     </li>
                 </ul>
-                <div class="row">
-                    <div class="col-sm-9 chat-inputbar">
-                        <input type="text" class="form-control chat-input" placeholder="Enter your text"
-                          v-on:keyup.enter="sendMessage" v-model="content">
-                    </div>
-                    <div class="col-sm-3 chat-send">
-                        <button type="submit" class="btn btn-md btn-info btn-block waves-effect waves-light"
-                        @click="sendMessage">Send</button>
-                    </div>
-                </div>
+
             </div>
+            <v-layout row wrap>
+                      <v-flex xs12>
+                        <v-text-field
+                          outline
+                          clearable
+                          placeholder="Type Your Message Here "
+                          type="text"
+                          v-on:keyup.enter="sendMessage"
+                          v-model="content"
+                        >
+
+                          <template v-slot:append>
+                            <v-fade-transition leave-absolute>
+                              <v-progress-circular
+                                v-if="loading"
+                                size="24"
+                                color="info"
+                                indeterminate
+                              ></v-progress-circular>
+                              <img v-else width="24" height="24" src="https://cdn.vuetifyjs.com/images/logos/v-alt.svg" alt="">
+                            </v-fade-transition>
+                          </template>
+                          <template v-slot:append-outer>
+                            <v-menu
+                              style="top: -12px"
+                              offset-y
+                            >
+
+                            </v-menu>
+                          </template>
+                        </v-text-field>
+                      </v-flex>
+
+                    </v-layout>
       </div>
 
     </div>
@@ -79,32 +104,9 @@
       },
     },
     methods: {
-      onScroll () {
-        let scrollValue = this.$refs.chatContainer.scrollTop
-        const that = this
-        if (scrollValue < 100 && !this.loading) {
-          this.totalChatHeight = this.$refs.chatContainer.scrollHeight
-          this.loading = true
-          let chatID = this.id
-          let currentTopMessage = this.chatMessages[0]
-          if (currentTopMessage === undefined) {
-            this.loading = false
-            return
-          }
-          firebase.database().ref('messages').child(chatID).child('messages').orderByKey().endAt(currentTopMessage.key).limitToLast(20).once('value').then(
-            function (snapshot) {
-              let tempArray = []
-              snapshot.forEach(function (item) {
-                tempArray.push(item)
-              })
-              if (tempArray[0].key === tempArray[1].key) return
-              console.log(tempArray)
-              tempArray.reverse()
-              tempArray.forEach(function (child) { that.onChildAdded(child, false) })
-              that.loading = false
-            }
-          )
-        }
+      scrollToEnd: function() {
+        var container = this.$el.querySelector("#chat-conversation");
+        container.scrollTop = container.scrollHeight;
       },
 
       sendMessage () {
@@ -119,20 +121,6 @@
           this.content = '' // Clear after You send the Message
         }
       },
-      scrollToEnd () {
-        this.$nextTick(() => {
-          var container = this.$el.querySelector('.chat-container')
-          container.scrollTop = container.scrollHeight
-        })
-      },
-      scrollTo () {
-        this.$nextTick(() => {
-          let currentHeight = this.$refs.chatContainer.scrollHeight
-          let difference = currentHeight - this.totalChatHeight
-          var container = this.$el.querySelector('.chat-container')
-          container.scrollTop = difference
-        })
-      },
 
       fetchMessages(orderId) {
 
@@ -142,9 +130,11 @@
           var data = snapshot.val()
           temp_data.push(data)
 
+
         })
         this.chatMessages = temp_data
         console.log(this.chatMessages);
+        this.scrollToEnd()
       },
       // Messages Left & right
       displayMessages(SenderId)
@@ -183,7 +173,9 @@
 @import "../../assets/courier/css/core.css";
 @import "../../assets/courier/css/components.css";
 @import "../../assets/courier/css/materialdesignicons.css";
-
+.conversation-text{
+  padding-bottom: 10px !important;
+}
 .mymessage {
   text-align: right;
   color: #344955;
@@ -202,33 +194,8 @@ margin-top: 100px;
   width: 600px;
   margin-left: 10px;
 }
-scrollable {
-    overflow-y: auto;
-    height: 90vh;
-  }
-  .typer{
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    bottom: 0;
-    height: 4.9rem;
-    width: 100%;
-    background-color: #fff;
-    box-shadow: 0 -5px 10px -5px rgba(0,0,0,.2);
-  }
-  .typer .emoji-panel{
-    /*margin-right: 15px;*/
-  }
-  .typer input[type=text]{
-    position: absolute;
-    left: 2.5rem;
-    padding: 1rem;
-    width: 80%;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    font-size: 1.25rem;
-  }
+
+
   .chat-container{
     box-sizing: border-box;
     height: calc(100vh - 9.5rem);

@@ -1,35 +1,39 @@
-import axios from 'axios'
-import browsercookies from "browser-cookies";
-const api = axios.create();
+import axios from '../../axios';
+
+const browserCookies = require('browser-cookies');
+
+const user = browserCookies.get('user_id');
 
 const state = {
-    count: 0,
+  users: [],
+};
 
-}
-const mutations = {
-    UpdateAccountInfo ({commit},payload)
-    {
-        console.log (payload)
-        axios.post('http://127.0.0.1:3000/api/account/updateInfo', {
-                    fieldName: payload.new_user_input,
-                    data : payload.data,
-                    user_id: browsercookies.get('user_id')
-                })
-                .then((response) => {
-                   if (response.status == 200) {
-                   }
-                })
-                .catch(function (error) {
-                   if(error.response.status == 500) {
-                        console.log(response.data)
-                   }
-                })
+const getters = {
+  showUser(state) {
+    return state.users;
+  },
+};
 
-    }
-}
+const actions = {
+    editExistingUser: ({ state, commit, dispatch }, data) => {
+      console.log(data)
+       axios
+          .post("/api/account/"+ browserCookies.get("user_id") + "/update", data)
+          .then((response) => {
+              console.log('sent')
+             console.log(response);
+          })
+          .catch((err) => {
+            console.log('sent')
+
+             console.log(err);
+          });
+   },
+};
 
 export default {
     namespaced: true,
     state,
-    mutations
-}
+    getters,
+    actions,
+  };

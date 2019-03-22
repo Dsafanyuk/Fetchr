@@ -1,9 +1,8 @@
 const express = require('express');
+
 const router = express.Router();
+const accountController = require('./accountController');
 
-const accountController = require('./AccountController');
-
-router.post('/updateInfo', accountController.updateInfo);
-
+router.post('/:user_id/update', accountController.editUser);
 
 module.exports = router;

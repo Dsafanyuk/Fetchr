@@ -1,16 +1,16 @@
 <template>
-  <v-app>
-    <MainHeader v-model="search" @selectedCategory="selectedCategory = $event"></MainHeader>
-    <router-view ></router-view>
-    <v-layout row class="chat_container" >
-      <v-flex xs12 sm3 md3 offset-sm1>
+<v-app>
+  <MainHeader v-model="search" @selectedCategory="selectedCategory = $event"></MainHeader>
+  <router-view></router-view>
+  <v-layout row class="chat_container">
+    <v-flex xs12 sm3 md3 offset-sm1>
 
 
-        <chatRoom @showRoom="fetchMessages"> </chatRoom>
-      </v-flex>
-</v-layout>
-    <MainFooter></MainFooter>
-  </v-app>
+      <chatRoom> </chatRoom>
+    </v-flex>
+  </v-layout>
+  <MainFooter></MainFooter>
+</v-app>
 </template>
 
 <script>
@@ -34,6 +34,6 @@ export default {
 </script>
 <style>
 .chat_container {
-  margin-top : 100px 
+  margin-top : 100px
 }
 </style>

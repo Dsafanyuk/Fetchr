@@ -11,8 +11,8 @@
       <div class="card-box">
         <h4 class="m-t-0 m-b-20 header-title"><b>Chat</b></h4>
 
-        <div class="chat-conversation"   v-on:scroll="onScroll" ref="chatContainer">
-                <ul class="conversation-list nicescroll" tabindex="5001" style="overflow: scroll; outline: none;">
+        <div class="chat-conversation"  ref="chatContainer">
+                <ul class="conversation-list nicescroll" v-chat-scroll tabindex="5001" style="overflow: scroll; outline: none;">
                     <li  v-for="message in chatMessages" class="clearfix"   v-bind:class="displayMessages(message.SenderId)">
 
                         <div class="conversation-text" >

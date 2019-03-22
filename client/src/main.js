@@ -12,6 +12,7 @@ import store from './store';
 import router from './router';
 import 'vuetify/dist/vuetify.min.css';
 import * as firebase from 'firebase'
+import VueChatScroll from 'vue-chat-scroll'
 Vue.use(
   VueSocketio,
   io(process.env.NODE_ENV === 'production' ? 'https://fetchrapp.com:3000' : 'http://127.0.0.1:3000'),
@@ -34,6 +35,7 @@ Vue.use(Vuetify, {
   },
 });
 Vue.use(Vuex);
+Vue.use (VueChatScroll);
 new Vue({
   el: '#app',
   template: '<App/>',

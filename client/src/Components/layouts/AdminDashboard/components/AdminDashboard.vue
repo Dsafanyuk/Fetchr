@@ -1,11 +1,11 @@
 <template>
   <v-container fluid grid-list-lg>
     <v-layout row wrap align-center justify-space-around>
-      <v-flex xs2 v-for="(card, i) in cards" :key="i">
+      <v-flex xs3 v-for="(card, i) in cards" :key="i">
         <v-card class="accent lighten--2">
           <v-container>
             <v-layout>
-              <v-flex>
+              <v-flex xs2>
                 <v-icon dark size="42">{{card.icon}}</v-icon>
               </v-flex>
               <v-flex text-lg-right class="white--text">
@@ -18,45 +18,45 @@
       </v-flex>
     </v-layout>
     <v-layout row wrap>
-      <v-flex xs4>
-        <v-card>
-          <v-card-title>
-            <span class="headline">Courier Quick Look</span>
-          </v-card-title>
-          <v-data-table :items="couriers" :headers="courierHeader" hide-actions class="elevation-1">
-            <template slot="items" slot-scope="props">
-              <td>{{ props.item.first_name }} {{ props.item.last_name}}</td>
-              <td class="text-xs-right">{{ props.item.in_progress }}</td>
-              <td class="text-xs-right">{{ props.item.delivered }}</td>
-            </template>
-          </v-data-table>
-        </v-card>
-      </v-flex>
+      <v-layout row wrap>
+        <v-flex>
+          <v-card class="leftCards">
+            <v-card-title>
+              <span class="headline">Courier Quick Look</span>
+            </v-card-title>
+            <v-data-table :items="couriers" :headers="courierHeader" hide-actions class="elevation-1">
+              <template slot="items" slot-scope="props">
+                <td>{{ props.item.first_name }} {{ props.item.last_name}}</td>
+                <td class="text-xs-right">{{ props.item.in_progress }}</td>
+                <td class="text-xs-right">{{ props.item.delivered }}</td>
+              </template>
+            </v-data-table>
+          </v-card>
+          <v-card class="leftCards">
+            <v-card-title>
+              <span class="headline">Recent Orders</span>
+            </v-card-title>
+            <v-data-table :items="orders" hide-actions hide-headers class="elevation-1">
+              <template slot="items" slot-scope="props">
+                <td>{{ props.item.order_id }} - {{ props.item.first_name }} {{ props.item.last_name }}</td>
+                <td class="text-xs-right">$ {{ props.item.order_total }}</td>
+              </template>
+            </v-data-table>
+          </v-card>
+        </v-flex>
+      </v-layout>
       <v-flex xs5>
         <v-card>
           <v-card-title>
-            <span class="headline">Recent Orders</span>
+            <span class="headline">Products Sold by Category</span>
           </v-card-title>
           <apexchart
             type="pie"
-            height="389"
+            height="420"
             :options="chartOptions"
             :series="series"
-            class="chart"
+            class="chart elevation-1"
           />
-        </v-card>
-      </v-flex>
-      <v-flex xs3>
-        <v-card>
-          <v-card-title>
-            <span class="headline">Recent Orders</span>
-          </v-card-title>
-          <v-data-table :items="orders" hide-actions hide-headers class="elevation-1">
-            <template slot="items" slot-scope="props">
-              <td>{{ props.item.order_id }} - {{ props.item.first_name }} {{ props.item.last_name }}</td>
-              <td class="text-xs-right">$ {{ props.item.order_total }}</td>
-            </template>
-          </v-data-table>
         </v-card>
       </v-flex>
     </v-layout>
@@ -113,7 +113,7 @@ export default {
         .get('/api/admin/graphs/prodsSoldByCat')
         .then((response) => {
           let prodCounts = response.data[0][0][0];
-          
+
           // Two one dimensional arrays
           Object.keys(prodCounts).forEach(category => {
             this.chartOptions.labels.push(category.replace('_', ' '))
@@ -179,5 +179,8 @@ export default {
 <style>
 .apexcharts-canvas {
   margin: 0 auto;
+}
+.leftCards {
+  margin: 8px 7px 16px;
 }
 </style>

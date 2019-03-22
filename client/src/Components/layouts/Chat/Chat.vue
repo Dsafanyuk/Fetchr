@@ -47,8 +47,6 @@
   import ChatRoom from './ChatRoom.vue'
   import * as firebase from 'firebase'
   import browserCookies from "browser-cookies";
-  import Messages from './Messages.vue'
-  import LandingHeader from '../mini-components/LandingHeader.vue'
   export default {
     data () {
       return {
@@ -65,14 +63,14 @@
     props: [
       'id'
     ],
+    created(){
+    },
     mounted () {
-    //  this.loadChat()
+      this.fetchMessages((this.$route.params.order_id))
     //  this.$store.dispatch('loadOnlineUsers')
     },
     components: {
       'chatroom': ChatRoom,
-      'message' : Messages,
-      'LandingHeader' : LandingHeader
     },
     computed: {
 
@@ -81,16 +79,6 @@
       },
     },
     methods: {
-      loadChat () {
-          //  this.totalChatHeight = this.$refs.chatContainer.scrollHeight
-          //this.loading = false
-          let chatRef = firebase.database().ref('messages').orderByChild('OrderId').equalTo(this.currentChatRoom.OrderId).limitToLast(20)
-          chatRef.on("value", function(snapshot) {
-           console.log(snapshot.val())
-
-          })
-
-      },
       onScroll () {
         let scrollValue = this.$refs.chatContainer.scrollTop
         const that = this
@@ -146,11 +134,9 @@
         })
       },
 
-      fetchMessages(data) {
-        // Update the Current Chat Room
-        this.currentChatRoom = data
-        let refmessages = firebase.database().ref('messages').orderByChild('OrderId').equalTo(data.OrderId).limitToLast(20)
-        //refmessages.on('child_added', this.onChildAdded)
+      fetchMessages(orderId) {
+
+        let refmessages = firebase.database().ref('messages').orderByChild('OrderId').equalTo(parseInt(orderId)).limitToLast(20)
         let temp_data = []
         refmessages.on("child_added", function(snapshot) {
           var data = snapshot.val()
@@ -160,13 +146,12 @@
         this.chatMessages = temp_data
         console.log(this.chatMessages);
       },
-      // Style
+      // Messages Left & right
       displayMessages(SenderId)
       {
         console.log(browserCookies.get("user_id"));
         if( SenderId == browserCookies.get("user_id") )
           return "mymessage"
-
       },
       getFullName (id)
       {
@@ -182,16 +167,21 @@
             })
 
         });
+      },
+      isOrderExist()
+      {
+        axios
+        .get("/api/orders/" + this.$route.params.order_id +  "/showInfo")
+        .then(response => {
+        });
       }
-
     }
   }
 </script>
 
 <style>
-@import "../assets/courier/css/core.css";
-@import "../assets/courier/css/materialdesignicons.css";
-@import "../assets/courier/css/components.css";
+@import "../../assets/courier/css/core.css";
+@import "../../assets/courier/css/components.css";
 .mymessage {
   text-align: right;
   color: #344955;
@@ -204,7 +194,7 @@
   width: 600px
 }
 .chat_container{
-margin-top: 200px;
+margin-top: 100px;
 }
 .message_container{
   width: 600px;

@@ -67,17 +67,19 @@ const ChatModule = {
 
       let updates = {}
       updates['/chats/' + newPostKey] = {
-        name: payload.sender_id + "" + payload.receiver + "" + payload.or_id,
         sender_id: payload.sender_id,
         receiver: payload.receiver,
         order_id: payload.or_id
       }
       firebase.database().ref().update(updates)
-      dispatch('sendMessage', {
-        chat_id: newPostKey,
-        content: payload.message,
-        username: payload.sender_id
-      });
+      const  Message_data = {
+        OrderId  : payload.or_id,
+        ReceiverId: payload.receiver,
+        SenderId :  browserCookies.get("user_id"),
+        Content : payload.message
+      }
+      dispatch('sendMessage', Message_data);
+
     },
 
 

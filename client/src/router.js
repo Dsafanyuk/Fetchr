@@ -17,6 +17,9 @@ import AdminProducts from './Components/layouts/AdminDashboard/components/AdminP
 import AdminUsers from './Components/layouts/AdminDashboard/components/AdminUsers.vue';
 import AdminManageUsers from './Components/layouts/AdminDashboard/components/AdminManageUsers.vue';
 import AdminManageProducts from './Components/layouts/AdminDashboard/components/AdminManageProducts.vue';
+/*                CHAT                 */
+import ChatLayout from "./Components/layouts/Chat/ChatLayout.vue"
+import Chat from "./Components/layouts/Chat/Chat.vue"
 
 import NotFoundComponent from './Components/NotFoundComponent.vue';
 
@@ -116,6 +119,18 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/chat',
+    component: ChatLayout,
+    children: [
+      {
+        path: '/chat/:order_id',
+        component: Chat,
+        beforeEnter: requireAuth,
+      },
+    ]
+  },
+
   { path: '/home', component: Home },
   { path: '/login', component: Login },
   { path: '/register', component: Register },

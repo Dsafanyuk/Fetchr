@@ -26,7 +26,7 @@
         </v-list-tile-content>
 
         <v-list-tile-action>
-          <v-icon :color="grey">chat_bubble</v-icon>
+          <v-icon>chat_bubble</v-icon>
         </v-list-tile-action>
       </v-list-tile>
     </v-list>
@@ -41,7 +41,7 @@
 
 <script>
   import browserCookies from "browser-cookies";
-  import axios from "../../axios";
+  import axios from "../../../axios";
   export default{
     data () {
       return {
@@ -68,13 +68,14 @@
       }
     },
     methods :{
-      loadChatRoom: function(or_id, r_id) {
-        
-        const chatData = {
-          OrderId: or_id,
-          ReceiverId: r_id
-        }
-        this.$emit("showRoom", chatData)
+      loadChatRoom: function(order_id, r_id) {
+
+        // const chatData = {
+        //   OrderId: or_id,
+        //   ReceiverId: r_id
+        // }
+        // this.$emit("showRoom", chatData)
+          this.$router.push("/chat/" + order_id);
 
       }
 
@@ -84,7 +85,6 @@
 </script>
 
 <style scoped="true">
-@import "../assets/courier/css/core.css";
-@import "../assets/courier/css/materialdesignicons.css";
-@import "../assets/courier/css/components.css";
+@import "../../assets/courier/css/core.css";
+@import "../../assets/courier/css/components.css";
 </style>

@@ -118,6 +118,7 @@ export default {
       .get("/api/orders/" + order_id)
       .then(response => {
       var receiver_id = response.data[0]['courier_id'];
+      alert(receiver_id);
         this.$store.dispatch('createChat',{message: this.msg_content, sender_id : this.user_id, receiver : receiver_id, or_id : order_id });
         this.$router.push("/chat/" + order_id);
       });
@@ -139,7 +140,7 @@ export default {
           isexist = true
     })
     if(isexist  === true)
-      this.$router.push("/chat/");
+      this.$router.push("/chat/"+o_id);
   }
 
   }

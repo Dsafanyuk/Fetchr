@@ -35,6 +35,7 @@ export default new Vuex.Store({
     notification,
     admin,
     orders,
+    chat
   },
   strict: debug,
 });

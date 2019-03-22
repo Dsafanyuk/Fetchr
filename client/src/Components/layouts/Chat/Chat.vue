@@ -110,8 +110,8 @@
       sendMessage () {
         if (this.content !== '') {
       const  Message_data = {
-        OrderId  : this.currentChatRoom.OrderId,
-        ReceiverId: this.currentChatRoom.ReceiverId,
+        OrderId  : parseInt(this.$route.params.order_id),
+        ReceiverId: browserCookies.get("current_receiver"),
         SenderId :  browserCookies.get("user_id"),
         Content : this.content
       }
@@ -182,6 +182,8 @@
 <style>
 @import "../../assets/courier/css/core.css";
 @import "../../assets/courier/css/components.css";
+@import "../../assets/courier/css/materialdesignicons.css";
+
 .mymessage {
   text-align: right;
   color: #344955;

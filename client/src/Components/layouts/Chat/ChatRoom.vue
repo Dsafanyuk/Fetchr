@@ -68,14 +68,9 @@
       }
     },
     methods :{
-      loadChatRoom: function(order_id, r_id) {
-
-        // const chatData = {
-        //   OrderId: or_id,
-        //   ReceiverId: r_id
-        // }
-        // this.$emit("showRoom", chatData)
-          this.$router.push("/chat/" + order_id);
+      loadChatRoom: function(order_id, receiver_id) {
+        browserCookies.get("current_receiver")
+        this.$router.push("/chat/" + order_id);
 
       }
 

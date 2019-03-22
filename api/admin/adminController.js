@@ -132,6 +132,56 @@ function prodsSoldByCat(req, res) {
    .then((response) => { res.json(response) })
    .catch((error) => {res.status(422).send({ message: error})});
 }
+
+function totalOrders(req, res) {
+  knex.raw(`select count(*)as total from orders;`)
+    .then((response) => { res.json(response) })
+    .catch((error) => {res.status(422).send({ message: error})});
+}
+
+function totalDelivered(req, res) {
+  knex.raw(`select count(*) as total from orders where delivery_status = 'delivered'`)
+    .then((response) => { res.json(response) })
+    .catch((error) => {res.status(422).send({ message: error})});
+}
+
+function totalUsers(req, res) {
+  knex.raw(`select count(*) as total from users`)
+    .then((response) => { res.json(response) })
+    .catch((error) => {res.status(422).send({ message: error})});
+}
+
+function totalAmountOrdered(req, res) {
+  knex.raw(`select sum(order_total) as total from orders`)
+    .then((response) => { res.json(response) })
+    .catch((error) => {res.status(422).send({ message: error})});
+}
+
+function recentOrders(req, res) {
+  knex.raw(`select order_id, first_name, last_name, order_total
+              from orders
+              join users on users.user_id = orders.customer_id
+             order by order_id desc
+             limit 3`)
+    .then((response) => { res.json(response) })
+    .catch((error) => {res.status(422).send({ message: error})});
+}
+
+function topThreeCouriers(req, res) {
+  knex.raw(`with info as (select user_id, first_name, last_name, delivery_status, order_id
+                            from orders
+                            join users on users.user_id = orders.courier_id)
+            select first_name, last_name,
+                   count(if(delivery_status = 'delivered', order_id, null)) as 'delivered',
+                   count(if(delivery_status = 'in-progress', order_id, null)) as 'in_progress'
+              from info
+             group by user_id, first_name, last_name
+             order by count(*) desc
+             limit 3;`)
+    .then((response) => { res.json(response) })
+    .catch((error) => {res.status(422).send({ message: error})});
+}
+
 // Make these functions available to the router
 module.exports = {
   showAllProducts,
@@ -143,4 +193,10 @@ module.exports = {
   ordersPerDay,
   productsPerDay,
   prodsSoldByCat,
+  totalOrders,
+  totalDelivered,
+  totalUsers,
+  totalAmountOrdered,
+  recentOrders,
+  topThreeCouriers,
 };

@@ -20,12 +20,9 @@ const actions = {
        axios
           .post("/api/account/"+ browserCookies.get("user_id") + "/update", data)
           .then((response) => {
-              console.log('sent')
              console.log(response);
           })
           .catch((err) => {
-            console.log('sent')
-
              console.log(err);
           });
    },

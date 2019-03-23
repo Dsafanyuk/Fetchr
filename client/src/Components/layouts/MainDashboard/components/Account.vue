@@ -10,13 +10,13 @@
             <!-- personal info for -->
             <div class="col-sm-12">
                <v-form class="form-horizontal" ref="form">
-                  <v-layout class="form-group">
+                  <div class="form-group">
                      <v-flex sm12 md12 lg12><strong class="text-warning">First name</strong>: {{ user.first_name }}</v-flex><br>
                      <v-flex sm12 md12 lg12><strong class="text-warning">Last name</strong>: {{ user.last_name }}</v-flex><br>
                      <v-flex sm12 md12 lg12p><strong class="text-warning">Email address</strong>: {{ user.email_address}}</v-flex><br>
                      <v-flex sm12 md12 lg12><strong class="text-warning">Room number</strong>: {{ user.room_num }}</v-flex><br>
                      <v-flex sm12 md12 lg12><strong class="text-warning">Phone Number</strong>: {{ user.phone_number }}</v-flex><br>
-                  </v-layout>
+                  </div>
                   <div class="form-group text-center">
                      <v-btn rectangle color="lightened" dark type="submit" href="#" v-on:click="editItem(user)">Update Profile</v-btn>
                   </div>
@@ -26,20 +26,20 @@
                            <span class="headline">{{ formTitle }}</span>
                         </v-card-title>
                         <v-card-text>
-                           <v-form ref="form">
+                           <v-form ref="form" v-model="valid" lazy-validation>
                            <v-container grid-list-md>
                               <v-layout wrap>
                                  <v-flex sm12 md6 lg6>
-                                    <v-text-field v-model="editedItem.first_name" label="First Name" required></v-text-field>
+                                    <v-text-field v-model="editedItem.first_name" :counter="15" :rules="firstNameRules" label="First Name" required></v-text-field>
                                  </v-flex>
                                  <v-flex sm12 md6 lg6>
-                                    <v-text-field v-model="editedItem.last_name" label="Last Name" required></v-text-field>
+                                    <v-text-field v-model="editedItem.last_name" :counter="15" :rules="lastNameRules" label="Last Name" required></v-text-field>
                                  </v-flex>
                                  <v-flex sm12 md6 lg6>
-                                    <v-text-field v-model="editedItem.room_num" label="Room Number" required></v-text-field>
+                                    <v-text-field v-model="editedItem.room_num" :counter="4" :rules="roomNumberRules" label="Room Number" required></v-text-field>
                                  </v-flex>
                                  <v-flex sm12 md6 lg6>
-                                    <v-text-field v-model="editedItem.phone_number" label="Phone Number" required></v-text-field>
+                                    <v-text-field v-model="editedItem.phone_number" :counter="10" :rules="phoneNumberRules" label="Phone Number" required></v-text-field>
                                  </v-flex>
                              </v-layout>
                          </v-container>
@@ -49,7 +49,7 @@
                    <v-card-actions>
                       <v-spacer></v-spacer>
                       <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-                      <v-btn color="blue darken-1" :loading="sending" flat @click="save">Save</v-btn>
+                      <v-btn color="blue darken-1" :disabled="!valid" :loading="sending" flat @click="save">Save</v-btn>
                    </v-card-actions>
                    </v-card>
                    </v-dialog>
@@ -69,6 +69,10 @@ export default {
    
    data() {
       return {
+         sending: false,
+         dialog : false,
+         editedIndex: -1,
+         valid: true,
          user:{
             user_id : browsercookies.get("user_id"),
             first_name: browsercookies.get("first_name"),
@@ -77,9 +81,6 @@ export default {
             phone_number: browsercookies.get("phone_number"),
             email_address: browsercookies.get("email_address"),
          },
-         sending: false,
-         dialog : false,
-         editedIndex: -1,
          editedItem: {
             user_id : "",
             first_name: "",
@@ -95,11 +96,27 @@ export default {
             phone_number: "",
             room_num: "",
             email_address: ""
-         }
-         
+         },
+         firstNameRules: [
+            v => !!v || 'First Name cannot be empty.',
+            v => (v && v.length <= 15) || 'The First Name field may not be greater than 15 characters.'
+         ],
+         lastNameRules: [
+            v => !!v || 'Last Name cannot be empty.',
+            v => (v && v.length <= 15) || 'The Last Name field may not be greater than 15 characters.'
+         ],
+         roomNumberRules: [
+            v => !!v || 'The Room Number field is required',
+            v => (v && v.length <= 4 && v.length >= 4) || 'The Room Number field must be numeric and exactly contain 4 digits.'
+         ],
+         phoneNumberRules: [
+            v => !!v || 'The Phone Number field is required.',
+            v => (v && v.length <= 10 && v.length >= 10) || 'The Phone Number field must be numeric and exactly contain 10 digits.'
+         ],
       };
 
   },
+
 
 computed: {
     users() {
@@ -109,6 +126,7 @@ computed: {
       return this.editedIndex = "Edit User";
    }
 },
+
 watch: {
    dialog(val) {
    val || this.close();
@@ -116,7 +134,17 @@ watch: {
 },
 
 methods : {
-   displayCart(show) {
+   validate () {
+      if (this.$refs.form.validate()) {
+        this.snackbar = true
+      }
+    },
+
+    reset () {
+      this.$refs.form.reset()
+    },
+    
+    displayCart(show) {
       if (this.seen) this.seen = false;
       else {
          this.seen = true;
@@ -137,15 +165,17 @@ methods : {
    }, 300);
    this.$refs.form.reset();
    },
+   
    save() {
-   this.sendForm();
+      this.sendForm();
    },
+
    sendForm() {
       console.log(this.editedItem)
    this.sending = true;
    this.$store
       .dispatch("account/editExistingUser", this.editedItem)
-      .then(result => { console.log('done')
+      .then(result => {
          this.sending = false;
          this.close();
       });

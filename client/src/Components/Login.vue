@@ -129,9 +129,6 @@
           this.$validator.validateAll();
         }
       },
-      goToRegister: function () {
-        this.$router.push('/register');
-      }
     }
   };
 </script>

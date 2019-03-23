@@ -57,7 +57,7 @@
   </div>
 </template>
       
-      <script>
+<script>
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios.js";
 
@@ -86,6 +86,7 @@ export default {
       axios
         .get(`/api/orders/${this.$route.query.order}/summary`)
         .then(response => {
+          this.isLoading = false;
           let orderInfo = response.data.orderInfo[0];
           if (orderInfo.customer_id != browserCookies.get("user_id")) {
             this.$router.push("/orders");
@@ -101,7 +102,6 @@ export default {
             root: true
           });
         });
-      this.isLoading = false;
     }
   }
 };

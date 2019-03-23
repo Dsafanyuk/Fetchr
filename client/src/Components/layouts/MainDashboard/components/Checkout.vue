@@ -3,9 +3,9 @@
     <h3>Checkout</h3>
     <v-layout row class="pa-3 mb-2">
       <v-flex md8 xs12>
-        <v-data-table :items="items" hide-headers class="elevation-1">
+        <v-data-table :items="items" hide-headers :hide-actions="!isMobile" class="elevation-1">
           <template slot="items" slot-scope="props">
-            <td align="text-xs-left" class="hidden-sm-and-down">
+            <td align="text-xs-center" class="hidden-sm-and-down">
               <img :src="props.item.product_url" class="checkout-img">
             </td>
             <td class="body-2 text-xs-left">{{ props.item.product_name }}</td>
@@ -102,6 +102,17 @@ export default {
       } else {
         return false;
       }
+    },
+    isMobile() {
+      if (
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        )
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   methods: {
@@ -156,6 +167,9 @@ export default {
   }
 };
 </script>
-    <style scoped lang="css" src='../../../custom_css/checkout.css'>
+<style scoped lang="css">
+.checkout-img {
+  max-height: 75px;
+}
 </style>
     

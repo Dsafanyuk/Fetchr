@@ -24,6 +24,7 @@
         :active-class="'action-tile'"
       >
         <v-list-tile-title color="white" :active-class="'action-tile'" v-text="'Dashboard'"/>
+        <i class="material-icons" @click="$store.dispatch('admin/getDashboard')">refresh</i>
       </v-list-tile>
       <v-list-group
         value="true"

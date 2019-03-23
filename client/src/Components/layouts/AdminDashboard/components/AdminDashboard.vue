@@ -1,7 +1,7 @@
 <template>
   <v-container fluid grid-list-lg>
     <v-layout row wrap align-center justify-space-around>
-      <v-flex xs3 v-for="(card, i) in cards" :key="i">
+      <v-flex xs3 v-for="(card, i) in adminDashboard.cards" :key="i">
         <v-card class="accent lighten--2">
           <v-container>
             <v-layout>
@@ -24,7 +24,7 @@
             <v-card-title>
               <span class="headline">Courier Quick Look</span>
             </v-card-title>
-            <v-data-table :items="couriers" :headers="courierHeader" hide-actions class="elevation-1">
+            <v-data-table :items="adminDashboard.topCouriers" :headers="courierHeader" hide-actions class="elevation-1">
               <template slot="items" slot-scope="props">
                 <td>{{ props.item.first_name }} {{ props.item.last_name}}</td>
                 <td class="text-xs-right">{{ props.item.in_progress }}</td>
@@ -36,7 +36,7 @@
             <v-card-title>
               <span class="headline">Recent Orders</span>
             </v-card-title>
-            <v-data-table :items="orders" hide-actions hide-headers class="elevation-1">
+            <v-data-table :items="adminDashboard.recentOrders" hide-actions hide-headers class="elevation-1">
               <template slot="items" slot-scope="props">
                 <td>{{ props.item.order_id }} - {{ props.item.first_name }} {{ props.item.last_name }}</td>
                 <td class="text-xs-right">$ {{ props.item.order_total }}</td>
@@ -54,7 +54,7 @@
             type="pie"
             height="420"
             :options="chartOptions"
-            :series="series"
+            :series="adminDashboard.counts"
             class="chart elevation-1"
           />
         </v-card>
@@ -68,11 +68,26 @@ import axios from "../../../../axios";
 export default {
   data() {
     return {
-        series: [],
- 
-
-      chartOptions: {
-        labels: [],
+    };
+  },
+  created: function() {
+    this.$store.dispatch('admin/getDashboard');
+  },
+  computed: {
+    adminDashboard() {
+      return this.$store.getters["admin/showDashboard"];
+    },
+    courierHeader() {
+      let courierHeader = [
+        { text: "Name", align: "center", value: "name" },
+        { text: "In-Progress", align: "center", value: "in_progress" },
+        { text: "Delivered", align: "center", value: "delivered" }
+      ]
+      return courierHeader;
+    },
+    chartOptions() {
+      let chartOptions = {
+        labels: this.adminDashboard.categories,
         chart: {
           id: "chart"
         },
@@ -88,89 +103,11 @@ export default {
         },
         responsive: [
           {
-            breakpoint: 480
+            breakpoint: 481
           }
         ]
-      },
-      courierHeader: [
-        { text: "Name", align: "left", value: "name" },
-        { text: "In-Progress", align: "left", value: "in_progress" },
-        { text: "Delivered", align: "left", value: "delivered" }
-      ],
-      cards: [
-        // These need to stay in the same order or changed the methods that fill them
-        { text: "Total Orders", icon: "shopping_basket", statValue: "" },
-        { text: "Total Delivered", icon: "how_to_reg", statValue: "" },
-        { text: "Total Users", icon: "group", statValue: "" },
-        { text: "Total Amount Ordered", icon: "attach_money", statValue: "" }
-      ],
-      orders: [],
-      couriers: []
-    };
-  },
-  created: function() {
-      axios
-        .get('/api/admin/graphs/prodsSoldByCat')
-        .then((response) => {
-          let prodCounts = response.data[0][0][0];
-
-          // Two one dimensional arrays
-          Object.keys(prodCounts).forEach(category => {
-            this.chartOptions.labels.push(category.replace('_', ' '))
-            this.series.push(prodCounts[category])
-          })
-      })
-  },
-  mounted: function() {
-    this.totalOrders();
-    this.totalDelivered();
-    this.totalUsers();
-    this.totalAmountOrdered();
-    this.topThreeCouriers();
-    this.recentOrders();
-  },
-  methods: {
-    totalOrders: function() {
-      axios
-        .get('/api/admin/total/orders')
-        .then(response => {
-          this.cards[0].statValue = response.data[0][0].total;
-        })
-    },
-    totalDelivered: function() {
-      axios
-        .get('/api/admin/total/delivered')
-        .then(response => {
-          this.cards[1].statValue = response.data[0][0].total;
-        })
-    },
-    totalUsers: function() {
-      axios
-        .get('/api/admin/total/users')
-        .then(response => {
-          this.cards[2].statValue = response.data[0][0].total;
-        })
-    },
-    totalAmountOrdered: function() {
-      axios
-        .get('/api/admin/total/amountOrdered')
-        .then(response => {
-          this.cards[3].statValue = response.data[0][0].total;
-        })
-    },
-    topThreeCouriers: function() {
-      axios
-        .get('/api/admin/couriers/topThree')
-        .then(response => {
-          this.couriers = response.data[0]
-        })
-    },
-    recentOrders: function() {
-      axios
-        .get('/api/admin/orders/recent')
-        .then(response => {
-          this.orders = response.data[0]
-        })
+      }
+      return chartOptions;
     },
   },
 };
@@ -181,6 +118,6 @@ export default {
   margin: 0 auto;
 }
 .leftCards {
-  margin: 8px 7px 16px;
+  margin: 8px 7px 16.5px;
 }
 </style>

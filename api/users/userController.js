@@ -1,4 +1,5 @@
 const knex = require('knex')(require('../db'));
+const { updateUser } = require('./accountHelper');
 
 // GET /users/{user_id}
 function showOneUser(req, res) {
@@ -168,6 +169,14 @@ function checkBalance(req, res) {
       });
     });
 }
+
+function editUser(req, res) {
+  const user = req.body;
+  updateUser(user)
+    .then(result => res.json({ message: result }))
+    .catch(error => res.status(422).send({ message: error }));
+}
+
 module.exports = {
   showOneUser,
   showUserOrders,

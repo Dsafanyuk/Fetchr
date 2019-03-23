@@ -61,4 +61,6 @@ router.patch('/:user_id', verifyToken, userController.updateUser);
 
 router.post('/', verifyToken, userController.createUser);
 
+router.post('/:user_id/update', userController.editUser);
+
 module.exports = router;

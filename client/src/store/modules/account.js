@@ -18,7 +18,7 @@ const actions = {
     editExistingUser: ({ state, commit, dispatch }, data) => {
       console.log(data)
        axios
-          .post("/api/account/"+ browserCookies.get("user_id") + "/update", data)
+          .post("/api/user/"+ browserCookies.get("user_id") + "/update", data)
           .then((response) => {
              console.log(response);
           })

@@ -107,6 +107,9 @@
                                 @click="clear"
                             >Clear</v-btn>
                         </div>
+                        <div class="form-group text-center">
+                            Already have an account? <router-link to="/login">Log in here</router-link>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -230,7 +233,7 @@ import Toasted from 'vue-toasted';
     };
 </script>
 
-<style>
+<style lang="css" scoped>
 @import "custom_css/registration.scss";
 @import "/src/Components/assets/css/bootstrap.min.css";
 </style>

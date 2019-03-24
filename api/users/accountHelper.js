@@ -11,10 +11,32 @@ function updateAccount(user) {
       phone_number: user.phone_number,
       email_address: user.email_address,
     })
-    .then(success => console.log('success'))
+    .then((users) => {
+      knex('users')
+        .where('email_address', user.email_address)
+        .then((users) => {
+          if (users.length) {
+            res.status(401).send({ message: 'There is an account already associated with this email address.' });
+          }
+          else{
+            knex('users')
+            .update({
+              email_address: user.email_address,
+            })
+            .then((user_id) => {
+                res.status(200).send('user created successfully');
+              })
+            .catch((err) => {
+                Sentry.captureException(err);
+                res.status(500).send({
+                  message: `${err}`,
+                });
+            });
+          }
+        })
     .catch(err => console.log('err'));
+   })
 }
-
 module.exports = {
   updateAccount,
 };

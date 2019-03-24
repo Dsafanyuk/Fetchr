@@ -8,7 +8,6 @@
 
 <script>
 import MainHeader from "../MainDashboard/MainHeader.vue";
-import chatRoom from './ChatRoom.vue'
 import MainFooter from "../MainDashboard/MainFooter.vue";
 export default {
   data() {
@@ -17,16 +16,15 @@ export default {
       selectedCategory: "Popular"
     };
   },
+
   components: {
     MainHeader: MainHeader,
     MainFooter: MainFooter,
-    chatRoom  : chatRoom
+
 
   }
 };
 </script>
 <style>
-.chat_container {
-  margin-top : 100px
-}
+
 </style>

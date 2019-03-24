@@ -8,8 +8,44 @@
       <chatroom @showRoom="fetchMessages"> </chatroom>
     </v-flex>
     <div col-md-6>
+      <v-layout
+        v-scroll:#scroll-target="onScroll"
+        column
+        align-center
+        justify-center
+
+        >
+
+        </v-layout>
       <div class="card-box" >
-        <h4 class="m-t-0 m-b-20 header-title"><b>Chat</b></h4>
+        <!-- Order Details -->
+        <div class="text-xs-right">
+     <v-dialog
+       v-model="dialog"
+       width="500"
+     >
+       <template v-slot:activator="{ on }">
+         <v-btn
+           color="#344955"
+           dark
+           v-on="on"
+         >
+           Order Details
+         </v-btn>
+               <v-divider></v-divider>
+       </template>
+
+       <v-card>
+         <OrderDetailsChat > </OrderDetailsChat>
+       </v-card>
+     </v-dialog>
+   </div>
+<!-- End Of Order Details -->
+
+          <!--  <h4 class="m-t-0 m-b-20 header-title"><b>Chat</b></h4>-->
+        </v-flex>
+
+
 
         <div class="chat-conversation" id="chat-conversation"  ref="chatContainer" style="max-height:300px; overflow-y: auto;">
                 <ul class="conversation-list"  v-chat-scroll tabindex="5001" >
@@ -72,6 +108,7 @@
   import ChatRoom from './ChatRoom.vue'
   import * as firebase from 'firebase'
   import browserCookies from "browser-cookies";
+  import OrderDetailsChat from "./OrderDetailsChat.vue"
   export default {
     data () {
       return {
@@ -96,6 +133,7 @@
     },
     components: {
       'chatroom': ChatRoom,
+      'OrderDetailsChat': OrderDetailsChat,
     },
     computed: {
 

@@ -1,3 +1,4 @@
+const Sentry = require('@sentry/node');
 const knex = require('knex')(require('../db'));
 const { updateAccount } = require('./accountHelper');
 
@@ -12,6 +13,8 @@ function showOneUser(req, res) {
         res.send(rows).status(200);
       })
       .catch((err) => {
+        Sentry.captureException(err);
+
         res.status(500).send({
           message: `${err}`,
         });
@@ -30,6 +33,7 @@ function showUserOrders(req, res) {
       res.send(rows);
     })
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -54,6 +58,8 @@ function createUser(req, res) {
     })
     // else send err
     .catch((err) => {
+      Sentry.captureException(err);
+
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -78,6 +84,8 @@ function creditCheck(req, res) {
       }
     })
     .catch((err) => {
+      Sentry.captureException(err);
+
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact error message in prod
@@ -96,6 +104,8 @@ function favorite(req, res) {
       res.send(200).status(200);
     })
     .catch((err) => {
+      Sentry.captureException(err);
+
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact error message in prod
@@ -118,6 +128,8 @@ function unfavorite(req, res) {
         res.send(200).status(200);
       })
       .catch((err) => {
+        Sentry.captureException(err);
+
         res.status(500).send({
           message: `${err}`,
         }); // FOR DEBUGGING ONLY, dont send exact error message in prod
@@ -135,6 +147,8 @@ function favorites(req, res) {
       res.send(favorites).status(200);
     })
     .catch((err) => {
+      Sentry.captureException(err);
+
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -149,6 +163,8 @@ function addBalance(req, res) {
       res.send('success').status(200);
     })
     .catch((err) => {
+      Sentry.captureException(err);
+
       res.status(500).send({
         message: `${err}`,
       });
@@ -164,19 +180,21 @@ function checkBalance(req, res) {
       res.send(balance).status(200);
     })
     .catch((err) => {
+      Sentry.captureException(err);
+
       res.status(500).send({
         message: `${err}`,
       });
     });
 }
 
+// POST /users/:user_id
 function editUser(req, res) {
   const user = req.body;
   updateAccount(user)
     .then(result => res.json({ message: result }))
     .catch(error => res.status(422).send({ message: error }));
 }
-
 module.exports = {
   showOneUser,
   showUserOrders,
@@ -188,5 +206,5 @@ module.exports = {
   unfavorite,
   addBalance,
   checkBalance,
-  editUser
+  editUser,
 };

@@ -13,7 +13,7 @@
               <h4 class="text-center form_h"> Login in on our Platform </h4>
             </div>
             <br>
-            <form>
+            <form @keyup.enter="login('dashboard')">
               <v-text-field
                 v-validate="'required|email'"
                 type="email"
@@ -39,18 +39,24 @@
             </form>
             <div class="form-group text-center">
               <v-btn 
-                round color="cyan" dark
+                :loading="loading && this.loginTo == 'dashboard'"
+                :disabled="loading && this.loginTo == 'dashboard'"
+                round color="cyan"
+                class="white--text"
                 type="submit"
                 @click="login('dashboard')"
               >Login as Customer</v-btn>
-              <v-btn 
-                round color="cyan" dark
+              <v-btn
+                :loading="loading && this.loginTo == 'courier'"
+                :disabled="loading && this.loginTo == 'courier'"
+                round color="cyan"
+                class="white--text"
                 type="submit"
                 @click="login('courier')"
               >Login as Courier</v-btn>
             </div>
             <div class="form-group text-center">
-                Don't have an account? <a v-on:click="goToRegister">Sign up here</a>
+                Don't have an account? <router-link to="/register">Sign up here</router-link>
             </div>
           </div>
         </div>
@@ -73,6 +79,7 @@
       return {
         cEmail: '',
         cPassword: '',
+        loginTo: '',
         dictionary: {
           attributes: {
             cEmail: 'E-mail Address',
@@ -85,9 +92,14 @@
     mounted () {
       this.$validator.localize('en', this.dictionary)
     },
-
+    computed: {
+      loading() {
+        return this.$store.getters["login/getUserLoadStatus"] == 1
+      }
+    },
     methods: {
       login(value) {
+        this.loginTo = value;
         if (this.cEmail && this.cPassword) {
           axios.post('api/users/login', {
               email_address: this.cEmail,
@@ -117,18 +129,11 @@
           this.$validator.validateAll();
         }
       },
-      goToRegister: function () {
-        this.$router.push('/register');
-      }
     }
   };
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
   @import 'custom_css/registration.scss';
-
-  a:hover {
-    color:darkcyan!important;
-    cursor: pointer;
-  }
+  @import '/src/Components/assets/css/bootstrap.min.css';
 </style>

@@ -42,7 +42,7 @@
                                     <v-text-field v-model="editedItem.phone_number" type="number" :counter="10" :rules="phoneNumberRules" label="Phone Number" required></v-text-field>
                                  </v-flex>
                                  <v-flex sm12 md6 lg6>
-                                 <v-text-field v-model="editedItem.email_address" :rules="emailRules" label="E-mail" required></v-text-field>
+                                 <v-text-field v-model="editedItem.email_address"  type="email" :rules="emailRules" label="E-mail" required></v-text-field>
                                  </v-flex>
                              </v-layout>
                          </v-container>
@@ -66,7 +66,7 @@
 
 <script>
 import browsercookies from "browser-cookies";
-import axios from '../../../../axios';
+import axios from "../../../../axios.js";
 
 export default {
    
@@ -118,7 +118,7 @@ export default {
          ],
          emailRules: [
             v => !!v || 'E-mail is required',
-            v => /.+@.+/.test(v) || 'E-mail must be valid'
+            v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
          ],
       };
 
@@ -189,7 +189,6 @@ methods : {
       this.user.last_name =  this.editedItem.last_name
       this.user.room_num =  this.editedItem.room_num
       this.user.phone_number =  this.editedItem.phone_number
-      this.user.email_address =  this.editedItem.email_address
       
     }
   }

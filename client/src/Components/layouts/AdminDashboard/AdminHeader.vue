@@ -21,11 +21,18 @@
     <div>
       <v-toolbar dark color="primary">
         <v-toolbar-side-icon class="hidden-lg-and-up" @click.stop="drawer = !drawer" large></v-toolbar-side-icon>
-        <v-spacer class="hidden-lg-and-up"></v-spacer>
-        <img
-          :src="require('../../images/fetchr_header_logo.png')"
-          style="height:65px; width:215px;"
-        >
+        <v-spacer></v-spacer>
+
+        <router-link to="/admin/dashboard" class="text-md-center">
+          <img
+            src="../../images/fetchr_header_logo.png"
+            height="75"
+            width="250"
+            class="d-inline-block align-top navbar-brand"
+            align="left"
+            to="/admin/dashboard"
+          >
+        </router-link>
         <v-spacer></v-spacer>
         <div class="hidden-md-and-down">
           <v-menu fixed bottom left>
@@ -68,7 +75,7 @@ export default {
         { title: "About", icon: "question_answer" }
       ],
       menu: [
-        { title: "Switch to Shopping Mode", icon: "shopping_cart " },
+        { title: "Switch to Shopping Mode", icon: "shopping_cart" },
         { title: "Leave Feedback", icon: "feedback" },
         {
           title: "Logout",

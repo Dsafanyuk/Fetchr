@@ -4,14 +4,14 @@
             <div class="col-md-12 mx-auto register-right">
                 <div class="row register-form">
                     <div class="col-md-6 mx-auto">
-                        <img @click="goToLogin" class="center_img" width="300px" height="300px" src="./images/logo.png">
+                        <img class="center_img" width="300px" height="300px" src="./images/logo.png">
                     </div>
                     <div class="col-md-6 mx-auto">
                         <div class="form-group">
                             <h4 class="text-center form_h">Sign Up on our Platform</h4>
                         </div>
                         <br>
-                        <form>
+                        <form @keyup.enter="registerCustomer">
                             <v-text-field
                                 v-validate="'required|max:15'"
                                 v-model="cFirstname"
@@ -107,6 +107,9 @@
                                 @click="clear"
                             >Clear</v-btn>
                         </div>
+                        <div class="form-group text-center">
+                            Already have an account? <router-link to="/login">Log in here</router-link>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -117,6 +120,7 @@
 <script>
 import axios from "../axios";
 import Toasted from 'vue-toasted';
+import Vue from 'vue'
 
     export default {
         $_veeValidate: {
@@ -192,7 +196,7 @@ import Toasted from 'vue-toasted';
                                 last_name: this.cLastname,
                                 email_address: this.cEmail,
                                 room_num: this.cRoom,
-                                phone: this.cPhone,
+                                phone_number: this.cPhone,
                                 password: this.cPassword,
                             })
                             .then((response) => {
@@ -201,14 +205,16 @@ import Toasted from 'vue-toasted';
                                 }
                             })
                             .catch(function (error) {
-                                if (error.response.status == 400) {
-                                    toasted.error(error.response.data, {
-                                        theme: "primary",
-                                        position: "top-center",
-                                        duration : 5000
-                                    });
+                                if (error.response) {
+                                    error.response.data.errors.map( (error) => {
+                                        Vue.toasted.show(error.param + " " + error.msg, {
+                                            theme: 'bubble',
+                                            duration: 4000,
+                                            position: 'top-center',
+                                            icon: 'report_problem'
+                                        });
+                                    })
                                 }
-                                console.log(error);
                                 if (error.response) {
                                     // The request was made and the server responded with a status code
                                     // that falls out of the range of 2xx
@@ -223,13 +229,11 @@ import Toasted from 'vue-toasted';
                     this.$validator.validateAll();
                 }
             },
-            goToLogin () {
-                this.$router.push('\login');
-            }
         },
     };
 </script>
 
-<style>
+<style lang="css" scoped>
 @import "custom_css/registration.scss";
+@import "/src/Components/assets/css/bootstrap.min.css";
 </style>

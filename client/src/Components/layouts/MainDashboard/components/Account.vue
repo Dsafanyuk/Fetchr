@@ -35,14 +35,14 @@
                                  <v-flex sm12 md6 lg6>
                                     <v-text-field v-model="editedItem.last_name" :counter="15" :rules="lastNameRules" label="Last Name" required></v-text-field>
                                  </v-flex>
+                                 <v-flex sm12 md12 lg9>
+                                 <v-text-field v-model="editedItem.email_address"  type="email" :rules="emailRules" label="E-mail" required></v-text-field>
+                                 </v-flex>
                                  <v-flex sm12 md6 lg6>
                                     <v-text-field v-model="editedItem.room_num" type="number" :counter="4" :rules="roomNumberRules" label="Room Number" required></v-text-field>
                                  </v-flex>
                                  <v-flex sm12 md6 lg6>
                                     <v-text-field v-model="editedItem.phone_number" type="number" :counter="10" :rules="phoneNumberRules" label="Phone Number" required></v-text-field>
-                                 </v-flex>
-                                 <v-flex sm12 md6 lg6>
-                                 <v-text-field v-model="editedItem.email_address"  type="email" :rules="emailRules" label="E-mail" required></v-text-field>
                                  </v-flex>
                              </v-layout>
                          </v-container>
@@ -52,7 +52,7 @@
                    <v-card-actions>
                       <v-spacer></v-spacer>
                       <v-btn color="blue darken-1" flat @click="close">Close</v-btn>
-                      <v-btn color="blue darken-1" :disabled="!valid" :loading="sending" flat @click="save">Save</v-btn>
+                      <v-btn color="blue darken-1" :disabled="!valid" :loading="sending" flat v-on:click="save">Save</v-btn>
                    </v-card-actions>
                    </v-card>
                    </v-dialog>
@@ -184,11 +184,18 @@ methods : {
       .dispatch("account/editExistingUser", this.editedItem)
       .then(result => {
          this.sending = false;
+         this.user.first_name =  this.editedItem.first_name
+         this.user.last_name =  this.editedItem.last_name
+         this.user.email_address =  this.editedItem.email_address
+         this.user.room_num =  this.editedItem.room_num
+         this.user.phone_number =  this.editedItem.phone_number
+         browsercookies.set('first_name', this.editedItem.first_name);
+         browsercookies.set('last_name', this.editedItem.last_name);
+         browsercookies.set('email_address', this.editedItem.email_address);
+         browsercookies.set('room_num', this.editedItem.room_num);
+         browsercookies.set('phone_number', this.editedItem.phone_number);
+         
       });
-      this.user.first_name =  this.editedItem.first_name
-      this.user.last_name =  this.editedItem.last_name
-      this.user.room_num =  this.editedItem.room_num
-      this.user.phone_number =  this.editedItem.phone_number
       
     }
   }

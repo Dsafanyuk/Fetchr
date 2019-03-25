@@ -37,8 +37,12 @@
           to="/dashboard"
         >
       </router-link>
-      <v-spacer class="hidden-sm-and-down"></v-spacer>
-      <v-spacer></v-spacer>
+      <v-spacer></v-spacer> 
+      <v-flex align-self-center style="margin-right:10px" class="hidden-sm-and-down">
+        <transition name="fade" v-on:enter="enter" v-on:leave="leave">
+          <h4 class="white--text" style="margin-top: 20px" v-if="show">{{showText}}</h4>
+        </transition>
+      </v-flex>
       <div class="hidden-sm-and-down">
         <v-menu fixed>
           <v-btn
@@ -105,32 +109,40 @@
       v-if="isLanding "
     >
       <v-tabs-slider color="orange"></v-tabs-slider>
-      <v-tab href="#Popular">Popular
+      <v-tab href="#Popular">
+        Popular
         <v-icon>fas fa-fire-alt</v-icon>
       </v-tab>
 
-      <v-tab href="#Snacks">Snacks
+      <v-tab href="#Snacks">
+        Snacks
         <v-icon>fas fa-hamburger</v-icon>
       </v-tab>
 
-      <v-tab href="#Drinks">Drinks
+      <v-tab href="#Drinks">
+        Drinks
         <v-icon>fas fa-mug-hot</v-icon>
       </v-tab>
 
-      <v-tab href="#Personal">Personal
+      <v-tab href="#Personal">
+        Personal
         <v-icon>fas fa-toilet-paper</v-icon>
       </v-tab>
-      <v-tab href="#Electronics">Electronics
+      <v-tab href="#Electronics">
+        Electronics
         <v-icon>fas fa-headphones-alt</v-icon>
       </v-tab>
-      <v-tab href="#School Supplies">School Supplies
+      <v-tab href="#School Supplies">
+        School Supplies
         <v-icon>fas fa-paperclip</v-icon>
       </v-tab>
-      <v-tab href="#Misc">Misc
+      <v-tab href="#Misc">
+        Misc
         <v-icon>fas fa-random</v-icon>
       </v-tab>
 
-      <v-tab href="#Favorites">Favorites
+      <v-tab href="#Favorites">
+        Favorites
         <v-icon>fas fa-heart</v-icon>
       </v-tab>
     </v-tabs>
@@ -150,18 +162,25 @@ export default {
       showCart: false,
       activeCategory: null,
       menu: [
-        { title: "Switch To Courier", icon: "fa fa-bicycle"},
+        { title: "Switch To Courier", icon: "fa fa-bicycle" },
         { title: "Account", icon: "fas fa-user-alt fa-s" },
         { title: "Orders", icon: "far fa-list-alt fa-s" },
         {
           title: "Wallet",
           icon: "fas fa-wallet fa-s"
         },
+        { title: "Leave Feedback", icon: "feedback" },
+
         {
           title: "Logout",
           icon: "fas fa-sign-out-alt fa-s"
         }
-      ]
+      ],
+      textLists: [ "Remember, you cannot change your password", "You can go to shopping page by clicking Fetchr icon", "All items are non refundable", "Subscribe to PewDiePie", "Unsubscribe from T-series", "Follow us on instagram at @fecthr_app" ],
+      showText: "",
+      textTimeout: null,
+      show: false,
+      indexText: 0,
     };
   },
   components: {
@@ -170,6 +189,10 @@ export default {
   },
   created: function() {
     this.$store.dispatch("wallet/getWalletBalance");
+    this.showText = this.textLists[this.randomIndex()];
+    this.textTimeout = setTimeout(() => {
+      this.show = true;
+    },3000);
   },
   computed: {
     numOfItemsInCart: function() {
@@ -183,10 +206,23 @@ export default {
     }
   },
   methods: {
+    enter: function() {
+      this.textTimeout = setTimeout(() => {
+        this.show = false;
+      }, 6000);
+    },
+    leave: function() {
+      this.textTimeout = setTimeout(() => {
+        this.showText = this.textLists[this.randomIndex()];
+        this.show = true;
+      }, 3000);
+    },
+    randomIndex: function () {
+      return Math.floor(Math.random() * this.textLists.length)
+    },
     showWallet: function(value) {
       this.$store.commit("wallet/toggleWallet", value);
     },
-
     showShoppingCart: function(value) {
       this.$store.commit("cart/toggleCart", value);
     },
@@ -194,6 +230,10 @@ export default {
       switch (menuItem) {
         case "Switch To Courier": {
           this.$router.push("/courier");
+          break;
+        }
+        case "Leave Feedback": {
+          window.open("https://goo.gl/forms/Q1EzTiaBkPZwepb62");
           break;
         }
         case "Account": {
@@ -214,11 +254,14 @@ export default {
             for (let cookieName in allCookies) {
               browserCookies.erase(cookieName);
             }
-            this.$store.dispatch("login/logout").then( response => {
-              this.$router.push("/login");
-            }, error => {
-              this.$store.commit("login/logoutFailed");
-            });
+            this.$store.dispatch("login/logout").then(
+              response => {
+                this.$router.push("/login");
+              },
+              error => {
+                this.$store.commit("login/logoutFailed");
+              }
+            );
           }
           break;
       }
@@ -254,5 +297,11 @@ export default {
   position: sticky;
   top: 0;
   z-index: 1;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 2s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

@@ -98,12 +98,12 @@ export default {
           showForZeroSeries: true,
           position: "bottom",
           horizontalAlign: "center",
-          floating: false,
+          floating: true,
           fontSize: "14px"
         },
         responsive: [
           {
-            breakpoint: 481
+            breakpoint: 420
           }
         ]
       }

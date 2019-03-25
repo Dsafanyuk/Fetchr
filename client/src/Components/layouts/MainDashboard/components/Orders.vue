@@ -19,27 +19,7 @@
             <td>{{order.delivery_status}}</td>
             <td>${{order.order_total.toFixed(2)}}</td>
             <td>
-              <v-dialog v-model="dialog" persistent max-width="600px">
-                <v-btn slot="activator"  @click="ischatexist(order.order_id)" color="primary" dark> Chat </v-btn>
-                <v-card>
-                  <v-card-title>
-                    <span class="headline"> Write a Message to the Courier </span> </v-card-title>
-                  <v-card-text>
-                    <v-container grid-list-md>
-                      <v-layout wrap>
-
-                        <v-textarea name="input-7-1" v-model="msg_content" value="" hint="Type Here">
-                        </v-textarea>
-                      </v-layout>
-                    </v-container>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer>
-                    </v-spacer>
-                    <v-btn color="blue darken-1" flat @click="dialog = false"> Close </v-btn>
-                    <v-btn color="success" @click="createChat(order.order_id)"> Send </v-btn>
-                    </v-card-actions> </v-card>
-              </v-dialog>
+              <CreateChat :order_id="order.order_id"></CreateChat>
             </td>
             <td>
                 <button @click="viewOrder(order.order_id)" class="btn btn-outline-dark my-2 my-sm-0" type="button">View</button>
@@ -51,6 +31,7 @@
   </v-app>
 </template>
 <script>
+import CreateChat from "../../Chat/CreateConversation.vue"
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios";
 import {mapActions} from "vuex";
@@ -67,6 +48,9 @@ export default {
     };
 
 
+  },
+  components: {
+    CreateChat: CreateChat,
   },
   mounted: function() {
     let loadingOrdersToast = this.$toasted.show("Loading orders...");

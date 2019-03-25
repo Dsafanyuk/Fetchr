@@ -47,7 +47,7 @@
             <span>Delivered Orders: {{updatedCourierInfo.delivered}}</span>
           </div>
           <v-divider></v-divider>
-        <CreateChat></CreateChat>
+        <CreateChat :order_id="CurrentOrderId"></CreateChat>
         </v-card>
       </v-flex>
     </v-layout>
@@ -62,6 +62,7 @@ import CreateChat from "../../Chat/CreateConversation.vue"
 export default {
   data() {
     return {
+      CurrentOrderId : parseInt(this.$route.query.order),
       items: [],
       total: 0.0,
     }

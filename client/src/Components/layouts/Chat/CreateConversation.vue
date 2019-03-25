@@ -1,6 +1,6 @@
 <template>
 <v-dialog v-model="dialog" persistent max-width="600px">
-  <v-btn slot="activator"  @click="ischatexist(order.order_id)" color="primary" dark> Chat </v-btn>
+  <v-btn slot="activator"  @click="ischatexist()" color="primary" dark> Chat </v-btn>
   <v-card>
     <v-card-title>
       <span class="headline"> Write a Message to the Courier </span> </v-card-title>
@@ -17,7 +17,7 @@
       <v-spacer>
       </v-spacer>
       <v-btn color="blue darken-1" flat @click="dialog = false"> Close </v-btn>
-      <v-btn color="success" @click="createChat(order.order_id)"> Send </v-btn>
+      <v-btn color="success" @click="createChat()"> Send </v-btn>
       </v-card-actions> </v-card>
 </v-dialog>
 </template>
@@ -36,9 +36,11 @@ export default {
       user_id: browserCookies.get("user_id"),
 
     };
-
-
   },
+props : {
+  order_id : Number,
+
+},
   mounted: function() {
     let loadingOrdersToast = this.$toasted.show("Loading orders...");
     axios
@@ -56,13 +58,14 @@ export default {
       });
   },
   methods: {
-    createChat: function(order_id) {
+    createChat: function() {
+
       axios
-      .get("/api/orders/" + order_id)
+      .get("/api/orders/" + this.$props.order_id)
       .then(response => {
       var receiver_id = response.data[0]['courier_id'];
-        this.$store.dispatch('createChat',{message: this.msg_content, sender_id : this.user_id, receiver : receiver_id, or_id : order_id });
-        this.$router.push("/chat/" + order_id);
+        this.$store.dispatch('createChat',{message: this.msg_content, sender_id : this.user_id, receiver : receiver_id, or_id : this.props.order_id });
+        this.$router.push("/chat/" + this.$props.order_id);
       });
 
     },
@@ -73,18 +76,20 @@ export default {
           return response.data;
         });
     },
-    ischatexist : function (o_id){
-      console.log("Is exist Called");
+    ischatexist : function (){
+      console.log(this.$props.order_id);
       var isexist = false
-      let chatref = firebase.database().ref('messages').orderByChild('OrderId').equalTo(o_id)
+      let chatref = firebase.database().ref('messages').orderByChild('OrderId').equalTo(this.$props.order_id)
       chatref.on("value", function(snapshot) {
       if(snapshot.exists())
           isexist = true
     })
     if(isexist  === true)
-      this.$router.push("/chat/"+o_id);
+      this.$router.push("/chat/"+this.$props.order_id);
   }
 
   }
 };
 </script>
+<style scope="true">
+</style>

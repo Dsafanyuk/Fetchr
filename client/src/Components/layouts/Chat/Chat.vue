@@ -47,8 +47,8 @@
 
 
 
-        <div class="chat-conversation" id="chat-conversation"  ref="chatContainer" style="max-height:300px; overflow-y: auto;">
-                <ul class="conversation-list"  v-chat-scroll tabindex="5001" >
+        <div class="chat-conversation"  style="max-height:300px;"   id="chat-conversation"  ref="chatContainer">
+                <ul class="conversation-list"  tabindex="5001" >
                     <li  v-for="message in chatMessages" class="clearfix"   v-bind:class="displayMessages(message.SenderId)">
 
                         <div class="conversation-text" >
@@ -129,7 +129,11 @@
     },
     mounted () {
       this.fetchMessages((this.$route.params.order_id))
-    //  this.$store.dispatch('loadOnlineUsers')
+      this.scrollToEnd();
+    },
+    updated ()
+    {
+      this.scrollToEnd();
     },
     components: {
       'chatroom': ChatRoom,
@@ -142,10 +146,11 @@
       },
     },
     methods: {
-      scrollToEnd: function() {
-        var container = this.$el.querySelector("#chat-conversation");
-        container.scrollTop = container.scrollHeight;
-      },
+      scrollToEnd() {
+				var container = document.querySelector(".chat-conversation");
+				var scrollHeight = container.scrollHeight;
+				container.scrollTop = scrollHeight;
+			},
 
       sendMessage () {
         if (this.content !== '') {
@@ -223,7 +228,9 @@
   background: #34d3eb
 }
 .chat-conversation{
-  width: 600px
+width: 600px;
+max-height: 300px;
+overflow: scroll;
 }
 .chat_container{
 margin-top: 100px;

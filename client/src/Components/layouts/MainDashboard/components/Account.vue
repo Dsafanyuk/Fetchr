@@ -197,12 +197,12 @@ methods : {
          this.sending = false;
          this.user.first_name =  this.editedItem.first_name
          this.user.last_name =  this.editedItem.last_name
-         this.user.email_address =  this.editedItem.email_address
+         // this.user.email_address =  this.editedItem.email_address
          this.user.room_num =  this.editedItem.room_num
          this.user.phone_number =  this.editedItem.phone_number
          browsercookies.set('first_name', this.editedItem.first_name)
          browsercookies.set('last_name', this.editedItem.last_name)
-         browsercookies.set('email_address', this.editedItem.email_address)
+         //browsercookies.set('email_address', this.editedItem.email_address)
          browsercookies.set('room_num', this.editedItem.room_num)
          browsercookies.set('phone_number', this.editedItem.phone_number)
          

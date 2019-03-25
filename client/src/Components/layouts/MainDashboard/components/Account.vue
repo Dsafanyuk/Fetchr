@@ -66,8 +66,8 @@
 
                    <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" flat @click="close">Close</v-btn>
-                      <v-btn color="blue darken-1" :disabled="!valid" :loading="sending" flat v-on:click="save">Save</v-btn>
+                      <v-btn round color="red darken-1 darken-1" flat @click="close">Close</v-btn>
+                      <v-btn round color="blue darken-1" :disabled="!valid" :loading="sending" flat v-on:click="save">Save</v-btn>
                    </v-card-actions>
                    </v-card>
                    </v-dialog>
@@ -160,10 +160,6 @@ methods : {
       if (this.$refs.form.validate()) {
         this.snackbar = true
       }
-    },
-
-    reset () {
-      this.$refs.form.reset()
     },
     
     displayCart(show) {

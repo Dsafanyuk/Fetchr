@@ -1,7 +1,6 @@
 <template>
   <v-data-table
     :items="items"
-
     :total-items="items.length"
     hide-actions
     class="elevation-1"

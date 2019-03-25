@@ -47,16 +47,17 @@
             <span>Delivered Orders: {{updatedCourierInfo.delivered}}</span>
           </div>
           <v-divider></v-divider>
-          <v-btn type="submit" color="success" class="chatButton">Chat with me!</v-btn>
+        <CreateChat></CreateChat>
         </v-card>
       </v-flex>
     </v-layout>
   </div>
 </template>
-      
+
       <script>
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios.js";
+import CreateChat from "../../Chat/CreateConversation.vue"
 
 export default {
   data() {
@@ -64,6 +65,9 @@ export default {
       items: [],
       total: 0.0,
     }
+  },
+  components: {
+    CreateChat: CreateChat,
   },
   computed: {
     orderStatus() {
@@ -142,5 +146,4 @@ export default {
 .in-progress {
   color: rgb(249, 170, 51);
 }
-</style> 
-  
+</style>

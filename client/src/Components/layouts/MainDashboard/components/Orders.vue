@@ -118,7 +118,6 @@ export default {
       .get("/api/orders/" + order_id)
       .then(response => {
       var receiver_id = response.data[0]['courier_id'];
-      alert(receiver_id);
         this.$store.dispatch('createChat',{message: this.msg_content, sender_id : this.user_id, receiver : receiver_id, or_id : order_id });
         this.$router.push("/chat/" + order_id);
       });
@@ -133,6 +132,7 @@ export default {
     },
     ischatexist : function (o_id)
     {
+      console.log("Is exist Called");
       var isexist = false
       let chatref = firebase.database().ref('messages').orderByChild('OrderId').equalTo(o_id)
       chatref.on("value", function(snapshot) {

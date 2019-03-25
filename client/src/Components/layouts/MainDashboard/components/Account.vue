@@ -2,21 +2,31 @@
    <v-app>
    <br>
       <div class="container">
-         <h3 class="v-primary">
+         <div class="v-primary display-1">
          <br>Account Overview
-         </h3>
+         </div>
          <hr>
          <div class="row">
             <!-- personal info for -->
             <div class="col-sm-12">
-               <v-form class="form-horizontal" ref="form">
-                  <div class="form-group">
-                     <v-flex sm12 md12 lg12><strong class="text-warning">First name</strong>: {{ user.first_name }}</v-flex><br>
-                     <v-flex sm12 md12 lg12><strong class="text-warning">Last name</strong>: {{ user.last_name }}</v-flex><br>
-                     <v-flex sm12 md12 lg12p><strong class="text-warning">Email address</strong>: {{ user.email_address}}</v-flex><br>
-                     <v-flex sm12 md12 lg12><strong class="text-warning">Room number</strong>: {{ user.room_num }}</v-flex><br>
-                     <v-flex sm12 md12 lg12><strong class="text-warning">Phone Number</strong>: {{ user.phone_number }}</v-flex><br>
-                  </div>
+               <v-form ref="form">
+                  <v-container >
+                     <v-flex sm12 md12 lg12 row>
+                        <div class="font-weight-bold orange--text subheading">First name</div>: {{ user.first_name }}
+                     </v-flex><br>
+                     <v-flex sm12 md12 lg12 row>
+                        <div class="font-weight-bold orange--text subheading">Last name</div>: {{ user.last_name }}
+                     </v-flex><br>
+                     <v-flex sm12 md12 lg12 row>
+                        <div class="font-weight-bold orange--text subheading">Email address</div>: {{ user.email_address}}
+                     </v-flex><br>
+                     <v-flex sm12 md12 lg12 row>
+                        <div class="font-weight-bold orange--text subheading">Room number</div>: {{ user.room_num }}
+                     </v-flex><br>
+                     <v-flex sm12 md12 lg12 row>
+                        <div class="font-weight-bold orange--text subheading">Phone Number</div>: {{ user.phone_number }}
+                     </v-flex><br>
+                  </v-container>
                   <div class="form-group text-center">
                      <v-btn rectangle color="lightened" dark type="submit" href="#" v-on:click="editItem(user)">Update Profile</v-btn>
                   </div>
@@ -29,20 +39,25 @@
                            <v-form ref="form" v-model="valid" lazy-validation>
                            <v-container grid-list-md>
                               <v-layout wrap>
-                                 <v-flex sm12 md6 lg6>
-                                    <v-text-field v-model="editedItem.first_name" :counter="15" :rules="firstNameRules" label="First Name" required></v-text-field>
+                                 <v-flex sm12 md6 lg6 column>
+                                    <div class="caption">First Name</div>
+                                    <v-text-field v-model="editedItem.first_name" :counter="15" :rules="firstNameRules" required></v-text-field>
                                  </v-flex>
                                  <v-flex sm12 md6 lg6>
-                                    <v-text-field v-model="editedItem.last_name" :counter="15" :rules="lastNameRules" label="Last Name" required></v-text-field>
+                                    <div class="caption">Last Name:</div>
+                                    <v-text-field v-model="editedItem.last_name" :counter="15" :rules="lastNameRules" required></v-text-field>
                                  </v-flex>
                                  <v-flex sm12 md12 lg9>
-                                 <v-text-field v-model="editedItem.email_address"  type="email" :rules="emailRules" label="E-mail" required></v-text-field>
+                                    <div class="caption">E-mail:</div>
+                                    <v-text-field v-model="editedItem.email_address"  type="email" :rules="emailRules" required></v-text-field>
                                  </v-flex>
                                  <v-flex sm12 md6 lg6>
-                                    <v-text-field v-model="editedItem.room_num" type="number" :counter="4" :rules="roomNumberRules" label="Room Number" required></v-text-field>
+                                    <div class="caption">Room Number:</div>
+                                    <v-text-field v-model="editedItem.room_num" type="number" :counter="4" :rules="roomNumberRules" required></v-text-field>
                                  </v-flex>
                                  <v-flex sm12 md6 lg6>
-                                    <v-text-field v-model="editedItem.phone_number" type="number" :counter="10" :rules="phoneNumberRules" label="Phone Number" required></v-text-field>
+                                    <div class="caption">Phone Number:</div>
+                                    <v-text-field v-model="editedItem.phone_number" type="number" :counter="10" :rules="phoneNumberRules" required></v-text-field>
                                  </v-flex>
                              </v-layout>
                          </v-container>
@@ -179,8 +194,8 @@ methods : {
 
    sendForm() {
       console.log(this.editedItem)
-   this.sending = true;
-   this.$store
+      this.sending = true;
+      this.$store
       .dispatch("account/editExistingUser", this.editedItem)
       .then(result => {
          this.sending = false;

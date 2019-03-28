@@ -9,17 +9,7 @@ const state = {
 };
 
 const actions = {
-  editExistingUser: ({ state, commit, disptach }, data) => {
-    console.log(data);
-    axios
-      .put(`/api/users/${browserCookies.get('user_id')}`, data)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
+  editExistingUser: ({ state, commit, dispatch }, data) => axios.put(`/api/users/${browserCookies.get('user_id')}`, data),
 };
 
 export default {

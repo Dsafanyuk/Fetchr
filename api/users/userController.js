@@ -1,7 +1,6 @@
 const Sentry = require('@sentry/node');
 const knex = require('knex')(require('../db'));
 
-const userCookie = ['first_name', 'last_name', 'phone_number', 'room_num'];
 // GET /users/{user_id}
 function showOneUser(req, res) {
   // Check user id with value at the parameter

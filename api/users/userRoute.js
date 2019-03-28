@@ -59,7 +59,7 @@ router.get('/:user_id/showInfo', verifyToken, userController.showUserById);
 router.get('/:user_id/orders', verifyToken, userController.showUserOrders);
 router.get('/:user_id/orderschat', verifyToken, userController.showOrdersForChat);
 
-router.patch('/:user_id', verifyToken, userController.updateUser);
+router.put('/:user_id', userController.editUser);
 
 router.post('/', verifyToken, userController.createUser);
 

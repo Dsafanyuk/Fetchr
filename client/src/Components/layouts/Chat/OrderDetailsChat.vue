@@ -47,23 +47,13 @@ updatedCourierInfo() {
 mounted: function() {
 this.getOrderSummary();
 },
+props : {
+  items : [],
+  total : Number,
+},
 methods: {
 getOrderSummary: function() {
-  console.log(" summary Called");
-axios
-.get(`/api/orders/${this.$route.params.order_id}/summary`)
-.then(response => {
-  let orderInfo = response.data.orderInfo[0];
 
-  this.items = response.data.productList;
-  //this.$store.commit('orders/changeStatus', orderInfo.delivery_status);
-  this.items.forEach(item => {
-    item.item_total = item.price * item.quantity;
-    this.total += item.item_total;
-  });
-//  this.$store.commit('orders/changeOrder', this.$route.query.order);
-  //this.$store.dispatch('orders/getInfo', this.$route.query.order, {root:true})
-});
 },
 }
 };

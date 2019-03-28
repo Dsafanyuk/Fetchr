@@ -24,7 +24,6 @@ function showUserOrders(req, res) {
   knex('orders')
     .select('*')
     .where('customer_id', req.params.user_id)
-    .orWhere('courier_id', req.params.user_id)
     .orderBy('order_id', 'desc')
     .then((rows) => {
       res.send(rows);
@@ -34,6 +33,26 @@ function showUserOrders(req, res) {
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
     });
+}
+
+// GET /users/{user_id}/orderschat
+function showOrdersForChat(req, res) {
+
+  knex('orders').where(function() {
+  this.where('customer_id', req.params.user_id)
+  .orWhere('courier_id', req.params.user_id)
+}).havingIn('delivery_status', ['in-progress','delivered'])
+.then((rows) => {
+
+  res.send(rows);
+})
+.catch((err) => {
+
+  res.status(500).send({
+    message: `${err}`,
+  }); // FOR DEBUGGING ONLY, dont send exact message in prod
+});
+
 }
 
 // POST /user
@@ -195,5 +214,6 @@ module.exports = {
   unfavorite,
   addBalance,
   checkBalance,
-  showUserById
+  showUserById,
+  showOrdersForChat
 };

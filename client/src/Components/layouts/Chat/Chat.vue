@@ -2,33 +2,31 @@
   <body >
 
   <v-layout row class="chat_container" >
+    <loading :active.sync="isChatLoading"
+             :is-full-page="fullPage"
+             :can-cancel="true"
+             :on-cancel="onCancel"
+
+            >
+    </loading>
     <v-flex xs12 sm3 md3 offset-sm1>
-
-
-      <chatroom @showRoom="fetchMessages"> </chatroom>
+      <chatroom @fetchMessages="fetchMessages" model="fullPage"> </chatroom>
     </v-flex>
     <div col-md-6>
-      <v-layout
-        v-scroll:#scroll-target="onScroll"
-        column
-        align-center
-        justify-center
 
-        >
-
-        </v-layout>
       <div class="card-box" >
+
         <!-- Order Details -->
-        <div class="text-xs-right">
+        <div class="text-xs-left">
      <v-dialog
-       v-model="dialog"
+       v-model="ORDER_DETAILS_DIAGLOG"
        width="500"
      >
        <template v-slot:activator="{ on }">
          <v-btn
            color="#344955"
            dark
-           v-on="on"
+           v-on:click="showOrderDetails"
          >
            Order Details
          </v-btn>
@@ -36,14 +34,14 @@
        </template>
 
        <v-card>
-         <OrderDetailsChat > </OrderDetailsChat>
+         <OrderDetailsChat :items ="items" :total = "total" > </OrderDetailsChat>
        </v-card>
      </v-dialog>
    </div>
 <!-- End Of Order Details -->
 
           <!--  <h4 class="m-t-0 m-b-20 header-title"><b>Chat</b></h4>-->
-        </v-flex>
+  </v-flex>
 
 
 
@@ -94,6 +92,7 @@
                         </v-text-field>
                       </v-flex>
 
+
                     </v-layout>
       </div>
 
@@ -106,20 +105,29 @@
 
 <script>
   import ChatRoom from './ChatRoom.vue'
+  import OrderDetailsChat from "./OrderDetailsChat.vue"
   import * as firebase from 'firebase'
   import browserCookies from "browser-cookies";
-  import OrderDetailsChat from "./OrderDetailsChat.vue"
+  import axios from "../../../axios";
+  import Loading from 'vue-loading-overlay';
+  import 'vue-loading-overlay/dist/vue-loading.css';
+
   export default {
     data () {
       return {
         username :  browserCookies.get("username"),
         content: '',
         chatMessages: [],
-        emojiPanel: false,
         currentRef: {},
         loading: false,
         totalChatHeight: 0,
         currentChatRoom : null,
+        items: [],
+        total: 0.0,
+        ORDER_DETAILS_DIAGLOG : false,
+        isChatLoading: false,
+        fullPage: true,
+
       }
     },
     props: [
@@ -128,7 +136,7 @@
     created(){
     },
     mounted () {
-      this.fetchMessages((this.$route.params.order_id))
+      this.fetchMessages()
       this.scrollToEnd();
     },
     updated ()
@@ -165,9 +173,13 @@
         }
       },
 
-      fetchMessages(orderId) {
-
-        let refmessages = firebase.database().ref('messages').orderByChild('OrderId').equalTo(parseInt(orderId)).limitToLast(20)
+      fetchMessages() {
+        this.isChatLoading = true;
+        setTimeout(() => {
+    this.isLoading = false
+  },5000)
+        let orderId = parseInt(this.$route.params.order_id)
+        let refmessages = firebase.database().ref('messages').orderByChild('OrderId').equalTo(orderId).limitToLast(20)
         let temp_data = []
         refmessages.on("child_added", function(snapshot) {
           var data = snapshot.val()
@@ -176,13 +188,12 @@
 
         })
         this.chatMessages = temp_data
-        console.log(this.chatMessages);
+
         this.scrollToEnd()
       },
       // Messages Left & right
       displayMessages(SenderId)
       {
-        console.log(browserCookies.get("user_id"));
         if( SenderId == browserCookies.get("user_id") )
           return "mymessage"
       },
@@ -207,7 +218,28 @@
         .get("/api/orders/" + this.$route.params.order_id +  "/showInfo")
         .then(response => {
         });
+      },
+      showOrderDetails (){
+        this.ORDER_DETAILS_DIAGLOG = true;
+        axios
+        .get(`/api/orders/${this.$route.params.order_id}/summary`)
+        .then(response => {
+          let orderInfo = response.data.orderInfo[0];
+
+          this.items = response.data.productList;
+          this.items.forEach(item => {
+            item.item_total = item.price * item.quantity;
+            this.total += item.item_total;
+          });
+        });
+
+
+      },
+      onCancel ()
+      {
+        console.log("On CANCEL");
       }
+
     }
   }
 </script>

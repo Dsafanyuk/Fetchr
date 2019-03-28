@@ -57,6 +57,7 @@ router.get('/:user_id/',  verifyToken, userController.showOneUser); // eslint-di
 router.get('/:user_id/showInfo', verifyToken, userController.showUserById);
 
 router.get('/:user_id/orders', verifyToken, userController.showUserOrders);
+router.get('/:user_id/orderschat', verifyToken, userController.showOrdersForChat);
 
 router.patch('/:user_id', verifyToken, userController.updateUser);
 

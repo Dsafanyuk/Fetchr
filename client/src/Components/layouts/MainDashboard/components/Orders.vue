@@ -116,7 +116,6 @@ export default {
     },
     ischatexist : function (o_id)
     {
-      console.log("Is exist Called");
       var isexist = false
       let chatref = firebase.database().ref('messages').orderByChild('OrderId').equalTo(o_id)
       chatref.on("value", function(snapshot) {

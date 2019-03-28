@@ -5,7 +5,8 @@
             :on-cancel="onCancel"
             :is-full-page="fullPage">
   </loading>
-<v-btn slot="default"  @click="ischatexist()" color="primary" dark> Chat </v-btn>
+
+<v-btn   icon slot="default"  @click="ischatexist()"> <v-icon>far fa-comment</v-icon></v-btn>
 <v-dialog v-model="dialog" persistent max-width="600px">
 
   <v-card>
@@ -78,7 +79,7 @@ props : {
       .get("/api/orders/" + this.$props.order_id)
       .then(response => {
       var receiver_id = response.data[0]['courier_id'];
-        this.$store.dispatch('createChat',{message: this.msg_content, sender_id : this.user_id, receiver : receiver_id, or_id : this.props.order_id });
+        this.$store.dispatch('createChat',{message: this.msg_content, sender_id : this.user_id, receiver : receiver_id, or_id : this.$props.order_id });
         this.$router.push("/chat/" + this.$props.order_id);
       });
 

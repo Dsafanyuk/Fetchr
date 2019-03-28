@@ -1,16 +1,9 @@
 <template>
   <v-card>
-    <v-toolbar color="#344955" dark>
-      <v-toolbar-side-icon></v-toolbar-side-icon>
-      <v-spacer></v-spacer>
 
-      <v-btn icon>
-        <v-icon>search</v-icon>
-      </v-btn>
-    </v-toolbar>
 
     <v-list subheader>
-      <v-subheader>Recent chat</v-subheader>
+      <v-subheader>Recent orders</v-subheader>
       <v-list-tile
         v-for="(chat, index) in chats"
         :key="chat.order_id"
@@ -21,8 +14,9 @@
           <v-icon>perm_identity</v-icon>
         </v-list-tile-avatar>
 
-        <v-list-tile-content>
-          <v-list-tile-title v-html="chat.userInfo"></v-list-tile-title>
+        <v-list-tile-content
+        >
+          <v-list-tile-title >{{"# "+ chat.order_id + "-" + chat.userInfo }}</v-list-tile-title>
         </v-list-tile-content>
 
         <v-list-tile-action>
@@ -54,23 +48,25 @@
     created () {
       // Get all the orderId where the current user is involved
       axios
-        .get("/api/users/" + browserCookies.get("user_id") + "/orders")
+        .get("/api/users/" + browserCookies.get("user_id") + "/orderschat")
         .then(response => {
+
           this.$store.dispatch ('loadChats', {orders : response.data})
         });
 
     },
     computed: {
       chats () {
-        console.log(this.$store.getters.chats);
+        console.log(this.$store.getters.chats)
         return  this.$store.getters.chats
 
       }
     },
     methods :{
       loadChatRoom: function(order_id, receiver_id) {
-        browserCookies.get("current_receiver")
         this.$router.push("/chat/" + order_id);
+        this.$emit('fetchMessages')
+
 
       }
 

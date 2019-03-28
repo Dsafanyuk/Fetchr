@@ -22,7 +22,12 @@ export default {
     MainFooter: MainFooter,
 
 
-  }
+  },
+    mounted () {
+      if (typeof this.$route.params.order_id === 'undefined' || this.$route.params.order_id === null) {
+        this.$router.push('/dashboard')
+      }
+    }
 };
 </script>
 <style>

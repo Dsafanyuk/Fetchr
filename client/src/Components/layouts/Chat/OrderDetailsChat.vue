@@ -1,10 +1,5 @@
 <template>
-  <v-data-table
-    :items="items"
-    :total-items="items.length"
-    hide-actions
-    class="elevation-1"
-  >
+  <v-data-table :items="items" :total-items="items.length" hide-actions class="elevation-1">
     <template slot="items" slot-scope="props">
       <td align="center">
         <img height="100px" :src="props.item.product_url" class="checkout-img">
@@ -18,11 +13,8 @@
         <strong>Total</strong>
       </td>
       <td class="text-xs-left" :colspan="4">${{total.toFixed(2)}}</td>
-
-
     </template>
   </v-data-table>
-
 </template>
 
 <script>
@@ -31,33 +23,30 @@ import axios from "../../../axios";
 
 export default {
   data() {
-      return {
-        items: [],
-        total: 0.0,
-}
-},
-computed: {
-orderStatus() {
-//return this.$store.getters["orders/status"];
-},
-updatedCourierInfo() {
-//return this.$store.getters["orders/info"];
-},
-},
-mounted: function() {
-this.getOrderSummary();
-},
-props : {
-  items : [],
-  total : Number,
-},
-methods: {
-getOrderSummary: function() {
-
-},
-}
+    return {
+      // items: [],
+      // total: 0.0
+    };
+  },
+  computed: {
+    orderStatus() {
+      //return this.$store.getters["orders/status"];
+    },
+    updatedCourierInfo() {
+      //return this.$store.getters["orders/info"];
+    }
+  },
+  mounted: function() {
+    this.getOrderSummary();
+  },
+  props: {
+    items: Array,
+    total: Number
+  },
+  methods: {
+    getOrderSummary: function() {}
+  }
 };
 </script>
 <style scoped lang="css">
-
 </style>

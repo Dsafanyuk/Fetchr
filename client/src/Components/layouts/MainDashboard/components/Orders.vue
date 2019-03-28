@@ -17,7 +17,7 @@
           <td class="text-xs-center">{{ props.item.delivery_status }}</td>
           <td class="text-xs-center">{{ props.item.order_total.toFixed(2) }}</td>
           <td>
-            <CreateChat :order_id="order.order_id"></CreateChat>
+            <CreateChat :order_id="props.item.order_id"></CreateChat>
           </td>
           <td>
             <v-btn

@@ -41,22 +41,19 @@ function showUserOrders(req, res) {
 
 // GET /users/{user_id}/orderschat
 function showOrdersForChat(req, res) {
-
-  knex('orders').where(function() {
-  this.where('customer_id', req.params.user_id)
-  .orWhere('courier_id', req.params.user_id)
-}).havingIn('delivery_status', ['in-progress','delivered'])
-.then((rows) => {
-
-  res.send(rows);
-})
-.catch((err) => {
-
-  res.status(500).send({
-    message: `${err}`,
-  }); // FOR DEBUGGING ONLY, dont send exact message in prod
-});
-
+  knex('orders')
+    .where(function () {
+      this.where('customer_id', req.params.user_id).orWhere('courier_id', req.params.user_id);
+    })
+    .havingIn('delivery_status', ['in-progress', 'delivered'])
+    .then((rows) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: `${err}`,
+      }); // FOR DEBUGGING ONLY, dont send exact message in prod
+    });
 }
 
 // POST /user
@@ -207,19 +204,19 @@ function checkBalance(req, res) {
     });
 }
 // GET /users/{user_id}/showInfo
-function showUserById(req, res)
-{
-    knex('users')
-      .select('first_name','last_name')
-      .where('user_id', req.params.user_id)
-      .then((rows) => {
-        res.send(rows).status(200);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message: `${err}`,
-        });
+function showUserById(req, res) {
+  knex('users')
+    .select('first_name', 'last_name')
+    .where('user_id', req.params.user_id)
+    .then((rows) => {
+      res.send(rows).status(200);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: `${err}`,
       });
+    });
+}
 
 // PUT /users/:user_id
 function editUser(req, res) {
@@ -255,4 +252,4 @@ module.exports = {
   showUserById,
   showOrdersForChat,
   editUser,
-}
+};

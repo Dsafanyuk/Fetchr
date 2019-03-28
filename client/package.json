@@ -10,7 +10,7 @@
     "dev:prod": "NODE_ENV=production webpack-dev-server --open --hot --config webpack.prod.js --mode=production --compress"
   },
   "dependencies": {
-    "@sentry/browser": "^4.6.4",
+    "@sentry/browser": "^4.6.6",
     "acorn": "^6.1.1",
     "apexcharts": "^3.6.3",
     "axios": "^0.18.0",

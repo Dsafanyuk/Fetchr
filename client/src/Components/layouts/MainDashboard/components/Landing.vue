@@ -37,13 +37,13 @@ export default {
     };
   },
   mounted: function loadProducts() {
-    let loadingProductsToast = this.$store.getters['notification/loadingProducts'];
-    // Vue.toasted.show("Loading products...", {
-    //   theme: 'bubble',
-    //   duration: 4000,
-    //   position: 'top-center',
-    //   icon: 'hourglass_empty'
-    // });
+    let loadingProductsToast =
+    Vue.toasted.show("Loading products...", {
+      theme: 'bubble',
+      duration: 4000,
+      position: 'top-center',
+      icon: 'hourglass_empty'
+    });
 
     axios
       .get(`/api/products`)

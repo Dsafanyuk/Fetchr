@@ -100,6 +100,24 @@
           </div>
         </div>
       </section>
+      <section class="section">
+        <div class="container"> 
+          <v-carousel
+            :cycle=false
+            :dark=true
+            next-icon=false
+            prev-icon=false
+          >
+            <v-carousel-item
+              v-for="(gif, i) in gifs"
+              :key="i"
+              :src="gif.src"
+              transition="fade"
+              reverse-transition="fade">
+            </v-carousel-item>
+          </v-carousel>
+        </div>
+      </section>
       <section class="features section text-center">
         <div class="container">
           <div class="features-inner section-inner has-top-divider">
@@ -486,10 +504,24 @@
 </template>
 
 <script>
+import AddToCart from "./assets/AddToCart.gif";
+import AddToFavorites from "./assets/AddToFavorites.gif";
+import AddToWallet from "./assets/AddToWallet.gif";
+import CheckOut from "./assets/CheckOut.gif";
 export default {
   data() {
-    return {};
-  }
+    return {
+      gifs: Array,
+    };
+  },
+  mounted: function() {
+    this.gifs = [
+                { src: AddToCart },
+                { src: AddToFavorites },
+                { src: AddToWallet },
+                { src: CheckOut },
+            ]
+  },
 };
 </script>
 

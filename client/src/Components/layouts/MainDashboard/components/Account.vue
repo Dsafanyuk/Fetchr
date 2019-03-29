@@ -38,9 +38,6 @@
               <br>
             </v-container>
             <div class="form-group text-center">
-<<<<<<< HEAD
-              <v-btn rectangle color="lightened" dark v-on:click="editItem(user)">Update Profile</v-btn>
-=======
               <v-btn
                 rectangle
                 color="lightened"
@@ -49,7 +46,6 @@
                 href="#"
                 v-on:click="editItem(user)"
               >Update Profile</v-btn>
->>>>>>> 04d7315d805afda372807397dd0efd411d0aabad
             </div>
             <v-dialog v-model="dialog" max-width="500px">
               <v-card>

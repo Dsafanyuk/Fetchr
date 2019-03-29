@@ -1,4 +1,3 @@
-const Sentry = require('@sentry/node');
 const knex = require('knex')(require('../db'));
 
 function updateAccount(user) {

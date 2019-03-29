@@ -51,18 +51,8 @@ const mutations = {
             })}
     }
 }
-const getters = {
-    loadingProducts(state) {
-        return Vue.toasted.show("Loading products...", {
-                    theme: 'bubble',
-                    duration: 4000,
-                    position: 'top-center',
-                    icon: 'hourglass_empty'
-                });
-    },
-}
+
 export default {
     namespaced: true,
     mutations,
-    getters,
 }

@@ -12,6 +12,7 @@ import App from './App.vue';
 import store from './store';
 import router from './router';
 import IdleVue from 'idle-vue';
+import browserCookies from "browser-cookies";
 import 'vuetify/dist/vuetify.min.css';
 
 Vue.use(VueApexCharts);
@@ -58,7 +59,7 @@ const eventsHub = new Vue();
 
 Vue.use(IdleVue, {
   eventEmitter: eventsHub,
-  idleTime: 3 * 60 * 1000,
+  idleTime: 5000,
 });
 
 new Vue({
@@ -68,8 +69,20 @@ new Vue({
   router,
   render: h => h(App),
   onIdle() {
-    store.dispatch('login/logout');
-    router.push('/login');
+    // Check if user is logged in, then log out
+    if(
+      store.getters['login/isLoggedIn']
+      && browserCookies.get('token')
+      && browserCookies.get('user_id')
+    ) {
+        // Clear cookies
+        let allCookies = browserCookies.all();
+        for (let cookieName in allCookies) {
+          browserCookies.erase(cookieName);
+        }
+        store.dispatch('login/logout');
+        router.push('/login');
+    }
   },
   onActive() {
     this.messageStr = 'Hello'

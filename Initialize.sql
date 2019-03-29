@@ -170,7 +170,7 @@ INSERT INTO `products` VALUES (55, 'Camera', 47.92, 'electronics', 'https://fetc
 INSERT INTO `products` VALUES (56, 'Candle', 0.91, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/candle.jpg', 'TRUE');
 INSERT INTO `products` VALUES (57, 'Candy Wrapper', 0.45, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/candy_wrapper.jpg', 'TRUE');
 INSERT INTO `products` VALUES (58, 'Canvas', 4.81, 'school_supplies', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/canvas.jpg', 'TRUE');
-INSERT INTO `products` VALUES (59, 'Car', 937.11, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/car.jpg', 'TRUE');
+INSERT INTO `products` VALUES (59, 'Car', 2637.11, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/car.jpg', 'TRUE');
 INSERT INTO `products` VALUES (60, 'Carrots', 5.80, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/carrots.jpg', 'TRUE');
 INSERT INTO `products` VALUES (61, 'Cat', 14.49, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/cat.jpg', 'TRUE');
 INSERT INTO `products` VALUES (62, 'Cd', 0.24, 'electronics', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/cd.jpg', 'TRUE');

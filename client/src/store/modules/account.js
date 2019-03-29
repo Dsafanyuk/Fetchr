@@ -5,32 +5,15 @@ const browserCookies = require('browser-cookies');
 const user = browserCookies.get('user_id');
 
 const state = {
-  users: [],
-};
-
-const getters = {
-  showUser(state) {
-    return state.users;
-  },
+  user: {},
 };
 
 const actions = {
-    editExistingUser: ({ state, commit, dispatch }, data) => {
-      console.log(data)
-       axios
-          .post("/api/users/"+ browserCookies.get("user_id") + "/update", data)
-          .then((response) => {
-             console.log(response);
-          })
-          .catch((err) => {
-             console.log(err);
-          });
-   },
+  editExistingUser: ({ state, commit, dispatch }, data) => axios.put(`/api/users/${browserCookies.get('user_id')}`, data),
 };
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-  };
+  namespaced: true,
+  state,
+  actions,
+};

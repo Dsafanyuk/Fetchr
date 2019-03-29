@@ -29,10 +29,10 @@ router.post(
       })
       .isNumeric()
       .trim(),
-    check('first_name', 'Cannot have numbers')
+    check('first_name', 'Cannot have numbers or special characters')
       .isAlpha()
       .trim(),
-    check('last_name', 'Cannot have numbers')
+    check('last_name', 'Cannot have numbers or special characters')
       .isAlpha()
       .trim(),
   ],
@@ -57,10 +57,8 @@ router.get('/:user_id/', verifyToken, userController.showOneUser); // eslint-dis
 
 router.get('/:user_id/orders', verifyToken, userController.showUserOrders);
 
-router.patch('/:user_id', verifyToken, userController.updateUser);
+router.put('/:user_id', userController.editUser);
 
 router.post('/', verifyToken, userController.createUser);
-
-router.post('/:user_id/update', userController.editUser);
 
 module.exports = router;

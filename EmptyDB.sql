@@ -170,7 +170,7 @@ INSERT INTO `products` VALUES (55, 'Camera', 47.92, 'electronics', 'https://fetc
 INSERT INTO `products` VALUES (56, 'Candle', 0.91, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/candle.jpg', 'TRUE');
 INSERT INTO `products` VALUES (57, 'Candy Wrapper', 0.45, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/candy_wrapper.jpg', 'TRUE');
 INSERT INTO `products` VALUES (58, 'Canvas', 4.81, 'school_supplies', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/canvas.jpg', 'TRUE');
-INSERT INTO `products` VALUES (59, 'Car', 937.11, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/car.jpg', 'TRUE');
+INSERT INTO `products` VALUES (59, 'Car', 2637.11, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/car.jpg', 'TRUE');
 INSERT INTO `products` VALUES (60, 'Carrots', 5.80, 'snacks', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/carrots.jpg', 'TRUE');
 INSERT INTO `products` VALUES (61, 'Cat', 14.49, 'misc', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/cat.jpg', 'TRUE');
 INSERT INTO `products` VALUES (62, 'Cd', 0.24, 'electronics', 'https://fetchrapp.s3.amazonaws.com/Product%20Photos/cd.jpg', 'TRUE');
@@ -387,6 +387,23 @@ SELECT products.*,  ifnull(sum(order_summary.quantity),0) as 'total_sold'
   FROM `products` left OUTER JOIN fetchr_db.order_summary
     ON order_summary.product_id = products.product_id
  group by product_id;
+
+drop procedure if exists fetchr_db.prodsSoldByCat;
+delimiter //
+create procedure fetchr_db.prodsSoldByCat()
+begin
+select group_concat( concat( 'sum(if(category = ''', t.category, ''', quantity, 0)) as ', t.category))
+  into @pivot
+  from (select distinct category from fetchr_db.products) t;
+  
+set @pivot = concat('select ', @pivot, ' from fetchr_db.products join fetchr_db.order_summary on products.product_id = order_summary.product_id');
+
+PREPARE statement FROM @pivot;
+EXECUTE statement;
+DEALLOCATE PREPARE statement;
+end//
+delimiter ;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

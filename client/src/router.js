@@ -65,26 +65,42 @@ const routes = [
   {
     path: '/admin',
     component: AdminLayout,
+    beforeEnter: (to, from, next) => {
+        if(browserCookies.get('is_admin') == true) {
+            if (to.path == '/admin') {
+                next({ path: '/admin/dashboard' });
+            } else {
+                next();
+            }
+        } else {
+            next({ path: '/login'});
+        }
+    },
     children: [
       {
         path: 'dashboard',
         component: AdminDashboard,
+        beforeEnter: requireAuth,
       },
       {
         path: 'users',
         component: AdminUsers,
+        beforeEnter: requireAuth,
       },
       {
         path: 'users/manage',
         component: AdminManageUsers,
+        beforeEnter: requireAuth,
       },
       {
         path: 'products',
         component: AdminProducts,
+        beforeEnter: requireAuth,
       },
       {
         path: 'products/manage',
         component: AdminManageProducts,
+        beforeEnter: requireAuth,
       },
     ],
   },

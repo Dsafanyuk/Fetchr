@@ -19,6 +19,7 @@ import ShoppingCart from "../ShoppingCart.vue";
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios";
 import Toasted from "vue-toasted";
+import Vue from "vue"
 
 export default {
   props: ["search", "selectedCategory"],
@@ -36,7 +37,14 @@ export default {
     };
   },
   mounted: function loadProducts() {
-    let loadingProductsToast = this.$toasted.show("Loading products...");
+    let loadingProductsToast = this.$store.getters['notification/loadingProducts'];
+    // Vue.toasted.show("Loading products...", {
+    //   theme: 'bubble',
+    //   duration: 4000,
+    //   position: 'top-center',
+    //   icon: 'hourglass_empty'
+    // });
+
     axios
       .get(`/api/products`)
       .then(response => {
@@ -48,7 +56,12 @@ export default {
         if (error.response) {
           console.log(error);
           loadingProductsToast.goAway();
-          this.$toasted.error("Something went wrong");
+          Vue.toasted.error("Something went wrong", {
+            theme: 'bubble',
+            duration: 4000,
+            position: 'top-center',
+            icon: 'report_problem'
+          });
         }
       });
   },

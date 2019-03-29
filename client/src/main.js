@@ -11,6 +11,7 @@ import * as Sentry from '@sentry/browser';
 import App from './App.vue';
 import store from './store';
 import router from './router';
+import IdleVue from 'idle-vue';
 import 'vuetify/dist/vuetify.min.css';
 
 Vue.use(VueApexCharts);
@@ -52,10 +53,27 @@ Vue.use(Vuetify, {
   },
 });
 Vue.use(Vuex);
+
+const eventsHub = new Vue();
+
+Vue.use(IdleVue, {
+  eventEmitter: eventsHub,
+  idleTime: 3 * 60 * 1000,
+});
+
 new Vue({
   el: '#app',
   template: '<App/>',
   store,
   router,
   render: h => h(App),
+  onIdle() {
+    console.log('IDLE')
+    store.dispatch('login/logout');
+    router.push('/login');
+  },
+  onActive() {
+    console.log('ACTIVE')
+    this.messageStr = 'Hello'
+  }
 });

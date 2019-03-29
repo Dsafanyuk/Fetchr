@@ -59,7 +59,7 @@ const eventsHub = new Vue();
 
 Vue.use(IdleVue, {
   eventEmitter: eventsHub,
-  idleTime: 5000,
+  idleTime: 5 * 60 * 5000,
 });
 
 new Vue({

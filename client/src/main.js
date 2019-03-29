@@ -68,12 +68,10 @@ new Vue({
   router,
   render: h => h(App),
   onIdle() {
-    console.log('IDLE')
     store.dispatch('login/logout');
     router.push('/login');
   },
   onActive() {
-    console.log('ACTIVE')
     this.messageStr = 'Hello'
   }
 });

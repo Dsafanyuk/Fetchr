@@ -75,6 +75,7 @@ props : {
 },
   methods: {
     createChat: function() {
+
       axios
       .get("/api/orders/" + this.$props.order_id)
       .then(response => {
@@ -92,6 +93,7 @@ props : {
         });
     },
     ischatexist : function (){
+
       var self = this
       var isexist = false
 

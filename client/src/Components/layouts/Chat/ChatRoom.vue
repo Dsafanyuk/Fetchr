@@ -57,7 +57,7 @@
     },
     computed: {
       chats () {
-        console.log(this.$store.getters.chats)
+    
         return  this.$store.getters.chats
 
       }

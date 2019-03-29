@@ -23,29 +23,29 @@ import axios from "../../../axios";
 
 export default {
   data() {
-    return {
-      // items: [],
-      // total: 0.0
-    };
-  },
-  computed: {
-    orderStatus() {
-      //return this.$store.getters["orders/status"];
-    },
-    updatedCourierInfo() {
-      //return this.$store.getters["orders/info"];
-    }
-  },
-  mounted: function() {
-    this.getOrderSummary();
-  },
-  props: {
-    items: Array,
-    total: Number
-  },
-  methods: {
-    getOrderSummary: function() {}
-  }
+      return {
+}
+},
+computed: {
+orderStatus() {
+//return this.$store.getters["orders/status"];
+},
+updatedCourierInfo() {
+//return this.$store.getters["orders/info"];
+},
+},
+mounted: function() {
+this.getOrderSummary();
+},
+props : {
+  items : Array,
+  total : Number,
+},
+methods: {
+getOrderSummary: function() {
+
+},
+}
 };
 </script>
 <style scoped lang="css">

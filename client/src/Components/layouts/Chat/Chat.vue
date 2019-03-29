@@ -175,9 +175,6 @@
 
       fetchMessages() {
         this.isChatLoading = true;
-        setTimeout(() => {
-    this.isLoading = false
-  },5000)
         let orderId = parseInt(this.$route.params.order_id)
         let refmessages = firebase.database().ref('messages').orderByChild('OrderId').equalTo(orderId).limitToLast(20)
         let temp_data = []

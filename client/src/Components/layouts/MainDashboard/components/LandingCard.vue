@@ -38,18 +38,16 @@
             <v-btn
               v-if="inCart"
               id="cart_btn"
-              depressed
               block
               color="accent"
-              v-on:click="removeItem(product)"
+              v-on:click="incQuantity(product)"
               :ripple="false"
             >
-              <v-icon medium>check</v-icon>
+              <v-icon medium color="white">plus_one</v-icon>
             </v-btn>
             <v-btn
-              v-if="!(inCart)"
+              v-if="!inCart"
               id="cart_btn"
-              depressed
               block
               color="accent"
               v-on:click="addItem"
@@ -68,7 +66,7 @@
 import axios from "../../../../axios";
 import Toasted from "vue-toasted";
 import browserCookies from "browser-cookies";
-import lozad from 'lozad';
+import lozad from "lozad";
 
 export default {
   props: {
@@ -83,8 +81,7 @@ export default {
   },
   data() {
     return {
-      isFavorite: this.product.is_favorite,
-      productDetail: this.product.is_favorite,
+      isFavorite: this.product.is_favorite
     };
   },
   components: {},
@@ -155,13 +152,17 @@ export default {
     },
     // Add item to cart
     addItem: function() {
-      this.$toasted.success("Added to cart").goAway(1000);
+      this.$toasted
+        .success(`${this.product.product_name} added to cart`)
+        .goAway(1500);
       this.$store.commit("cart/addItem", this.product);
-      this.$forceUpdate();
     },
-    // Remove an item from cart
-    removeItem: function(product) {
-      this.$store.commit("cart/removeItem", product);
+
+    incQuantity: function(product) {
+      this.$toasted
+        .success(`${this.product.product_name} added to cart`)
+        .goAway(1500);
+      this.$store.commit("cart/incQuantity", product);
     }
   }
 };

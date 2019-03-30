@@ -79,7 +79,11 @@ export default {
         this.isLoading = false;
         if (error.response) {
           console.log(error);
-          this.$toasted.error("Something went wrong");
+          this.$toasted.error("Something went wrong", {
+            theme: 'bubble',
+            position: 'top-center',
+            icon: 'report_problem',
+          }).goAway(1000);
         }
       });
   },

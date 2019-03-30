@@ -19,7 +19,6 @@ import ShoppingCart from "../ShoppingCart.vue";
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios";
 import Toasted from "vue-toasted";
-import Vue from "vue"
 
 export default {
   props: ["search", "selectedCategory"],
@@ -38,7 +37,7 @@ export default {
   },
   mounted: function loadProducts() {
     let loadingProductsToast =
-    Vue.toasted.show("Loading products...", {
+    this.$toasted.show("Loading products...", {
       theme: 'bubble',
       duration: 4000,
       position: 'top-center',
@@ -56,7 +55,7 @@ export default {
         if (error.response) {
           console.log(error);
           loadingProductsToast.goAway();
-          Vue.toasted.error("Something went wrong", {
+          this.$toasted.error("Something went wrong", {
             theme: 'bubble',
             duration: 4000,
             position: 'top-center',

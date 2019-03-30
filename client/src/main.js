@@ -14,6 +14,7 @@ import router from './router';
 import IdleVue from 'idle-vue';
 import browserCookies from "browser-cookies";
 import 'vuetify/dist/vuetify.min.css';
+import * as firebase from 'firebase';
 
 Vue.use(VueApexCharts);
 Vue.component('apexchart', VueApexCharts);
@@ -34,10 +35,13 @@ Vue.use(
   VueSocketio,
   io(
     process.env.NODE_ENV === 'production' ? 'https://fetchrapp.com:3000' : 'http://127.0.0.1:3000',
+    // ,
+    // {
+    //   transports: ['websocket'],
+    // },
   ),
   { store },
 );
-
 Vue.use(VueApexCharts);
 Vue.component('apexchart', VueApexCharts);
 
@@ -86,5 +90,15 @@ new Vue({
   },
   onActive() {
     this.messageStr = 'Hello'
-  }
+  },
+  created() {
+    firebase.initializeApp({
+      apiKey: 'AIzaSyAMV114OOLoOo0rIRzmLo4WR_S_Q6G-P6o',
+      authDomain: 'fetchr-768e2.firebaseapp.com',
+      databaseURL: 'https://fetchr-768e2.firebaseio.com',
+      projectId: 'fetchr-768e2',
+      storageBucket: 'fetchr-768e2.appspot.com',
+      messagingSenderId: '981262313357',
+    });
+  },
 });

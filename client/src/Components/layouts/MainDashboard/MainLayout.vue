@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <MainHeader v-model="search" @selectedCategory="selectedCategory = $event"></MainHeader>
-    <router-view :search="search" :selectedCategory="selectedCategory"></router-view>
+    <router-view id="main" :search="search" :selectedCategory="selectedCategory"></router-view>
     <MainFooter></MainFooter>
   </v-app>
 </template>
@@ -24,12 +24,15 @@ export default {
 };
 </script>
 <style>
-@import "/src/Components/assets/css/bootstrap.min.css";
 .toasted.bubble .action {
   color: white;
 }
 .toasted.bubble {
   background-color: #4a6572;
+}
+
+#main {
+  flex: 1;
 }
 </style>
 

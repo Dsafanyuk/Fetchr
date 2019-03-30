@@ -8,7 +8,7 @@
         <tr>
 
 
-          <td @click="toggleDialog(props.item)" ><span>{{props.item.order_id}}</span></td>
+          <td @click="toggleDialog(props.item)" >{{props.item.order_id}}</span></td>
           <td @click="toggleDialog(props.item)">{{props.item.first_name}}</td>
           <td @click="toggleDialog(props.item)">{{props.item.room_num}}</td>
           <td @click="toggleDialog(props.item)">{{props.item.time_created}}</td>

@@ -53,11 +53,11 @@
     </v-btn>
   </v-container>
 </template>
-      
+
 <script>
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios.js";
-import CreateChat from "../../Chat/CreateConversation.vue";
+import CreateChat from "../../MainDashboard/components/ChatCreateConversation.vue";
 
 export default {
   data() {

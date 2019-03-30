@@ -6,7 +6,7 @@
             :is-full-page="fullPage">
   </loading>
 
-<v-btn   icon slot="default"  @click="ischatexist()"> <v-icon>far fa-comment</v-icon></v-btn>
+<v-btn   icon slot="default"  @click="isChatExist()"> <v-icon>far fa-comment</v-icon></v-btn>
 <v-dialog v-model="dialog" persistent max-width="600px">
 
   <v-card>
@@ -34,7 +34,7 @@
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import browserCookies from "browser-cookies";
-import axios from "../../../axios";
+import axios from "../../../../axios";
 import {mapActions} from "vuex";
 import * as firebase from 'firebase'
 
@@ -54,22 +54,6 @@ props : {
   order_id : Number,
 
 },
-  mounted: function() {
-    let loadingOrdersToast = this.$toasted.show("Loading orders...");
-    axios
-      .get("/api/users/" + browserCookies.get("user_id") + "/orders")
-      .then(response => {
-        this.orders = response.data;
-        loadingOrdersToast.text("Orders loaded!").goAway(500);
-      })
-      .catch(error => {
-        if (error.response) {
-          console.log(error);
-          loadingProductsToast.goAway();
-          this.$toasted.error("Something went wrong");
-        }
-      });
-  },
   components: {
     Loading
 },
@@ -85,14 +69,8 @@ props : {
       });
 
     },
-    getCourierId: function(courier_id) {
-      return axios
-        .get("/api/orders/" + courier_id)
-        .then(response => {
-          return response.data;
-        });
-    },
-    ischatexist : function (){
+
+    isChatExist : function (){
 
       var self = this
       var isexist = false

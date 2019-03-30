@@ -30,6 +30,8 @@ const ChatModule = {
           // Get The chat keys using the Order Id
           let chatref = firebase.database().ref('chats').orderByChild('order_id').equalTo(payload.orders[key]['order_id'])
           .on("value", function(snapshot) {
+          // If there is no Chatroom for the specific order, firebase will return  null
+          // The temp variables keep the data before they are being pushed in the ChatList Array
             if (snapshot.val() != null)
             {
             var temp_chat_key = Object.keys(snapshot.val())[0]
@@ -66,7 +68,8 @@ const ChatModule = {
 
     },
     createChat({commit,dispatch}, payload, ) {
-      // Generate a conversation ID
+      //Generate a conversation ID, create a chatroom node
+      //and store it to the "chats " node in firebase
       let newPostKey = firebase.database().ref().child('chats').push().key
 
       let updates = {}

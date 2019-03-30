@@ -19,7 +19,7 @@
         <!-- Order Details -->
         <div class="text-xs-left">
      <v-dialog
-       v-model="ORDER_DETAILS_DIAGLOG"
+       v-model="ORDER_DETAILS_DIALOG"
        width="500"
      >
        <template v-slot:activator="{ on }">
@@ -40,7 +40,7 @@
    </div>
 <!-- End Of Order Details -->
 
-          <!--  <h4 class="m-t-0 m-b-20 header-title"><b>Chat</b></h4>-->
+
   </v-flex>
 
 
@@ -51,7 +51,6 @@
 
                         <div class="conversation-text" >
                             <div class="ctext-wrap">
-                              <!--  <i v-html="message.Content">John Deo</i>-->
                                 <p v-html="message.Content"> </p>
                             </div>
                         </div>
@@ -105,26 +104,23 @@
 
 <script>
   import ChatRoom from './ChatRoom.vue'
-  import OrderDetailsChat from "./OrderDetailsChat.vue"
+  import OrderDetailsChat from "./ChatOrderDetails.vue"
   import * as firebase from 'firebase'
   import browserCookies from "browser-cookies";
-  import axios from "../../../axios";
+  import axios from "../../../../axios";
   import Loading from 'vue-loading-overlay';
   import 'vue-loading-overlay/dist/vue-loading.css';
 
   export default {
     data () {
       return {
-        username :  browserCookies.get("username"),
         content: '',
         chatMessages: [],
-        currentRef: {},
         loading: false,
-        totalChatHeight: 0,
         currentChatRoom : null,
         items: [],
         total: 0.0,
-        ORDER_DETAILS_DIAGLOG : false,
+        ORDER_DETAILS_DIALOG : false,
         isChatLoading: false,
         fullPage: true,
 
@@ -217,7 +213,7 @@
         });
       },
       showOrderDetails (){
-        this.ORDER_DETAILS_DIAGLOG = true;
+        this.ORDER_DETAILS_DIALOG = true;
         axios
         .get(`/api/orders/${this.$route.params.order_id}/summary`)
         .then(response => {
@@ -242,9 +238,8 @@
 </script>
 
 <style>
-@import "../../assets/courier/css/core.css";
-@import "../../assets/courier/css/components.css";
-@import "../../assets/courier/css/materialdesignicons.css";
+@import "../../../assets/courier/css/core.css";
+@import "../../../assets/courier/css/components.css";
 .conversation-text{
   padding-bottom: 10px !important;
 }

@@ -35,7 +35,7 @@
 
 <script>
   import browserCookies from "browser-cookies";
-  import axios from "../../../axios";
+  import axios from "../../../../axios";
   export default{
     data () {
       return {
@@ -57,7 +57,7 @@
     },
     computed: {
       chats () {
-    
+
         return  this.$store.getters.chats
 
       }
@@ -76,6 +76,6 @@
 </script>
 
 <style scoped="true">
-@import "../../assets/courier/css/core.css";
-@import "../../assets/courier/css/components.css";
+@import "../../../assets/courier/css/core.css";
+@import "../../../assets/courier/css/components.css";
 </style>

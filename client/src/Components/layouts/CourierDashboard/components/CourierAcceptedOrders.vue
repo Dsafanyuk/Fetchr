@@ -8,11 +8,11 @@
         <tr>
 
 
-          <td@click="toggleDialog(props.item)" >{{props.item.order_id}}</span></td>
+          <td @click="toggleDialog(props.item)" >{{props.item.order_id}}</span></td>
           <td @click="toggleDialog(props.item)">{{props.item.first_name}}</td>
           <td @click="toggleDialog(props.item)">{{props.item.room_num}}</td>
           <td @click="toggleDialog(props.item)">{{props.item.time_created}}</td>
-          <Chat :order_id="parseInt(props.item.order_id)"></Chat>
+          <CreateConversation :order_id="parseInt(props.item.order_id)"></CreateConversation>
 
         </tr>
 
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import Chat from '../../Chat/CreateConversation.vue'
+import CreateConversation from '../../MainDashboard/components/ChatCreateConversation.vue'
 export default {
   name: "CourierAvailableOrders",
   data() {
@@ -40,7 +40,7 @@ export default {
     orders: Array
   },
   components : {
-      'Chat': Chat,
+      'CreateConversation': CreateConversation,
   },
   computed: {},
   methods: {

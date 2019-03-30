@@ -34,7 +34,7 @@
   </v-container>
 </template>
 <script>
-import CreateChat from "../../Chat/CreateConversation.vue";
+import CreateChat from "../../MainDashboard/components/ChatCreateConversation.vue";
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios";
 import { mapActions } from "vuex";
@@ -131,18 +131,7 @@ export default {
         return response.data;
       });
     },
-    ischatexist: function(o_id) {
-      var isexist = false;
-      let chatref = firebase
-        .database()
-        .ref("messages")
-        .orderByChild("OrderId")
-        .equalTo(o_id);
-      chatref.on("value", function(snapshot) {
-        if (snapshot.exists()) isexist = true;
-      });
-      if (isexist === true) this.$router.push("/chat/" + o_id);
-    }
+
   }
 };
 </script>

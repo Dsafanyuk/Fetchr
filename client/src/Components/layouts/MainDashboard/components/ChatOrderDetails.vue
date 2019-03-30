@@ -19,7 +19,7 @@
 
 <script>
 import browserCookies from "browser-cookies";
-import axios from "../../../axios";
+import axios from "../../../../axios";
 
 export default {
   data() {
@@ -27,12 +27,7 @@ export default {
 }
 },
 computed: {
-orderStatus() {
-//return this.$store.getters["orders/status"];
-},
-updatedCourierInfo() {
-//return this.$store.getters["orders/info"];
-},
+
 },
 mounted: function() {
 this.getOrderSummary();
@@ -42,9 +37,7 @@ props : {
   total : Number,
 },
 methods: {
-getOrderSummary: function() {
 
-},
 }
 };
 </script>

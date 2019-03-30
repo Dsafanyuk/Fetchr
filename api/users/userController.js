@@ -50,6 +50,7 @@ function showOrdersForChat(req, res) {
       res.send(rows);
     })
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -212,6 +213,7 @@ function showUserById(req, res) {
       res.send(rows).status(200);
     })
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).send({
         message: `${err}`,
       });

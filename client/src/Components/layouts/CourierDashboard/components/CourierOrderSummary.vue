@@ -13,11 +13,13 @@
         <v-btn
           v-if="order.delivery_status == 'pending'"
           color="orange"
+          dark
           v-on:click="acceptOrder"
         >Accept</v-btn>
         <v-btn
           v-if="order.delivery_status == 'in-progress'"
           color="green"
+          dark
           v-on:click="deliverOrder"
         >Deliver</v-btn>
       </div>
@@ -26,7 +28,7 @@
 </template>
         
 <script>
-import axios from "../../../../axios";
+import axios from "../../../../axios.js";
 import browserCookies from "browser-cookies";
 import Toasted from "vue-toasted";
 
@@ -73,7 +75,7 @@ export default {
           .get(`/api/orders/${this.order.order_id}/summary`)
           .then(response => {
             let prod = [];
-            prod = response.data.map(product => {
+            prod = response.data.productList.map(product => {
               product.price = "$" + product.price.toFixed(2);
               product.value = false;
               return product;
@@ -96,14 +98,19 @@ export default {
             if (response.data == "success") {
               this.dialog = false;
               this.$toasted.show("Order Accepted! Go pick it up plz", {
+                theme: 'bubble',
                 position: "top-center",
                 duration: 5000
               });
-              this.$socket.emit("ORDER_ACCEPTED");
+              this.$socket.emit("ORDER_ACCEPTED", {
+                user: this.order.user_id,
+                order: this.order.order_id
+              });
             } else {
               this.$toasted.error(
                 "Oops! This order has already been accepted. :(",
                 {
+                  theme: 'bubble',
                   position: "top-center",
                   duration: 5000
                 }
@@ -128,12 +135,17 @@ export default {
           if (response.data == "success") {
             this.dialog = false;
             this.$toasted.show("Order delivered!", {
+              theme: 'bubble',
               position: "top-center",
               duration: 5000
             });
-            this.$socket.emit("ORDER_DELIVERED");
+            this.$socket.emit("ORDER_DELIVERED", {
+              user: this.order.user_id,
+              order: this.order.order_id
+            });
           } else {
             this.$toasted.error("Oops! :(", {
+              theme: 'bubble',
               position: "top-center",
               duration: 5000
             });

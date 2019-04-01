@@ -1,12 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: 'build.js',
+    path: path.resolve(`${__dirname}/dist`),
+    filename: process.env.NODE_ENV === 'production' ? 'build.[hash].js' : 'build.js',
   },
   module: {
     rules: [
@@ -16,7 +17,7 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2|eot|ttf|svg)(\?.*$|$)/,
-        loader: 'file-loader' 
+        loader: 'file-loader',
       },
       {
         test: /\.scss$/,
@@ -35,11 +36,7 @@ module.exports = {
             // the "scss" and "sass" values for the lang attribute to the right configs here.
             // other preprocessors should work out of the box, no loader config like this necessary.
             scss: ['vue-style-loader', 'css-loader', 'sass-loader'],
-            sass: [
-              'vue-style-loader',
-              'css-loader',
-              'sass-loader?indentedSyntax',
-            ],
+            sass: ['vue-style-loader', 'css-loader', 'sass-loader?indentedSyntax'],
           },
           // other vue-loader options go here
         },
@@ -66,6 +63,7 @@ module.exports = {
   },
   devServer: {
     host: '127.0.0.1',
+    index: '../index.html',
     historyApiFallback: true,
     noInfo: false,
     overlay: true,
@@ -91,6 +89,11 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
+    }),
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      filename: './index.html',
+      template: 'template.html',
     }),
   ]);
 }

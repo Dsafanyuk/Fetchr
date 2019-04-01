@@ -1,3 +1,4 @@
+const Sentry = require('@sentry/node');
 const knex = require('knex')(require('../db'));
 
 // GET /order
@@ -8,6 +9,7 @@ function showAllOrders(req, res) {
       res.send(rows).status(200);
     })
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -22,6 +24,7 @@ function showOneOrder(req, res) {
       res.send(rows).status(200);
     })
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -32,59 +35,56 @@ function showOneOrder(req, res) {
 function createOrder(req, res) {
   const request = req.body;
 
-  let order = {
+  const order = {
     customer_id: request.customer_id,
     delivery_status: request.delivery_status,
     order_total: request.order_total,
   };
 
-  let productsWithQuantity = request.productsWithQuantity;
+  const { productsWithQuantity } = request;
 
   knex('orders')
     .insert(order)
     // if order successfully inserted
     .then((order_id) => {
-      //add the new order_id to the json
-      let orderProducts = productsWithQuantity.map((product) => {
+      // add the new order_id to the json
+      const orderProducts = productsWithQuantity.map((product) => {
         product.order_id = order_id[0];
         return product;
       });
       return orderProducts;
     })
     .then((orderProducts) => {
-      //insert the products to the summary
+      // insert the products to the summary
       knex('order_summary')
         .insert(orderProducts)
         .then(() => {})
         .catch((err) => {
+          Sentry.captureException(err);
           res.status(500).send({
             message: `${err}`,
           });
         });
-       return orderProducts[0].order_id;
+      return orderProducts[0].order_id;
     })
     .then((orderProducts) => {
-      let order = orderProducts
-      //if successful send back order id
+      const order = orderProducts;
+      // if successful send back order id
       knex('users')
         .where('user_id', request.customer_id)
-        .decrement(
-          'wallet', request.order_total)
+        .decrement('wallet', request.order_total)
         .then(() => {
-          console.log(order)
           res.send({ status: 'success', message: orderProducts }).status(200);
         })
         .catch((err) => {
-          console.log(err)
-
+          Sentry.captureException(err);
           res.status(500).send({
-            message: `${err}`
-          })
-        })
+            message: `${err}`,
+          });
+        });
     })
     // else send err
     .catch((err) => {
-      console.log(err)
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -105,8 +105,8 @@ function updateOrder(req, res) {
     .then(() => {
       res.send('success').status(200);
     })
-
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -129,15 +129,17 @@ function showOneOrderSummary(req, res) {
         .where('orders.order_id', req.params.order_id)
         .select('delivery_status', 'customer_id')
         .then((orderInfo) => {
-          res.send({productList, orderInfo}).status(200)
-        })
+          res.send({ productList, orderInfo }).status(200);
+        });
     })
     .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
     });
 }
+
 
 module.exports = {
   showAllOrders,

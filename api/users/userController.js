@@ -1,3 +1,4 @@
+const Sentry = require('@sentry/node');
 const knex = require('knex')(require('../db'));
 
 // GET /users/{user_id}
@@ -11,6 +12,8 @@ function showOneUser(req, res) {
         res.send(rows).status(200);
       })
       .catch((err) => {
+        Sentry.captureException(err);
+
         res.status(500).send({
           message: `${err}`,
         });
@@ -29,6 +32,25 @@ function showUserOrders(req, res) {
       res.send(rows);
     })
     .catch((err) => {
+      Sentry.captureException(err);
+      res.status(500).send({
+        message: `${err}`,
+      }); // FOR DEBUGGING ONLY, dont send exact message in prod
+    });
+}
+
+// GET /users/{user_id}/orderschat
+function showOrdersForChat(req, res) {
+  knex('orders')
+    .where(function () {
+      this.where('customer_id', req.params.user_id).orWhere('courier_id', req.params.user_id);
+    })
+    .havingIn('delivery_status', ['in-progress', 'delivered'])
+    .then((rows) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      Sentry.captureException(err);
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -53,6 +75,8 @@ function createUser(req, res) {
     })
     // else send err
     .catch((err) => {
+      Sentry.captureException(err);
+
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
@@ -77,6 +101,8 @@ function creditCheck(req, res) {
       }
     })
     .catch((err) => {
+      Sentry.captureException(err);
+
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact error message in prod
@@ -95,6 +121,8 @@ function favorite(req, res) {
       res.send(200).status(200);
     })
     .catch((err) => {
+      Sentry.captureException(err);
+
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact error message in prod
@@ -117,6 +145,8 @@ function unfavorite(req, res) {
         res.send(200).status(200);
       })
       .catch((err) => {
+        Sentry.captureException(err);
+
         res.status(500).send({
           message: `${err}`,
         }); // FOR DEBUGGING ONLY, dont send exact error message in prod
@@ -134,39 +164,81 @@ function favorites(req, res) {
       res.send(favorites).status(200);
     })
     .catch((err) => {
+      Sentry.captureException(err);
+
       res.status(500).send({
         message: `${err}`,
       }); // FOR DEBUGGING ONLY, dont send exact message in prod
     });
 }
 // POST /users/:user_id/wallet
-function addBalance(req,res){
+function addBalance(req, res) {
   knex('users')
-  .where('user_id', req.params.user_id)
-  .increment(
-    'wallet',req.body.amount)
-  .then(()=>{
-    res.send('success').status(200)
-  })
-  .catch((err)=>{
-    res.status(500).send({
-      message: `${err}`
+    .where('user_id', req.params.user_id)
+    .increment('wallet', req.body.amount)
+    .then(() => {
+      res.send('success').status(200);
     })
-  })
+    .catch((err) => {
+      Sentry.captureException(err);
+
+      res.status(500).send({
+        message: `${err}`,
+      });
+    });
 }
 
 // GET /users/{user_id}/wallet
 function checkBalance(req, res) {
-  knex('users').select('wallet')
+  knex('users')
+    .select('wallet')
     .where('user_id', req.params.user_id)
     .then((balance) => {
-      res.send(balance).status(200)
+      res.send(balance).status(200);
     })
     .catch((err) => {
+      Sentry.captureException(err);
+
       res.status(500).send({
-        message: `${err}`
-      })
+        message: `${err}`,
+      });
+    });
+}
+// GET /users/{user_id}/showInfo
+function showUserById(req, res) {
+  knex('users')
+    .select('first_name', 'last_name')
+    .where('user_id', req.params.user_id)
+    .then((rows) => {
+      res.send(rows).status(200);
     })
+    .catch((err) => {
+      Sentry.captureException(err);
+      res.status(500).send({
+        message: `${err}`,
+      });
+    });
+}
+
+// PUT /users/:user_id
+function editUser(req, res) {
+  const user = req.body;
+  const { user_id } = req.params;
+  knex('users')
+    .where('user_id', user_id)
+    .update({
+      first_name: user.first_name,
+      last_name: user.last_name,
+      room_num: user.room_num,
+      phone_number: user.phone_number,
+    })
+    .then(() => {
+      res.status(200).send('success');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
 }
 module.exports = {
   showOneUser,
@@ -178,5 +250,8 @@ module.exports = {
   favorites,
   unfavorite,
   addBalance,
-  checkBalance
+  checkBalance,
+  showUserById,
+  showOrdersForChat,
+  editUser,
 };

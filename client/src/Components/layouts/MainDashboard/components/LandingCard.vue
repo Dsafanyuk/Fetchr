@@ -1,26 +1,15 @@
 <template>
-  <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+  <div class="col-lg-3 col-md-4 col-sm-6 col-6">
     <div class="product-card">
-      <div class="card z-depth-4">
-        <div class="card-img">
-          <span
-            href="#"
-            class="btn-floating btn-large price waves-effect waves-light custom"
-          >${{product.price.toFixed(2)}}</span>
-          <img :src="product.product_url" :alt="product.product_name">
-        </div>
+      <div class="card z-depth-4 shadow">
         <div class="card-content">
-          <div class="row">
-            <div class="col s12">
-              <p>
-                <span class="card-title text-center">
-                  <span>{{product.product_name}}</span>
-                </span>
-                <br>
-              </p>
-            </div>
-          </div>
+          <span class="card-title text-center text-truncate heading">{{product.product_name}}</span>
         </div>
+        <div class="card-img">
+          <img class="lozad" :data-src="product.product_url" :alt="product.product_name">
+        </div>
+        <hr>
+        <h5 class="text-center headline">${{product.price.toFixed(2)}}</h5>
         <div style="display:flex" class="btn_container">
           <div class="favorite_button">
             <v-btn
@@ -45,10 +34,26 @@
               <v-icon medium>favorite_border</v-icon>
             </v-btn>
           </div>
-          <div class="cart_button">
-            <v-btn id="cart_btn" block color="accent" v-on:click="addItem" :ripple="false">
-              <v-icon medium v-if="inCart">check</v-icon>
-              <v-icon medium v-if="!inCart">add_shopping_cart</v-icon>
+          <div style="display:flex" class="cart_button">
+            <v-btn
+              v-if="inCart"
+              id="cart_btn"
+              block
+              color="accent"
+              v-on:click="incQuantity(product)"
+              :ripple="false"
+            >
+              <v-icon medium color="white">plus_one</v-icon>
+            </v-btn>
+            <v-btn
+              v-if="!inCart"
+              id="cart_btn"
+              block
+              color="accent"
+              v-on:click="addItem"
+              :ripple="false"
+            >
+              <v-icon medium>add_shopping_cart</v-icon>
             </v-btn>
           </div>
         </div>
@@ -61,6 +66,7 @@
 import axios from "../../../../axios";
 import Toasted from "vue-toasted";
 import browserCookies from "browser-cookies";
+import lozad from "lozad";
 
 export default {
   props: {
@@ -75,12 +81,16 @@ export default {
   },
   data() {
     return {
-      isFavorite: this.product.is_favorite,
-      productDetail: this.product.is_favorite
+      isFavorite: this.product.is_favorite
     };
   },
   components: {},
   watch: {},
+  mounted() {
+    // lazy load the image
+    const observer = lozad();
+    observer.observe();
+  },
   computed: {
     // Check if item is in cart, returns boolean value
     inCart: function() {
@@ -99,12 +109,20 @@ export default {
             console.log(response);
             this.isFavorite = "true";
             this.product.is_favorite = "true";
-            this.$toasted.success("Added to favorites!").goAway(1000);
+            this.$toasted.success("Added to favorites!", { 
+              theme: 'bubble',
+              position: 'top-center',
+              icon: 'favorite',
+            }).goAway(1000);
           }
         })
         .catch(error => {
           console.log(error);
-          this.$toasted.error("Error favoriting").goAway(1000);
+          this.$toasted.error("Error favoriting", {
+            theme: 'bubble',
+            position: 'top-center',
+            icon: 'report_problem',
+          }).goAway(1000);
           if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
@@ -125,12 +143,20 @@ export default {
             this.isFavorite = "false";
             this.product.is_favorite = "false";
             console.log(`After unfavoriting, isFavorite = ${this.isFavorite}`);
-            this.$toasted.success("Removed from favorites!").goAway(1000);
+            this.$toasted.success("Removed from favorites!", {
+              theme: 'bubble',
+              position: 'top-center',
+              icon: 'favorite_border',
+            }).goAway(1000);
           }
         })
         .catch(error => {
           console.log(error);
-          this.$toasted.error("Error unfavoriting").goAway(1000);
+          this.$toasted.error("Error unfavoriting", {
+            theme: 'bubble',
+            position: 'top-center',
+            icon: 'report_problem',
+          }).goAway(1000);
           if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
@@ -142,9 +168,16 @@ export default {
     },
     // Add item to cart
     addItem: function() {
-      this.$toasted.success("Added to cart").goAway(1000);
+      this.$toasted
+        .success(`${this.product.product_name} added to cart`)
+        .goAway(1500);
       this.$store.commit("cart/addItem", this.product);
-      this.$forceUpdate();
+    },
+    incQuantity: function(product) {
+      this.$toasted
+        .success(`${this.product.product_name} added to cart`)
+        .goAway(1500);
+      this.$store.commit("cart/incQuantity", product);
     }
   }
 };

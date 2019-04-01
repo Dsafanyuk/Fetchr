@@ -37,8 +37,13 @@
           to="/dashboard"
         >
       </router-link>
-      <v-spacer></v-spacer> 
-      <v-flex v-on:click="scrollToTop" align-self-center style="margin-right:10px" class="hidden-sm-and-down">
+      <v-spacer></v-spacer>
+      <v-flex
+        v-on:click="scrollToTop"
+        align-self-center
+        style="margin-right:10px"
+        class="hidden-sm-and-down"
+      >
         <transition name="fade" v-on:enter="enter" v-on:leave="leave">
           <h4 class="white--text" style="margin-top: 20px" v-if="show">{{showText}}</h4>
         </transition>
@@ -152,7 +157,7 @@
 import ShoppingCart from "./ShoppingCart.vue";
 import Wallet from "./Wallet.vue";
 import browserCookies from "browser-cookies";
-import Vue from 'vue';
+import Vue from "vue";
 
 export default {
   props: ["search"],
@@ -279,13 +284,14 @@ export default {
     goToDashboard: function() {
       this.$router.push("/dashboard");
     },
-    scrollToTop: function () {
+    scrollToTop: function() {
       window.scrollTo(0, 0);
     }
   },
   watch: {
     activeCategory: function(active) {
       this.$emit("selectedCategory", active);
+      this.scrollToTop();
     }
   }
 };

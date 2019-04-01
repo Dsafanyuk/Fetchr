@@ -112,10 +112,28 @@ export default {
               .success("Added to favorites!", {
                 theme: "bubble",
                 position: "top-center",
-                icon: "favorite"
+                icon: "favorite",
+                action: [
+                  {
+                    class: "toast-action",
+                    text: "SHOW",
+                    onClick: (e, toastObject) => {
+                      toastObject.goAway(0);
+                      this.$store.commit(
+                        "dashboard/setSelectedCategory",
+                        "Favorites"
+                      );
+                    }
+                  },
+                  {
+                    icon: "clear",
+                    onClick: (e, toastObject) => {
+                      toastObject.goAway(0);
+                    }
+                  }
+                ]
               })
-              .goAway(1000);
-            this.$store.commit("dashboard/setSelectedCategory", "Favorites");
+              .goAway(5000);
           }
         })
         .catch(error => {

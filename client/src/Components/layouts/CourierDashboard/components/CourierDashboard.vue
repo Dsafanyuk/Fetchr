@@ -14,8 +14,8 @@
       <div class="col-md-10 offset-md-1 col-sm-5">
         <v-tabs height="80px" centered light show-arrows grow v-model.lazy="active" mandatory>
           <v-tabs-slider color="accent"></v-tabs-slider>
-          <v-tab href="#baby1">Available</v-tab>
-          <v-tab href="#baby2">Accepted</v-tab>
+          <v-tab href="#baby1">Available({{available_orders}})</v-tab>
+          <v-tab href="#baby2">Accepted({{delivered_orders}})</v-tab>
           <v-tab href="#baby3">Delivered</v-tab>
           <v-tab-item v-for="i in 3" :key="i" :value="'baby' + i">
             <CourierAvailableOrders
@@ -52,8 +52,8 @@
           mandatory
         >
           <v-tabs-slider color="accent"></v-tabs-slider>
-          <v-tab href="#baby1">Available</v-tab>
-          <v-tab href="#baby2">Accepted</v-tab>
+          <v-tab href="#baby1">Available({{available_orders}})</v-tab>
+          <v-tab href="#baby2">Accepted({{delivered_orders}})</v-tab>
           <v-tab href="#baby3">Delivered</v-tab>
           <v-tab-item v-for="i in 3" :key="i" :value="'baby' + i">
             <CourierAvailableOrders
@@ -87,6 +87,7 @@ import CourierAcceptedOrders from "./CourierAcceptedOrders";
 import browserCookies from "browser-cookies";
 import Toasted from "vue-toasted";
 import axios from "../../../../axios";
+const user = browserCookies.get("user_id");
 
 export default {
   data() {
@@ -94,6 +95,9 @@ export default {
       active: "baby1",
       summaryOrder: {},
       summaryIsActive: false,
+      available_orders: 0,
+      delivered_orders: 0,
+      revenue: 0,
     };
   },
   components: {
@@ -111,8 +115,13 @@ export default {
     this.getAvailableOrders();
     this.getAcceptedOrders();
     this.getDeliveredOrders();
+    this.getAvailableOrders();
+    this.getTotalDelivered();
   },
   computed: {
+    isLoading() {
+      return this.$store.getters["courier/isLoading"];
+    },
     availableOrders() {
       return this.$store.getters["courier/availableOrders"];
     },
@@ -123,6 +132,7 @@ export default {
       return this.$store.getters["courier/acceptedOrders"];
     }
   },
+  
   methods: {
     toggleOrderSummary(value) {
       if (value) this.summaryOrder = value;
@@ -139,7 +149,21 @@ export default {
     },
     getAvailableOrders() {
       this.$store.dispatch("courier/getAvailableOrders");
-    }
+    },
+    getAvailableOrders() {
+      axios
+        .get("/api/courier/" + user + "/countAvailableOrder")
+        .then(response => {
+          this.available_orders = response.data[0][0]["count_av"];
+        });
+    },
+    getTotalDelivered() {
+      axios
+        .get("/api/courier/" + user + "/getTotalDelivered")
+        .then(response => {
+          this.delivered_orders = response.data[0][0]["count_d"];
+        });
+    },
   }
 };
 </script>

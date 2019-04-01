@@ -39,7 +39,7 @@
               icon="priority_high"
               outline
               dismissible
-            >Your wallet maximum ammount is $999
+            >Your wallet maximum needs to be less than $1000
             </v-alert>
           </v-item-group>
         </v-card-actions>

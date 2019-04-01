@@ -90,7 +90,6 @@
                                 solo
                                 required
                             ></v-text-field>
-                            
                             <v-alert
                                 :value="true"
                                 color="info"

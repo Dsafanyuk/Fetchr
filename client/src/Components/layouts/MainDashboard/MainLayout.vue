@@ -1,12 +1,7 @@
 <template>
   <v-app>
-    <MainHeader
-      v-model="search"
-    ></MainHeader>
-    <router-view
-      id="main"
-      :search="search"
-    ></router-view>
+    <MainHeader></MainHeader>
+    <router-view id="main"></router-view>
     <MainFooter></MainFooter>
   </v-app>
 </template>
@@ -17,9 +12,7 @@ import MainFooter from "./MainFooter.vue";
 
 export default {
   data() {
-    return {
-      search: "",
-    };
+    return {};
   },
   watch: {},
   components: {

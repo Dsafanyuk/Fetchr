@@ -94,7 +94,6 @@ export default {
             this.$router.push("/orders");
           }
           this.items = response.data.productList;
-          console.log(this.items);
           this.$store.commit("orders/changeStatus", orderInfo.delivery_status);
           this.items.forEach(item => {
             item.item_total = item.price * item.quantity;

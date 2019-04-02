@@ -34,7 +34,6 @@ function showOneOrder(req, res) {
 // POST /orders
 function createOrder(req, res) {
   const request = req.body;
-  console.log(request);
   const order = {
     customer_id: request.customer_id,
     delivery_status: request.delivery_status,
@@ -52,7 +51,6 @@ function createOrder(req, res) {
         product.order_id = order_id[0];
         return product;
       });
-      console.log('orderProducts: ', orderProducts);
       return orderProducts;
     })
     .then((orderProducts) => {
@@ -75,7 +73,6 @@ function createOrder(req, res) {
         .where('user_id', request.customer_id)
         .decrement('wallet', request.order_total)
         .then(() => {
-          console.log(orderProducts);
           res.send({ status: 'success', message: orderProducts }).status(200);
         })
         .catch((err) => {
@@ -124,7 +121,6 @@ function showOneOrderSummary(req, res) {
     .where('orders.order_id', req.params.order_id)
     .select('product_name', 'quantity', 'price', 'product_url')
     .then((productList) => {
-      console.log(productList);
       knex('orders')
         .where('orders.order_id', req.params.order_id)
         .select('delivery_status', 'customer_id')

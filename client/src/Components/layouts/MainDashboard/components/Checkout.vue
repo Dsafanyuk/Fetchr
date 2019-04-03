@@ -134,7 +134,6 @@ export default {
         });
       });
       this.$store.dispatch("wallet/getWalletBalance");
-      console.log(productsWithQuantity);
       if (this.sufficientFunds) {
         axios
           .post("/api/orders/", {

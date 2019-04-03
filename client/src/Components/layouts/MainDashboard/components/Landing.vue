@@ -21,7 +21,6 @@ import axios from "../../../../axios";
 import Toasted from "vue-toasted";
 
 export default {
-  props: ["search", "selectedCategory"],
   data() {
     return {
       products: [],
@@ -36,12 +35,11 @@ export default {
     };
   },
   mounted: function loadProducts() {
-    let loadingProductsToast =
-    this.$toasted.show("Loading products...", {
-      theme: 'bubble',
+    let loadingProductsToast = this.$toasted.show("Loading products...", {
+      theme: "bubble",
       duration: 4000,
-      position: 'top-center',
-      icon: 'hourglass_empty'
+      position: "top-center",
+      icon: "hourglass_empty"
     });
 
     axios
@@ -56,23 +54,31 @@ export default {
           console.log(error);
           loadingProductsToast.goAway();
           this.$toasted.error("Something went wrong", {
-            theme: 'bubble',
+            theme: "bubble",
             duration: 4000,
-            position: 'top-center',
-            icon: 'report_problem'
+            position: "top-center",
+            icon: "report_problem"
           });
         }
       });
   },
   computed: {
+    searchTerm() {
+      return this.$store.getters["dashboard/getSearchTerm"];
+    },
+    selectedCategory() {
+      return this.$store.getters["dashboard/getSelectedCategory"];
+    },
     filteredProducts() {
-      if (this.search) {
+      if (this.searchTerm) {
         return this.products.filter(product => {
           return (
             product.product_name
               .toLowerCase()
-              .includes(this.search.toLowerCase()) ||
-            product.category.toLowerCase().includes(this.search.toLowerCase())
+              .includes(this.searchTerm.toLowerCase()) ||
+            product.category
+              .toLowerCase()
+              .includes(this.searchTerm.toLowerCase())
           );
         });
       }

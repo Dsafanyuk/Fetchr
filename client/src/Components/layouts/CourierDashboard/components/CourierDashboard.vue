@@ -15,8 +15,8 @@
         <v-tabs height="80px" centered light show-arrows grow v-model.lazy="active" mandatory>
           <v-tabs-slider color="accent"></v-tabs-slider>
           <v-tab href="#baby1">Available({{available_orders}})</v-tab>
-          <v-tab href="#baby2">Accepted({{delivered_orders}})</v-tab>
-          <v-tab href="#baby3">Delivered</v-tab>
+          <v-tab href="#baby2">Accepted({{accepted_orders}})</v-tab>
+          <v-tab href="#baby3">Delivered({{delivered_orders}})</v-tab>
           <v-tab-item v-for="i in 3" :key="i" :value="'baby' + i">
             <CourierAvailableOrders
               v-if="i == 1"
@@ -53,8 +53,8 @@
         >
           <v-tabs-slider color="accent"></v-tabs-slider>
           <v-tab href="#baby1">Available({{available_orders}})</v-tab>
-          <v-tab href="#baby2">Accepted({{delivered_orders}})</v-tab>
-          <v-tab href="#baby3">Delivered</v-tab>
+          <v-tab href="#baby2">Accepted({{accepted_orders}})</v-tab>
+          <v-tab href="#baby3">Delivered({{delivered_orders}})</v-tab>
           <v-tab-item v-for="i in 3" :key="i" :value="'baby' + i">
             <CourierAvailableOrders
               v-if="i == 1"
@@ -97,6 +97,7 @@ export default {
       summaryIsActive: false,
       available_orders: 0,
       delivered_orders: 0,
+      accepted_orders: 0,
       revenue: 0,
     };
   },
@@ -115,13 +116,9 @@ export default {
     this.getAvailableOrders();
     this.getAcceptedOrders();
     this.getDeliveredOrders();
-    this.getAvailableOrders();
     this.getTotalDelivered();
   },
   computed: {
-    isLoading() {
-      return this.$store.getters["courier/isLoading"];
-    },
     availableOrders() {
       return this.$store.getters["courier/availableOrders"];
     },
@@ -146,12 +143,15 @@ export default {
     },
     getAcceptedOrders() {
       this.$store.dispatch("courier/getAcceptedOrders");
+         axios
+        .get("/api/courier/" + user + "/countAcceptedOrder")
+        .then(response => {
+          this.accepted_orders = response.data[0][0]["count_acc"];
+        });
     },
     getAvailableOrders() {
       this.$store.dispatch("courier/getAvailableOrders");
-    },
-    getAvailableOrders() {
-      axios
+       axios
         .get("/api/courier/" + user + "/countAvailableOrder")
         .then(response => {
           this.available_orders = response.data[0][0]["count_av"];

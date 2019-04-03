@@ -14,7 +14,6 @@ export default {
   data() {
     return {};
   },
-  watch: {},
   components: {
     MainHeader: MainHeader,
     MainFooter: MainFooter

@@ -139,7 +139,7 @@ export default {
           });
       } else {
         this.$toasted
-          .error("Please enter a different amount that adds up to less than $1000 ")
+          .error("Please enter a different amount that adds up to less than $1000")
           .goAway(3000);
         this.transactionIsProcessing = false;
         this.selectAmount(null);

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 import cart from './modules/cart';
+import dashboard from './modules/dashboard';
 import wallet from './modules/wallet';
 import courier from './modules/courier';
 import login from './modules/login';
@@ -40,6 +41,7 @@ export default new Vuex.Store({
     orders,
     chat,
     account,
+    dashboard,
     courierStats
   },
   strict: debug,

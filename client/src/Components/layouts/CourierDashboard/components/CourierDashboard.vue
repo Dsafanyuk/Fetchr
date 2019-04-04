@@ -142,14 +142,7 @@ export default {
     getAvailableOrders() {
       this.$store.dispatch("courier/getAvailableOrders");
     },
-    updateSummarySection(section){
-      if (section == "AVAILABLE_ORDERS")
-      {
 
-        //this.availableOrderSum = this.$store.getters.availableOrdersSum
-
-
-      }
 
     }
   }

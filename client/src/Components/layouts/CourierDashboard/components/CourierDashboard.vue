@@ -141,11 +141,10 @@ export default {
     },
     getAvailableOrders() {
       this.$store.dispatch("courier/getAvailableOrders");
-    },
-
-
     }
-  }
+}
+
+
 };
 </script>
 

@@ -6,8 +6,9 @@
       :summaryIsActive="summaryIsActive"
       v-model="summaryIsActive"
       @closeDialog="summaryIsActive"
+      @updateSummarySection = "updateSummarySection"
     ></CourierOrderSummary>
-    <CourierSummaryCard class="summarycard"></CourierSummaryCard>
+    <CourierSummaryCard v-bind:available_orders="availableOrderSum" class="summarycard"></CourierSummaryCard>
 
     <!-- MOBILE AND TABLETS -->
     <div class="hidden-lg-and-up row">
@@ -94,6 +95,7 @@ export default {
       active: "baby1",
       summaryOrder: {},
       summaryIsActive: false,
+      availableOrderSum:0,
     };
   },
   components: {
@@ -139,6 +141,16 @@ export default {
     },
     getAvailableOrders() {
       this.$store.dispatch("courier/getAvailableOrders");
+    },
+    updateSummarySection(section){
+      if (section == "AVAILABLE_ORDERS")
+      {
+
+        //this.availableOrderSum = this.$store.getters.availableOrdersSum
+
+
+      }
+
     }
   }
 };

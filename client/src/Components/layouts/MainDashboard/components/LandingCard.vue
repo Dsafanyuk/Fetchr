@@ -3,7 +3,7 @@
     <div class="product-card">
       <div class="card z-depth-4 shadow">
         <div class="card-content">
-          <span class="card-title text-center text-truncate heading">{{product.product_name}}</span>
+          <span class="card-title text-center text-truncate heading"><b>{{product.product_name}}</b></span>
         </div>
         <div class="card-img">
           <img class="lozad" :data-src="product.product_url" :alt="product.product_name">
@@ -43,7 +43,7 @@
               v-on:click="incQuantity(product)"
               :ripple="false"
             >
-              <v-icon medium color="white">plus_one</v-icon>
+              <v-icon medium color="white">add_shopping_cart</v-icon>
             </v-btn>
             <v-btn
               v-if="!inCart"
@@ -106,23 +106,45 @@ export default {
         })
         .then(response => {
           if (response.status == 200) {
-            console.log(response);
             this.isFavorite = "true";
             this.product.is_favorite = "true";
-            this.$toasted.success("Added to favorites!", { 
-              theme: 'bubble',
-              position: 'top-center',
-              icon: 'favorite',
-            }).goAway(1000);
+            this.$toasted
+              .success("Added to favorites!", {
+                theme: "bubble",
+                position: "top-center",
+                icon: "favorite",
+                action: [
+                  {
+                    class: "toast-action",
+                    text: "SHOW",
+                    onClick: (e, toastObject) => {
+                      toastObject.goAway(0);
+                      this.$store.commit(
+                        "dashboard/setSelectedCategory",
+                        "Favorites"
+                      );
+                    }
+                  },
+                  {
+                    icon: "clear",
+                    onClick: (e, toastObject) => {
+                      toastObject.goAway(0);
+                    }
+                  }
+                ]
+              })
+              .goAway(5000);
           }
         })
         .catch(error => {
           console.log(error);
-          this.$toasted.error("Error favoriting", {
-            theme: 'bubble',
-            position: 'top-center',
-            icon: 'report_problem',
-          }).goAway(1000);
+          this.$toasted
+            .error("Error favoriting", {
+              theme: "bubble",
+              position: "top-center",
+              icon: "report_problem"
+            })
+            .goAway(1000);
           if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
@@ -142,21 +164,24 @@ export default {
           if (response.status == 200) {
             this.isFavorite = "false";
             this.product.is_favorite = "false";
-            console.log(`After unfavoriting, isFavorite = ${this.isFavorite}`);
-            this.$toasted.success("Removed from favorites!", {
-              theme: 'bubble',
-              position: 'top-center',
-              icon: 'favorite_border',
-            }).goAway(1000);
+            this.$toasted
+              .success("Removed from favorites!", {
+                theme: "bubble",
+                position: "top-center",
+                icon: "favorite_border"
+              })
+              .goAway(1000);
           }
         })
         .catch(error => {
           console.log(error);
-          this.$toasted.error("Error unfavoriting", {
-            theme: 'bubble',
-            position: 'top-center',
-            icon: 'report_problem',
-          }).goAway(1000);
+          this.$toasted
+            .error("Error unfavoriting", {
+              theme: "bubble",
+              position: "top-center",
+              icon: "report_problem"
+            })
+            .goAway(1000);
           if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
@@ -169,13 +194,21 @@ export default {
     // Add item to cart
     addItem: function() {
       this.$toasted
-        .success(`${this.product.product_name} added to cart`)
+        .success(`${this.product.product_name} added to cart`, {
+          theme: "bubble",
+          position: "top-center",
+          icon: "shopping_cart",
+        })
         .goAway(1500);
       this.$store.commit("cart/addItem", this.product);
     },
     incQuantity: function(product) {
       this.$toasted
-        .success(`${this.product.product_name} added to cart`)
+        .success(`${this.product.product_name} added to cart`, {
+          theme: "bubble",
+          position: "top-center",
+          icon: "shopping_cart",
+        })
         .goAway(1500);
       this.$store.commit("cart/incQuantity", product);
     }

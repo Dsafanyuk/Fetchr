@@ -90,11 +90,12 @@ function deliveredOrders(req, res) {
 
 // Get total available Orders
 function countAvailableOrder(req, res ){
- knex.raw ('SELECT COUNT(*) as count_av FROM orders WHERE courier_id is null')
+ knex.raw ('SELECT COUNT(*) as count_av FROM orders WHERE courier_id is null AND customer_id <>'+ req.params.user_id)
 .then((orders) => {
     res.send(orders);
 })
 }
+
 // Get delivered Orders
 function countDelivered(req, res ){
 
@@ -103,12 +104,25 @@ function countDelivered(req, res ){
 .then((count_d) => {
      res.send(count_d);
  })
+}function countAcceptedOrder(req, res ){
+  knex.raw ('SELECT COUNT(*) as count_acc FROM orders WHERE courier_id = '+ req.params.user_id +
+           ' AND delivery_status = \'in-progress\' ')
+.then((count_acc) => {
+     res.send(count_acc);
+ })
 }
 function getRevenue(req, res ){
-  knex.raw ('SELECT SUM(order_total) as revenue FROM orders WHERE courier_id = '+ req.params.user_id)
+  knex.raw ('SELECT SUM(order_total) as revenue FROM orders WHERE courier_id = '+ req.params.user_id+
+            ' AND delivery_status = \'delivered\' ')
 .then((revenue) => {
      res.send(revenue);
  })
+ .catch((err) => {
+   res.status(500).json({
+     message: `${err}`,
+   }); // FOR DEBUGGING ONLY, dont send exact message in prod
+   console.log(err);
+ });
 }
 // POST /accept
 function acceptOrder(req, res) {
@@ -173,6 +187,7 @@ module.exports = {
   acceptOrder,
   deliverOrder,
   countAvailableOrder,
+  countAcceptedOrder,
   countDelivered,
   getRevenue,
   courierInfo,

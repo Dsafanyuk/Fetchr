@@ -22,6 +22,10 @@ const state = {
   acceptedOrders: [],
   deliveredOrders: [],
   isLoading: true,
+  availableOrdersSum : 0,
+  acceptedSum : 0,
+  deliveredOrdersSum: 0,
+  deliveredRevenueSum: 0
 };
 const mutations = {
   addAvailableOrder: (state, data) => {
@@ -48,12 +52,36 @@ const mutations = {
   startLoading: (state, data) => {
     state.isLoading = true;
   },
+  updateAvailableOrders: (state, value) => {
+    state.availableOrdersSum = value
+
+  },
+
+  updateDeliveredOrders: (state, value) => {
+    state.deliveredOrdersSum = value
+
+  },
+
+  updateacceptedOrders: (state, value) => {
+    state.acceptedOrdersSum = value
+
+  }, 
+  updateDeliveredRevenue: (state, value) => {
+    state.deliveredRevenueSum = value
+
+
+  }
+
 };
 const getters = {
   availableOrders: state => state.availableOrders,
   acceptedOrders: state => state.acceptedOrders,
   deliveredOrders: state => state.deliveredOrders,
   isLoading: state => state.isLoading,
+  getAvailableOrdersSum :  state => state.availableOrdersSum,
+  getAcceptedOrdersSum :  state => state.acceptedOrdersSum,
+  getDeliveredOrdersSum :  state => state.deliveredOrdersSum,
+  getDeliveredRevenueSum   : state  => state.deliveredRevenueSum,
 };
 const actions = {
   clearAllOrders: ({ state, getters, commit }) => new Promise(
@@ -136,6 +164,7 @@ const actions = {
   }) => {
     dispatch('clearAllOrders').then(() => {
       dispatch('refreshAllOrders');
+      dispatch('updateAvailableOrders')
     });
   },
   socket_updateAcceptedOrders: ({
@@ -158,6 +187,28 @@ const actions = {
       dispatch('refreshAllOrders');
     });
   },
+  updateAvailableOrders : ({ commit })=> {
+
+    axios
+      .get("/api/courier/" + user + "/countAvailableOrder")
+      .then(response => {
+        commit('updateAvailableOrders', response.data[0][0]["count_av"])
+      });
+  },
+  updateDeliveredOrders:({ commit })=>{
+    axios
+      .get("/api/courier/" + user + "/getTotalDelivered")
+      .then(response => {
+        commit('updateDeliveredOrders', response.data[0][0]["count_d"])
+
+      });
+  },
+  updateDeliveredRevenue : ({ commit })=> {
+    axios.get("/api/courier/" + user + "/getRevenue").then(response => {
+
+        commit('updateDeliveredRevenue', response.data[0][0]["revenue"])
+    });
+  }
 };
 export default {
   namespaced: true,

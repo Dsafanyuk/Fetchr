@@ -11,7 +11,7 @@
           class="headline justify-center text-xs-center font-weight-bold"
           primary-title
         >Refill your Wallet</v-card-title>
-        <v-card-text>Your current balance is:</v-card-text>
+        <v-card-text class="text-xs-center">Your current balance is:</v-card-text>
         <v-card-text class="text-xs-center font-weight-medium display-3">${{walletBalance}}</v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="justify-center text-xs-center" v-if="!transactionIsProcessing">
@@ -33,6 +33,14 @@
               >
               <v-chip v-else slot-scope="{ active }" :selected="active" @click="customAmount">other</v-chip>
             </v-item>
+            <v-alert
+              :value="true"
+              color="warning"
+              icon="priority_high"
+              outline
+              dismissible
+            >Your wallet maximum needs to be less than $1000
+            </v-alert>
           </v-item-group>
         </v-card-actions>
         <div v-if="transactionIsProcessing">
@@ -131,7 +139,7 @@ export default {
           });
       } else {
         this.$toasted
-          .error("You're Too Rich! Give More To Charity pls")
+          .error("Please enter a different amount that adds up to less than $1000")
           .goAway(3000);
         this.transactionIsProcessing = false;
         this.selectAmount(null);

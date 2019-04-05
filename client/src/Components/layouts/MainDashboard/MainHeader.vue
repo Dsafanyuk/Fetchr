@@ -49,7 +49,7 @@
         </transition>
       </v-flex>
       <div class="hidden-sm-and-down">
-        <v-menu id="customer_menu" fixed bottom offset-y>
+        <v-menu id="customer_menu" fixed bottom offset-y class="active_menu">
           <v-btn
             v-if="!firstName"
             flat
@@ -338,7 +338,7 @@ export default {
   opacity: 0;
 }
 
-#customer_menu.v-menu__content {
+.active_menu .menuable__content__active {
   position: fixed;
 }
 </style>

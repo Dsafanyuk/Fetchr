@@ -12,7 +12,6 @@ const ChatModule = {
       state.messages = []
     },
     setChats(state, payload) {
-    //  state.chats = payload
       state.chats.push(payload)
     },
     setInfo(state, UserInfo) {

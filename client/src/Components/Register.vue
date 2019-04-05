@@ -97,7 +97,7 @@
                                 icon="info"
                                 outline
                                 dismissible
-                            >Password <strong>Must have at least</strong>.<br>- 8 characters
+                            >Password <strong>Must have at least</strong>:<br> 8 characters
                             </v-alert>
                         </form>
                         <div class="form-group text-center">

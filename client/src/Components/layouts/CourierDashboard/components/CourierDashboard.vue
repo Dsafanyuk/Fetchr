@@ -14,9 +14,9 @@
       <div class="col-md-10 offset-md-1 col-sm-5">
         <v-tabs height="80px" centered light show-arrows grow v-model.lazy="active" mandatory>
           <v-tabs-slider color="accent"></v-tabs-slider>
-          <v-tab href="#baby1">Available({{available_orders}})</v-tab>
-          <v-tab href="#baby2">Accepted({{accepted_orders}})</v-tab>
-          <v-tab href="#baby3">Delivered({{delivered_orders}})</v-tab>
+          <v-tab href="#baby1">Available ({{availableOrders.length }})</v-tab>
+          <v-tab href="#baby2">Accepted ({{acceptedOrders.length}})</v-tab>
+          <v-tab href="#baby3">Delivered ({{deliveredOrders.length}})</v-tab>
           <v-tab-item v-for="i in 3" :key="i" :value="'baby' + i">
             <CourierAvailableOrders
               v-if="i == 1"
@@ -36,8 +36,7 @@
           </v-tab-item>
         </v-tabs>
       </div>
-    </div>
-
+    </div>  
     <!-- Computers -->
     <div class="row hidden-md-and-down">
       <div class="col-lg-10 offset-lg-1">
@@ -52,9 +51,9 @@
           mandatory
         >
           <v-tabs-slider color="accent"></v-tabs-slider>
-          <v-tab href="#baby1">Available({{available_orders}})</v-tab>
-          <v-tab href="#baby2">Accepted({{accepted_orders}})</v-tab>
-          <v-tab href="#baby3">Delivered({{delivered_orders}})</v-tab>
+          <v-tab href="#baby1">Available ({{availableOrders.length }})</v-tab>
+          <v-tab href="#baby2">Accepted ({{acceptedOrders.length}})</v-tab>
+          <v-tab href="#baby3">Delivered ({{deliveredOrders.length}})</v-tab>
           <v-tab-item v-for="i in 3" :key="i" :value="'baby' + i">
             <CourierAvailableOrders
               v-if="i == 1"
@@ -95,9 +94,6 @@ export default {
       active: "baby1",
       summaryOrder: {},
       summaryIsActive: false,
-      available_orders: 0,
-      delivered_orders: 0,
-      accepted_orders: 0,
       revenue: 0,
     };
   },
@@ -116,7 +112,6 @@ export default {
     this.getAvailableOrders();
     this.getAcceptedOrders();
     this.getDeliveredOrders();
-    this.getTotalDelivered();
   },
   computed: {
     availableOrders() {
@@ -143,26 +138,9 @@ export default {
     },
     getAcceptedOrders() {
       this.$store.dispatch("courier/getAcceptedOrders");
-         axios
-        .get("/api/courier/" + user + "/countAcceptedOrder")
-        .then(response => {
-          this.accepted_orders = response.data[0][0]["count_acc"];
-        });
     },
     getAvailableOrders() {
       this.$store.dispatch("courier/getAvailableOrders");
-       axios
-        .get("/api/courier/" + user + "/countAvailableOrder")
-        .then(response => {
-          this.available_orders = response.data[0][0]["count_av"];
-        });
-    },
-    getTotalDelivered() {
-      axios
-        .get("/api/courier/" + user + "/getTotalDelivered")
-        .then(response => {
-          this.delivered_orders = response.data[0][0]["count_d"];
-        });
     },
   }
 };

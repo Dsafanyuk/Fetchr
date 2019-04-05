@@ -95,15 +95,7 @@ function countAvailableOrder(req, res ){
     res.send(orders);
 })
 }
-// Get accepted Orders
-function countAcceptedOrder(req, res ){
 
-  knex.raw ('SELECT COUNT(*) as count_acc FROM orders WHERE courier_id = '+ req.params.user_id +
-           ' AND delivery_status = \'in-progress\' ')
-.then((count_acc) => {
-     res.send(count_acc);
- })
-}
 // Get delivered Orders
 function countDelivered(req, res ){
 
@@ -182,7 +174,6 @@ module.exports = {
   acceptOrder,
   deliverOrder,
   countAvailableOrder,
-  countAcceptedOrder,
   countDelivered,
   getRevenue,
   courierInfo,

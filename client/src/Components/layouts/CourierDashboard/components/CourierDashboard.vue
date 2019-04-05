@@ -6,8 +6,9 @@
       :summaryIsActive="summaryIsActive"
       v-model="summaryIsActive"
       @closeDialog="summaryIsActive"
+    
     ></CourierOrderSummary>
-    <CourierSummaryCard class="summarycard"></CourierSummaryCard>
+    <CourierSummaryCard v-bind:available_orders="availableOrderSum" class="summarycard"></CourierSummaryCard>
 
     <!-- MOBILE AND TABLETS -->
     <div class="hidden-lg-and-up row">
@@ -93,6 +94,7 @@ export default {
       summaryOrder: {},
       summaryIsActive: false,
       revenue: 0,
+      availableOrderSum:0,
     };
   },
   components: {

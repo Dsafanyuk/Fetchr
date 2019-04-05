@@ -135,10 +135,26 @@
       this.fetchMessages()
 
     },
-    updated ()
-    {
-      this.scrollToEnd();
-    },
+    watch: {
+      chatMessages: function() {
+        if (this.chatMessages.length == 1 || this.chatMessages.length == 0)
+        {
+        this.scrollToTop()
+
+        }
+        else
+        {
+          // --Hack-- Because Html components are slow to render.
+          // Variables assignment are faster
+          // I have to wait for the ".scrollTop" property of the .chat-conversation
+          // Element in the DOM to render before i call the scrollToEnd function
+          // Any suggestion ??
+          var self = this
+           setTimeout(function(){
+              self.scrollToEnd()
+            }, 100);
+        }
+      }},
     components: {
       'chatroom': ChatRoom,
       'OrderDetailsChat': OrderDetailsChat,
@@ -156,8 +172,14 @@
 				var container = document.querySelector(".chat-conversation");
 				var scrollHeight = container.scrollHeight;
 				container.scrollTop = scrollHeight;
-			},
 
+
+			},
+      scrollToTop() {
+        var container = document.querySelector(".chat-conversation");
+        container.scrollTop = 0;
+
+      },
       sendMessage () {
         if (this.content !== '') {
       const  Message_data = {
@@ -183,10 +205,15 @@
           var data = snapshot.val()
           temp_data.push(data)
         })
+
         this.chatMessages = temp_data
+
+
+
+
         //If there's no chat for the current id
         self.isChatLoading = false;
-        this.scrollToEnd()
+
       },
       // Messages Left & right
       displayMessages(SenderId)
@@ -224,6 +251,7 @@
           let orderInfo = response.data.orderInfo[0];
 
           this.items = response.data.productList;
+          this.total = 0
           this.items.forEach(item => {
             item.item_total = item.price * item.quantity;
             this.total += item.item_total;
@@ -259,6 +287,7 @@
 width: 600px;
 max-height: 300px;
 overflow: scroll;
+ overflow-x: hidden;
 }
 .chat_container{
 margin-top: 100px;

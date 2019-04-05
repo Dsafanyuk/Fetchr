@@ -49,13 +49,8 @@
         </transition>
       </v-flex>
       <div class="hidden-sm-and-down">
-        <v-btn
-          v-on:click="goToDashboard"
-          flat
-          color="white"
-          light>
-          Home
-          <v-icon right dark>home</v-icon>
+        <v-btn v-on:click="goToDashboard" depressed icon>
+          <v-icon color="white">home</v-icon>
         </v-btn>
         <v-menu id="customer_menu" fixed bottom offset-y class="active_menu">
           <v-btn

@@ -45,7 +45,7 @@
 
 
 
-        <div class="chat-conversation"  style="max-height:300px;"   id="chat-conversation"  ref="chatContainer">
+        <div class="chat-conversation"     id="chat-conversation"  ref="chatContainer">
                 <ul class="conversation-list"  tabindex="5001" >
                     <li  v-for="message in chatMessages" class="clearfix"   v-bind:class="displayMessages(message.SenderId)">
 
@@ -77,7 +77,7 @@
                                 color="info"
                                 indeterminate
                               ></v-progress-circular>
-                              <img v-else width="24" height="24" src="https://cdn.vuetifyjs.com/images/logos/v-alt.svg" alt="">
+                            <a v-on:click="sendMessage"><v-icon>far fa-paper-plane</v-icon></a>
                             </v-fade-transition>
                           </template>
                           <template v-slot:append-outer>
@@ -133,7 +133,7 @@
     },
     mounted () {
       this.fetchMessages()
-      this.scrollToEnd();
+
     },
     updated ()
     {
@@ -184,10 +184,8 @@
           temp_data.push(data)
         })
         this.chatMessages = temp_data
-
-
-
-
+        //If there's no chat for the current id
+        self.isChatLoading = false;
         this.scrollToEnd()
       },
       // Messages Left & right

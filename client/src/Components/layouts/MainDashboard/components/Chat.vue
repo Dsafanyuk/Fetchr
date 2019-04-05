@@ -142,6 +142,8 @@
     components: {
       'chatroom': ChatRoom,
       'OrderDetailsChat': OrderDetailsChat,
+      'loading' : Loading
+
     },
     computed: {
 
@@ -171,16 +173,20 @@
 
       fetchMessages() {
         this.isChatLoading = true;
+
         let orderId = parseInt(this.$route.params.order_id)
-        let refmessages = firebase.database().ref('messages').orderByChild('OrderId').equalTo(orderId).limitToLast(20)
+        let refmessages = firebase.database().ref('messages').orderByChild('OrderId').equalTo(orderId).limitToLast(100)
         let temp_data = []
+        var self = this
         refmessages.on("child_added", function(snapshot) {
+          self.isChatLoading = false;
           var data = snapshot.val()
           temp_data.push(data)
-
-
         })
         this.chatMessages = temp_data
+
+
+
 
         this.scrollToEnd()
       },

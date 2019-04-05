@@ -50,8 +50,11 @@
       axios
         .get("/api/users/" + browserCookies.get("user_id") + "/orderschat")
         .then(response => {
+          this.$store.dispatch ('clearchats')
+          .then(() => {
+            this.$store.dispatch ('loadChats', {orders : response.data})
+          })
 
-          this.$store.dispatch ('loadChats', {orders : response.data})
         });
 
     },

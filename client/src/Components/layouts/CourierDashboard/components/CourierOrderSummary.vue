@@ -107,7 +107,7 @@ export default {
                 order: this.order.order_id
               });
               // Get available order for the Summary Section
-              this.$store.dispatch("courierStats/updateAvailableOrders")
+              this.$store.dispatch("courier/updateAvailableOrders")
 
 
 
@@ -148,9 +148,9 @@ export default {
               user: this.order.user_id,
               order: this.order.order_id
             });
-            this.$store.dispatch("courierStats/updateDeliveredOrders")
+            this.$store.dispatch("courier/updateDeliveredOrders")
             .then(() => {
-              this.$store.dispatch("courierStats/updateDeliveredRevenue")
+              this.$store.dispatch("courier/updateDeliveredRevenue")
             })
 
 

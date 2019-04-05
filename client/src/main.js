@@ -10,7 +10,7 @@ import VueApexCharts from 'vue-apexcharts';
 import * as Sentry from '@sentry/browser';
 import IdleVue from 'idle-vue';
 import browserCookies from 'browser-cookies';
-import firebase from 'firebase';
+import firebase from 'firebase/app'
 import App from './App.vue';
 import store from './store';
 import router from './router';
@@ -62,7 +62,7 @@ const eventsHub = new Vue();
 
 Vue.use(IdleVue, {
   eventEmitter: eventsHub,
-  idleTime: 5 * 60 * 5000,
+  idleTime: 5 * 60 * 1000,
 });
 
 new Vue({

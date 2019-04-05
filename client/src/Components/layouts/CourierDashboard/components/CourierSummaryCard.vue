@@ -757,9 +757,9 @@ export default {
   name: "CourierSummaryCard",
   data() {
     return {
-     available_orders :  this.$store.getters['courierStats/getAvailableOrdersSum'],
-     delivered_orders :  this.$store.getters['courierStats/getDeliveredOrdersSum'],
-     delivered_revenue :10
+     available_orders :  this.$store.getters['courier/getAvailableOrdersSum'],
+     delivered_orders :  this.$store.getters['courier/getDeliveredOrdersSum'],
+     delivered_revenue : this.$store.getters['courier/getDeliveredRevenueSum']
     };
   },
   computed: {
@@ -771,26 +771,26 @@ export default {
   },
 
   mounted() {
-this.$store.dispatch("courierStats/updateAvailableOrders")
-this.$store.dispatch("courierStats/updateDeliveredOrders")
-this.$store.dispatch("courierStats/updateDeliveredRevenue")
+this.$store.dispatch("courier/updateAvailableOrders")
+this.$store.dispatch("courier/updateDeliveredOrders")
+this.$store.dispatch("courier/updateDeliveredRevenue")
 this.$store.subscribe((mutation, state) => {
   switch(mutation.type)
   {
-    case "courierStats/updateAvailableOrders" :
+    case "courier/updateAvailableOrders" :
     {
-      this.available_orders = this.$store.getters['courierStats/getAvailableOrdersSum']
+      this.available_orders = this.$store.getters['courier/getAvailableOrdersSum']
 
       break;
     }
-    case "courierStats/updateDeliveredOrders":
+    case "courier/updateDeliveredOrders":
     {
-      this.delivered_orders = this.$store.getters['courierStats/getDeliveredOrdersSum']
+      this.delivered_orders = this.$store.getters['courier/getDeliveredOrdersSum']
       break;
     }
-    case "courierStats/updateDeliveredRevenue" :
+    case "courier/updateDeliveredRevenue" :
     {
-      this.delivered_revenue = this.$store.getters['courierStats/getDeliveredRevenueSum']
+      this.delivered_revenue = this.$store.getters['courier/getDeliveredRevenueSum']
 
       break;
     }

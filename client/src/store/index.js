@@ -13,6 +13,7 @@ import orders from './modules/orders';
 import account from './modules/account';
 import courierStats from './modules/courierStats.js'
 
+
 Vue.use(Vuex);
 
 const debug = process.env.NODE_ENV !== 'production';

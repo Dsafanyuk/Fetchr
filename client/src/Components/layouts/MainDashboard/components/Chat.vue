@@ -129,9 +129,7 @@
     props: [
       'id'
     ],
-    created(){
-    },
-    mounted () {
+    created () {
       this.fetchMessages()
 
     },
@@ -163,9 +161,9 @@
     },
     computed: {
 
-      messages () {
-        return this.chatMessages
-      },
+//      messages () {
+//        return this.chatMessages
+//      },
     },
     methods: {
       scrollToEnd() {
@@ -201,6 +199,7 @@
         let temp_data = []
         var self = this
         refmessages.on("child_added", function(snapshot) {
+          console.log("fetch called");
           self.isChatLoading = false;
           var data = snapshot.val()
           temp_data.push(data)
@@ -269,7 +268,7 @@
   }
 </script>
 
-<style>
+<style scoped="true">
 @import "../../../assets/courier/css/core.css";
 @import "../../../assets/courier/css/components.css";
 .conversation-text{

@@ -10,6 +10,7 @@ const socketApi = {};
 socketApi.io = io;
 
 io.on('connection', (socket) => {
+
   socket.on('ORDER_CREATED', (data) => {
     updateOpenOrders(data, socket);
   });
@@ -18,6 +19,9 @@ io.on('connection', (socket) => {
   });
   socket.on('ORDER_DELIVERED', (data) => {
     updateDeliveredOrders(data, socket);
+  });
+  socket.on('news', (data) => {
+    console.log("Weeee" + data);
   });
 });
 

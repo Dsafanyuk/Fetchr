@@ -162,7 +162,7 @@
         if (this.content !== '') {
       const  Message_data = {
         OrderId  : parseInt(this.$route.params.order_id),
-        ReceiverId: browserCookies.get("current_receiver"),
+        ReceiverId: browserCookies.get("current_receiver_id"),
         SenderId :  browserCookies.get("user_id"),
         Content : this.content
       }
@@ -201,7 +201,7 @@
         .then(response => {
             fullname = response.data[0]['first_name'] + " " + response.data[0]['last_name']
             chatList.push({chat_key : temp_chat_key,
-              sender_id : temp_sender_id,
+            sender_id : temp_sender_id,
              receiver_id :temp_receiver_id,
              order_id : snapshot.val()[temp_chat_key]['order_id'],
              userInfo : temp_fullInfo

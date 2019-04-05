@@ -11,7 +11,7 @@ import notification from './modules/notification';
 import admin from './modules/admin';
 import orders from './modules/orders';
 import account from './modules/account';
-import courierStats from './modules/courierStats.js'
+
 
 Vue.use(Vuex);
 
@@ -42,7 +42,6 @@ export default new Vuex.Store({
     chat,
     account,
     dashboard,
-    courierStats
   },
   strict: debug,
 });

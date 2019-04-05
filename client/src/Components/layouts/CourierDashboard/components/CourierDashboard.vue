@@ -6,7 +6,7 @@
       :summaryIsActive="summaryIsActive"
       v-model="summaryIsActive"
       @closeDialog="summaryIsActive"
-      @updateSummarySection = "updateSummarySection"
+    
     ></CourierOrderSummary>
     <CourierSummaryCard v-bind:available_orders="availableOrderSum" class="summarycard"></CourierSummaryCard>
 

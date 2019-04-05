@@ -41,7 +41,7 @@
       <v-flex
         v-on:click="scrollToTop"
         align-self-center
-        style="margin-right:10px"
+        style="margin-left: 100px"
         class="hidden-sm-and-down"
       >
         <transition name="fade" v-on:enter="enter" v-on:leave="leave">
@@ -49,6 +49,14 @@
         </transition>
       </v-flex>
       <div class="hidden-sm-and-down">
+        <v-btn
+          v-on:click="goToDashboard"
+          flat
+          color="white"
+          light>
+          Home
+          <v-icon right dark>home</v-icon>
+        </v-btn>
         <v-menu id="customer_menu" fixed bottom offset-y class="active_menu">
           <v-btn
             v-if="!firstName"
@@ -165,7 +173,6 @@ export default {
       ],
       menu: [
         { title: "Switch To Courier", icon: "fa fa-truck" },
-        { title: "Home", icon: "fa fa-home" },
         { title: "Account", icon: "fas fa-user-alt fa-s" },
         { title: "Orders", icon: "far fa-list-alt fa-s" },
         {
@@ -260,10 +267,6 @@ export default {
       switch (menuItem) {
         case "Switch To Courier": {
           this.$router.push("/courier");
-          break;
-        }
-        case "Home": {
-          this.goToDashboard();
           break;
         }
         case "Leave Feedback": {

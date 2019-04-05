@@ -83,10 +83,8 @@ import CourierDeliveredOrders from "./CourierDeliveredOrders";
 import CourierSummaryCard from "./CourierSummaryCard.vue";
 import CourierAvailableOrders from "./CourierAvailableOrders";
 import CourierAcceptedOrders from "./CourierAcceptedOrders";
-import browserCookies from "browser-cookies";
 import Toasted from "vue-toasted";
 import axios from "../../../../axios";
-const user = browserCookies.get("user_id");
 
 export default {
   data() {

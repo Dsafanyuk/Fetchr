@@ -130,8 +130,13 @@
       'id'
     ],
     created () {
+      this.$store.dispatch('clearchats')
       this.fetchMessages()
 
+    },
+    mounted (){
+      // Clear the store before reload 
+      this.$store.dispatch('clearchats')
     },
     watch: {
       chatMessages: function() {
@@ -199,7 +204,7 @@
         let temp_data = []
         var self = this
         refmessages.on("child_added", function(snapshot) {
-          console.log("fetch called");
+
           self.isChatLoading = false;
           var data = snapshot.val()
           temp_data.push(data)
@@ -269,8 +274,7 @@
 </script>
 
 <style scoped="true">
-@import "../../../assets/courier/css/core.css";
-@import "../../../assets/courier/css/components.css";
+
 .conversation-text{
   padding-bottom: 10px !important;
 }

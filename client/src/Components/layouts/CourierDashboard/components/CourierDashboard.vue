@@ -6,10 +6,6 @@
       :summaryIsActive="summaryIsActive"
       v-model="summaryIsActive"
       @closeDialog="summaryIsActive"
-<<<<<<< HEAD
-
-=======
->>>>>>> 2107504cb7c32161490018638de0ca1a6501fafe
     ></CourierOrderSummary>
     <CourierSummaryCard v-bind:available_orders="availableOrderSum" class="summarycard"></CourierSummaryCard>
 

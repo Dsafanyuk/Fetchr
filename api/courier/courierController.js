@@ -145,17 +145,9 @@ function acceptOrder(req, res) {
     })
     .then((rows) => {
       if (rows) {
-<<<<<<< HEAD
-
-        res.send("success");
-      }
-      else {
-        res.send("fail");
-=======
         res.send('success');
       } else {
         res.send('fail');
->>>>>>> 2107504cb7c32161490018638de0ca1a6501fafe
       }
     })
     .catch((err) => {

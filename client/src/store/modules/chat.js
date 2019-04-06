@@ -28,6 +28,7 @@ const ChatModule = {
     loadChats({commit,dispatch,state}, payload) {
 
       var chatList = []
+
       // Loop going through each order
       for (var key in payload.orders) {
         if (payload.orders.hasOwnProperty(key)) {
@@ -54,27 +55,25 @@ const ChatModule = {
           axios
           .get("/api/users/" + id_to_request +  "/showInfo")
           .then(response => {
-              temp_fullInfo = response.data[0]['first_name'] + " " + response.data[0]['last_name']
 
-            //  chatList.push(
-              commit('setChats', {chat_key : temp_chat_key,
-                sender_id : temp_sender_id,
-               receiver_id :temp_receiver_id,
-               order_id : snapshot.val()[temp_chat_key]['order_id'],
-               userInfo : temp_fullInfo
-             })
-            //)
-
-          });
-          }
+            if (response.data.length != 0)
+              {
+                     temp_fullInfo = response.data[0]['first_name'] + " " + response.data[0]['last_name']
+                     commit('setChats', {chat_key : temp_chat_key,
+                     sender_id : temp_sender_id,
+                     receiver_id :temp_receiver_id,
+                     order_id : snapshot.val()[temp_chat_key]['order_id'],
+                     userInfo : temp_fullInfo
+                 });
+              }
           })
 
         }
-      }
+      })
+    }
+  }
 
-
-
-    },
+},
     createChat({commit,dispatch}, payload, ) {
       //Generate a conversation ID, create a chatroom node
       //and store it to the "chats " node in firebase

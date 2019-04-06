@@ -17,6 +17,14 @@
         <v-card-actions class="justify-center text-xs-center" v-if="!transactionIsProcessing">
           <v-item-group class="text-xs-center" v-model="selectedAmount">
             <v-subheader>Select the amount to refill:</v-subheader>
+            <v-item>
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <v-icon color="grey" dark v-on="on">info</v-icon>
+                </template>
+                <span>Your wallet maximum needs to be less than $1000</span>
+              </v-tooltip>
+            </v-item>
             <v-item v-for="n in refillAmounts" :key="n">
               <v-chip slot-scope="{ active }" :selected="active" @click="selectAmount(n)">${{ n }}</v-chip>
             </v-item>
@@ -33,14 +41,6 @@
               >
               <v-chip v-else slot-scope="{ active }" :selected="active" @click="customAmount">other</v-chip>
             </v-item>
-            <v-alert
-              :value="true"
-              color="warning"
-              icon="priority_high"
-              outline
-              dismissible
-            >Your wallet maximum needs to be less than $1000
-            </v-alert>
           </v-item-group>
         </v-card-actions>
         <div v-if="transactionIsProcessing">

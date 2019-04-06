@@ -6,7 +6,10 @@
       :summaryIsActive="summaryIsActive"
       v-model="summaryIsActive"
       @closeDialog="summaryIsActive"
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2107504cb7c32161490018638de0ca1a6501fafe
     ></CourierOrderSummary>
     <CourierSummaryCard v-bind:available_orders="availableOrderSum" class="summarycard"></CourierSummaryCard>
 
@@ -94,7 +97,7 @@ export default {
       summaryOrder: {},
       summaryIsActive: false,
       revenue: 0,
-      availableOrderSum:0,
+      availableOrderSum: 0
     };
   },
   components: {
@@ -108,10 +111,8 @@ export default {
     this.$store.dispatch("courier/clearAllOrders");
   },
   mounted: function loadOrder() {
-    this.$store.commit('courier/startLoading');
-    this.getAvailableOrders();
-    this.getAcceptedOrders();
-    this.getDeliveredOrders();
+    this.$store.commit("courier/startLoading");
+    this.$store.dispatch("courier/refreshAllOrders");
   },
   computed: {
     availableOrders() {
@@ -141,7 +142,7 @@ export default {
     },
     getAvailableOrders() {
       this.$store.dispatch("courier/getAvailableOrders");
-    },
+    }
   }
 };
 </script>

@@ -12,11 +12,10 @@
 </template>
 
 <script>
-import Vue from "vue";
 
 export default {
   data: () => ({
-    links: ["Home", "Courier", "Meat the Team", "Back to Top"]
+    links: ["Home", "Courier", "Meet the Team", "Back to Top"]
   }),
   methods: {
     footerActions: function(link){
@@ -29,7 +28,7 @@ export default {
           this.$router.push("/courier");
           break;
         }
-        case "Meat the Team": {
+        case "Meet the Team": {
           this.$router.push("/home#team");
           break;
         }

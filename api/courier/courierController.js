@@ -1,6 +1,10 @@
 const knex = require('knex')(require('../db'));
 const { fixDateTime } = require('./courierHelper');
 const moment = require('moment');
+const updateOpenOrders = require('../socket/updateOpenOrders');
+const updateAcceptedOrders = require('../socket/updateAcceptedOrders');
+const updateDeliveredOrders = require('../socket/updateDeliveredOrders');
+const socketApi = require('../socket');
 
 // GET /courier/:user_id/order
 function availableOrders(req, res) {
@@ -15,10 +19,12 @@ function availableOrders(req, res) {
       'orders.time_created',
       'order_total',
     )
-    .whereNull('courier_id')
+    .where('delivery_status', 'pending')
+    //.whereNull('courier_id')
     .whereNot('customer_id', req.params.user_id)
     .then((orders) => {
       orders.forEach((order) => {
+        console.log(order.order_id);
         order.time_created = fixDateTime(order.time_created);
       });
       res.send(orders);
@@ -135,6 +141,13 @@ function getRevenue(req, res) {
 }
 // POST /accept
 function acceptOrder(req, res) {
+  updateOpenOrders(socketApi);
+
+  updateAcceptedOrders({
+    user: req.body.customer_id,
+    order: req.body.order_id,
+  }, socketApi);
+
   knex('orders')
     .whereNull('courier_id')
     .andWhere('order_id', req.body.order_id)
@@ -159,6 +172,16 @@ function acceptOrder(req, res) {
 
 // POST /deliver
 function deliverOrder(req, res) {
+  updateAcceptedOrders({
+    user: req.body.courier_id,
+    order: req.body.order_id,
+  }, socketApi);
+
+  updateDeliveredOrders({
+    user: req.body.courier_id,
+    order: req.body.order_id,
+  }, socketApi);
+
   knex('orders')
     .where('order_id', req.body.order_id)
     .update({

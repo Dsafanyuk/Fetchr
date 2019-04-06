@@ -144,7 +144,7 @@ export default {
             productsWithQuantity: productsWithQuantity
           })
           .then(response => {
-            socket.emit("ORDER_CREATED");
+            // socket.emit("ORDER_CREATED");
             //go to the confirmation page and send it the order id
             router.push("/confirmation?order=" + response.data.message);
             this.$store.dispatch("wallet/getWalletBalance");

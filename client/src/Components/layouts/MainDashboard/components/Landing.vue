@@ -9,7 +9,7 @@
           :product="product"
         ></LandingCard>
         <v-btn
-              color="red"
+              color="primary"
               dark red
               small
               bottom

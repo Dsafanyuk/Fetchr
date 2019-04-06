@@ -16,24 +16,24 @@ import Vue from "vue";
 
 export default {
   data: () => ({
-    links: ["Home", "Courier", "Team", "Scroll up"]
+    links: ["Home", "Courier", "Meat the Team", "Back to Top"]
   }),
   methods: {
     footerActions: function(link){
       switch(link){
         case "Home": {
-          this.$router.push("/dashboard");
+          this.$router.push("/home");
           break;
         }
          case "Courier": {
           this.$router.push("/courier");
           break;
         }
-        case "Team": {
+        case "Meat the Team": {
           this.$router.push("/home#team");
           break;
         }
-        case "Scroll up": {
+        case "Back to Top": {
           this.scrollToTop();
           break;
         }

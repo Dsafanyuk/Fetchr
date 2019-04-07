@@ -1,7 +1,6 @@
 const knex = require('knex')(require('../db'));
 const { fixDateTime } = require('./courierHelper');
 const moment = require('moment');
-const updateOpenOrders = require('../socket/updateOpenOrders');
 const updateAcceptedOrders = require('../socket/updateAcceptedOrders');
 const updateDeliveredOrders = require('../socket/updateDeliveredOrders');
 const socketApi = require('../socket');
@@ -141,8 +140,6 @@ function getRevenue(req, res) {
 }
 // POST /accept
 function acceptOrder(req, res) {
-  updateOpenOrders(socketApi);
-
   updateAcceptedOrders({
     user: req.body.customer_id,
     order: req.body.order_id,
@@ -172,13 +169,8 @@ function acceptOrder(req, res) {
 
 // POST /deliver
 function deliverOrder(req, res) {
-  updateAcceptedOrders({
-    user: req.body.courier_id,
-    order: req.body.order_id,
-  }, socketApi);
-
   updateDeliveredOrders({
-    user: req.body.courier_id,
+    user: req.body.customer_id,
     order: req.body.order_id,
   }, socketApi);
 

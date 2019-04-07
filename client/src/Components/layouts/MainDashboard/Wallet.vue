@@ -17,14 +17,6 @@
         <v-card-actions class="justify-center text-xs-center" v-if="!transactionIsProcessing">
           <v-item-group class="text-xs-center" v-model="selectedAmount">
             <v-subheader>Select the amount to refill:</v-subheader>
-            <v-item>
-              <v-tooltip top>
-                <template v-slot:activator="{ on }">
-                  <v-icon color="grey" dark v-on="on">info</v-icon>
-                </template>
-                <span>Your wallet maximum needs to be less than $1000</span>
-              </v-tooltip>
-            </v-item>
             <v-item v-for="n in refillAmounts" :key="n">
               <v-chip slot-scope="{ active }" :selected="active" @click="selectAmount(n)">${{ n }}</v-chip>
             </v-item>
@@ -41,18 +33,20 @@
               >
               <v-chip v-else slot-scope="{ active }" :selected="active" @click="customAmount">other</v-chip>
             </v-item>
+            <v-tooltip top>
+              <template v-slot:activator="{ on }">
+                <v-icon color="grey" dark v-on="on">info</v-icon>
+              </template>
+              <span>Your wallet balance cannot exceed $1000</span>
+            </v-tooltip>
           </v-item-group>
         </v-card-actions>
         <div v-if="transactionIsProcessing">
           <v-progress-linear :indeterminate="true" height="15" color="success"></v-progress-linear>
         </div>
         <div v-else class="text-xs-center">
-          <v-btn
-            :disabled="validAmountChosen"
-            round
-            color="success"
-            @click="addToWallet"
-          >Refill &nbsp; &nbsp;
+          <v-btn :disabled="validAmountChosen" round color="success" @click="addToWallet">
+            Refill &nbsp; &nbsp;
             <v-icon>fas fa-money-bill-wave</v-icon>
           </v-btn>
         </div>
@@ -130,16 +124,18 @@ export default {
           })
           .catch(error => {
             Vue.toasted.error("Failed wallet transaction", {
-              theme: 'bubble',
+              theme: "bubble",
               duration: 4000,
-              position: 'top-center',
-              icon: 'report_problem'
+              position: "top-center",
+              icon: "report_problem"
             });
             console.log(error);
           });
       } else {
         this.$toasted
-          .error("Please enter a different amount that adds up to less than $1000")
+          .error(
+            "Please enter a different amount that adds up to less than $1000"
+          )
           .goAway(3000);
         this.transactionIsProcessing = false;
         this.selectAmount(null);

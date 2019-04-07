@@ -104,8 +104,6 @@ export default {
                 position: "top-center",
                 duration: 5000
               });
-              // Get available order for the Summary Section
-              this.$store.dispatch("courier/updateAvailableOrders")
             } else {
               this.$toasted.error(
                 "Oops! This order has already been accepted. :(",
@@ -133,11 +131,8 @@ export default {
               theme: 'bubble',
               position: "top-center",
               duration: 5000
-            });
-            this.$store.dispatch("courier/updateDeliveredOrders")
-            .then(() => {
-              this.$store.dispatch("courier/updateDeliveredRevenue")
             })
+            this.$store.dispatch("courier/updateDeliveredRevenue")
 
 
           } else {

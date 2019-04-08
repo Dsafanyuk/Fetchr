@@ -785,6 +785,4 @@ this.$store.dispatch("courier/updateDeliveredRevenue")
 
 };
 </script>
-
-<style scoped src="../../../assets/courier/css/core.css">
-</style>
+<style scoped src="../../../assets/courier/css/core.scss"> </style>

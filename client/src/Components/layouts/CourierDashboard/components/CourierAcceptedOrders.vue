@@ -5,18 +5,18 @@
     </div>
     <v-data-table :headers="headers" :items="orders" v-bind:pagination.sync="pagination">
       <template slot="items" slot-scope="props">
-        <tr @click="toggleDialog(props.item)">
-          <td>{{props.item.order_id}}</td>
-          <td>{{props.item.first_name}}</td>
-          <td>{{props.item.room_num}}</td>
-          <td>{{props.item.time_created}}</td>
-        </tr>
+        <td @click="toggleDialog(props.item)">{{props.item.order_id}}</td>
+        <td @click="toggleDialog(props.item)">{{props.item.first_name}}</td>
+        <td @click="toggleDialog(props.item)">{{props.item.room_num}}</td>
+        <td @click="toggleDialog(props.item)">{{props.item.time_created}}</td>
+        <CreateConversation v-if="props.item.order_id" :order_id="parseInt(props.item.order_id)"></CreateConversation>
       </template>
     </v-data-table>
   </v-card>
 </template>
-  
+
 <script>
+import CreateConversation from "../../MainDashboard/components/ChatCreateConversation.vue";
 export default {
   name: "CourierAvailableOrders",
   data() {
@@ -26,25 +26,28 @@ export default {
         { text: "Order #", align: "left", value: "order_id" },
         { text: "Name", align: "left", value: "first_name" },
         { text: "Room #", align: "left", value: "room_num" },
-        { text: "Time Created", align: "left", value: "time_created" }
+        { text: "Time Created", align: "left", value: "time_created" },
+        { text: "", align: "left", value: "", sortable: false }
       ]
     };
   },
   props: {
     orders: Array
   },
+  components: {
+    CreateConversation: CreateConversation
+  },
   computed: {},
   methods: {
-       toggleDialog(value) {
-      this.$emit("toggleSummary", value)
+    toggleDialog(value) {
+      this.$emit("toggleSummary", value);
     }
   }
 };
 </script>
-    
+
 <style scoped lang="css">
 .v-progress-linear {
-  margin: auto !important
+  margin: auto !important;
 }
 </style>
-    

@@ -15,11 +15,19 @@
           <template slot="items" slot-scope="props">
             <td>{{ props.item.product_name }}</td>
             <td class="text-xs-center">
-              <v-btn icon v-on:click="incQuantity(props.item)">
+              <v-btn
+                icon
+                v-on:click="incQuantity(props.item)"
+                :disabled="props.item.quantity === 10"
+              >
                 <v-icon color="primary">add_circle</v-icon>
               </v-btn>
               {{ props.item.quantity }}
-              <v-btn icon v-on:click="decQuantity(props.item)">
+              <v-btn
+                icon
+                v-on:click="decQuantity(props.item)"
+                :disabled="props.item.quantity === 1"
+              >
                 <v-icon color="primary">remove_circle</v-icon>
               </v-btn>
             </td>
@@ -43,13 +51,10 @@
           </template>
         </v-data-table>
         <div class="text-xs-center">
-          <v-btn color="gray" @click="show = !show">Continue Shopping</v-btn>
+          <v-btn color="gray" @click="show = !show" to="/dashboard">Continue Shopping</v-btn>
 
-          <v-btn
-            :disabled="isEmpty"
-            v-on:click="checkout(false)"
-            color="success"
-          >Checkout &nbsp;&nbsp;
+          <v-btn :disabled="isEmpty" v-on:click="checkout(false)" color="success">
+            Checkout &nbsp;&nbsp;
             <v-icon>check</v-icon>
           </v-btn>
         </div>
@@ -115,5 +120,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../custom_css/ShoppingCart.scss";
 </style>

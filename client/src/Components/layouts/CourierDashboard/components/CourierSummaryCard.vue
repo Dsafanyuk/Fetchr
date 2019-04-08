@@ -6,14 +6,19 @@
           <div class="bar-widget">
             <div class="table-box">
               <div class="table-detail">
-                <div class="iconbox bg-info">
+                <v-btn fab icon color="primary" :ripple="false">
                   <v-icon large color="white">shopping_basket</v-icon>
-                </div>
+                </v-btn>
               </div>
 
               <div class="table-detail">
-                <v-progress-circular class="m-t-0 m-b-5" :size="23" v-if="isLoading" indeterminate color="primary">
-                </v-progress-circular>
+                <v-progress-circular
+                  class="m-t-0 m-b-5"
+                  :size="23"
+                  v-if="isLoading"
+                  indeterminate
+                  color="primary"
+                ></v-progress-circular>
                 <div v-if="!(isLoading)">
                   <h4 class="m-t-0 m-b-5">
                     <b>{{available_orders}}</b>
@@ -128,14 +133,19 @@
           <div class="bar-widget">
             <div class="table-box">
               <div class="table-detail">
-                <div class="iconbox bg-info">
-                  <v-icon large color="white" class="rounded">how_to_reg</v-icon>
-                </div>
+                <v-btn fab icon color="primary" :ripple="false">
+                  <v-icon large color="white">how_to_reg</v-icon>
+                </v-btn>
               </div>
 
               <div class="table-detail">
-                <v-progress-circular class="m-t-0 m-b-5" :size="23" v-if="isLoading" indeterminate color="primary">
-                </v-progress-circular>
+                <v-progress-circular
+                  class="m-t-0 m-b-5"
+                  :size="23"
+                  v-if="isLoading"
+                  indeterminate
+                  color="primary"
+                ></v-progress-circular>
                 <div v-if="!(isLoading)">
                   <h4 class="m-t-0 m-b-5">
                     <b>{{delivered_orders}}</b>
@@ -148,7 +158,7 @@
                   data-plugin="peity-bar"
                   data-colors="#f9aa33,#ebeff2"
                   data-width="120"
-                  data-height="45"
+                  data-height="s45"
                   style="display: none;"
                 >5,3,9,6,5,9,7,3,5,2,9,7,2,1</span>
                 <svg class="peity" height="45" width="120">
@@ -251,17 +261,22 @@
           <div class="bar-widget">
             <div class="table-box">
               <div class="table-detail">
-                <div class="iconbox bg-info">
+                <v-btn fab icon color="primary" :ripple="false">
                   <v-icon large color="white">attach_money</v-icon>
-                </div>
+                </v-btn>
               </div>
 
               <div class="table-detail">
-                <v-progress-circular class="m-t-0 m-b-5" :size="23" v-if="isLoading" indeterminate color="primary">
-                </v-progress-circular>
+                <v-progress-circular
+                  class="m-t-0 m-b-5"
+                  :size="23"
+                  v-if="isLoading"
+                  indeterminate
+                  color="primary"
+                ></v-progress-circular>
                 <div v-if="!(isLoading)">
                   <h4 class="m-t-0 m-b-5">
-                    <b>{{revenue}}</b>
+                    <b>{{delivered_revenue}}</b>
                   </h4>
                 </div>
                 <p class="text-muted m-b-0 m-t-0">Total Delivered Revenue</p>
@@ -376,9 +391,9 @@
           <div class="bar-widget">
             <div class="table-box">
               <div class="table-detail">
-                <div class="iconbox bg-info">
-                  <i class="mdi mdi-shopping"></i>
-                </div>
+                <v-btn fab icon color="primary" :ripple="false">
+                  <v-icon large color="white">shopping_basket</v-icon>
+                </v-btn>
               </div>
 
               <div class="table-detail">
@@ -494,9 +509,9 @@
           <div class="bar-widget">
             <div class="table-box">
               <div class="table-detail">
-                <div class="iconbox bg-info">
-                  <i class="mdi mdi-shopping"></i>
-                </div>
+                <v-btn fab icon color="primary" :ripple="false">
+                  <v-icon large color="white">how_to_reg</v-icon>
+                </v-btn>
               </div>
 
               <div class="table-detail">
@@ -613,14 +628,14 @@
           <div class="bar-widget">
             <div class="table-box">
               <div class="table-detail">
-                <div class="iconbox bg-info">
-                  <i class="mdi mdi-shopping"></i>
-                </div>
+                <v-btn fab icon color="primary" :ripple="false">
+                  <v-icon large color="white">attach_money</v-icon>
+                </v-btn>
               </div>
 
               <div class="table-detail">
                 <h4 class="m-t-0 m-b-5">
-                  <b>{{revenue}}</b>
+                  <b>{{delivered_revenue}}</b>
                 </h4>
                 <p class="text-muted m-b-0 m-t-0">Total Delivered Revenue</p>
               </div>
@@ -736,52 +751,57 @@ import axios from "../../../../axios";
 import browserCookies from "browser-cookies";
 import Toasted from "vue-toasted";
 const user = browserCookies.get("user_id");
+import { mapGetters } from 'vuex'
 
 export default {
   name: "CourierSummaryCard",
   data() {
     return {
-      available_orders: 0,
-      delivered_orders: 0,
-      revenue: 0,
+     available_orders :  this.$store.getters['courier/getAvailableOrdersSum'],
+     delivered_orders :  this.$store.getters['courier/getDeliveredOrdersSum'],
+     delivered_revenue : this.$store.getters['courier/getDeliveredRevenueSum']
     };
   },
   computed: {
     isLoading() {
-      return this.$store.getters['courier/isLoading']
+      return this.$store.getters["courier/isLoading"];
     }
   },
   methods: {
-    getAvailableOrders() {
-      axios
-        .get("/api/courier/" + user + "/countAvailableOrder")
-        .then(response => {
-          this.available_orders = response.data[0][0]["count_av"];
-        });
-    },
-    getTotalDelivered() {
-      axios
-        .get("/api/courier/" + user + "/getTotalDelivered")
-        .then(response => {
-          this.delivered_orders = response.data[0][0]["count_d"];
-        });
-    },
-    getRevenue() {
-      axios.get("/api/courier/" + user + "/getRevenue").then(response => {
-        this.revenue = response.data[0][0]["revenue"];
-      });
-    }
   },
 
-  mounted: function() {
-    this.getAvailableOrders();
-    this.getTotalDelivered();
-    this.getRevenue();
+  mounted() {
+this.$store.dispatch("courier/updateAvailableOrders")
+this.$store.dispatch("courier/updateDeliveredOrders")
+this.$store.dispatch("courier/updateDeliveredRevenue")
+this.$store.subscribe((mutation, state) => {
+  switch(mutation.type)
+  {
+    case "courier/updateAvailableOrders" :
+    {
+      this.available_orders = this.$store.getters['courier/getAvailableOrdersSum']
+
+      break;
+    }
+    case "courier/updateDeliveredOrders":
+    {
+      this.delivered_orders = this.$store.getters['courier/getDeliveredOrdersSum']
+      break;
+    }
+    case "courier/updateDeliveredRevenue" :
+    {
+      this.delivered_revenue = this.$store.getters['courier/getDeliveredRevenueSum']
+
+      break;
+    }
+
   }
+
+})
+
+}
+
+
 };
 </script>
-
-<style scoped="true">
-@import "../../../assets/courier/css/core.css";
-@import "../../../assets/courier/css/components.css";
-</style>
+<style scoped src="../../../assets/courier/css/core.scss"> </style>

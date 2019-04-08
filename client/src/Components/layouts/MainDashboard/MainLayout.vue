@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <MainHeader v-model="search" @selectedCategory="selectedCategory = $event"></MainHeader>
-    <router-view :search="search" :selectedCategory="selectedCategory"></router-view>
+    <MainHeader></MainHeader>
+    <router-view id="main"></router-view>
     <MainFooter></MainFooter>
   </v-app>
 </template>
@@ -12,10 +12,7 @@ import MainFooter from "./MainFooter.vue";
 
 export default {
   data() {
-    return {
-      search: "",
-      selectedCategory: "Popular"
-    };
+    return {};
   },
   components: {
     MainHeader: MainHeader,
@@ -24,12 +21,15 @@ export default {
 };
 </script>
 <style>
-@import "/src/Components/assets/css/bootstrap.min.css";
 .toasted.bubble .action {
   color: white;
 }
 .toasted.bubble {
   background-color: #4a6572;
+}
+
+#main {
+  flex: 1;
 }
 </style>
 

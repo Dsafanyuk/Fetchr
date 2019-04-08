@@ -39,6 +39,24 @@ function showUserOrders(req, res) {
     });
 }
 
+// GET /users/{user_id}/orderschat
+function showOrdersForChat(req, res) {
+  knex('orders')
+    .where(function () {
+      this.where('customer_id', req.params.user_id).orWhere('courier_id', req.params.user_id);
+    })
+    .havingIn('delivery_status', ['in-progress', 'delivered'])
+    .then((rows) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      Sentry.captureException(err);
+      res.status(500).send({
+        message: `${err}`,
+      }); // FOR DEBUGGING ONLY, dont send exact message in prod
+    });
+}
+
 // POST /user
 function createUser(req, res) {
   const request = req.body;
@@ -186,6 +204,42 @@ function checkBalance(req, res) {
       });
     });
 }
+// GET /users/{user_id}/showInfo
+function showUserById(req, res) {
+  knex('users')
+    .select('first_name', 'last_name')
+    .where('user_id', req.params.user_id)
+    .then((rows) => {
+      res.send(rows).status(200);
+    })
+    .catch((err) => {
+      Sentry.captureException(err);
+      res.status(500).send({
+        message: `${err}`,
+      });
+    });
+}
+
+// PUT /users/:user_id
+function editUser(req, res) {
+  const user = req.body;
+  const { user_id } = req.params;
+  knex('users')
+    .where('user_id', user_id)
+    .update({
+      first_name: user.first_name,
+      last_name: user.last_name,
+      room_num: user.room_num,
+      phone_number: user.phone_number,
+    })
+    .then(() => {
+      res.status(200).send('success');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+}
 module.exports = {
   showOneUser,
   showUserOrders,
@@ -197,4 +251,7 @@ module.exports = {
   unfavorite,
   addBalance,
   checkBalance,
+  showUserById,
+  showOrdersForChat,
+  editUser,
 };

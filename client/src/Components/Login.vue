@@ -107,6 +107,7 @@
           })
             .then((response) => {
               if (response.status == 200) {
+                this.$store.commit('login/setUserId', response.data.user_id)
                 // Change login status, returns a promise
                 this.$store.dispatch('login/login').then(response => {
                   this.$router.push('/' + value);
@@ -120,9 +121,10 @@
             .catch((error) => {
               console.log(error);
               this.$toasted.error('WRONG EMAIL OR PASSWORD', {
-                theme: "primary", 
+                theme: "bubble", 
                 position: "top-center", 
-                duration : 5000
+                duration : 5000,
+                icon: "report_problem"
               });
             });
         } else {

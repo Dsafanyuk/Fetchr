@@ -2,12 +2,17 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 import cart from './modules/cart';
+import dashboard from './modules/dashboard';
 import wallet from './modules/wallet';
 import courier from './modules/courier';
 import login from './modules/login';
+import chat from './modules/chat';
 import notification from './modules/notification';
 import admin from './modules/admin';
-import orders from './modules/orders'
+import orders from './modules/orders';
+import account from './modules/account';
+import courierStats from './modules/courierStats.js'
+
 
 Vue.use(Vuex);
 
@@ -35,6 +40,10 @@ export default new Vuex.Store({
     notification,
     admin,
     orders,
+    chat,
+    account,
+    dashboard,
+    courierStats
   },
   strict: debug,
 });

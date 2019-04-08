@@ -80,6 +80,5 @@
 </script>
 
 <style scoped="true">
-@import "../../../assets/courier/css/core.css";
-@import "../../../assets/courier/css/components.css";
+
 </style>

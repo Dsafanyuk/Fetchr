@@ -805,5 +805,6 @@ this.$store.subscribe((mutation, state) => {
 };
 </script>
 
-<style scoped src="../../../assets/courier/css/core.css">
+<style scoped="true">
+@import "../../../assets/courier/css/core.scss";
 </style>

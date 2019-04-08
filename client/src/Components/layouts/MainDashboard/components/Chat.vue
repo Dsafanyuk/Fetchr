@@ -135,7 +135,7 @@
 
     },
     mounted (){
-      // Clear the store before reload 
+      // Clear the store before reload
       this.$store.dispatch('clearchats')
     },
     watch: {
@@ -272,8 +272,9 @@
     }
   }
 </script>
-
-<style scoped="true">
+<style scoped src="../../../assets/courier/css/core.scss"></style>
+<style scoped src="../../../assets/courier/css/components.scss"></style>
+<style lang="css" scoped>
 
 .conversation-text{
   padding-bottom: 10px !important;
@@ -335,5 +336,4 @@ margin-top: 100px;
       max-width: 60%;
     }
   }
-
 </style>

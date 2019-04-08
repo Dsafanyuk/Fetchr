@@ -1,7 +1,6 @@
 const knex = require('knex')(require('../db'));
 const { fixDateTime } = require('./courierHelper');
 const moment = require('moment');
-var socketApi = require('../socket');
 
 // GET /courier/:user_id/order
 function availableOrders(req, res) {
@@ -168,9 +167,6 @@ function deliverOrder(req, res) {
       time_delivered: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
     })
     .then((rows) => {
-
-      // Emit Accepted Order
-      global.io.emit('news', { hello: 'world' });
       res.status(200).send('success');
     })
     .catch((err) => {

@@ -147,11 +147,6 @@
         }
         else
         {
-          // --Hack-- Because Html components are slow to render.
-          // Variables assignment are faster
-          // I have to wait for the ".scrollTop" property of the .chat-conversation
-          // Element in the DOM to render before i call the scrollToEnd function
-          // Any suggestion ??
           var self = this
            setTimeout(function(){
               self.scrollToEnd()
@@ -165,10 +160,6 @@
 
     },
     computed: {
-
-//      messages () {
-//        return this.chatMessages
-//      },
     },
     methods: {
       scrollToEnd() {
@@ -192,7 +183,7 @@
         Content : this.content
       }
           this.$store.dispatch('sendMessage', Message_data)
-          this.content = '' // Clear after You send the Message
+          this.content = ''
         }
       },
 
@@ -211,15 +202,10 @@
         })
 
         this.chatMessages = temp_data
-
-
-
-
         //If there's no chat for the current id
         self.isChatLoading = false;
 
       },
-      // Messages Left & right
       displayMessages(SenderId)
       {
         if( SenderId == browserCookies.get("user_id") )

@@ -20,9 +20,6 @@ io.on('connection', (socket) => {
   socket.on('ORDER_DELIVERED', (data) => {
     updateDeliveredOrders(data, socket);
   });
-  socket.on('news', (data) => {
-    console.log("Weeee" + data);
-  });
 });
 
 module.exports = socketApi;

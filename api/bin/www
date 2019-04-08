@@ -44,10 +44,6 @@ var socketApi = require('../socket');
 var { io } = socketApi;
 io.listen(server);
 
-
-// Pass io to global to emit anywhere in the app
-global.io = io; 
-
 /**
  * Listen on provided port, on all network interfaces.
  */

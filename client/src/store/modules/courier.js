@@ -118,7 +118,6 @@ const actions = {
   socket_updateOpenOrders: ({
     state, getters, commit, dispatch,
   }) => {
-    console.log('EVENT RECEIVED: UPDATE_CREATED_ORDERS');
     dispatch('clearAllOrders').then(() => {
       dispatch('refreshAllOrders');
     });
@@ -126,7 +125,6 @@ const actions = {
   socket_updateAcceptedOrders: ({
     state, getters, commit, dispatch,
   }, data) => {
-    console.log(data);
     const notifyData = data;
     commit('notification/NOTIFY_ACCEPTED', notifyData, { root: true });
     console.log('EVENT RECEIVED: UPDATE_ACCEPTED_ORDERS');

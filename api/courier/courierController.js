@@ -19,11 +19,9 @@ function availableOrders(req, res) {
       'order_total',
     )
     .where('delivery_status', 'pending')
-    //.whereNull('courier_id')
     .whereNot('customer_id', req.params.user_id)
     .then((orders) => {
       orders.forEach((order) => {
-        console.log(order.order_id);
         order.time_created = fixDateTime(order.time_created);
       });
       res.send(orders);

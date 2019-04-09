@@ -54,7 +54,7 @@
               </v-list-tile>
             </v-list>
           </v-menu>
-          <v-dialog v-model="helpDialog">
+          <v-dialog v-model="helpDialog" width="800">
             <template v-slot:activator="{ on }">
               <v-btn depressed icon v-on="on">
                 <v-icon v-on:click="showInstructions" color="white">help </v-icon>
@@ -78,11 +78,9 @@
                 <v-stepper-items>
                   <v-stepper-content
                     :step="help">
-                    <v-card
-                      class="mb-5"
-                      color="grey lighten-1"
-                      height="200px"
-                    ></v-card>
+                    <v-card class="mb-5" color="grey lighten-1">
+                      <v-img :src="gifs[help-1]"></v-img>
+                    </v-card>
                     <div class="text-xs-center">
                       {{ instructions[help-1] }}
                     </div>
@@ -102,7 +100,7 @@
                         class="text-xs-center"
                         color="primary"
                         :disabled="help == 3"
-                        v-on:click="help++">>
+                        v-on:click="help++">
                         next
                       </v-btn>
                     </div>
@@ -119,6 +117,10 @@
 
 <script>
 import browserCookies from "browser-cookies";
+import CourierAcceptOrder from "../../images/CourierAcceptOrder.gif";
+import CourierDeliverOrder from "../../images/CourierDeliverOrder.gif";
+import CourierViewOrder from "../../images/CourierViewOrder.gif";
+
 export default {
   data() {
     return {
@@ -139,9 +141,14 @@ export default {
       helpDialog: false,
       help: 1,
       instructions: [
-        "Instruction 1",
-        "Instruction 2",
-        "Instruction 3",
+        "Accept an order from available orders",
+        "Go to 'accepted' tab, deliver the order",
+        "Once it's delivered, you can click the row for further details",
+      ],
+      gifs: [
+        CourierAcceptOrder,
+        CourierDeliverOrder,
+        CourierViewOrder,
       ],
       textLists: [
         "Remember, you cannot change your password",

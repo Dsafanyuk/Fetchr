@@ -54,3 +54,6 @@ h2 {
 .v-icon {
 	margin-bottom: 2%;
 }
+.theme--dark .v-icon {
+	color: #414141;
+}

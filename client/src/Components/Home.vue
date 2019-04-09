@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import SwipeRight from "./SwipeRight.vue";
 import AddToCart from "./assets/AddToCart.gif";
 import AddToFavorites from "./assets/AddToFavorites.gif";
 import AddToWallet from "./assets/AddToWallet.gif";
@@ -117,6 +118,7 @@ export default {
         },
       ],
       gifs: [
+        { src: SwipeRight, title: "Welcome to Fetchr" },
         { src: AddToCart, title: "Add Items to Cart" },
         { src: AddToFavorites, title: "Add Your Favorite Items" },
         { src: AddToWallet, title: "Add More Cash" },

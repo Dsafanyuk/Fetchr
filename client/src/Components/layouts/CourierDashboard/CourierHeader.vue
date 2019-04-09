@@ -35,8 +35,7 @@
         <div class="hidden-md-and-down">
           <v-menu fixed bottom left>
             <v-btn flat slot="activator" color="white" light>
-              Hi {{firstName}} &nbsp;&nbsp;&nbsp;
-              <v-icon>fas fa-user-alt fa-s</v-icon>
+              Hi {{firstName}} &nbsp;&nbsp;&nbsp;▼
             </v-btn>
             <v-list dense class="pt-0" style="cursor: pointer">
               <v-list-tile

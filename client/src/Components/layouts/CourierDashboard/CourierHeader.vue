@@ -224,9 +224,6 @@ export default {
           break;
       }
     },
-    showInstructions: function() {
-
-    }
   }
 };
 </script>

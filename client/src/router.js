@@ -70,7 +70,7 @@ function requireLoggedOut(to, from, next) {
     && browserCookies.get('token')
     && browserCookies.get('user_id')
   ) {
-    next({ path: '/dashboard'});
+    next({ path: '/dashboard' });
   } else {
     next();
   }
@@ -82,18 +82,18 @@ const routes = [
     path: '/admin',
     component: AdminLayout,
     beforeEnter: (to, from, next) => {
-      axios.get('api/admin/verify')
-      .then((response) => {
-        if(response.status == 200) {
-          next();
-        }
-        else {
+      axios
+        .get('api/admin/verify')
+        .then((response) => {
+          if (response.status == 200) {
+            next();
+          } else {
+            next({ path: '/nicetry' });
+          }
+        })
+        .catch((error) => {
           next({ path: '/nicetry' });
-        }
-      })
-      .catch(error => {
-        next({ path: '/nicetry' })
-      });
+        });
     },
     children: [
       {

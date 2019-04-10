@@ -37,6 +37,7 @@ export default new Vuex.Store({
     wallet,
     login,
     notification,
+    courier,
     admin,
     orders,
     chat,

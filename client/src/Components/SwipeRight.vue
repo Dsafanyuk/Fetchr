@@ -1,21 +1,21 @@
 <template>
-    <div v-bind: class="bigDiv">
-        <div class="bigText"></div>
-    </div>
+  <div :class="bigDiv">
+    <div class="bigText"></div>
+  </div>
 </template>
 <script>
-import Logo from './images/logo.png';
+import Logo from "./images/logo.png";
 export default {
   data() {
     return {
-        logo: Logo,
+      logo: Logo
     };
-  },
+  }
 };
 </script>
 <style scoped>
-    .bigDiv {
-        background-image: './images/logo.png';
-        opacity: .2;
-    }
+.bigDiv {
+  background-image: "./images/logo.png";
+  opacity: 0.2;
+}
 </style>

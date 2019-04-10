@@ -165,7 +165,6 @@ const routes = [
   {
     path: '/home',
     component: Home,
-    beforeEnter: requireLoggedOut,
   },
   { 
     path: '/login',

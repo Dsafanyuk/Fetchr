@@ -181,7 +181,7 @@ const routes = [
     beforeEnter: requireLoggedOut,
   },
   { path: '/courier', component: CourierLayout, beforeEnter: requireAuth },
-  { path: '/nicetry', component: NiceTry },
+  { path: '/nicetry', component: NiceTry, beforeEnter: requireAuth },
   { path: '*', component: NotFoundComponent },
 ];
 

@@ -34,7 +34,6 @@ export default new Vuex.Store({
   ],
   modules: {
     cart,
-    courier,
     wallet,
     login,
     notification,

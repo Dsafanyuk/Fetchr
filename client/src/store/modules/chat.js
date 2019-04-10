@@ -5,7 +5,6 @@ const ChatModule = {
   state: {
     chats: [],
     UserInfo : "",
-
   },
   mutations: {
     setMessagesEmpty(state) {
@@ -19,6 +18,10 @@ const ChatModule = {
     },
     clearchats(state){
       state.chats = []
+    },
+    changeCurrentReceiver (state, current_receiver_id)
+    {
+      state.current_receiver = current_receiver_id;
     }
   },
   actions: {
@@ -26,7 +29,6 @@ const ChatModule = {
     firebase.database().ref("messages").push(payload)
     },
     loadChats({commit,dispatch,state}, payload) {
-
       var chatList = []
 
       // Loop going through each order
@@ -46,10 +48,10 @@ const ChatModule = {
             var temp_fullInfo = ""
             var id_to_request = 0
             // This determine which info we need to display
-            if (temp_sender_id == browserCookies.get("user_id"))
+           if (temp_sender_id == browserCookies.get("user_id"))
                 id_to_request = temp_receiver_id // I don't wan't to display my own name in the chat room
-            else
-                id_to_request = temp_sender_id
+           else
+               id_to_request = temp_sender_id
 
 
           axios
@@ -97,11 +99,7 @@ const ChatModule = {
     },
     clearchats({commit}, payload) {
       commit('clearchats')
-    }
-
-
-
-
+    },
   },
   getters: {
     messages(state) {

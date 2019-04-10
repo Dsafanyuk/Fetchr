@@ -60,24 +60,42 @@ props : {
 },
   methods: {
     createChat: function() {
+      var logged_as =""
+      switch (this.$route.path) {
+        case '/courier':
+        logged_as = "Courier"
+        break;
+        default:
+        logged_as = "Customer"
+
+      }
 
       axios
       .get("/api/orders/" + this.$props.order_id)
       .then(response => {
-      var receiver_id = response.data[0]['courier_id'];
+        var receiver_id = ""
+
+        if(logged_as == "Courier")
+        receiver_id = response.data[0]['customer_id'];
+        else
+          receiver_id = response.data[0]['courier_id'];
+
+        console.log("The Receiver is " + receiver_id);
         this.$store.dispatch('createChat',{message: this.msg_content, sender_id : this.user_id, receiver : receiver_id, or_id : this.$props.order_id });
         this.$router.push("/chat/" + this.$props.order_id);
       });
 
+
     },
 
     isChatExist : function (){
+
       var self = this
       var isexist = false
 
       self.chatloader = true
 
-      let chatref = firebase.database().ref('messages').orderByChild('OrderId').equalTo(this.$props.order_id)
+      let chatref = firebase.database().ref('chats').orderByChild('OrderId').equalTo(this.$props.order_id)
       chatref.on("value", function(snapshot) {
       if(snapshot.exists())
       {

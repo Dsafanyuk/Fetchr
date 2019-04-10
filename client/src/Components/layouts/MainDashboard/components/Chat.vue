@@ -195,7 +195,6 @@
         let temp_data = []
         var self = this
         refmessages.on("child_added", function(snapshot) {
-
           self.isChatLoading = false;
           var data = snapshot.val()
           temp_data.push(data)
@@ -271,7 +270,8 @@
 }
 .mymessage .ctext-wrap{
   color : white;
-  background: #34d3eb
+  background: #f9aa33
+
 }
 .chat-conversation{
 width: 600px;

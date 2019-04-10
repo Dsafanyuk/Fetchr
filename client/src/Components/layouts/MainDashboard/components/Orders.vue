@@ -11,20 +11,33 @@
         v-bind:pagination.sync="pagination"
         :rows-per-page-items="rowsPerPage"
       >
+        <template v-slot:no-data v-if="!isLoading">
+          <v-flex class="text-xs-center">
+            <router-link to="/dashboard">
+              <v-btn color="accent">Create Your First Order</v-btn>
+            </router-link>
+          </v-flex>
+        </template>
         <template slot="items" slot-scope="props">
           <td class="text-xs-center">{{ props.item.order_id }}</td>
           <td class="text-xs-center">{{ fixDate(props.item.time_created) }}</td>
           <td class="text-xs-center">{{ props.item.delivery_status }}</td>
           <td class="text-xs-center">{{ props.item.order_total.toFixed(2) }}</td>
           <td class="text-xs-center">
-            <CreateChat :order_id="props.item.order_id"></CreateChat>
-            <v-btn
-              @click="viewOrder(props.item.order_id)"
-              round
-              dark
-              color="#616161"
-              type="button"
-            >View</v-btn>
+            <CreateChat
+             :order_id="props.item.order_id" :delivery_status ="props.item.delivery_status">
+           </CreateChat>
+             <v-tooltip right>
+                          <template v-slot:activator="{ on }">
+                          <v-btn
+                            @click="viewOrder(props.item.order_id)"
+                            icon
+                            type="button"
+                            v-on="on"
+                          ><v-icon color="primary">visibility</v-icon></v-btn>
+                          </template>
+                          <span>View Order</span>
+                        </v-tooltip>
           </td>
         </template>
       </v-data-table>

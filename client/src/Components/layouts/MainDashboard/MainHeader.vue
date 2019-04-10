@@ -192,7 +192,6 @@ export default {
         "You can go to shopping page by clicking Fetchr icon",
         "All items are non refundable",
         "Try favoriting an item",
-        "Test inputs to handle too many char/numbers"
       ],
       showText: "",
       textTimeout: null,
@@ -287,13 +286,15 @@ export default {
         }
         case "Logout":
           {
-            let allCookies = browserCookies.all();
-            for (let cookieName in allCookies) {
-              browserCookies.erase(cookieName);
-            }
-            window.localStorage.clear();
             this.$store.dispatch("login/logout").then(
               response => {
+                let allCookies = browserCookies.all();
+
+                for (let cookieName in allCookies) {
+                  browserCookies.erase(cookieName);
+                }
+                
+                window.localStorage.removeItem('vuex');
                 this.$router.push("/login");
               },
               error => {

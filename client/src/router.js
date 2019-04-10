@@ -21,6 +21,7 @@ import AdminManageProducts from './Components/layouts/AdminDashboard/components/
 import NotFoundComponent from './Components/NotFoundComponent.vue';
 
 import store from './store';
+import axios from './axios';
 
 // Check if the user is authenticated or not
 function requireAuth(to, from, next) {
@@ -67,11 +68,15 @@ const routes = [
     path: '/admin',
     component: AdminLayout,
     beforeEnter: (to, from, next) => {
-      if (browserCookies.get('is_admin') == 'true') {
-        next();
-      } else {
-        next({ path: '/login' });
-      }
+      axios.get('api/admin/verify')
+      .then((response) => {
+        if(response.status == 200) {
+          next();
+        }
+        else {
+          next({ path: '/login' });
+        }
+      });
     },
     children: [
       {
@@ -145,7 +150,22 @@ const routes = [
   },
 
   { path: '/home', component: Home },
-  { path: '/login', component: Login },
+  { 
+    path: '/login',
+    component: Login,
+    beforeEnter: (to, from, next) => {
+      // Check if the user is logged in & cookies have not expired
+      if (
+        store.getters['login/isLoggedIn']
+        && browserCookies.get('token')
+        && browserCookies.get('user_id')
+      ) {
+        next({ path: '/dashboard'});
+      } else {
+        next();
+      }
+    },
+  },
   { path: '/register', component: Register },
   { path: '/courier', component: CourierLayout, beforeEnter: requireAuth },
   { path: '*', component: NotFoundComponent },

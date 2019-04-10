@@ -88,7 +88,6 @@ props : {
     },
 
     isChatExist : function (){
-
       var self = this
       var isexist = false
 

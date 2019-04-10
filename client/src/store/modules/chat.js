@@ -18,10 +18,6 @@ const ChatModule = {
     },
     clearchats(state){
       state.chats = []
-    },
-    changeCurrentReceiver (state, current_receiver_id)
-    {
-      state.current_receiver = current_receiver_id;
     }
   },
   actions: {
@@ -29,6 +25,7 @@ const ChatModule = {
     firebase.database().ref("messages").push(payload)
     },
     loadChats({commit,dispatch,state}, payload) {
+
       var chatList = []
 
       // Loop going through each order
@@ -99,7 +96,11 @@ const ChatModule = {
     },
     clearchats({commit}, payload) {
       commit('clearchats')
-    },
+    }
+
+
+
+
   },
   getters: {
     messages(state) {

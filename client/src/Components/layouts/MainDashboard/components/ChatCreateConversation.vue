@@ -74,7 +74,7 @@ props : {
       .get("/api/orders/" + this.$props.order_id)
       .then(response => {
         var receiver_id = ""
-
+        
         if(logged_as == "Courier")
         receiver_id = response.data[0]['customer_id'];
         else

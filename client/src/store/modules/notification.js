@@ -33,7 +33,7 @@ const mutations = {
     }
   },
   NOTIFY_DELIVERED: (state, message) => {
-    if (message.user == user) {
+    if ((message.user == user) && (this.$router.history.current.fullPath != '/home')) {
       Vue.toasted.show(`Order #${message.order} has been delivered.`, {
         theme: 'bubble',
         position: 'top-center',

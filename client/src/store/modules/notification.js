@@ -9,6 +9,7 @@ Vue.use(Toasted);
 const state = {};
 const mutations = {
   NOTIFY_ACCEPTED: (state, message) => {
+    console.log(message.user == user);
     if ((message.user == user) && (router.history.current.fullPath != '/home')) {
       Vue.toasted.show(`Order #${message.order} has been accepted.`, {
         theme: 'bubble',

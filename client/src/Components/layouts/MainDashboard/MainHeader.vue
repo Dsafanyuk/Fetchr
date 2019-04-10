@@ -294,7 +294,6 @@ export default {
                   browserCookies.erase(cookieName);
                 }
                 
-                window.localStorage.removeItem('vuex');
                 this.$router.push("/login");
               },
               error => {

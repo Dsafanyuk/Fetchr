@@ -118,11 +118,7 @@ const routes = [
     component: MainLayout,
     beforeEnter: (to, from, next) => {
       if (to.path == '/') {
-        if (window.localStorage.vuex) {
-          next({ path: '/dashboard' });
-        } else {
-          next({ path: '/home' });
-        }
+        next({ path: '/home' });
       } else {
         next();
       }

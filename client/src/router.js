@@ -19,6 +19,7 @@ import AdminManageUsers from './Components/layouts/AdminDashboard/components/Adm
 import AdminManageProducts from './Components/layouts/AdminDashboard/components/AdminManageProducts.vue';
 
 import NotFoundComponent from './Components/NotFoundComponent.vue';
+import NiceTry from './Components/NiceTry.vue';
 
 import store from './store';
 import axios from './axios';
@@ -87,8 +88,11 @@ const routes = [
           next();
         }
         else {
-          next({ path: '/login' });
+          next({ path: '/dashboard' });
         }
+      })
+      .catch(error => {
+        next({ path: '/dashboard' })
       });
     },
     children: [
@@ -165,7 +169,6 @@ const routes = [
   {
     path: '/home',
     component: Home,
-    beforeEnter: requireLoggedOut,
   },
   {
     path: '/login',
@@ -178,6 +181,7 @@ const routes = [
     beforeEnter: requireLoggedOut,
   },
   { path: '/courier', component: CourierLayout, beforeEnter: requireAuth },
+  { path: '/nicetry', component: NiceTry },
   { path: '*', component: NotFoundComponent },
 ];
 

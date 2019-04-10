@@ -36,7 +36,6 @@ import CreateChat from "../../MainDashboard/components/ChatCreateConversation.vu
 import browserCookies from "browser-cookies";
 import axios from "../../../../axios";
 import { mapActions } from "vuex";
-import * as firebase from "firebase";
 
 export default {
   data() {

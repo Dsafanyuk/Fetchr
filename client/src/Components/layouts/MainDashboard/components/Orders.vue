@@ -17,7 +17,9 @@
           <td class="text-xs-center">{{ props.item.delivery_status }}</td>
           <td class="text-xs-center">{{ props.item.order_total.toFixed(2) }}</td>
           <td class="text-xs-center">
-            <CreateChat :order_id="props.item.order_id"></CreateChat>
+            <CreateChat  v-if="props.item.delivery_status == 'in-progress'
+            || props.item.delivery_status == 'delivered'"
+             :order_id="props.item.order_id"></CreateChat>
             <v-btn
               @click="viewOrder(props.item.order_id)"
               round

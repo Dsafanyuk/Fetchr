@@ -8,7 +8,7 @@
 <v-tooltip right>
   <template v-slot:activator="{ on }">
     <v-btn
-
+      :disabled= "delivery_status == 'pending'"
       v-on="on"
       icon slot="default"
       @click="isChatExist()">

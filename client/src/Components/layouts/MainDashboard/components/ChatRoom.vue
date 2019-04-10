@@ -62,6 +62,9 @@
 
       }
     },
+    mounted (){
+      this.$store.dispatch ('clearchats')
+    },
     methods :{
       loadChatRoom: function(order_id, receiver_id) {
 

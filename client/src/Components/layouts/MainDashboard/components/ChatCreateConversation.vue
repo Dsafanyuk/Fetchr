@@ -74,12 +74,12 @@ props : {
       .get("/api/orders/" + this.$props.order_id)
       .then(response => {
         var receiver_id = ""
-        
+
         if(logged_as == "Courier")
         receiver_id = response.data[0]['customer_id'];
         else
           receiver_id = response.data[0]['courier_id'];
-          
+
         this.$store.dispatch('createChat',{message: this.msg_content, sender_id : this.user_id, receiver : receiver_id, or_id : this.$props.order_id });
         this.$router.push("/chat/" + this.$props.order_id);
       });
@@ -93,10 +93,11 @@ props : {
 
       self.chatloader = true
 
-      let chatref = firebase.database().ref('chats').orderByChild('OrderId').equalTo(this.$props.order_id)
+      let chatref = firebase.database().ref('chats').orderByChild('order_id').equalTo(this.$props.order_id)
       chatref.on("value", function(snapshot) {
       if(snapshot.exists())
       {
+          
           self.chatloader = false
           self.$router.push("/chat/"+self.$props.order_id);
       }

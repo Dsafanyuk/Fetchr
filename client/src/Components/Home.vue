@@ -74,18 +74,18 @@
           primary-title
         >Meet the Fetchr Team</v-card-title>
         <v-layout row wrap>
-          <v-flex pa-5 xs6 v-for="(boi, i) in team" :key="i">
+          <v-flex pa-5 lg6 xs12 v-for="(boi, i) in team" :key="i">
             <v-card height="100%" width="100%" color="white" elevation="3">
               <v-container text-xs-center grid-list-lg>
                 <v-layout row wrap>
-                  <v-flex xs4>
-                    <v-img v-bind:src="boi.portrait" height="150px" contain></v-img>
+                  <v-flex lg4 sm12>
+                    <img v-bind:src="boi.portrait" height="150px">
                   </v-flex>
-                  <v-flex xs8>
+                  <v-flex lg8 sm12>
                     <v-card-text class="display-1 pt-5">{{boi.name}}</v-card-text>
                     <span class="body-2 grey--text">{{boi.role}}</span>
                   </v-flex>
-                  <v-flex xs12 offset-xs-2>
+                  <v-flex lg12 offset-lg-2 sm12>
                     <v-card-text>{{boi.bio}}</v-card-text>
                   </v-flex>
                 </v-layout>

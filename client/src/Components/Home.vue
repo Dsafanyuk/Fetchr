@@ -192,7 +192,12 @@ export default {
         },
       ],
     };
-  }
+  },
+  mounted () {
+
+    // Set image to fetchr header logo colored
+    document.getElementsByClassName('firstCarousel')[0].style.backgroundImage = 'url(' + this.faintLogo + ')';
+  },
 };
 </script>
 

@@ -120,7 +120,7 @@
 </template>
 
 <script>
-import Logo from "./images/logo.png"
+import Logo from "./images/fetchr_header_logo_colored.png"
 import AddToCart from "./assets/AddToCart.gif";
 import AddToFavorites from "./assets/AddToFavorites.gif";
 import AddToWallet from "./assets/AddToWallet.gif";

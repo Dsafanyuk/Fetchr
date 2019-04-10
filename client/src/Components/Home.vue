@@ -188,7 +188,7 @@ export default {
           portrait: Ben,
           name: "Ben Kintaudi",
           role: "Communications Coordinator",
-          bio: "Loves to play soccer; The weird one; Bite-Sized-Ben",
+          bio: "Loves to play soccer; The weird one;",
         },
       ],
     };

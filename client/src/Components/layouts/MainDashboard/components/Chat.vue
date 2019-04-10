@@ -226,9 +226,9 @@ export default {
   text-align: right;
   color: #344955;
 }
-.mymessage .ctext-wrap {
-  color: white;
-  background: #34d3eb;
+.mymessage .ctext-wrap{
+  color : white;
+  background: #f9aa33
 }
 .chat-conversation {
   width: 600px;

@@ -87,8 +87,11 @@ const routes = [
           next();
         }
         else {
-          next({ path: '/login' });
+          next({ path: '/dashboard' });
         }
+      })
+      .catch(error => {
+        next({ path: '/dashboard' })
       });
     },
     children: [
@@ -165,14 +168,13 @@ const routes = [
   {
     path: '/home',
     component: Home,
-    beforeEnter: requireLoggedOut,
   },
-  { 
+  {
     path: '/login',
     component: Login,
     beforeEnter: requireLoggedOut,
   },
-  { 
+  {
     path: '/register',
     component: Register,
     beforeEnter: requireLoggedOut,

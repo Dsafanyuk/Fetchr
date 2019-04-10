@@ -6,7 +6,7 @@ import axios from '../../axios';
 const ChatModule = {
   state: {
     chats: [],
-    UserInfo: '',
+    UserInfo : "",
   },
   mutations: {
     setMessagesEmpty(state) {
@@ -36,38 +36,38 @@ const ChatModule = {
         console.log(key);
         if (payload.orders.hasOwnProperty(key)) {
           // Get The chat keys using the Order Id
-          const chatref = firebase
-            .database()
-            .ref('chats')
-            .orderByChild('order_id')
-            .equalTo(payload.orders[key].order_id)
-            .on('value', (snapshot) => {
-              // If there is no Chatroom for the specific order, firebase will return  null
-              // The temp variables keep the data before they are being pushed in the ChatList Array
-              if (snapshot.val() != null) {
-                const temp_chat_key = Object.keys(snapshot.val())[0];
-                const temp_sender_id = snapshot.val()[temp_chat_key].sender_id;
-                const temp_receiver_id = snapshot.val()[temp_chat_key].receiver;
-                let temp_fullInfo = '';
-                let id_to_request = 0;
-                // This determine which info we need to display
-                if (temp_sender_id == browserCookies.get('user_id')) id_to_request = temp_receiver_id;
-                // I don't wan't to display my own name in the chat room
-                else id_to_request = temp_sender_id;
+          let chatref = firebase.database().ref('chats').orderByChild('order_id').equalTo(payload.orders[key]['order_id'])
+          .on("value", function(snapshot) {
+          // If there is no Chatroom for the specific order, firebase will return  null
+          // The temp variables keep the data before they are being pushed in the ChatList Array
+            if (snapshot.val() != null)
+            {
 
-                axios.get(`/api/users/${id_to_request}/showInfo`).then((response) => {
-                  temp_fullInfo = `${response.data[0].first_name} ${response.data[0].last_name}`;
+            var temp_chat_key = Object.keys(snapshot.val())[0]
+            var temp_sender_id = snapshot.val()[temp_chat_key]['sender_id']
+            var temp_receiver_id = snapshot.val()[temp_chat_key]['receiver']
+            var temp_fullInfo = ""
+            var id_to_request = 0
+            // This determine which info we need to display
+           if (temp_sender_id == browserCookies.get("user_id"))
+                id_to_request = temp_receiver_id // I don't wan't to display my own name in the chat room
+           else
+               id_to_request = temp_sender_id
 
-                  //  chatList.push(
-                  commit('setChats', {
-                    chat_key: temp_chat_key,
-                    sender_id: temp_sender_id,
-                    receiver_id: temp_receiver_id,
-                    order_id: snapshot.val()[temp_chat_key].order_id,
-                    userInfo: temp_fullInfo,
-                  });
-                  // )
-                });
+
+          axios
+          .get("/api/users/" + id_to_request +  "/showInfo")
+          .then(response => {
+
+            if (response.data.length != 0)
+              {
+                     temp_fullInfo = response.data[0]['first_name'] + " " + response.data[0]['last_name']
+                     commit('setChats', {chat_key : temp_chat_key,
+                     sender_id : temp_sender_id,
+                     receiver_id :temp_receiver_id,
+                     order_id : snapshot.val()[temp_chat_key]['order_id'],
+                     userInfo : temp_fullInfo
+                 });
               }
             });
         }

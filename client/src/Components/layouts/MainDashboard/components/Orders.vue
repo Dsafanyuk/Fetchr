@@ -17,16 +17,20 @@
           <td class="text-xs-center">{{ props.item.delivery_status }}</td>
           <td class="text-xs-center">{{ props.item.order_total.toFixed(2) }}</td>
           <td class="text-xs-center">
-            <CreateChat  v-if="props.item.delivery_status == 'in-progress'
-            || props.item.delivery_status == 'delivered'"
-             :order_id="props.item.order_id"></CreateChat>
-            <v-btn
-              @click="viewOrder(props.item.order_id)"
-              round
-              dark
-              color="#616161"
-              type="button"
-            >View</v-btn>
+            <CreateChat
+             :order_id="props.item.order_id" :delivery_status ="props.item.delivery_status">
+           </CreateChat>
+             <v-tooltip right>
+                          <template v-slot:activator="{ on }">
+                          <v-btn
+                            @click="viewOrder(props.item.order_id)"
+                            icon
+                            type="button"
+                            v-on="on"
+                          ><v-icon color="primary">visibility</v-icon></v-btn>
+                          </template>
+                          <span>View Order</span>
+                        </v-tooltip>
           </td>
         </template>
       </v-data-table>

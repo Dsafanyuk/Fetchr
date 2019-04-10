@@ -67,7 +67,7 @@
     },
     methods :{
       loadChatRoom: function(order_id, receiver_id) {
-
+        //browserCookies.set("current_receiver_id",receiver_id)
         this.$router.push("/chat/" + order_id);
         this.$emit('fetchMessages')
 

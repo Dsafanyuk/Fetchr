@@ -1,12 +1,22 @@
 <template>
-<div>
+<div >
   <loading :active.sync="chatloader"
             :can-cancel="true"
             :on-cancel="onCancel"
             :is-full-page="fullPage">
   </loading>
-
-<v-btn   icon slot="default"  @click="isChatExist()"> <v-icon>far fa-comment</v-icon></v-btn>
+<v-tooltip right>
+  <template v-slot:activator="{ on }">
+    <v-btn
+      :disabled= "delivery_status == 'pending'"
+      v-on="on"
+      icon slot="default"
+      @click="isChatExist()">
+      <v-icon color="primary">chat_bubble</v-icon>
+    </v-btn>
+  </template>
+  <span>Chat</span>
+</v-tooltip>
 <v-dialog v-model="dialog" persistent max-width="600px">
 
   <v-card>
@@ -53,6 +63,7 @@ export default {
   },
 props : {
   order_id : Number,
+  delivery_status : String,
 
 },
   components: {
@@ -97,7 +108,7 @@ props : {
       chatref.on("value", function(snapshot) {
       if(snapshot.exists())
       {
-          
+
           self.chatloader = false
           self.$router.push("/chat/"+self.$props.order_id);
       }
@@ -111,10 +122,14 @@ props : {
   },
   onCancel : function(){
     console.log(" Loader cancelled");
-  }
+  },
 
   }
 };
 </script>
 <style scope="true">
+
+.create_chat button{
+    cursor: not-allowed;
+}
 </style>

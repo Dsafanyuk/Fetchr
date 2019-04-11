@@ -8,6 +8,9 @@
         v-for="(chat, index) in chats"
         :key="chat.order_id"
         avatar
+        :to="'/chat/' + chat.order_id"
+        :exact="chats.exact"
+        active-class="primary--text accent"
         @click="loadChatRoom(chat.order_id,chat.receiver_id)"
       >
         <v-list-tile-avatar>

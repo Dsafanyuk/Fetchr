@@ -14,11 +14,12 @@
         @click="loadChatRoom(chat.order_id,chat.receiver_id)"
       >
         <v-list-tile-avatar>
-          <v-icon>perm_identity</v-icon>
+          <v-icon >perm_identity</v-icon>
         </v-list-tile-avatar>
 
         <v-list-tile-content
         >
+
           <v-list-tile-title >{{"# "+ chat.order_id + "-" + chat.userInfo }}</v-list-tile-title>
         </v-list-tile-content>
 
@@ -63,7 +64,7 @@
       chats () {
         return  this.$store.getters.chats
 
-      }
+      },
     },
     mounted (){
       this.$store.dispatch ('clearchats')

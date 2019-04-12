@@ -19,6 +19,7 @@
 
         <v-list-tile-content
         >
+
           <v-list-tile-title >{{"# "+ chat.order_id + "-" + chat.userInfo }}</v-list-tile-title>
         </v-list-tile-content>
 
@@ -65,7 +66,7 @@
       chats () {
         return  this.$store.getters.chats
 
-      }
+      },
     },
     mounted (){
       this.$store.dispatch ('clearchats')

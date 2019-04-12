@@ -96,12 +96,6 @@ const ChatModule = {
     clearchats({commit}, payload) {
       commit('clearchats')
     },
-    reverseChats({commit})
-    {
-      commit("reversechats")
-    }
-
-
 
   },
   getters: {

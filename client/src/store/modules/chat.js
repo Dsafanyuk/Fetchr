@@ -12,21 +12,20 @@ const ChatModule = {
     },
     setChats(state, payload) {
       state.chats.push(payload)
+      state.chats.reverse()
     },
     setInfo(state, UserInfo) {
       state.UserInfo = UserInfo
     },
     clearchats(state){
       state.chats = []
-    }
+    },
   },
   actions: {
     sendMessage({commit}, payload) {
     firebase.database().ref("messages").push(payload)
     },
     loadChats({commit,dispatch,state}, payload) {
-
-      var chatList = []
 
       // Loop going through each order
       for (var key in payload.orders) {
@@ -71,7 +70,6 @@ const ChatModule = {
       })
     }
   }
-
 },
     createChat({commit,dispatch}, payload, ) {
       //Generate a conversation ID, create a chatroom node
@@ -96,8 +94,11 @@ const ChatModule = {
     },
     clearchats({commit}, payload) {
       commit('clearchats')
+    },
+    reverseChats({commit})
+    {
+      commit("reversechats")
     }
-
 
 
 

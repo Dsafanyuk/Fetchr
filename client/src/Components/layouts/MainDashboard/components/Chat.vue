@@ -17,7 +17,7 @@
       <div class="card-box" >
 
         <!-- Order Details -->
-        <div class="text-xs-left">
+        <div class="text-xs-left col-md-6">
      <v-dialog
        v-model="ORDER_DETAILS_DIALOG"
        width="500"

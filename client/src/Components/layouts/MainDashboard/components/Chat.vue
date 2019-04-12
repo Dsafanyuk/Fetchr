@@ -189,7 +189,6 @@
 
       fetchMessages() {
         this.isChatLoading = true;
-
         let orderId = parseInt(this.$route.params.order_id)
         let refmessages = firebase.database().ref('messages').orderByChild('OrderId').equalTo(orderId).limitToLast(100)
         let temp_data = []

@@ -78,13 +78,20 @@ new Vue({
       && browserCookies.get('token')
       && browserCookies.get('user_id')
     ) {
-      // Clear cookies
-      const allCookies = browserCookies.all();
-      for (const cookieName in allCookies) {
-        browserCookies.erase(cookieName);
-      }
-      store.dispatch('login/logout');
-      router.push('/login');
+      store.dispatch("login/logout").then(
+        response => {
+          let allCookies = browserCookies.all();
+
+          for (let cookieName in allCookies) {
+            browserCookies.erase(cookieName);
+          }
+          
+          router.push("/home");
+        },
+        error => {
+          store.commit("login/logoutFailed");
+        }
+      );
     }
   },
   onActive() {

@@ -19,6 +19,7 @@ import AdminManageUsers from './Components/layouts/AdminDashboard/components/Adm
 import AdminManageProducts from './Components/layouts/AdminDashboard/components/AdminManageProducts.vue';
 
 import NotFoundComponent from './Components/NotFoundComponent.vue';
+import NiceTry from './Components/NiceTry.vue';
 
 import store from './store';
 import axios from './axios';
@@ -69,7 +70,7 @@ function requireLoggedOut(to, from, next) {
     && browserCookies.get('token')
     && browserCookies.get('user_id')
   ) {
-    next({ path: '/dashboard'});
+    next({ path: '/dashboard' });
   } else {
     next();
   }
@@ -81,18 +82,18 @@ const routes = [
     path: '/admin',
     component: AdminLayout,
     beforeEnter: (to, from, next) => {
-      axios.get('api/admin/verify')
-      .then((response) => {
-        if(response.status == 200) {
-          next();
-        }
-        else {
-          next({ path: '/dashboard' });
-        }
-      })
-      .catch(error => {
-        next({ path: '/dashboard' })
-      });
+      axios
+        .get('api/admin/verify')
+        .then((response) => {
+          if (response.status == 200) {
+            next();
+          } else {
+            next({ path: '/nicetry' });
+          }
+        })
+        .catch((error) => {
+          next({ path: '/nicetry' });
+        });
     },
     children: [
       {
@@ -117,11 +118,7 @@ const routes = [
     component: MainLayout,
     beforeEnter: (to, from, next) => {
       if (to.path == '/') {
-        if (window.localStorage.vuex) {
-          next({ path: '/dashboard' });
-        } else {
-          next({ path: '/home' });
-        }
+        next({ path: '/home' });
       } else {
         next();
       }
@@ -180,6 +177,7 @@ const routes = [
     beforeEnter: requireLoggedOut,
   },
   { path: '/courier', component: CourierLayout, beforeEnter: requireAuth },
+  { path: '/nicetry', component: NiceTry, beforeEnter: requireAuth },
   { path: '*', component: NotFoundComponent },
 ];
 

@@ -41,7 +41,7 @@
       <v-flex
         v-on:click="scrollToTop"
         align-self-center
-        style="margin-left: 100px"
+        style="margin-left: 30px"
         class="hidden-sm-and-down"
       >
         <transition name="fade" v-on:enter="enter" v-on:leave="leave">
@@ -179,10 +179,7 @@ export default {
         {
           title: "Wallet",
           icon: "fas fa-wallet fa-s"
-        },
-        { title: "Leave Feedback", icon: "feedback" },
-
-        {
+        },{
           title: "Logout",
           icon: "fas fa-sign-out-alt fa-s"
         }
@@ -192,7 +189,7 @@ export default {
         "You can go to shopping page by clicking Fetchr icon",
         "All items are non refundable",
         "Try favoriting an item",
-        "Test inputs to handle too many char/numbers"
+        "Your wallet can hold $5000",
       ],
       showText: "",
       textTimeout: null,
@@ -269,10 +266,6 @@ export default {
           this.$router.push("/courier");
           break;
         }
-        case "Leave Feedback": {
-          window.open("https://goo.gl/forms/Q1EzTiaBkPZwepb62");
-          break;
-        }
         case "Account": {
           this.$router.push("/account");
           break;
@@ -287,13 +280,15 @@ export default {
         }
         case "Logout":
           {
-            let allCookies = browserCookies.all();
-            for (let cookieName in allCookies) {
-              browserCookies.erase(cookieName);
-            }
             this.$store.dispatch("login/logout").then(
               response => {
-                this.$router.push("/login");
+                let allCookies = browserCookies.all();
+
+                for (let cookieName in allCookies) {
+                  browserCookies.erase(cookieName);
+                }
+                
+                this.$router.push("/home");
               },
               error => {
                 this.$store.commit("login/logoutFailed");

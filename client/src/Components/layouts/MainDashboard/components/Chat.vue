@@ -10,10 +10,10 @@
     <v-flex xs12 sm3 md3 offset-sm1>
       <chatroom @fetchMessages="fetchMessages" model="fullPage"></chatroom>
     </v-flex>
-    <div col-md-6>
+    <div col-md-6 style="margin-left: 20px">
       <div class="card-box">
         <!-- Order Details -->
-        <div class="text-xs-left">
+        <div class="text-xs-left col-md-6">
           <v-dialog v-model="ORDER_DETAILS_DIALOG" width="500">
             <template v-slot:activator="{ on }">
               <v-btn color="#344955" dark v-on:click="showOrderDetails">Order Details</v-btn>
@@ -34,8 +34,8 @@
               class="clearfix"
               v-bind:class="displayMessages(message.SenderId)"
             >
-              <div class="conversation-text">
-                <div class="ctext-wrap">
+              <div class="conversation-text" style="width: 100%; margin-left: 0px">
+                <div class="ctext-wrap" style="font-size: 16px">
                   <p v-html="message.Content"></p>
                 </div>
               </div>
@@ -56,7 +56,7 @@
                 <v-fade-transition leave-absolute>
                   <v-progress-circular v-if="loading" size="24" color="info" indeterminate></v-progress-circular>
                   <a v-on:click="sendMessage">
-                    <v-icon>far fa-paper-plane</v-icon>
+                    <v-icon>send</v-icon>
                   </a>
                 </v-fade-transition>
               </template>
@@ -92,24 +92,24 @@ export default {
       total: 0.0,
       ORDER_DETAILS_DIALOG: false,
       isChatLoading: false,
-      fullPage: true
+      fullPage: true,
+      senderFirstName: browserCookies.get("first_name")
     };
   },
   props: ["id"],
-  created() {},
-  mounted() {
+  created() {
+    this.$store.dispatch("clearchats");
     this.fetchMessages();
+  },
+  mounted() {
+    // Clear the store before reload
+    this.$store.dispatch("clearchats");
   },
   watch: {
     chatMessages: function() {
       if (this.chatMessages.length == 1 || this.chatMessages.length == 0) {
         this.scrollToTop();
       } else {
-        // --Hack-- Because Html components are slow to render.
-        // Variables assignment are faster
-        // I have to wait for the ".scrollTop" property of the .chat-conversation
-        // Element in the DOM to render before i call the scrollToEnd function
-        // Any suggestion ??
         var self = this;
         setTimeout(function() {
           self.scrollToEnd();
@@ -121,11 +121,6 @@ export default {
     chatroom: ChatRoom,
     OrderDetailsChat: OrderDetailsChat,
     loading: Loading
-  },
-  computed: {
-    messages() {
-      return this.chatMessages;
-    }
   },
   methods: {
     scrollToEnd() {
@@ -146,16 +141,15 @@ export default {
           Content: this.content
         };
         this.$store.dispatch("sendMessage", Message_data);
-        this.content = ""; // Clear after You send the Message
+        this.content = "";
       }
     },
 
     fetchMessages() {
       this.isChatLoading = true;
-
       let orderId = parseInt(this.$route.params.order_id);
       let refmessages = firebase
-      .database()
+        .database()
         .ref("messages")
         .orderByChild("OrderId")
         .equalTo(orderId)
@@ -169,11 +163,10 @@ export default {
       });
 
       this.chatMessages = temp_data;
-
       //If there's no chat for the current id
       self.isChatLoading = false;
+      refmessages = null;
     },
-    // Messages Left & right
     displayMessages(SenderId) {
       if (SenderId == browserCookies.get("user_id")) return "mymessage";
     },
@@ -210,9 +203,7 @@ export default {
           });
         });
     },
-    onCancel() {
-      console.log("On CANCEL");
-    }
+    onCancel() {}
   }
 };
 </script>
@@ -226,9 +217,9 @@ export default {
   text-align: right;
   color: #344955;
 }
-.mymessage .ctext-wrap{
-  color : white;
-  background: #f9aa33
+.mymessage .ctext-wrap {
+  color: white;
+  background: #f9aa33;
 }
 .chat-conversation {
   width: 600px;

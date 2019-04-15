@@ -97,33 +97,42 @@ props : {
         else
           receiver_id = response.data[0]['courier_id'];
 
-        this.$store.dispatch('createChat',{message: this.msg_content, sender_id : this.user_id, receiver : receiver_id, or_id : this.$props.order_id });
-        this.$router.push("/chat/" + this.$props.order_id);
+        this.$store.dispatch('createChat',{message: this.msg_content, sender_id : this.user_id, receiver : receiver_id, or_id : this.$props.order_id })
+        .then(() => {
+          this.$router.push("/chat/" + this.$props.order_id);
+        })
+
       });
     },
 
-    isChatExist: function() {
-      var self = this;
-      var isexist = false;
-      self.chatloader = true;
-      let chatref = firebase
-        .database()
-        .ref("messages")
-        .orderByChild("OrderId")
-        .equalTo(this.$props.order_id);
+    isChatExist : function (){
+      var self = this
+      var isexist = false
+
+      self.chatloader = true
+      let chatref = firebase.database().ref('chats').orderByChild('order_id').equalTo(this.$props.order_id)
+
       chatref.on("value", function(snapshot) {
-        if (snapshot.exists()) {
-          self.chatloader = false;
-          self.$router.push("/chat/" + self.$props.order_id);
-        } else {
-          self.chatloader = false;
-          self.dialog = true;
-        }
-      });
-    },
-    onCancel: function() {
-      console.log(" Loader Cancelled");
-    }
+      if(snapshot.exists())
+      {
+          self.chatloader = false
+          self.$router.push("/chat/"+self.$props.order_id);
+      }
+      else
+      {
+
+          self.chatloader = false
+          self.dialog = true
+      }
+      })
+      chatref = null
+
+
+  },
+  onCancel : function(){
+    console.log(" Loader cancelled");
+  },
+
   }
 };
 </script>

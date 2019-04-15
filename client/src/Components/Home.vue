@@ -14,14 +14,14 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <v-layout class="mt-1">
+    <v-container fluid class="mt-1">
       <v-flex xs12>
         <v-layout pt-5 pb-5 class="hero">
           <v-layout align-center column fill-height class="hero-text justify-center">
             <v-icon x-large color="#f9aa33">people</v-icon>
             <span class="display-1 text-xs-center">What you need - straight to your door.</span>
             <br>
-            <span class="body-2 text-xs-center">We're students. We get you.</span>
+            <span class="body-2 text-xs-center">We're students. We get it.</span>
             <v-btn
               to="/register"
               large
@@ -32,20 +32,26 @@
           </v-layout>
         </v-layout>
       </v-flex>
-    </v-layout>
-    <v-container>
+    </v-container>
+    <v-container >
       <v-layout pb-5 align-end justify-center>
         <span class="display-3 font-weight-bold text-xs-center">{{gifs[gifSlide].title}}</span>
       </v-layout>
       <v-layout class>
-        <v-carousel :cycle="false" :dark="true" v-model="gifSlide">
+        <v-carousel :cycle="false" light v-model="gifSlide" height="565">
+          <v-flex xs12>
           <v-carousel-item
             v-for="(gif, i) in gifs"
             :key="i"
             :src="gif.src"
             transition="fade"
             reverse-transition="fade"
-          ></v-carousel-item>
+          >
+          <v-layout class="firstCarousel" v-if="i == 0" justify-center align-center v-bind:data-logo="faintLogo">
+              <div class="display-1" >Click the right arrow to see how it works!</div>
+          </v-layout>
+        </v-carousel-item>
+          </v-flex>
         </v-carousel>
       </v-layout>
     </v-container>
@@ -70,6 +76,7 @@
     <v-container mb-5>
       <v-card color="transparent" flat>
         <v-card-title
+          id="team"
           class="display-3 justify-center text-xs-center font-weight-bold"
           primary-title
         >Meet the Fetchr Team</v-card-title>
@@ -116,7 +123,7 @@
 </template>
 
 <script>
-import SwipeRight from "./SwipeRight.vue";
+import Logo from "./images/fetchr_header_logo_colored.png"
 import AddToCart from "./assets/AddToCart.gif";
 import AddToFavorites from "./assets/AddToFavorites.gif";
 import AddToWallet from "./assets/AddToWallet.gif";
@@ -130,6 +137,7 @@ import Kesney from "./assets/Saurel.png";
 export default {
   data() {
     return {
+      faintLogo: Logo,
       links: [
         {
           name: "Login",
@@ -141,7 +149,7 @@ export default {
         }
       ],
       gifs: [
-        { src: SwipeRight, title: "Welcome to Fetchr" },
+        { src: '', title: "Welcome to Fetchr" },
         { src: AddToCart, title: "Add Items to Cart" },
         { src: AddToFavorites, title: "Add Your Favorite Items" },
         { src: AddToWallet, title: "Add More Cash" },
@@ -177,16 +185,27 @@ export default {
           portrait: Caleb,
           name: "Caleb Murray",
           role: "Database Administrator",
-          bio: "Lives on rice and salmon; Olen henna"
+          bio: "Lives on rice and salmon; Olen Yhdysvalloista"
         },
         {
           portrait: Ben,
           name: "Ben Kintaudi",
           role: "Communications Coordinator",
-          bio: "Loves to play soccer; The weird one"
-        }
-      ]
+          bio: "Loves to play soccer; The weird one;",
+        },
+      ],
     };
+  },
+  mounted () {
+    // From testing, without a brief timeout, it won't work.
+    if (this.$route.hash) {
+      setTimeout(() => this.scrollTo(this.$route.hash), 1)
+    }
+  },
+  methods: {
+    scrollTo: function (hashtag) {
+      setTimeout(() => { location.href = hashtag }, 1)
+    }
   }
 };
 </script>

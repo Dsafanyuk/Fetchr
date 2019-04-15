@@ -13,13 +13,17 @@ const ChatModule = {
       state.messages = [];
     },
     setChats(state, payload) {
-      state.chats.push(payload);
+      state.chats.push(payload)
+      state.chats.sort((a, b) => (a.order_id > b.order_id) ? -1 : 1)
     },
     setInfo(state, UserInfo) {
       state.UserInfo = UserInfo;
     },
     clearchats(state) {
       state.chats = [];
+    },
+    clearchats(state){
+      state.chats = []
     },
   },
   actions: {
@@ -29,20 +33,18 @@ const ChatModule = {
         .ref('messages')
         .push(payload);
     },
-    loadChats({ commit, dispatch, state }, payload) {
-      const chatList = [];
+    loadChats({commit,dispatch,state}, payload) {
       // Loop going through each order
       for (const key in payload.orders) {
         console.log(key);
         if (payload.orders.hasOwnProperty(key)) {
           // Get The chat keys using the Order Id
-          let chatref = firebase.database().ref('chats').orderByChild('order_id').equalTo(payload.orders[key]['order_id'])
+          let chatref = firebase.database().ref('chats').orderByChild('order_id').equalTo(payload.orders[key]['order_id']).limitToFirst(1)
           .on("value", function(snapshot) {
           // If there is no Chatroom for the specific order, firebase will return  null
           // The temp variables keep the data before they are being pushed in the ChatList Array
             if (snapshot.val() != null)
             {
-
             var temp_chat_key = Object.keys(snapshot.val())[0]
             var temp_sender_id = snapshot.val()[temp_chat_key]['sender_id']
             var temp_receiver_id = snapshot.val()[temp_chat_key]['receiver']
@@ -61,26 +63,27 @@ const ChatModule = {
 
             if (response.data.length != 0)
               {
+
                      temp_fullInfo = response.data[0]['first_name'] + " " + response.data[0]['last_name']
-                     commit('setChats', {chat_key : temp_chat_key,
-                     sender_id : temp_sender_id,
-                     receiver_id :temp_receiver_id,
-                     order_id : snapshot.val()[temp_chat_key]['order_id'],
-                     userInfo : temp_fullInfo
-                 });
+                       commit('setChats', {chat_key : temp_chat_key,
+                         sender_id : temp_sender_id,
+                         receiver_id :temp_receiver_id,
+                         order_id : snapshot.val()[temp_chat_key]['order_id'],
+                         userInfo : temp_fullInfo
+                   })
+
               }
             });
         }
-      }
-    },
-    createChat({ commit, dispatch }, payload) {
-      // Generate a conversation ID, create a chatroom node
-      // and store it to the "chats " node in firebase
-      const newPostKey = firebase
-        .database()
-        .ref()
-        .child('chats')
-        .push().key;
+      })
+    }
+  }
+},
+
+    createChat({commit,dispatch}, payload, ) {
+      //Generate a conversation ID, create a chatroom node
+      //and store it to the "chats " node in firebase
+      let newPostKey = firebase.database().ref().child('chats').push().key
 
       const updates = {};
       updates[`/chats/${newPostKey}`] = {
@@ -100,8 +103,8 @@ const ChatModule = {
       };
       dispatch('sendMessage', Message_data);
     },
-    clearchats({ commit }, payload) {
-      commit('clearchats');
+    clearchats({commit}, payload) {
+      commit('clearchats')
     },
   },
   getters: {
